@@ -24,7 +24,7 @@
 
 <h3>Индикаторы (модуль STANDARD)</h3>
 
-![image](https://user-images.githubusercontent.com/42806772/144913370-bb9ecbad-a5be-40c0-95b2-158b0bcdc0ad.png)
+<img src="https://user-images.githubusercontent.com/42806772/144913370-bb9ecbad-a5be-40c0-95b2-158b0bcdc0ad.png" width="500">
 
 Список доступных индикаторов (`enum Indicators`): <br>
 `HEALTH` индикатор здоровья над инвентарем, <br>
@@ -41,7 +41,7 @@
 
 <h3>Подсвечивание границ экрана, виньетка (модуль STANDARD)</h3>
 
-![2021-12-06_22 59 05](https://user-images.githubusercontent.com/42806772/144913800-298a8e7b-22bf-4000-a03f-f32891459b63.png)
+<img src="https://user-images.githubusercontent.com/42806772/144913800-298a8e7b-22bf-4000-a03f-f32891459b63.png" width="500">
 
 Цвета:
 1. Цвета состоят из трез целых чисел и одного дробного, красный [0 .. 255], синий [0 .. 255], зеленый [0 .. 255], прозрачность [0 .. 1.0]
@@ -57,7 +57,7 @@
 
 <h3>Диалоги (модуль DIALOGS)</h3>
 
-![2021-12-06_23 22 49](https://user-images.githubusercontent.com/42806772/144916818-ff974368-878c-483d-a34b-79e3f2e576c8.png)
+<img src="https://user-images.githubusercontent.com/42806772/144916818-ff974368-878c-483d-a34b-79e3f2e576c8.png" width="500">
 
 Методы взаимодействия с клинтом:<br>
 `Anime.sendDialog(player: Player, dialog: Dialog)` отправляет игру ветку диалогов<br>
@@ -86,14 +86,14 @@ new Dialog(new Entrypoint(
 
 <h3>Меню ежедневных наград (модуль STANDARD)</h3>
 
-![image](https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png)
+<img src="https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png" width="500">
 
 Метод показа окна награды:<br>
 `Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с указанием текущего дня [0..6], а также с указанием наград за каждый день в объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
 
 <h3>Лутбокс (модуль LOOTBOX)</h3>
 
-![2021-12-06_23 45 04](https://user-images.githubusercontent.com/42806772/144919787-00cdac9a-a01c-4c48-97af-62c2f8e5f8b5.png)
+<img src="https://user-images.githubusercontent.com/42806772/144919787-00cdac9a-a01c-4c48-97af-62c2f8e5f8b5.png" width="500">
 
 Метод показа дропа с лутбокса:<br>
 `Anime.openLootBox(player: Player, vararg items: LootDrop)` открыть игроку лутбокс с указанием всего что выпало в виде объектов `LootDrop(сам предмет, название предмета, <НЕ ОБЯЗАТЕЛЬНО ПО УМАЛЧАНИЮ COMMON> редкость)`
@@ -114,7 +114,7 @@ enum class DropRare(val title: String, val color: String) {
 
 <h3>Маркеры в мире (модуль STANDARD)</h3>
 
-![image](https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png)
+<img src="https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png" width="500">
 
 Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSing`: 
 ```
@@ -141,30 +141,71 @@ enum class DropRare(val title: String, val color: String) {
 
 <h3>Всплывающие сообщения (модуль STANDARD)</h3>
 
-topmessage
-![image](https://user-images.githubusercontent.com/42806772/144923669-6c52ffef-9359-4175-be7c-d6ead8d4ef3f.png)
+<img src="https://user-images.githubusercontent.com/42806772/144923669-6c52ffef-9359-4175-be7c-d6ead8d4ef3f.png" width="500">
 
-alert
-![image](https://user-images.githubusercontent.com/42806772/144923731-bb1d8a58-eb6d-4bd8-97e1-038cf3b5cda4.png)
+`Anime.topMessage(player: Player, message: String)` сообщение сверху (поддерживает цвета и многострочные сообщения)<br>
 
-comments
-![image](https://user-images.githubusercontent.com/42806772/144923540-7f2822be-efc1-4f1e-9e34-b4f3e1e704b4.png)
+<img src="https://user-images.githubusercontent.com/42806772/144923731-bb1d8a58-eb6d-4bd8-97e1-038cf3b5cda4.png" width="500">
 
-cursor 
-![image](https://user-images.githubusercontent.com/42806772/144923936-a99a7103-7ac3-4dcd-b78a-462358382c20.png)
+`Anime.title(player: Player, text: String)` многострочный title, поддерживает все цвета, а так же `\n`<br>
+`Anime.title(player: Player, vararg text: String)` то же самое, но строчк можно указывать через запятую или можно передавать массив<br>
 
+<img src="https://user-images.githubusercontent.com/42806772/144923540-7f2822be-efc1-4f1e-9e34-b4f3e1e704b4.png" width="500">
+
+`Anime.alert(player: Player, title: String, description: String, seconds: Double)` отправить сообщение с комментарием с указанием времени<br>
+`Anime.alert(player: Player, title: String, description: String)` отправить сообщение с комментарием (на 7.3 секунды)<br>
+`Anime.alert(player: Player, description: String, seconds: Double)` отправить отписание с сообщением "Внимание" с указанием вреени<br>
+`Anime.alert(player: Player, description: String)` комментарий с сообщением "Внимание" на 7.3 секунды<br>
+
+<img src="https://user-images.githubusercontent.com/42806772/144923936-a99a7103-7ac3-4dcd-b78a-462358382c20.png" width="500">
+
+`Anime.cursorMessage(player: Player, message: String)` сообщения появляющиеся на курсоре и летящие вниз<br>
+
+<img src="https://user-images.githubusercontent.com/42806772/144924621-7f1d87ae-f0df-4943-af8f-18324cb99124.gif" width="500">
+
+`Anime.itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double)` отправить на экран предмет с указанием продолжительности в секундах (можно указать сообщения сверху и снизу)<br>
+
+<img src="https://user-images.githubusercontent.com/42806772/144925126-c524e4e4-2cc5-45d1-8647-e5cf98301152.gif" width="500">
+
+`Anime.counting321(player: Player)` начать на экране игрока отсчет 3 2 1 GO!<br>
 
 <h3>Системная информация (модуль STANDARD)</h3>
 
-killboard
-![2021-12-07_00 10 53](https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png)
-timer
-![image](https://user-images.githubusercontent.com/42806772/144923338-130365f6-bea4-4d4d-a9d1-8ec8d90dd7ad.png)
+<img src="https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png" width="500">
+
+`Anime.killboardMessage(player: Player, text: String)` отправить в правую верхнюю часть экрана сообщение<br>
+
+<img src="https://user-images.githubusercontent.com/42806772/144923338-130365f6-bea4-4d4d-a9d1-8ec8d90dd7ad.png" width="500">
+
+`Anime.timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int)` начать игроку отчсет сверху с сообщением, длительностью, цветом полоски<br>
+`Anime.timer(player: Player, text: String, duration: Int)` начать отсчет сверху с сообщением и продолжительностью<br>
+`Anime.timer(player: Player, duration: Int)` начать отсчет с сообщением по умолчанию<br>
 
 <h3>Прочее (модуль STANDARD)</h3>
 
-corpse
-![image](https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png)
+<img src="https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png" width="500">
+
+`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double)` создать труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно)<br>
+`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double)` то же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
+`Anime.clearAllCorpses(player: Player)` очистить игроку все трупы
+<br><br>
+<b>Отправить пустой Buffer игроку в канал</b>:<br>
+
+`Anime.sendEmptyBuffer(channel: String, player: Player)`<br>
+
+<b>Персонализация:</b><br>
+
+`Anime.lockPersonalization(player: Player)` заблокировать персонализацию игроку<br>
+`Anime.unlockPersonalization(player: Player)` разблокировать персонализацию игроку<br>
+
+<b>Загрузка фотографий</b>:
+
+`Anime.loadTexture(player: Player, url: String)` загрузить игроку фотографию по ссылке в папку `cache/animation/`<br>
+`Anime.loadTextures(player: Player, vararg url: String)` загрузить игроку фотографии по ссылкам в папку `cache/animation/`<br>
+Когда игрок скачает фотографию/и от отправит серверу пустой буффер в канал `func:loaded` <br>
+
+<b>Регистрация канала для входящих сообщений</b>:
+`createReader(app: JavaPlugin, channel: String, listener: PluginMessageListener)`
 
 <h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
 
@@ -175,6 +216,7 @@ corpse
 
 `loadFromWeb(fileUrl: String)` загрузка файла в стандартную папку `mods` по адресу, затем прогрузка мода на уровнь плагина<br>
 `loadManyFromWeb(vararg fileUrls: String)` то же самое, но можно указывать адреса через запятую<br>
+
 `load(filePath: String)` прогрузка мода указав путь к файлу (не web), мод сохраняется по ключу имени файла, например `mod-bundle.jar`<br>
 `loadAll(dirPath: String)` загрузить все моды из папки по путю к папке<br>
 <h3>Отправка мода игроку</h3>
@@ -186,8 +228,10 @@ corpse
 
 <h2>Отправка данных на моды - конструктор ModTransfer</h2>
 Пример #1:<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771556-c024a5fc-910e-4c23-bb95-ab0c58d8bc3a.png">
+<img src="https://user-images.githubusercontent.com/42806772/144771556-c024a5fc-910e-4c23-bb95-ab0c58d8bc3a.png" width="500">
+
 Пример #2 (Kotlin):<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771588-b6836e50-0c0d-4fee-8fe5-54b681d25ecd.png">
+<img src="https://user-images.githubusercontent.com/42806772/144771588-b6836e50-0c0d-4fee-8fe5-54b681d25ecd.png" width="500">
+
 Пример #3:<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771670-73be5c2a-173b-4da9-8ee0-d67a8b291a61.png">
+<img src="https://user-images.githubusercontent.com/42806772/144771670-73be5c2a-173b-4da9-8ee0-d67a8b291a61.png" width="500">
