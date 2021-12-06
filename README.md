@@ -206,6 +206,7 @@ enum class DropRare(val title: String, val color: String) {
 Когда игрок скачает фотографию/и от отправит серверу пустой буффер в канал `func:loaded` <br>
 
 <b>Регистрация канала для входящих сообщений</b>:
+
 `createReader(app: JavaPlugin, channel: String, listener: PluginMessageListener)`
 
 <h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
