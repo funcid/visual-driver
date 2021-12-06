@@ -22,7 +22,7 @@
 
 При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.inlude(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
 
-<h3>Индикаторы</h3>
+<h3>Индикаторы (модуль STANDARD)</h3>
 
 ![image](https://user-images.githubusercontent.com/42806772/144913370-bb9ecbad-a5be-40c0-95b2-158b0bcdc0ad.png)
 
@@ -39,7 +39,7 @@
 `Anime.hideIndicator(player: Player, vararg indicator: Indicators)` скрывает игроку указанные через запятую индикаторы<br>
 `Anime.showIndicator(player: Player, vararg indicator: Indicators)` показывает игроку указанные через запятую индикаторы<br>
 
-<h3>Подсвечивание границ экрана (виньетка)</h3>
+<h3>Подсвечивание границ экрана, виньетка (модуль STANDARD)</h3>
 
 ![2021-12-06_22 59 05](https://user-images.githubusercontent.com/42806772/144913800-298a8e7b-22bf-4000-a03f-f32891459b63.png)
 
@@ -55,23 +55,96 @@
 `Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int)` то же самое, но без указания прозрачности (без прозрачности)<br>
 `Glow.animate(player: Player, seconds: Double, color: GlowColor)` то же самое, но через GlowColor<br>
 
-<h3>Диалоги</h3>
+<h3>Диалоги (модуль DIALOGS)</h3>
 
+![2021-12-06_23 22 49](https://user-images.githubusercontent.com/42806772/144916818-ff974368-878c-483d-a34b-79e3f2e576c8.png)
 
-<h3>Меню ежедневных наград</h3>
+Методы взаимодействия с клинтом:<br>
+`Anime.sendDialog(player: Player, dialog: Dialog)` отправляет игру ветку диалогов<br>
+`Anime.openDialog(player: Player, dialogId: String)` показывает игроку диалог по ID ветки<br>
+`Anime.dialog(player: Player, dialog: Dialog, openEntrypoint: String)` отправляет и показывает игроку диалог по ID ветки<br>
 
-Пример в игре:
+Структура диалога:
+`Dialog` состоит из набора точек входа `Entrypoint`, в одном хранятся `Screen`, это конкоетно что видит игрок - набор строк и кнопок `Button` с действиями `Action`, например открытия нового окна. Набор Action вы можете увидить в `enum Actions`
+
+Пример кода:<br>
+```
+new Dialog(new Entrypoint(
+  "id", 
+  "название", 
+  new Screen("Первая видимая строка", "Вторая видимая строка").buttons(
+    new Button("Имя кнопки").actions(
+      new Action(Actions.COMMAND).command("/next"),
+      new Action(Actions.CLOSE)
+    ), new Button("Войти в очередь").actions(
+      new Action(Actions.COMMAND).command("/hub"),
+      new Action(Actions.CLOSE)
+    )
+  )
+))
+```
+
+<h3>Меню ежедневных наград (модуль STANDARD)</h3>
+
 ![image](https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png)
 
-<h3>Лутбокс</h3>
+Метод показа окна награды:<br>
+`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с указанием текущего дня [0..6], а также с указанием наград за каждый день в объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
 
-<h3>Маркеры</h3>
+<h3>Лутбокс (модуль LOOTBOX)</h3>
 
-<h3>Всплывающие сообщения</h3>
+![2021-12-06_23 45 04](https://user-images.githubusercontent.com/42806772/144919787-00cdac9a-a01c-4c48-97af-62c2f8e5f8b5.png)
 
-<h3>Системная информация</h3>
+Метод показа дропа с лутбокса:<br>
+`Anime.openLootBox(player: Player, vararg items: LootDrop)` открыть игроку лутбокс с указанием всего что выпало в виде объектов `LootDrop(сам предмет, название предмета, <НЕ ОБЯЗАТЕЛЬНО ПО УМАЛЧАНИЮ COMMON> редкость)`
 
-<h3>Прочее</h3>
+Редкости предметов:
+```
+enum class DropRare(val title: String, val color: String) {
+    COMMON("Обычный", "§a"),
+    RARE("Редкий", "§9"),
+    EPIC("Эпический", "§5"),
+    LEGENDARY("Легендарный", "§6"),;
+    
+    fun getColored(): String {
+        return "$color$title" // метод для получения окрашенного имени редкости
+    }
+}
+```
+
+<h3>Маркеры в мире (модуль STANDARD)</h3>
+
+![image](https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png)
+
+Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSing`: 
+```
+    FINE("textures/others/znak_v_3.png"),
+    ERROR("textures/others/znak_v_2.png"),
+    WARNING("textures/others/znak_v_1.png"),
+    QUESTION_FINE("textures/others/z1.png"),
+    QUESTION_ERROR("textures/others/z2.png"),
+    QUESTION_WARNING("textures/others/z1.png"),
+```
+Пример маркера: `new Marker(225, 1, 5, 10, MarkerSing.ERROR)`
+
+Методы взаимодействия с клинтом:<br>
+`Anime.marker(player: Player, marker: Marker)` показать маркер игроку<br>
+`Anime.markers(player: Player, vararg markers: Marker)` показать игроку кучу маркеров<br>
+<br>
+`Anime.clearMarkers(player: Player)` очистить все маркеры у игрока<br>
+`Anime.removeMarker(player: Player, marker: Marker)` удалить игроку маркер по маркеру<br>
+`Anime.removeMarker(player: Player, uuid: UUID)` удалить игроку маркер по UUID маркера<br>
+<br>
+`Anime.moveMarker(player: Player, marker: Marker)` обновить нахождение маркера у игрока<br>
+`Anime.moveMarker(player: Player, marker: Marker, seconds: Double)` обновить нахождение маркера у игрока анимированно за указанное время<br>
+`Anime.moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double)` обновить нахождение маркера у игрока анимированно за указанное время имея только UUID маркера<br>
+
+<h3>Всплывающие сообщения (модуль STANDARD)</h3>
+
+
+<h3>Системная информация (модуль STANDARD)</h3>
+
+<h3>Прочее (модуль STANDARD)</h3>
 
 <h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
 
