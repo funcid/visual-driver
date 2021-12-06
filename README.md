@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.0.0)
+# Cristalix Animation API DOCS (актуальная версия 1.0.2)
 
 <br>
 <h2>Зачем нужно использовать этот интсрумент?</h2>
@@ -12,7 +12,7 @@
 
 1. Вам нужно подключить его внутрь вашего плагина, Animation API - <b>НЕ ПЛАГИН</b><br>
 1.1. Добавть `.jar` файл в classpath, последнюю версию вы можете получить у <a href="https://vk.com/funcid">@funcid</a><br>
-1.2. Добавить `implementation 'me.func:animation-api:1.0.0'` в ваш `build.gradle`, для получения ключа к репозиторию, пишите <a href="https://vk.com/funcid">@funcid</a> или <a href="https://vk.com/delfikpro">@delfikpro</a>.
+1.2. Добавить `implementation 'me.func:animation-api:1.0.2'` в ваш `build.gradle`, для получения ключа к репозиторию, пишите <a href="https://vk.com/funcid">@funcid</a> или <a href="https://vk.com/delfikpro">@delfikpro</a>.
 <br>
 
 <h2>Как подключить? Какие модули есть?</h2>
