@@ -17,7 +17,7 @@
 
 <h2>Как подключить? Какие модули есть?</h2>
 
-При старте плагина напишите `Anime.inlude(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.inlude(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
+При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.inlude(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
 
 <h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
 
