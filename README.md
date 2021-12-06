@@ -31,6 +31,11 @@
 
 <h2>Отправка данных на моды - конструктор ModTransfer</h2>
 Пример #1:<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771408-9290a895-2c5e-4655-a26d-b48c2c5397bc.png">
+<img src="https://user-images.githubusercontent.com/42806772/144771556-c024a5fc-910e-4c23-bb95-ab0c58d8bc3a.png">
+Пример #2 (Kotlin):<br>
+<img src="https://user-images.githubusercontent.com/42806772/144771588-b6836e50-0c0d-4fee-8fe5-54b681d25ecd.png">
+Пример #3:<br>
+<img src="https://user-images.githubusercontent.com/42806772/144771670-73be5c2a-173b-4da9-8ee0-d67a8b291a61.png">
+
 
 
