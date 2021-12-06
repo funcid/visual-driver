@@ -31,6 +31,6 @@
 
 <h2>Отправка данных на моды - конструктор ModTransfer</h2>
 Пример #1:<br>
-![Пример для Java](https://user-images.githubusercontent.com/42806772/144771408-9290a895-2c5e-4655-a26d-b48c2c5397bc.png)
+<img src="https://user-images.githubusercontent.com/42806772/144771408-9290a895-2c5e-4655-a26d-b48c2c5397bc.png">
 
 
