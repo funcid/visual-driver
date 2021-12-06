@@ -141,10 +141,30 @@ enum class DropRare(val title: String, val color: String) {
 
 <h3>Всплывающие сообщения (модуль STANDARD)</h3>
 
+topmessage
+![image](https://user-images.githubusercontent.com/42806772/144923669-6c52ffef-9359-4175-be7c-d6ead8d4ef3f.png)
+
+alert
+![image](https://user-images.githubusercontent.com/42806772/144923731-bb1d8a58-eb6d-4bd8-97e1-038cf3b5cda4.png)
+
+comments
+![image](https://user-images.githubusercontent.com/42806772/144923540-7f2822be-efc1-4f1e-9e34-b4f3e1e704b4.png)
+
+cursor 
+![image](https://user-images.githubusercontent.com/42806772/144923936-a99a7103-7ac3-4dcd-b78a-462358382c20.png)
+
 
 <h3>Системная информация (модуль STANDARD)</h3>
 
+killboard
+![2021-12-07_00 10 53](https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png)
+timer
+![image](https://user-images.githubusercontent.com/42806772/144923338-130365f6-bea4-4d4d-a9d1-8ec8d90dd7ad.png)
+
 <h3>Прочее (модуль STANDARD)</h3>
+
+corpse
+![image](https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png)
 
 <h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
 
