@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.16)
+# Cristalix Animation API DOCS (актуальная версия 1.1.18)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -12,10 +12,10 @@
 
 1. Вам нужно подключить его внутрь вашего плагина, Animation API - <b>НЕ ПЛАГИН</b><br>
 1.1. Добавть `.jar` файл в classpath, последнюю версию вы можете получить у <a href="https://vk.com/funcid">@funcid</a><br>
-1.2. Добавить `implementation 'me.func:animation-api:1.1.16'` в ваш `build.gradle`, для получения ключа к репозиторию, пишите <a href="https://vk.com/funcid">@funcid</a> или <a href="https://vk.com/delfikpro">@delfikpro</a>.<br>
+1.2. Добавить `implementation 'me.func:animation-api:1.1.18'` в ваш `build.gradle`, для получения ключа к репозиторию, пишите <a href="https://vk.com/funcid">@funcid</a> или <a href="https://vk.com/delfikpro">@delfikpro</a>.<br>
 1.3. Библиотека работает на языках `Java`, `Kotlin`, `Groovy`<br>
 1.4. <b>Совместима со всеми версиями Core API и Paper</b><br>
-1.5. Есть `implementation 'me.func:animation-api:1.1.16-shaded'` версия без kotlin
+1.5. Есть `implementation 'me.func:animation-api:1.1.18-shaded'` версия без kotlin
 
 <h2>Как подключить? Какие модули есть?</h2>
 
