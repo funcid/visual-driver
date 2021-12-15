@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.21)
+# Cristalix Animation API DOCS (актуальная версия 1.1.22)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.21'
+  implementation 'me.func:animation-api:1.1.22'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -178,7 +178,7 @@ enum class DropRare(val title: String, val color: String) {
 
 <img src="https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png" width="500">
 
-Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSing`: 
+Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSign`: 
 ```
     FINE("textures/others/znak_v_3.png"),
     ERROR("textures/others/znak_v_2.png"),
@@ -191,7 +191,7 @@ enum class DropRare(val title: String, val color: String) {
     ARROW_RIGHT("mcpatcher/cit/others/badges/arrow_right.png"),
     ARROW_LEFT("mcpatcher/cit/others/badges/arrow_left.png"),
 ```
-Пример маркера: `new Marker(225, 1, 5, 10, MarkerSing.ERROR)`
+Пример маркера: `new Marker(225, 1, 5, 10, MarkerSign.ERROR)`
 
 Методы взаимодействия с клинтом:<br>
 `Anime.marker(player: Player, marker: Marker)` показать маркер игроку<br>
