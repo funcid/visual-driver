@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.19)
+# Cristalix Animation API DOCS (актуальная версия 1.1.20)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -8,16 +8,38 @@
 3. Автоматическое обновление базового пакета модов (стандартный пакет, квесты, лутбокс и прочее)
 4. Единый стиль и оформление режимов
 <br>
-<h2>Каким образом происходит интеграция API?</h2>
-
-1. Вам нужно подключить его внутрь вашего плагина, Animation API - <b>НЕ ПЛАГИН</b><br>
-1.1. Добавть `.jar` файл в classpath, последнюю версию вы можете получить у <a href="https://vk.com/funcid">@funcid</a><br>
-1.2. Добавить `implementation 'me.func:animation-api:1.1.19'` в ваш `build.gradle`, для получения ключа к репозиторию, пишите <a href="https://vk.com/funcid">@funcid</a> или <a href="https://vk.com/delfikpro">@delfikpro</a>.<br>
-1.3. Библиотека работает на языках `Java`, `Kotlin`, `Groovy`<br>
-1.4. <b>Совместима со всеми версиями Core API и Paper</b><br>
-1.5. Есть `implementation 'me.func:animation-api:1.1.19-shaded'` версия без kotlin
 
 <h2>Как подключить? Какие модули есть?</h2>
+
+<h3>Get Started `with .gradle`</h3>
+
+```
+repositories {
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url 'https://repo.implario.dev/cristalix/'
+    credentials {
+      username System.getenv("IMPLARIO_REPO_USER")
+      password System.getenv("IMPLARIO_REPO_PASSWORD")
+    }
+  }
+}
+
+dependencies {
+  implementation 'me.func:animation-api:1.1.20'
+  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+}
+```
+
+<h3>Модули</h3>
+
+`STANDARD` - стандартный набор модов (by <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
+`DIALOG` - кит с квестовыми диалогами (by <a href="https://vk.com/sworroo">@sworroo</a>, <a href="https://vk.com/funcid">@func</a>)<br>
+`LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/funcid">@func</a>)<br>
+`MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
+`GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@funcid</a>)<br>
+`EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 
 <h3>Подключение модулей</h3>
 
@@ -40,6 +62,24 @@
 `Anime.hideIndicator(player: Player, vararg indicator: Indicators)` скрывает игроку указанные через запятую индикаторы<br>
 `Anime.showIndicator(player: Player, vararg indicator: Indicators)` показывает игроку указанные через запятую индикаторы<br>
 
+<h3>Мультичат</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/146237931-759b0902-50e4-44e3-a692-409089ef7d6a.png" width="500">
+
+Чаты по умолчанию: <br>
+
+```
+  SERVER
+  SYSTEM
+  ATTACK
+  PARTY
+  TRADE
+```
+
+Методы взаимодействия с клинтом:<br>
+`Anime.chat(player: Player, chat: ModChat, message: String)` отправить игроку сообщение в чат <br>
+`Anime.removeChats(player: Player, vararg chats: ModChat)` удалить все указанные в чаты у игрока <br>
+
 <h3>Подсвечивание границ экрана, виньетка (модуль STANDARD)</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144913800-298a8e7b-22bf-4000-a03f-f32891459b63.png" width="500">
@@ -55,6 +95,27 @@
 `Glow.animate(player: Player, seconds: Double, color: GlowColor, alpha: Double)` то же самое, но через GlowColor<br>
 `Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int)` то же самое, но без указания прозрачности (без прозрачности)<br>
 `Glow.animate(player: Player, seconds: Double, color: GlowColor)` то же самое, но через GlowColor<br>
+
+<h3>Подсвечивание границ места в мире (модуль EXPERIMENTAL)</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/146236013-43fbd0d1-4aa3-4a8c-b0a2-2ed37260575a.png" width="500">
+
+Методы добавления места в глобальный список мест (не показывает игрокам!):<br>
+`Glow.addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit)`<br>
+`Glow.addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double)`<br>
+`Glow.addPlace(color: GlowColor, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit)`<br>
+`Glow.addPlace(color: GlowColor, x: Double, y: Double, z: Double)`<br>
+`Glow.addPlace(place: GlowingPlace, onJoin: Consumer<Player>)`<br>
+`Glow.addPlace(place: GlowingPlace)`<br>
+
+Методы показа мест игроку:<br>
+`Glow.showPlace(player: Player, place: GlowingPlace)` показать игроку место (место может быть не глобальным!)<br>
+`Glow.showLoadedPlace(player: Player, uuid: UUID)` показать игрку глобальное место по UUID<br>
+`Glow.showAllPlaces(player: Player)` показать игроку все глобальные места<br>
+
+Очистка мест:<br>
+`Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
+`Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
 
 <h3>Диалоги (модуль DIALOGS)</h3>
 
