@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.20)
+# Cristalix Animation API DOCS (актуальная версия 1.1.21)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -27,7 +27,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.20'
+  implementation 'me.func:animation-api:1.1.21'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
