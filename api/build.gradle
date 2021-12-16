@@ -1,0 +1,78 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'maven-publish'
+
+group 'me.func'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = "UTF-8"
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = '1.8'
+}
+
+dependencies {
+    compileOnly 'cristalix:bukkit-core:21.01.30'
+    compileOnly 'cristalix:dark-paper:21.02.03'
+    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+
+    implementation 'dev.xdark:feder:live-SNAPSHOT'
+    implementation project(':protocol')
+}
+
+publishing {
+    repositories {
+        maven {
+            name 'func'
+            url 'https://repo.implario.dev/cristalix'
+            credentials {
+                username System.getenv('IMPLARIO_REPO_USER')
+                password System.getenv('IMPLARIO_REPO_PASSWORD')
+            }
+        }
+    }
+    def p = project
+    publications {
+        create(p.name, MavenPublication) {
+            it.groupId = 'me.func'
+            it.artifactId = 'animation-api'
+            it.version = '1.1.28'
+            it.artifact p.tasks.jar
+        }
+    }
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+configurations.all {
+    exclude group: "io.reactivex", module:"rxjava"
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+jar {
+    from configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
+}
+
+afterEvaluate {
+    jar {
+        archiveBaseName.set 'animation-api'
+        from {
+            configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
+        }
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
+    }
+}

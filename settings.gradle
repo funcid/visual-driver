@@ -1,0 +1,8 @@
+rootProject.name = 'AnimationApi'
+include 'api'
+include 'mod'
+include 'protocol'
+include 'experimental'
+include 'graffiti'
+include 'graffiti-service'
+

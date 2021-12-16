@@ -1,0 +1,21 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version "1.6.0"
+    id 'application'
+}
+
+subprojects {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven {
+            url 'https://repo.implario.dev/public/'
+        }
+        maven {
+            url 'https://repo.implario.dev/cristalix/'
+            credentials {
+                username System.getenv("IMPLARIO_REPO_USER") ?: project.properties.get("IMPLARIO_REPO_USER").toString()
+                password System.getenv("IMPLARIO_REPO_PASSWORD") ?: project.properties.get("IMPLARIO_REPO_PASSWORD").toString()
+            }
+        }
+    }
+}
