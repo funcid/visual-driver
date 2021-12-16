@@ -1,4 +1,4 @@
-# Cristalix Arcade API DOCS (актуальная версия 1.0.8)
+# Cristalix Arcade API DOCS (актуальная версия 1.0.9)
 
 Это система объединяющая все аркады на Cristalix. 
 Проект тянет за собой Animation API, и сам включает его, поэтому вам не нужно добавлять его отдельно.
@@ -21,14 +21,14 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:arcade-api:1.0.8'
+  implementation 'me.func:arcade-api:1.0.9'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
 
 <h2>Важно</h2>
 
-При начале игры нужно вызвать `Arcade.start()`<br>
+При начале игры нужно вызвать (если вы используете games5e укажите в скобках реалм) `Arcade.start()`<br>
 При завершении игры или при кике всех игроков нужно вызвать `Arcade.bulkSave(vararg players: Player)` чтобы сделать сохранение игроков в одном запросе, а не в отдельных
 
 <h2>Методы</h2>
