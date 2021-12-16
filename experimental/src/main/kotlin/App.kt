@@ -8,5 +8,6 @@ class App : KotlinMod() {
 
         GlowPlaces
         RightBottom
+        Particles()
     }
 }
