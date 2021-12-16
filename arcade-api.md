@@ -1,4 +1,4 @@
-# Cristalix Arcade API DOCS (актуальная версия 1.0.7)
+# Cristalix Arcade API DOCS (актуальная версия 1.0.8)
 
 Это система объединяющая все аркады на Cristalix. 
 Проект тянет за собой Animation API, и сам включает его, поэтому вам не нужно добавлять его отдельно.
@@ -21,7 +21,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:arcade-api:1.0.7'
+  implementation 'me.func:arcade-api:1.0.8'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
