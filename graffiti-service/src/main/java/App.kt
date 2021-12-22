@@ -22,9 +22,41 @@ const val PASSWORD = "PASSWORD"
 lateinit var app: App
 
 class App {
+    private val actualGraffitiPacks = mutableListOf(
+        GraffitiPack(
+            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fd"), mutableListOf(
+                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f1", 0, 0, 219, "func"),
+                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f2", 219, 0, 219, "func"),
+                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f3", 219 * 2, 0, 219, "func"),
+                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 3, 0, 219, "func"),
+                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 4, 0, 219, "func"),
+            ), "Тест", "func", 999, DropRare.LEGENDARY.ordinal, true
+        ),
+        GraffitiPack(
+            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fa"), mutableListOf(
+                Graffiti("30726433-2c69-11e8-b5ea-1cb72caa35f1", 0, 219, 219, "func"),
+                Graffiti("30726431-2c69-11e8-b5ea-1cb72caa35f2", 219, 219, 219, "func"),
+                Graffiti("30726433-2c61-11e8-b5ea-1cb72caa35f3", 219 * 2, 219, 219, "func"),
+                Graffiti("30726433-2c69-21e8-b5ea-1cb72caa35f4", 219 * 3, 219, 219, "func"),
+                Graffiti("30726433-2c69-13e8-b5ea-1cb72caa35f4", 219 * 4, 219, 219, "func"),
+                Graffiti("30726433-2c69-1148-b5ea-1cb72caa35f4", 219 * 5, 219, 219, "func"),
+                Graffiti("30726433-2c69-11e5-b5ea-1cb72caa35f4", 219 * 6, 219, 219, "func"),
+            ), "Тест 2", "func", 999, DropRare.COMMON.ordinal, true
+        ),
+        GraffitiPack(
+            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fb"), mutableListOf(
+                Graffiti("307264a2-2c69-11e8-b5e1-1cb72caa35f1", 0, 219 * 2, 219, "func"),
+                Graffiti("307264a2-2c69-11e8-b5ea-2cb72caa35f2", 219, 219 * 2, 219, "func"),
+                Graffiti("307264a2-2c69-11e8-b5ea-13b72caa35f3", 219 * 2, 219 * 2, 219, "func"),
+                Graffiti("307264a2-2c69-11e8-b5ea-1c472caa35f4", 219 * 3, 219 * 2, 219, "func"),
+                Graffiti("307264a2-2c69-11e8-b5ea-1cb52caa35f4", 219 * 4, 219 * 2, 219, "func"),
+                Graffiti("307264a2-2c69-11e8-b5ea-1c472caa35f4", 219 * 5, 219 * 2, 219, "func"),
+                Graffiti("307264a2-2c69-11e8-b5ea-1cb52caa35f4", 219 * 6, 219 * 2, 219, "func"),
+            ), "Тест 3", "func", 999, DropRare.EPIC.ordinal, true
+        )
+    )
     val handlers: MutableMap<Class<out DataPackage>, PackageHandler<in DataPackage>> = mutableMapOf()
     lateinit var mongoAdapter: MongoAdapter
-
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
@@ -48,43 +80,11 @@ class App {
 
         registerHandler<GraffitiLoadUserPackage> { channel, _, pckg ->
             // Загрузка профиля игрока
-            loadProfile(pckg.playerUuid) {
-                pckg.data = it ?: UserGraffitiData(
-                    pckg.playerUuid,
-                    mutableListOf(
-                        GraffitiPack(
-                            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fd"), mutableListOf(
-                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f1", 0, 0, 219, "func"),
-                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f2", 219, 0, 219, "func"),
-                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f3", 219 * 2, 0, 219, "func"),
-                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 3, 0, 219, "func"),
-                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 4, 0, 219, "func"),
-                            ), "Тест", "func", 999, DropRare.LEGENDARY.ordinal, true
-                        ),
-                        GraffitiPack(
-                            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fa"), mutableListOf(
-                                Graffiti("30726433-2c69-11e8-b5ea-1cb72caa35f1", 0, 219, 219, "func"),
-                                Graffiti("30726431-2c69-11e8-b5ea-1cb72caa35f2", 219, 219, 219, "func"),
-                                Graffiti("30726433-2c61-11e8-b5ea-1cb72caa35f3", 219 * 2, 219, 219, "func"),
-                                Graffiti("30726433-2c69-21e8-b5ea-1cb72caa35f4", 219 * 3, 219, 219, "func"),
-                                Graffiti("30726433-2c69-13e8-b5ea-1cb72caa35f4", 219 * 4, 219, 219, "func"),
-                                Graffiti("30726433-2c69-1148-b5ea-1cb72caa35f4", 219 * 5, 219, 219, "func"),
-                                Graffiti("30726433-2c69-11e5-b5ea-1cb72caa35f4", 219 * 6, 219, 219, "func"),
-                            ), "Тест 2", "func", 999, DropRare.COMMON.ordinal, true
-                        ),
-                        GraffitiPack(
-                            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fb"), mutableListOf(
-                                Graffiti("307264a2-2c69-11e8-b5e1-1cb72caa35f1", 0, 219 * 2, 219, "func"),
-                                Graffiti("307264a2-2c69-11e8-b5ea-2cb72caa35f2", 219, 219 * 2, 219, "func"),
-                                Graffiti("307264a2-2c69-11e8-b5ea-13b72caa35f3", 219 * 2, 219 * 2, 219, "func"),
-                                Graffiti("307264a2-2c69-11e8-b5ea-1c472caa35f4", 219 * 3, 219 * 2, 219, "func"),
-                                Graffiti("307264a2-2c69-11e8-b5ea-1cb52caa35f4", 219 * 4, 219 * 2, 219, "func"),
-                                Graffiti("307264a2-2c69-11e8-b5ea-1c472caa35f4", 219 * 5, 219 * 2, 219, "func"),
-                                Graffiti("307264a2-2c69-11e8-b5ea-1cb52caa35f4", 219 * 6, 219 * 2, 219, "func"),
-                            ), "Тест 3", "func", 999, DropRare.EPIC.ordinal, true
-                        )
-                    ), 0
-                )
+            loadProfile(pckg.playerUuid) { data ->
+                // Если данные уже есть - обновляем набор паков, если нет - создаем новые
+                pckg.data = data?.apply {
+                    data.packs.addAll(actualGraffitiPacks.filter { !this.packs.contains(it) })
+                } ?: UserGraffitiData(pckg.playerUuid, actualGraffitiPacks, 0)
 
                 // Если данные только что были сгенерированы - сохранить
                 mongoAdapter.save(pckg.data!!)
