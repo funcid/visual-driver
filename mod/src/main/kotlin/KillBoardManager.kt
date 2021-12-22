@@ -30,6 +30,7 @@ object KillBoardManager {
 
         App::class.mod.registerChannel("func:notice") {
             val text = NetUtil.readUtf8(this)
+            board.offset.y = readInt().toDouble()
             val notice = KillBoard(text)
 
             board + notice.box

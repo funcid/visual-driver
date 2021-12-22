@@ -18,7 +18,7 @@ data class LocalPack(
         val boxOpposite = 7
 
         offset.y -= 30
-        offset.x -= index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
+        offset.x += index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
 
         size = V3(boxSize, boxSize)
         color = WHITE

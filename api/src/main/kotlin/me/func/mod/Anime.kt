@@ -161,10 +161,16 @@ object Anime {
     }
 
     @JvmStatic
-    fun killboardMessage(player: Player, text: String) {
+    fun killboardMessage(player: Player, text: String, topMargin: Int) {
         ModTransfer()
             .string(text)
+            .integer(topMargin)
             .send("func:notice", player)
+    }
+
+    @JvmStatic
+    fun killboardMessage(player: Player, text: String) {
+        killboardMessage(player, text, 15)
     }
 
     @JvmStatic
