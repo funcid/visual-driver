@@ -106,8 +106,8 @@ enum class Kit(val fromUrl: String) : Listener {
                                     .integer(graffiti.address.y)
                                     .integer(graffiti.address.size)
                                     .integer(graffiti.address.maxUses)
-                                    .integer(graffiti.uses)
                                     .string(graffiti.author)
+                                    .integer(graffiti.uses)
                             }
 
                             transfer.string(pack.title)

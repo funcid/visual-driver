@@ -1,16 +1,43 @@
 import me.func.protocol.graffiti.GraffitiPlaced
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
+import ru.cristalix.uiengine.element.RectangleElement
+import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.*
 import java.util.*
 
 data class LocalPack(
     var packUuid: UUID,
-    var graffiti: List<LocalGraffiti> = app.getPack(packUuid).graffiti.map { currentGraffiti ->
+    val index: Int,
+    val icon: RectangleElement = rectangle {
+        origin = BOTTOM
+        align = BOTTOM
+
+        val boxSize = 25.0
+        val boxOpposite = 7
+
+        offset.y -= 30
+        offset.x -= index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
+
+        size = V3(boxSize, boxSize)
+        color = WHITE
+
+        onClick {
+            app.gui.children.clear()
+            app.userData.activePack = index
+            app.loadPackIntoMenu()
+        }
+    },
+    val title: TextElement = text {
+        val pack = app.getPack(packUuid)
+        origin = CENTER
+        align = CENTER
+        color = WHITE
+        offset.y -= 20
+        shadow = true
+        content = "${pack.title}\nby ${pack.creator}"
+    }, var graffiti: List<LocalGraffiti> = app.getPack(packUuid).graffiti.map { currentGraffiti ->
         LocalGraffiti(app.getPack(packUuid), currentGraffiti, rectangle {
             origin = CENTER
             align = CENTER
@@ -18,15 +45,37 @@ data class LocalPack(
             enabled = false
 
             textureLocation = app.texture
-            textureFrom = V3(currentGraffiti.address.x.toDouble() / 1024, currentGraffiti.address.y.toDouble() / 1024)
+            textureFrom = V3(currentGraffiti.address.x.toDouble() / PICTURE_SIZE, currentGraffiti.address.y.toDouble() / PICTURE_SIZE)
             size = V3(currentGraffiti.address.size.toDouble(), currentGraffiti.address.size.toDouble())
             textureSize =
-                V3(currentGraffiti.address.size.toDouble() / 1024, currentGraffiti.address.size.toDouble() / 1024)
+                V3(currentGraffiti.address.size.toDouble() / PICTURE_SIZE, currentGraffiti.address.size.toDouble() / PICTURE_SIZE)
 
             onHover {
-                animate(0.1) {
-                    scale.x = if (hovered) 1.15 else 1.0
-                    scale.y = if (hovered) 1.15 else 1.0
+                var child = if (this@rectangle.children.isEmpty()) null else this@rectangle.children[0] as TextElement?
+
+                if (child != null && !hovered) {
+                    animate(0.1) {
+                        scale.x = 0.25
+                        scale.y = 0.25
+                        color.alpha = 1.0
+                    }
+                    removeChild(child!!)
+                } else if (child == null && hovered) {
+                    child = text {
+                        origin = CENTER
+                        align = CENTER
+                        color = WHITE
+                        scale.x = 5.0
+                        scale.y = 5.0
+                        shadow = true
+                        content = "${currentGraffiti.uses}/${currentGraffiti.address.maxUses}"
+                    }
+                    addChild(child!!)
+                    animate(0.1) {
+                        scale.x = 0.37
+                        scale.y = 0.37
+                        color.alpha = 0.9
+                    }
                 }
             }
             onClick {
@@ -35,6 +84,9 @@ data class LocalPack(
 
                 val player = UIEngine.clientApi.minecraft().player
 
+                scale.x = 1.0
+                scale.y = 1.0
+                size = V3(65.0, 65.0)
                 app.activeGraffiti = LocalGraffitiPlaced(
                     GraffitiPlaced(
                         packUuid,
@@ -45,11 +97,9 @@ data class LocalPack(
                         player.z,
                         1000,
                     ), Context3D(V3(player.x, player.y, player.z).apply {
-                        size = V3(20.0, 20.0)
+                        size = V3(65.0, 65.0)
                     })
                 )
-                size = V3(20.0, 20.0)
-                scale = V3(1.0, 1.0)
                 offset = V3(10.0, 10.0)
                 color.alpha = 0.7
 

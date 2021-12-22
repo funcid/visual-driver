@@ -1,6 +1,6 @@
 import dev.xdark.clientapi.event.entity.RotateAround
 import dev.xdark.clientapi.event.input.KeyPress
-import dev.xdark.clientapi.event.render.RenderTickPre
+import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
@@ -15,12 +15,12 @@ import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
-import sun.audio.AudioPlayer.player
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
 lateinit var app: App
+const val PICTURE_SIZE = 1536
 
 class App : KotlinMod() {
 
@@ -30,7 +30,7 @@ class App : KotlinMod() {
     private var open = false
     private var inited = false
 
-    private lateinit var userData: UserGraffitiData
+    lateinit var userData: UserGraffitiData
     private lateinit var packs: MutableList<LocalPack>
 
     var activeGraffiti: LocalGraffitiPlaced? = null
@@ -70,9 +70,9 @@ class App : KotlinMod() {
             color = WHITE
 
             textureLocation = app.texture
-            textureFrom = V3(mark.graffiti.address.x.toDouble() / 1024, mark.graffiti.address.y.toDouble() / 1024)
+            textureFrom = V3(mark.graffiti.address.x.toDouble() / PICTURE_SIZE, mark.graffiti.address.y.toDouble() / PICTURE_SIZE)
             textureSize =
-                V3(mark.graffiti.address.size.toDouble() / 1024, mark.graffiti.address.size.toDouble() / 1024)
+                V3(mark.graffiti.address.size.toDouble() / PICTURE_SIZE, mark.graffiti.address.size.toDouble() / PICTURE_SIZE)
 
             size = V3(20.0, 20.0)
             offset = V3(10.0, 10.0)
@@ -101,9 +101,8 @@ class App : KotlinMod() {
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readInt()
-                ),
-                buffer.readInt(),
-                NetUtil.readUtf8(buffer)
+                ), NetUtil.readUtf8(buffer),
+                buffer.readInt()
             ),
             buffer.readDouble(), buffer.readDouble(),
             buffer.readDouble(), buffer.readInt(),
@@ -132,6 +131,8 @@ class App : KotlinMod() {
         buffer.writeBoolean(graffiti.onGround)
         buffer.writeBoolean(false)
 
+        graffiti.graffiti.uses--
+
         clientApi.clientConnection().sendPayload("graffiti:use", buffer)
     }
 
@@ -144,9 +145,31 @@ class App : KotlinMod() {
         clientApi.clientConnection().sendPayload("graffiti:buy", buffer)
     }
 
+    fun loadPackIntoMenu() {
+        val active = getActivePack()
+        active.graffiti.forEachIndexed { index, element ->
+            element.icon.scale.x = 0.25
+            element.icon.scale.y = 0.25
+
+            val angle = 2 * Math.PI / active.graffiti.size * index
+            element.icon.offset.x = sin(angle) * 90
+            element.icon.offset.y = cos(angle) * 90 * 0.8 - 25
+            element.icon.enabled = true
+
+            gui + element.icon
+        }
+        gui + active.title
+        packs.forEach { gui + it.icon }
+    }
+
     override fun onEnable() {
         app = this
         UIEngine.initialize(this)
+
+        registerHandler<HealthRender> { if (open) isCancelled = true }
+        registerHandler<HungerRender> { if (open) isCancelled = true }
+        registerHandler<ArmorRender> { if (open) isCancelled = true }
+        registerHandler<ExpBarRender> { if (open) isCancelled = true }
 
         gui.color = Color(0, 0, 0, 0.86)
 
@@ -187,8 +210,9 @@ class App : KotlinMod() {
                                     readInt(), // y
                                     readInt(), // size
                                     readInt() // maxUses
-                                ), readInt(), // uses
-                                NetUtil.readUtf8(this) // authot
+                                ),
+                                NetUtil.readUtf8(this), // author
+                                readInt(), // uses
                             )
                         }, NetUtil.readUtf8(this), // title
                         NetUtil.readUtf8(this), // creator
@@ -198,7 +222,7 @@ class App : KotlinMod() {
                     )
                 }, readInt() // active pack
             )
-            packs = userData.packs.map { LocalPack(it.getUuid()) }.toMutableList()
+            packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.getUuid(), index) }.toMutableList()
 
             inited = true
 
@@ -221,15 +245,7 @@ class App : KotlinMod() {
             // Выбрать другое граффити
             if (key == Keyboard.KEY_H) {
                 if (!open) {
-                    val active = getActivePack()
-                    active.graffiti.forEachIndexed { index, element ->
-                        val angle = 2 * Math.PI / active.graffiti.size * index
-                        element.icon.offset.x = sin(angle) * 72
-                        element.icon.offset.y = cos(angle) * 72 * 0.85 - 20
-                        element.icon.enabled = true
-
-                        gui + element.icon
-                    }
+                    loadPackIntoMenu()
                     gui.open()
                 } else {
                     gui.children.clear()

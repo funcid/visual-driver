@@ -2,7 +2,6 @@ import adapter.MongoAdapter
 import io.netty.channel.Channel
 import me.func.protocol.DropRare
 import me.func.protocol.graffiti.Graffiti
-import me.func.protocol.graffiti.GraffitiInfo
 import me.func.protocol.graffiti.GraffitiPack
 import me.func.protocol.graffiti.UserGraffitiData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
@@ -52,12 +51,39 @@ class App {
             loadProfile(pckg.playerUuid) {
                 pckg.data = it ?: UserGraffitiData(
                     pckg.playerUuid,
-                    mutableListOf(GraffitiPack(UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fd"), mutableListOf(
-                        Graffiti(GraffitiInfo(UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35f1"), 0, 0, 128, 50), 50, "func"),
-                        Graffiti(GraffitiInfo(UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35f2"), 128, 0, 128, 50), 50, "func"),
-                        Graffiti(GraffitiInfo(UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35f3"), 256, 0, 128, 50), 50, "func"),
-                        Graffiti(GraffitiInfo(UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35f4"), 0, 128, 128, 50), 50, "func"),
-                    ), "Тест", "func", 999, DropRare.LEGENDARY.ordinal, true)), 0
+                    mutableListOf(
+                        GraffitiPack(
+                            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fd"), mutableListOf(
+                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f1", 0, 0, 219, "func"),
+                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f2", 219, 0, 219, "func"),
+                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f3", 219 * 2, 0, 219, "func"),
+                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 3, 0, 219, "func"),
+                                Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 4, 0, 219, "func"),
+                            ), "Тест", "func", 999, DropRare.LEGENDARY.ordinal, true
+                        ),
+                        GraffitiPack(
+                            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fa"), mutableListOf(
+                                Graffiti("30726433-2c69-11e8-b5ea-1cb72caa35f1", 0, 219, 219, "func"),
+                                Graffiti("30726431-2c69-11e8-b5ea-1cb72caa35f2", 219, 219, 219, "func"),
+                                Graffiti("30726433-2c61-11e8-b5ea-1cb72caa35f3", 219 * 2, 219, 219, "func"),
+                                Graffiti("30726433-2c69-21e8-b5ea-1cb72caa35f4", 219 * 3, 219, 219, "func"),
+                                Graffiti("30726433-2c69-13e8-b5ea-1cb72caa35f4", 219 * 4, 219, 219, "func"),
+                                Graffiti("30726433-2c69-1148-b5ea-1cb72caa35f4", 219 * 5, 219, 219, "func"),
+                                Graffiti("30726433-2c69-11e5-b5ea-1cb72caa35f4", 219 * 6, 219, 219, "func"),
+                            ), "Тест 2", "func", 999, DropRare.COMMON.ordinal, true
+                        ),
+                        GraffitiPack(
+                            UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fb"), mutableListOf(
+                                Graffiti("307264a2-2c69-11e8-b5e1-1cb72caa35f1", 0, 219 * 2, 219, "func"),
+                                Graffiti("307264a2-2c69-11e8-b5ea-2cb72caa35f2", 219, 219 * 2, 219, "func"),
+                                Graffiti("307264a2-2c69-11e8-b5ea-13b72caa35f3", 219 * 2, 219 * 2, 219, "func"),
+                                Graffiti("307264a2-2c69-11e8-b5ea-1c472caa35f4", 219 * 3, 219 * 2, 219, "func"),
+                                Graffiti("307264a2-2c69-11e8-b5ea-1cb52caa35f4", 219 * 4, 219 * 2, 219, "func"),
+                                Graffiti("307264a2-2c69-11e8-b5ea-1c472caa35f4", 219 * 5, 219 * 2, 219, "func"),
+                                Graffiti("307264a2-2c69-11e8-b5ea-1cb52caa35f4", 219 * 6, 219 * 2, 219, "func"),
+                            ), "Тест 3", "func", 999, DropRare.EPIC.ordinal, true
+                        )
+                    ), 0
                 )
 
                 // Если данные только что были сгенерированы - сохранить
