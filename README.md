@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.22)
+# Cristalix Animation API DOCS (актуальная версия 1.1.34)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -240,6 +240,7 @@ enum class DropRare(val title: String, val color: String) {
 <img src="https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png" width="500">
 
 `Anime.killboardMessage(player: Player, text: String)` отправить в правую верхнюю часть экрана сообщение<br>
+`Anime.killboardMessage(player: Player, text: String, topMargin: Int)` отправить в правую верхнюю часть экрана сообщение с указанием отсупа сверху<br>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923338-130365f6-bea4-4d4d-a9d1-8ec8d90dd7ad.png" width="500">
 
