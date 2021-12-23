@@ -21,7 +21,7 @@ object KillBoardManager {
         val minecraft = UIEngine.clientApi.minecraft()
 
         registerHandler<GameLoop> {
-            val inGame = minecraft.inGameHasFocus()
+            val inGame = minecraft.inGameHasFocus() && board.offset.y <= 20
             if(board.enabled && !inGame)
                 board.enabled = false
             else if (!board.enabled && inGame)

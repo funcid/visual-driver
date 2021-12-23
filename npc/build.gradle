@@ -26,7 +26,7 @@ dependencies {
     compileOnly 'ru.cristalix:client-api:latest-SNAPSHOT'
     implementation 'ru.cristalix:uiengine:3.15.3'
     implementation 'ru.cristalix:client-sdk:5.1.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.31'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
 
     implementation project(':protocol')
 }
@@ -47,8 +47,8 @@ jar {
 }
 
 bundler {
-    name 'Graffiti'
+    name 'Npc Animations'
     mainClass 'App'
-    version '1.4'
+    version '1.0'
     author 'func'
 }

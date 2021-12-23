@@ -11,13 +11,13 @@ data class LocalPack(
     var packUuid: UUID,
     val index: Int,
     val icon: RectangleElement = rectangle {
-        origin = BOTTOM
-        align = BOTTOM
+        origin = CENTER
+        align = CENTER
 
-        val boxSize = 25.0
-        val boxOpposite = 7
+        val boxSize = 20.0
+        val boxOpposite = 6
 
-        offset.y -= 30
+        offset.y += OVAL_RADIUS - 10
         offset.x += index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
 
         size = V3(boxSize, boxSize)
@@ -34,7 +34,7 @@ data class LocalPack(
         origin = CENTER
         align = CENTER
         color = WHITE
-        offset.y -= 20
+        offset.y -= 30
         shadow = true
         content = "${pack.title}\nby ${pack.creator}"
     }, var graffiti: List<LocalGraffiti> = app.getPack(packUuid).graffiti.map { currentGraffiti ->
@@ -65,16 +65,16 @@ data class LocalPack(
                         origin = CENTER
                         align = CENTER
                         color = WHITE
-                        scale.x = 5.0
-                        scale.y = 5.0
+                        scale.x = 4.0
+                        scale.y = 4.0
                         shadow = true
-                        content = "${currentGraffiti.uses}/${currentGraffiti.address.maxUses}"
+                        content = "${currentGraffiti.uses} штук"
                     }
                     addChild(child!!)
                     animate(0.1) {
                         scale.x = 0.37
                         scale.y = 0.37
-                        color.alpha = 0.9
+                        color.alpha = 0.7
                     }
                 }
             }
@@ -86,7 +86,7 @@ data class LocalPack(
 
                 scale.x = 1.0
                 scale.y = 1.0
-                size = V3(65.0, 65.0)
+                size = V3(75.0, 75.0)
                 app.activeGraffiti = LocalGraffitiPlaced(
                     GraffitiPlaced(
                         packUuid,
@@ -98,10 +98,10 @@ data class LocalPack(
                         1000,
                     ), Context3D(V3(player.x, player.y, player.z).apply {
                         size = V3(65.0, 65.0)
+                        color = WHITE
                     })
                 )
                 offset = V3(10.0, 10.0)
-                color.alpha = 0.7
 
                 app.activeGraffiti!!.context3D.addChild(this@rectangle)
                 UIEngine.worldContexts.add(app.activeGraffiti!!.context3D)

@@ -164,7 +164,7 @@ object GraffitiManager {
             val packUuid = Anime.safeReadUUID(buffer) ?: return@createReader
 
             // Если такого пака не существует
-            val pack = data.packs.firstOrNull { it.getUuid() == packUuid } ?: return@createReader
+            val pack = data.packs.find { it.getUuid() == packUuid } ?: return@createReader
 
             // Попробовать купить пак граффити
             Anime.graffitiClient?.buy(player.uniqueId, packUuid, pack.price)?.thenAccept { error ->

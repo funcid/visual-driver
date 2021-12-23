@@ -63,6 +63,14 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
+    NPC("https://implario.dev/animation-api/npc-bundle.jar") {
+        @EventHandler(priority = EventPriority.HIGHEST)
+        fun PlayerJoinEvent.handle() {
+            MinecraftServer.SERVER.postToMainThread {
+                ModLoader.send("npc-bundle.jar", player)
+            }
+        }
+    },
     GRAFFITI("https://implario.dev/animation-api/graffiti-bundle.jar") {
         @EventHandler
         fun AsyncPlayerPreLoginEvent.handle() {

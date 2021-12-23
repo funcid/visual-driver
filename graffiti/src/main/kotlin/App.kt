@@ -5,6 +5,7 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.protocol.DropRare
 import me.func.protocol.graffiti.*
 import org.lwjgl.input.Keyboard
 import org.lwjgl.util.vector.Matrix4f
@@ -21,13 +22,13 @@ import kotlin.math.sin
 
 lateinit var app: App
 const val PICTURE_SIZE = 1536
+const val OVAL_RADIUS = 90
 
 class App : KotlinMod() {
 
     val texture: ResourceLocation = ResourceLocation.of("cache/animation", "graffiti.png")
 
     val gui = ContextGui()
-    private var open = false
     private var inited = false
 
     lateinit var userData: UserGraffitiData
@@ -147,18 +148,40 @@ class App : KotlinMod() {
 
     fun loadPackIntoMenu() {
         val active = getActivePack()
+        val pack = getPack(active.packUuid)
+        val rare = DropRare.values()[pack.rare]
+
+        GlowEffect.showAlways(rare.red, rare.green, rare.blue, 0.11)
+
         active.graffiti.forEachIndexed { index, element ->
             element.icon.scale.x = 0.25
             element.icon.scale.y = 0.25
 
             val angle = 2 * Math.PI / active.graffiti.size * index
-            element.icon.offset.x = sin(angle) * 90
-            element.icon.offset.y = cos(angle) * 90 * 0.8 - 25
+            element.icon.offset.x = sin(angle) * OVAL_RADIUS
+            element.icon.offset.y = cos(angle) * OVAL_RADIUS * 0.75 - 40
             element.icon.enabled = true
 
             gui + element.icon
         }
         gui + active.title
+        val text = "Купить - ${pack.price} кристаликов"
+        gui + rectangle {
+            align = CENTER
+            origin = CENTER
+            color = Color(42, 102, 189, 1.0)
+            size = V3(UIEngine.clientApi.fontRenderer().getStringWidth(text) + 12.0, 17.0)
+            offset.y += OVAL_RADIUS + 20
+            + text {
+                align = CENTER
+                origin = CENTER
+                color = WHITE
+                shadow = true
+                content = text
+            }
+
+            onClick { buyPack(active) }
+        }
         packs.forEach { gui + it.icon }
     }
 
@@ -166,10 +189,10 @@ class App : KotlinMod() {
         app = this
         UIEngine.initialize(this)
 
-        registerHandler<HealthRender> { if (open) isCancelled = true }
-        registerHandler<HungerRender> { if (open) isCancelled = true }
-        registerHandler<ArmorRender> { if (open) isCancelled = true }
-        registerHandler<ExpBarRender> { if (open) isCancelled = true }
+        registerHandler<HealthRender> { if (activeGraffiti == null) isCancelled = true }
+        registerHandler<HungerRender> { if (activeGraffiti == null) isCancelled = true }
+        registerHandler<ArmorRender> { if (activeGraffiti == null) isCancelled = true }
+        registerHandler<ExpBarRender> { if (activeGraffiti == null) isCancelled = true }
 
         gui.color = Color(0, 0, 0, 0.86)
 
@@ -244,14 +267,13 @@ class App : KotlinMod() {
 
             // Выбрать другое граффити
             if (key == Keyboard.KEY_H) {
-                if (!open) {
+                if (activeGraffiti == null) {
                     loadPackIntoMenu()
                     gui.open()
                 } else {
                     gui.children.clear()
                     gui.close()
                 }
-                open = !open
             }
 
             if (key == Keyboard.KEY_J) {

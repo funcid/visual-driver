@@ -5,4 +5,5 @@ include 'protocol'
 include 'experimental'
 include 'graffiti'
 include 'graffiti-service'
+include 'npc'
 
