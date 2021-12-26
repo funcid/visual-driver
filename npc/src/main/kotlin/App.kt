@@ -1,9 +1,10 @@
-import dev.xdark.clientapi.event.chunk.ChunkLoad
-import dev.xdark.clientapi.event.chunk.ChunkUnload
 import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.inventory.EntityEquipmentSlot
+import dev.xdark.clientapi.item.ItemTools
+import dev.xdark.clientapi.math.BlockPos
+import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.clientapi.util.EnumHand
 import dev.xdark.clientapi.world.World
-import dev.xdark.clientapi.world.chunk.Chunk
 import dev.xdark.feder.NetUtil
 import me.func.protocol.npc.NpcBehaviour
 import me.func.protocol.npc.NpcData
@@ -13,7 +14,6 @@ import java.util.*
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
-
 
 class App : KotlinMod() {
 
@@ -25,33 +25,31 @@ class App : KotlinMod() {
 
         // Чтение NPC
         registerChannel("npc:spawn") {
-            val uuid = UUID.fromString(NetUtil.readUtf8(this))
-
-            NpcManager.spawn(
-                NpcData(
-                    uuid,
-                    readInt(),
-                    readInt(),
-                    NetUtil.readUtf8(this),
-                    NpcBehaviour.values()[readInt()],
-                    readDouble(),
-                    readDouble(),
-                    readDouble(),
-                    readFloat(),
-                    readFloat(),
-                    NetUtil.readUtf8(this),
-                    NetUtil.readUtf8(this),
-                    readBoolean()
-                )
+            val data = NpcData(
+                readInt(),
+                UUID.fromString(NetUtil.readUtf8(this)),
+                readDouble(),
+                readDouble(),
+                readDouble(),
+                readInt(),
+                NetUtil.readUtf8(this),
+                NpcBehaviour.values()[readInt()],
+                readDouble().toFloat(),
+                readDouble().toFloat(),
+                NetUtil.readUtf8(this),
+                NetUtil.readUtf8(this),
+                readBoolean(),
+                readBoolean(),
+                readBoolean(),
+                readBoolean()
             )
+            NpcManager.spawn(data)
 
-            NpcManager.get(uuid)?.let {
-                val world: World = clientApi.minecraft().world
+            val world: World = clientApi.minecraft().world
 
-                // Если чанк прогружен - показать NPC
-                world.chunkProvider.getLoadedChunk(it.data.x.toInt() shr 4, it.data.z.toInt() shr 4)?.let {
-                    NpcManager.show(uuid)
-                }
+            // Если чанк прогружен - показать NPC
+            world.chunkProvider.getLoadedChunk(data.x.toInt() shr 4, data.z.toInt() shr 4)?.let {
+                NpcManager.show(data.uuid)
             }
         }
 
@@ -73,63 +71,102 @@ class App : KotlinMod() {
             }
         }
 
-        // Удалить всех NPC
-        registerChannel("npc:kill") {
-            NpcManager.each { uuid, _ ->
-                NpcManager.hide(uuid)
-                NpcManager.kill(uuid)
+        // Обновить метаданные NPC
+        registerChannel("npc:update") {
+            UUID.fromString(NetUtil.readUtf8(this)).apply {
+                NpcManager.get(this)?.let { entity ->
+                    entity.entity?.let { npc ->
+                        npc.customNameTag = NetUtil.readUtf8(this@registerChannel)
+
+                        npc.teleport(readDouble(), readDouble(), readDouble())
+                        npc.setYaw(readDouble().toFloat())
+                        npc.setPitch(readDouble().toFloat())
+
+                        if (readBoolean()) npc.enableRidingAnimation()
+                        else npc.disableRidingAnimation()
+                        if (readBoolean()) npc.enableSleepAnimation(
+                            BlockPos.of(
+                                npc.x.toInt(),
+                                npc.y.toInt(),
+                                npc.z.toInt()
+                            ), EnumFacing.DOWN
+                        )
+                        else npc.disableSleepAnimation()
+                        npc.isSneaking = readBoolean()
+                    }
+                }
             }
         }
 
-        // Проверка на нахождение в чанке
-        fun inside(chunk: Chunk, x: Double, z: Double) = x.toInt() shr 4 == chunk.x && z.toInt() shr 4 == chunk.z
+        // Обновить метаданные NPC
+        registerChannel("npc:update") {
 
-        // При загрузке чанка показывать NPC
-        registerHandler<ChunkLoad> {
-            NpcManager.each { uuid, data -> data.entity?.let { if (inside(chunk, it.x, it.z)) NpcManager.show(uuid) } }
-        }
+            // Удалить всех NPC
+            registerChannel("npc:kill-all") {
+                NpcManager.each { uuid, _ ->
+                    NpcManager.hide(uuid)
+                    NpcManager.kill(uuid)
+                }
+            }
 
-        // При отгрузке чанка скрывать NPC
-        registerHandler<ChunkUnload> {
-            NpcManager.each { uuid, data -> data.entity?.let { if (inside(chunk, it.x, it.z)) NpcManager.hide(uuid) } }
-        }
+            // Изменение предмета в инвентаре
+            registerChannel("npc:slot") {
+                NpcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
+                    it.entity?.let { npc ->
+                        readInt().let { slot ->
+                            val item = ItemTools.read(this)
 
-        // Постоянный цикл
-        var ticks = 0
+                            when (slot) {
+                                0 -> npc.setItemInSlot(EntityEquipmentSlot.MAINHAND, item)
+                                1 -> npc.setItemInSlot(EntityEquipmentSlot.OFFHAND, item)
+                                2 -> npc.setItemInSlot(EntityEquipmentSlot.FEET, item)
+                                3 -> npc.setItemInSlot(EntityEquipmentSlot.LEGS, item)
+                                4 -> npc.setItemInSlot(EntityEquipmentSlot.CHEST, item)
+                                5 -> npc.setItemInSlot(EntityEquipmentSlot.HEAD, item)
+                            }
+                        }
+                    }
+                }
+            }
 
-        registerHandler<GameLoop> {
-            val tick = ticks++ % 600
-            val player = clientApi.minecraft().player
+            // Постоянный цикл
+            var ticks = 0
 
-            NpcManager.each { _, data ->
-                data.entity?.let { entity ->
-                    if (data.data.behaviour == NpcBehaviour.NONE)
-                        return@let
-                    val lookAround = data.data.behaviour == NpcBehaviour.STARE_AND_LOOK_AROUND
+            registerHandler<GameLoop> {
+                return@registerHandler
+                val tick = ticks++ % 600
+                val player = clientApi.minecraft().player
 
-                    if (lookAround && (tick == 500 || tick == 510))
-                        entity.swingArm(EnumHand.MAIN_HAND)
+                NpcManager.each { _, data ->
+                    data.entity?.let { entity ->
+                        if (data.data.behaviour == NpcBehaviour.NONE)
+                            return@let
+                        val lookAround = data.data.behaviour == NpcBehaviour.STARE_AND_LOOK_AROUND
 
-                    val dYaw = if (tick in 41..69) -40f else if (tick in 76..129) +40f else 0f
+                        if (lookAround && (tick == 500 || tick == 510))
+                            entity.swingArm(EnumHand.MAIN_HAND)
 
-                    val resetPitch = tick in 41..129
+                        val dYaw = if (tick in 41..69) -40f else if (tick in 76..129) +40f else 0f
 
-                    val dx: Double = player.x - entity.x
-                    var dy: Double = player.y - entity.y
-                    val dz: Double = player.z - entity.z
+                        val resetPitch = tick in 41..129
 
-                    val active = dx * dx + dy * dy + dz * dz < 36
+                        val dx: Double = player.x - entity.x
+                        var dy: Double = player.y - entity.y
+                        val dz: Double = player.z - entity.z
 
-                    dy /= sqrt(dx * dx + dz * dz)
-                    var yaw =
-                        if (active) (atan2(-dx, dz) / Math.PI * 180).toFloat() else data.data.yaw
-                    if (lookAround)
-                        yaw += dYaw
+                        val active = dx * dx + dy * dy + dz * dz < 36
 
-                    entity.apply {
-                        rotationYawHead = yaw
-                        setYaw(yaw)
-                        setPitch(if (!active || resetPitch && lookAround)0f else (atan(-dy) / Math.PI * 180).toFloat())
+                        dy /= sqrt(dx * dx + dz * dz)
+                        var yaw =
+                            if (active) (atan2(-dx, dz) / Math.PI * 180).toFloat() else data.data.yaw
+                        if (lookAround)
+                            yaw += dYaw
+
+                        entity.apply {
+                            rotationYawHead = yaw
+                            setYaw(yaw)
+                            setPitch(if (!active || resetPitch && lookAround) 0f else (atan(-dy) / Math.PI * 180).toFloat())
+                        }
                     }
                 }
             }

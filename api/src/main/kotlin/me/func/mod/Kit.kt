@@ -1,6 +1,8 @@
 package me.func.mod
 
+import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.Anime.provided
+import me.func.mod.Npc.npcs
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.GraffitiManager
@@ -14,6 +16,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
+
 
 enum class Kit(val fromUrl: String) : Listener {
 
@@ -69,6 +72,11 @@ enum class Kit(val fromUrl: String) : Listener {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("npc-bundle.jar", player)
             }
+        }
+
+        @EventHandler
+        fun PlayerUseUnknownEntityEvent.handle() {
+            npcs[entityId]?.click?.accept(this)
         }
     },
     GRAFFITI("https://implario.dev/animation-api/graffiti-bundle.jar") {

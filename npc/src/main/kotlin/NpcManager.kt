@@ -2,8 +2,12 @@ import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
 import dev.xdark.clientapi.entity.AbstractClientPlayer
 import dev.xdark.clientapi.entity.PlayerModelPart.*
+import dev.xdark.clientapi.math.BlockPos
+import dev.xdark.clientapi.util.EnumFacing
+import dev.xdark.clientapi.util.EnumHand
 import me.func.protocol.npc.NpcData
 import ru.cristalix.clientapi.JavaMod.clientApi
+import ru.cristalix.uiengine.UIEngine
 import java.util.*
 
 
@@ -12,7 +16,7 @@ object NpcManager {
     private val storage = mutableMapOf<UUID, NpcEntity>()
     private val wearing = arrayOf(CAPE, HAT, JACKET, LEFT_PANTS_LEG, LEFT_SLEEVE, RIGHT_PANTS_LEG, RIGHT_SLEEVE)
 
-    fun spawn(data: NpcData) {
+    fun spawn(data: NpcData): NpcEntity {
         val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
             entityId = data.id
             setUniqueId(data.uuid)
@@ -38,10 +42,15 @@ object NpcManager {
             setYaw(data.yaw)
             setPitch(data.pitch)
 
+            if (data.sitting)
+                enableRidingAnimation()
+            if (data.sleeping)
+                enableSleepAnimation(BlockPos.of(data.x.toInt(), data.y.toInt(), data.z.toInt()), EnumFacing.DOWN)
+            isSneaking = data.sneaking
+
             setNoGravity(true)
         }
-
-        storage[data.uuid] = NpcEntity(data.uuid, data, spawned)
+        return NpcEntity(data.uuid, data, spawned).apply { storage[data.uuid] = this }
     }
 
     fun get(uuid: UUID) = storage[uuid]

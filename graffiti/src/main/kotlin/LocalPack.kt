@@ -14,8 +14,8 @@ data class LocalPack(
         origin = CENTER
         align = CENTER
 
-        val boxSize = 20.0
-        val boxOpposite = 6
+        val boxSize = ICON_PACK_SIZE
+        val boxOpposite = 8
 
         offset.y += OVAL_RADIUS - 10
         offset.x += index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite

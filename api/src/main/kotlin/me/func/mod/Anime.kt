@@ -3,6 +3,8 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.mod.Npc.npc
+import me.func.mod.Npc.onClick
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
@@ -14,8 +16,8 @@ import me.func.protocol.Marker
 import me.func.protocol.ModChat
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.graffiti.GraffitiPlaced
+import me.func.protocol.npc.NpcBehaviour
 import org.bukkit.Bukkit
-import org.bukkit.ChatColor
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack

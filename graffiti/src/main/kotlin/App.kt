@@ -23,16 +23,18 @@ import kotlin.math.sin
 lateinit var app: App
 const val PICTURE_SIZE = 1536
 const val OVAL_RADIUS = 90
+const val ICON_PACK_SIZE = 20.0
 
 class App : KotlinMod() {
 
     val texture: ResourceLocation = ResourceLocation.of("cache/animation", "graffiti.png")
 
     val gui = ContextGui()
+    var open = false
     private var inited = false
 
     lateinit var userData: UserGraffitiData
-    private lateinit var packs: MutableList<LocalPack>
+    lateinit var packs: MutableList<LocalPack>
 
     var activeGraffiti: LocalGraffitiPlaced? = null
     private var drewGraffities = mutableListOf<LocalGraffitiPlaced>()
@@ -179,20 +181,25 @@ class App : KotlinMod() {
                 shadow = true
                 content = text
             }
-
             onClick { buyPack(active) }
         }
-        packs.forEach { gui + it.icon }
+        packs.forEachIndexed { index, it ->
+            gui + it.icon.apply {
+                val boost = if (index == app.userData.activePack) 2 else 0
+                it.icon.size.x = ICON_PACK_SIZE + boost
+                it.icon.size.y = ICON_PACK_SIZE + boost
+            }
+        }
     }
 
     override fun onEnable() {
         app = this
         UIEngine.initialize(this)
 
-        registerHandler<HealthRender> { if (activeGraffiti == null) isCancelled = true }
-        registerHandler<HungerRender> { if (activeGraffiti == null) isCancelled = true }
-        registerHandler<ArmorRender> { if (activeGraffiti == null) isCancelled = true }
-        registerHandler<ExpBarRender> { if (activeGraffiti == null) isCancelled = true }
+        registerHandler<HealthRender> { if (open) isCancelled = true }
+        registerHandler<HungerRender> { if (open) isCancelled = true }
+        registerHandler<ArmorRender> { if (open) isCancelled = true }
+        registerHandler<ExpBarRender> { if (open) isCancelled = true }
 
         gui.color = Color(0, 0, 0, 0.86)
 
@@ -267,17 +274,19 @@ class App : KotlinMod() {
 
             // Выбрать другое граффити
             if (key == Keyboard.KEY_H) {
-                if (activeGraffiti == null) {
+                open = if (activeGraffiti == null) {
                     loadPackIntoMenu()
                     gui.open()
+                    true
                 } else {
                     gui.children.clear()
                     gui.close()
+                    false
                 }
             }
 
             if (key == Keyboard.KEY_J) {
-                if (activeGraffiti != null) {
+                if (activeGraffiti != null && !open) {
                     // Вернуть граффити в меню
                     getActivePack().backGraffitiToPack(activeGraffiti!!)
 

@@ -49,6 +49,6 @@ jar {
 bundler {
     name 'Npc Animations'
     mainClass 'App'
-    version '1.0'
+    version '1.5'
     author 'func'
 }
