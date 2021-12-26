@@ -129,7 +129,7 @@ dependencies {
 `Npc.hide(entityId: Int, player: Player)` скрыть конкретному игроку NPC по entityId<br>
 `Npc.show(entityId: Int, player: Player)` показать конкретному игроку NPC по entityId<br>
 `Npc.clear()` удалить всем игрокам всех NPC (не чистит глобальный список NPC)<br>
-<br>NpcSmart:<br>
+NpcSmart:<br>
 
 ```
     var data: NpcData, // данные на клиенте
@@ -150,7 +150,7 @@ dependencies {
 `NpcSmart.update(player: Player): NpcSmart` обновить игроку данные NPC (имя, координаты, поворот головы, положение тела - сидеть, спать, шифтить)<br> 
 `NpcSmart.swingArm(mainHand: Boolean, player: Player): NpcSmart` пошевелить рукой, указав главная ли рука и игрока-получателя<br> 
 `NpcSmart.spawn(): NpcSmart` отправить всем игрокам NPC<br>
-<br>NpcData:<br>
+NpcData:<br>
 
 ```
     var id: Int = (Math.random() * Int.MAX_VALUE).toInt(), // entityId NPC
@@ -173,7 +173,7 @@ dependencies {
 
 `NpcData.onClick(init: Consumer<PlayerUseUnknownEntityEvent>)` при клике на NPC обработать событие<br>
 `NpcData.location(location: Location)` указать координаты NPC через локацию<br>
-<br>Модели поведения:<br>
+Модели поведения:<br>
 
 ```
     NONE, // нет поведения
@@ -181,7 +181,7 @@ dependencies {
     STARE_AND_LOOK_AROUND // смотрит на игрока
 ```
 
-<br>Пример на Kotlin:<br>
+Пример на Kotlin:<br>
 
 ```
   npc {
