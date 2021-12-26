@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.34)
+# Cristalix Animation API DOCS (актуальная версия 1.1.38)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -40,6 +40,7 @@ dependencies {
 `MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
 `GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@funcid</a>)<br>
+`NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 
 <h3>Подключение модулей</h3>
 
@@ -116,6 +117,83 @@ dependencies {
 Очистка мест:<br>
 `Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
 `Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
+
+<h3>NPC (модуль NPC)</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/147400304-4ffc0399-8fa2-4ef1-8346-ac0ad7e18ab8.gif" width="500">
+
+Методы:<br>
+`Npc.npc(init: NpcData.() -> Unit): NpcSmart` конструктор для создания NPC (только через него можно сделать глобальных NPC)<br>
+`Npc.spawn(entityId: Int)` показать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
+`Npc.kill(entityId: Int)` спрятать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
+`Npc.hide(entityId: Int, player: Player)` скрыть конкретному игроку NPC по entityId<br>
+`Npc.show(entityId: Int, player: Player)` показать конкретному игроку NPC по entityId<br>
+`Npc.clear()` удалить всем игрокам всех NPC (не чистит глобальный список NPC)<br>
+<br>NpcSmart:<br>
+
+```
+    var data: NpcData, // данные на клиенте
+    var click: Consumer<PlayerUseUnknownEntityEvent>? = null, // обработчик нажатия на NPC
+    private var leftArm: ItemStack? = null, // предмет в левой руке
+    private var rightArm: ItemStack? = null, // предмет в правой руке
+    private var head: ItemStack? = null, // предмет на голове
+    private var chest: ItemStack? = null, // предмет на груди
+    private var legs: ItemStack? = null, // предмет на ножках
+    private var feet: ItemStack? = null, // предмет на стопах
+```
+
+`NpcSmart.slot(slot: EquipmentSlot, itemStack: ItemStack): NpcSmart` метод обновляющий слот NPC для всех игроков<br>
+`NpcSmart.slot(slot: EquipmentSlot, itemStack: ItemStack, player: Player): NpcSmart` метод обновляющий слот NPC для конкретного игрока<br>
+`NpcSmart.kill(): NpcSmart` скрыть всем игрокам этого NPC<br>
+`NpcSmart.show(player: Player): NpcSmart` показать игроку этого NPC<br>
+`NpcSmart.hide(player: Player): NpcSmart` скрыть игроку этого NPC<br>
+`NpcSmart.update(player: Player): NpcSmart` обновить игроку данные NPC (имя, координаты, поворот головы, положение тела - сидеть, спать, шифтить)<br> 
+`NpcSmart.swingArm(mainHand: Boolean, player: Player): NpcSmart` пошевелить рукой, указав главная ли рука и игрока-получателя<br> 
+`NpcSmart.spawn(): NpcSmart` отправить всем игрокам NPC<br>
+<br>NpcData:<br>
+
+```
+    var id: Int = (Math.random() * Int.MAX_VALUE).toInt(), // entityId NPC
+    val uuid: UUID = UUID.randomUUID(), // UUID
+    var x: Double = 0.0, 
+    var y: Double = 0.0,
+    var z: Double = 0.0,
+    var type: Int = 1000, // тип сущности 1000 - ИГРОК
+    var name: String? = null, // имя
+    var behaviour: NpcBehaviour = NpcBehaviour.NONE, // модель поведения NPC
+    var pitch: Float = 0f,
+    var yaw: Float = 0f,
+    var skinUrl: String? = null, // ссылка на скин 
+    var skinDigest: String? = null, 
+    var slimArms: Boolean = false, // тонкие руки
+    var sneaking: Boolean = false, // шифтит
+    var sleeping: Boolean = false, // спит
+    val sitting: Boolean = false // сидит
+```
+
+`NpcData.onClick(init: Consumer<PlayerUseUnknownEntityEvent>)` при клике на NPC обработать событие<br>
+`NpcData.location(location: Location)` указать координаты NPC через локацию<br>
+<br>Модели поведения:<br>
+
+```
+    NONE, // нет поведения
+    STARE_AT_PLAYER, // следит за игроком
+    STARE_AND_LOOK_AROUND // смотрит на игрока
+```
+
+<br>Пример на Kotlin:<br>
+
+```
+        npc {
+            x = 1337.0
+            y = 225.5
+            z = -102.3
+            behaviour = NpcBehaviour.STARE_AND_LOOK_AROUND
+            onClick {
+                it.player.sendMessage("Хай")
+            }
+        }.slot(EquipmentSlot.HAND, CraftItemStack.asNMSCopy(ItemStack(Material.DIAMOND_BLOCK))).spawn()
+```
 
 <h3>Диалоги (модуль DIALOGS)</h3>
 
