@@ -184,15 +184,15 @@ dependencies {
 <br>Пример на Kotlin:<br>
 
 ```
-        npc {
-            x = 1337.0
-            y = 225.5
-            z = -102.3
-            behaviour = NpcBehaviour.STARE_AND_LOOK_AROUND
-            onClick {
-                it.player.sendMessage("Хай")
-            }
-        }.slot(EquipmentSlot.HAND, CraftItemStack.asNMSCopy(ItemStack(Material.DIAMOND_BLOCK))).spawn()
+  npc {
+    x = 1337.0
+    y = 225.5
+    z = -102.3
+    behaviour = NpcBehaviour.STARE_AND_LOOK_AROUND
+    onClick {
+      it.player.sendMessage("Хай")
+    }
+  }.slot(EquipmentSlot.HAND, CraftItemStack.asNMSCopy(ItemStack(Material.DIAMOND_BLOCK))).spawn()
 ```
 
 <h3>Диалоги (модуль DIALOGS)</h3>
