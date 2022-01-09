@@ -262,6 +262,7 @@ enum class DropRare(val title: String, val color: String) {
 ```
 
 <h3>Маркеры в мире (модуль STANDARD)</h3>
+!!! Это частный случай Banners, класс помечен `@Deprecated`, новый инструмент способен делать намного больше, рекомендуем испольовать его !!!
 
 <img src="https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png" width="500">
 
