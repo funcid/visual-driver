@@ -131,7 +131,8 @@ dependencies {
 <img src="https://user-images.githubusercontent.com/42806772/147400304-4ffc0399-8fa2-4ef1-8346-ac0ad7e18ab8.gif" width="500">
 
 Методы:<br>
-`Npc.npc(init: NpcData.() -> Unit): NpcSmart` конструктор для создания NPC (только через него можно сделать глобальных NPC)<br>
+`Npc.npc(init: NpcData.() -> Unit): NpcSmart` kotlin вариант конструктора для создания NPC (только через него можно сделать глобальных NPC, которых плагин отправляет игроку при заходе на сервер)<br>
+`Npc.npc(data: NpcData): NpcSmart` java версия (делает тоже самое)<br>
 `Npc.spawn(entityId: Int)` показать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.kill(entityId: Int)` спрятать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.hide(entityId: Int, player: Player)` скрыть конкретному игроку NPC по entityId<br>
