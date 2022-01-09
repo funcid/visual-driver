@@ -339,8 +339,8 @@ enum class DropRare(val title: String, val color: String) {
 
 <img src="https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png" width="500">
 
-`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double)` создать труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно)<br>
-`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double)` то же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
+`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` создать труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно) (secondsAlive - количество секунд через которое исчезнет труп)<br>
+`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` то же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
 `Anime.clearAllCorpses(player: Player)` очистить игроку все трупы
 <br><br>
 <b>Отправить пустой Buffer игроку в канал</b>:<br>
