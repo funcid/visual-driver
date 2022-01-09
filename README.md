@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.38)
+# Cristalix Animation API DOCS (актуальная версия 1.1.40)
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -117,6 +117,14 @@ dependencies {
 Очистка мест:<br>
 `Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
 `Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
+
+<h3>Информация справа снизу (модуль STANDARD)</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/148701775-bd2afe54-b659-492a-b779-061269924130.png" width="500">
+
+Методы:<br>
+`Anime.bottomRightMessage(player: Player, text: String)` поставить справа снизу информацию игроку (строка делится по `\n`)<br>
+`Anime.bottomRightMessage(player: Player, vararg text: String)` тоже самое, но удобнее, так как можно указать строки через запятую<br>
 
 <h3>NPC (модуль NPC)</h3>
 
