@@ -157,7 +157,7 @@ NpcSmart:<br>
 `NpcSmart.hide(player: Player): NpcSmart` скрыть игроку этого NPC<br>
 `NpcSmart.update(player: Player): NpcSmart` обновить игроку данные NPC (имя, координаты, поворот головы, положение тела - сидеть, спать, шифтить)<br> 
 `NpcSmart.swingArm(mainHand: Boolean, player: Player): NpcSmart` пошевелить рукой, указав главная ли рука и игрока-получателя<br> 
-`NpcSmart.spawn(): NpcSmart` отправить всем игрокам NPC<br>
+`NpcSmart.spawn(player: Player): NpcSmart` создать игроку NPC <--- Только тут игроку создается с нуля NPC<br>
 NpcData:<br>
 
 ```
