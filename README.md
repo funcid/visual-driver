@@ -1,7 +1,7 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.42)
+# Cristalix Animation API DOCS (актуальная версия 1.1.43)
 
 <br>
-<h2>1.1.40 up to 1.1.42</h2>
+<h2>1.1.40 up to 1.1.43</h2>
 
 1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
 2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.42'
+  implementation 'me.func:animation-api:1.1.43'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
