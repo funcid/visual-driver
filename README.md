@@ -1,4 +1,16 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.38)
+# Cristalix Animation API DOCS (актуальная версия 1.1.42)
+
+<br>
+<h2>1.1.40 up to 1.1.42</h2>
+
+1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
+2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
+3. Метод `spawn` теперь показывает NPC только указанному игроку, создан конструктор NPC для Java версии, при заходе игрока, NPC в списке автоматически отправляются игроку.<br>
+4. Класс Marker и связные методы помечены `@Deprecated`.<br>
+5. Появился новый инструмент - `Banners`, он позволяет создавать прямоугольник в мире (можно указать текстуру или цвет, координаты, точку взора, наклон, текст), можно использовать для отрисовки картинок, текстов и прочего.<br>
+6. `Anime#bottomRight` теперь поддерживает многострочные тексты.<br>
+7. Запись предмета в буффер использовала метод, которого нет в `Dark Paper`, теперь все работает хорошо.<br>
+8. Виньетка (`Glow`) теперь меняет своя размер при изменении окна.<br>
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -118,12 +130,21 @@ dependencies {
 `Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
 `Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
 
+<h3>Информация справа снизу (модуль STANDARD)</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/148701775-bd2afe54-b659-492a-b779-061269924130.png" width="500">
+
+Методы:<br>
+`Anime.bottomRightMessage(player: Player, text: String)` поставить справа снизу информацию игроку (строка делится по `\n`)<br>
+`Anime.bottomRightMessage(player: Player, vararg text: String)` тоже самое, но удобнее, так как можно указать строки через запятую<br>
+
 <h3>NPC (модуль NPC)</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/147400304-4ffc0399-8fa2-4ef1-8346-ac0ad7e18ab8.gif" width="500">
 
 Методы:<br>
-`Npc.npc(init: NpcData.() -> Unit): NpcSmart` конструктор для создания NPC (только через него можно сделать глобальных NPC)<br>
+`Npc.npc(init: NpcData.() -> Unit): NpcSmart` kotlin вариант конструктора для создания NPC (только через него можно сделать глобальных NPC, которых плагин отправляет игроку при заходе на сервер)<br>
+`Npc.npc(data: NpcData): NpcSmart` java версия (делает тоже самое)<br>
 `Npc.spawn(entityId: Int)` показать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.kill(entityId: Int)` спрятать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.hide(entityId: Int, player: Player)` скрыть конкретному игроку NPC по entityId<br>
@@ -149,7 +170,7 @@ NpcSmart:<br>
 `NpcSmart.hide(player: Player): NpcSmart` скрыть игроку этого NPC<br>
 `NpcSmart.update(player: Player): NpcSmart` обновить игроку данные NPC (имя, координаты, поворот головы, положение тела - сидеть, спать, шифтить)<br> 
 `NpcSmart.swingArm(mainHand: Boolean, player: Player): NpcSmart` пошевелить рукой, указав главная ли рука и игрока-получателя<br> 
-`NpcSmart.spawn(): NpcSmart` отправить всем игрокам NPC<br>
+`NpcSmart.spawn(player: Player): NpcSmart` создать игроку NPC <--- Только тут игроку создается с нуля NPC<br>
 NpcData:<br>
 
 ```
@@ -256,6 +277,9 @@ enum class DropRare(val title: String, val color: String) {
 
 <img src="https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png" width="500">
 
+!!! ВАЖНО !!!<br>
+Это частный случай Banners, класс помечен `@Deprecated`, новый инструмент способен делать намного больше, рекомендуем испольовать его<br>
+
 Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSign`: 
 ```
     FINE("textures/others/znak_v_3.png"),
@@ -330,8 +354,8 @@ enum class DropRare(val title: String, val color: String) {
 
 <img src="https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png" width="500">
 
-`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double)` создать труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно)<br>
-`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double)` то же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
+`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` создать труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно) (secondsAlive - количество секунд через которое исчезнет труп)<br>
+`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` то же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
 `Anime.clearAllCorpses(player: Player)` очистить игроку все трупы
 <br><br>
 <b>Отправить пустой Buffer игроку в канал</b>:<br>
