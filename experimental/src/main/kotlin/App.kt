@@ -7,7 +7,7 @@ class App : KotlinMod() {
         UIEngine.initialize(this)
 
         GlowPlaces
-        RightBottom
+        Banners
         Particles
     }
 }

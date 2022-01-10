@@ -22,5 +22,6 @@ class App : KotlinMod() {
         CorpseManager
         ScreenAlert
         CursorAlert
+        RightBottom
     }
 }

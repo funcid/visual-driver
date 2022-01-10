@@ -3,6 +3,8 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.mod.Anime.provided
+import me.func.mod.Anime.sendEmptyBuffer
 import me.func.mod.Npc.npc
 import me.func.mod.Npc.onClick
 import me.func.mod.conversation.ModLoader
@@ -18,8 +20,10 @@ import me.func.protocol.dialog.Dialog
 import me.func.protocol.graffiti.GraffitiPlaced
 import me.func.protocol.npc.NpcBehaviour
 import org.bukkit.Bukkit
+import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
+import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
@@ -49,9 +53,7 @@ object Anime {
 
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) {
-        ModTransfer()
-            .integer(0)
-            .send(channel, player)
+        ModTransfer().send(channel, player)
     }
 
     @JvmStatic
@@ -164,6 +166,9 @@ object Anime {
     }
 
     @JvmStatic
+    fun bottomRightMessage(player: Player, vararg text: String) = bottomRightMessage(player, text.joinToString("\n"))
+
+    @JvmStatic
     fun killboardMessage(player: Player, text: String, topMargin: Int) {
         ModTransfer()
             .string(text)
@@ -238,6 +243,7 @@ object Anime {
     }
 
     @JvmStatic
+    @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
     fun marker(player: Player, marker: Marker): Marker {
         ModTransfer()
             .string(marker.uuid.toString())
@@ -274,6 +280,7 @@ object Anime {
     }
 
     @JvmStatic
+    @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
     fun markers(player: Player, vararg markers: Marker) {
         for (marker in markers)
             marker(player, marker)
@@ -344,19 +351,12 @@ object Anime {
     }
 
     @JvmStatic
-    fun corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double) {
-        ModTransfer()
-            .string(name ?: "")
-            .string("https://webdata.c7x.dev/textures/skin/$uuid")
-            .string(uuid.toString())
-            .double(x)
-            .double(y + 3)
-            .double(z)
-            .send("func:corpse", to)
+    fun corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60) {
+        corpse(to, name ?: "", "https://webdata.c7x.dev/textures/skin/$uuid", x, y, z, secondsAlive)
     }
 
     @JvmStatic
-    fun corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double) {
+    fun corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60) {
         ModTransfer()
             .string(name ?: "")
             .string(skinUrl)
@@ -364,6 +364,7 @@ object Anime {
             .double(x)
             .double(y + 3)
             .double(z)
+            .integer(secondsAlive)
             .send("func:corpse", to)
     }
 

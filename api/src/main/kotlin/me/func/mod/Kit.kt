@@ -6,6 +6,7 @@ import me.func.mod.Npc.npcs
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.GraffitiManager
+import me.func.protocol.element.MotionType
 import net.minecraft.server.v1_12_R1.MinecraftServer
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
@@ -55,6 +56,8 @@ enum class Kit(val fromUrl: String) : Listener {
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("experimental-bundle.jar", player)
+
+                Banners.show(player, *Banners.banners.values.toTypedArray())
             }
         }
     },
@@ -71,6 +74,8 @@ enum class Kit(val fromUrl: String) : Listener {
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("npc-bundle.jar", player)
+
+                npcs.forEach { (id, _) -> Npc.show(id, player) }
             }
         }
 

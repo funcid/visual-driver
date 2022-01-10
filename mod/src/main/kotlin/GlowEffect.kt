@@ -1,7 +1,9 @@
+import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import org.lwjgl.opengl.GL11
 import ru.cristalix.clientapi.mod
+import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
@@ -33,6 +35,11 @@ object GlowEffect {
 
         App::class.mod.registerChannel("func:glow") {
             showAlways(readInt(), readInt(), readInt(), readDouble())
+        }
+
+        registerHandler<WindowResize> {
+            if (added)
+                vignette.size = UIEngine.overlayContext.size
         }
     }
 

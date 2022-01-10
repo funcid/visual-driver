@@ -59,7 +59,7 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
         if (!item.isEmpty && item.getItem() != null) {
             data.writeShort(Item.getId(item.getItem())).writeByte(item.getCount()).writeShort(item.data)
             var nbttagcompound: NBTTagCompound? = null
-            if (item.getItem().usesDurability() || item.getItem().p()) {
+            if (item.getItem().usesDurability()) {
                 item = item.cloneItemStack()
                 CraftItemStack.setItemMeta(item, CraftItemStack.getItemMeta(item))
                 nbttagcompound = item.getTag()

@@ -32,6 +32,12 @@ object Npc {
         return npc
     }
 
+    fun npc(data: NpcData): NpcSmart {
+        val npc = NpcSmart(data)
+        npcs[data.id] = npc
+        return npc
+    }
+
     @JvmStatic
     fun clear() = Bukkit.getOnlinePlayers().forEach { Anime.sendEmptyBuffer("npc:kill-all", it) }
 

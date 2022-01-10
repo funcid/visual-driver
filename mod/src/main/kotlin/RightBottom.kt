@@ -19,6 +19,7 @@ object RightBottom {
 
         App::class.mod.registerChannel("func:bottom-right") {
             right.content = NetUtil.readUtf8(this)
+            right.offset.y = -15.0 * right.content.split("\n").size
         }
     }
 
