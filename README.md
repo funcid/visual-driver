@@ -93,10 +93,10 @@ dependencies {
 
 <img src="https://user-images.githubusercontent.com/42806772/148837007-d52b93ca-1a52-4507-9c9b-648a05d3ec6d.png" width="250">
 
-Как создать Banner? (Kotlin пример)<br>
+Как создать Banner?<br>
 ```
-// Баннер добавится в список баннеров и когда игроки будут заходить, они его увидят
-Banners.new {
+// Kotlin пример
+Banners.new { // Баннер добавится в список баннеров и когда игроки будут заходить, они его увидят
   // Элементарная заменя характеристик (указана лишь часть)
   x = 1.0
   y = 100.0
@@ -115,6 +115,22 @@ Banners.new {
   shineBlocks(false) // Чтобы баннер не просвечивался через стены
 }
 ```
+```
+// Java пример
+Banner banner = new Banner.Builder() // Создание баннера
+  .x(location.x) 
+  .y(location.y + 50)
+  .z(location.z)
+  .opacity(0.0) // Прозрачность, от 0.0 до 1.0
+  .height(50) // Высота
+  .weight(50) // Ширина
+  .content("§aЯ голограмма", "§eОчень красивая", "§cИ приятная глазу") // Многострочный текст
+  .watchingOnPlayer(true) // Указание, чтобы баннер всегда смотрел на игрока
+  .build();
+  
+Banners.new(banner); // Добавление в список баннеров, которые будут показаны игроку при входе на сервер
+```
+
 Методы утилиты `Banners`:<br>
 `Banners.new(data: Banner.() -> Unit): Banner` kotlin версия конструктора для баннера (пример выше)<br>
 `Banners.new(banner: Banner): Banner` java версия конструктора для баннера (пример выше)<br>
