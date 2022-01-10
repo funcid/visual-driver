@@ -1,7 +1,7 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.43)
+# Cristalix Animation API DOCS (актуальная версия 1.1.44)
 
 <br>
-<h2>1.1.40 up to 1.1.43</h2>
+<h2>1.1.40 up to 1.1.44</h2>
 
 1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
 2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
@@ -39,7 +39,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.43'
+  implementation 'me.func:animation-api:1.1.44'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -63,6 +63,7 @@ dependencies {
 <img src="https://user-images.githubusercontent.com/42806772/148836905-914c3f10-bf65-4767-b28d-7a884fac6acd.png" width="250">
 
 Что представляет из себя баннер?<br>
+Это голограмма, рисунок в мире, маркер и прочее что является прямоугольником в мире.<br>
 ```
     val uuid: UUID = UUID.randomUUID(), // уникальный номер
     var motionType: MotionType = MotionType.CONSTANT, // тип движения
@@ -111,6 +112,7 @@ Banners.new {
   location(player.location) // Указание места баннера через локацию
   eyeLocation(player.bedSpawnLocation) // Указание поворота через точку, на которую нужно смотреть
   target(player, 0.0, 0.0, 2.1) // Теперь баннер следует за игроком, баннер выше игрока на 2.1 блока
+  shineBlocks(false) // Чтобы баннер не просвечивался через стены
 }
 ```
 Методы утилиты `Banners`:<br>
