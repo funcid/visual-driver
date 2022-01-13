@@ -24,6 +24,7 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
                 is Int -> integer(info)
                 is Boolean -> boolean(info)
                 is Double -> double(info)
+                is NBTTagCompound -> nbt(info)
             }
         }
     }
@@ -37,6 +38,12 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = this.apply { writeItem(serializer, item) }
 
     fun item(item: ItemStack) = this.apply { writeItem(serializer, CraftItemStack.asNMSCopy(item)) }
+
+    fun nbt(nbt: NBTTagCompound) = this.apply { writeNbtCompound(serializer, nbt) }
+
+    fun nbt(item: ItemStack) = this.apply { nbt(CraftItemStack.asNMSCopy(item)) }
+
+    fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) { this.apply { nbt(item.tag) } }
 
     fun integer(integer: Int) = this.apply { serializer.writeInt(integer) }
 

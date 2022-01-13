@@ -1,7 +1,8 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.42)
+# Cristalix Animation API DOCS (актуальная версия 1.1.47)
 
+![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
-<h2>1.1.40 up to 1.1.42</h2>
+<h2>1.1.40 up to 1.1.47</h2>
 
 1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
 2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
@@ -39,7 +40,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.42'
+  implementation 'me.func:animation-api:1.1.44'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -63,6 +64,7 @@ dependencies {
 <img src="https://user-images.githubusercontent.com/42806772/148836905-914c3f10-bf65-4767-b28d-7a884fac6acd.png" width="250">
 
 Что представляет из себя баннер?<br>
+Это голограмма, рисунок в мире, маркер и прочее что является прямоугольником в мире.<br>
 ```
     val uuid: UUID = UUID.randomUUID(), // уникальный номер
     var motionType: MotionType = MotionType.CONSTANT, // тип движения
@@ -92,10 +94,10 @@ dependencies {
 
 <img src="https://user-images.githubusercontent.com/42806772/148837007-d52b93ca-1a52-4507-9c9b-648a05d3ec6d.png" width="250">
 
-Как создать Banner? (Kotlin пример)<br>
+Как создать Banner?<br>
 ```
-// Баннер добавится в список баннеров и когда игроки будут заходить, они его увидят
-Banners.new {
+// Kotlin пример
+Banners.new { // Баннер добавится в список баннеров и когда игроки будут заходить, они его увидят
   // Элементарная заменя характеристик (указана лишь часть)
   x = 1.0
   y = 100.0
@@ -111,8 +113,25 @@ Banners.new {
   location(player.location) // Указание места баннера через локацию
   eyeLocation(player.bedSpawnLocation) // Указание поворота через точку, на которую нужно смотреть
   target(player, 0.0, 0.0, 2.1) // Теперь баннер следует за игроком, баннер выше игрока на 2.1 блока
+  shineBlocks(false) // Чтобы баннер не просвечивался через стены
 }
 ```
+```
+// Java пример
+Banner banner = new Banner.Builder() // Создание баннера
+  .x(location.x) 
+  .y(location.y + 50)
+  .z(location.z)
+  .opacity(0.0) // Прозрачность, от 0.0 до 1.0
+  .height(50) // Высота
+  .weight(50) // Ширина
+  .content("§aЯ голограмма", "§eОчень красивая", "§cИ приятная глазу") // Многострочный текст
+  .watchingOnPlayer(true) // Указание, чтобы баннер всегда смотрел на игрока
+  .build();
+  
+Banners.new(banner); // Добавление в список баннеров, которые будут показаны игроку при входе на сервер
+```
+
 Методы утилиты `Banners`:<br>
 `Banners.new(data: Banner.() -> Unit): Banner` kotlin версия конструктора для баннера (пример выше)<br>
 `Banners.new(banner: Banner): Banner` java версия конструктора для баннера (пример выше)<br>
