@@ -44,7 +44,7 @@ object Banners {
             transfer.string(current.uuid.toString())
                 .integer(current.motionType.ordinal)
                 .boolean(current.watchingOnPlayer)
-                .double(current.motionSettings["yaw"].toString().toDouble())
+                .double(-current.motionSettings["yaw"].toString().toDouble())
                 .double(current.motionSettings["pitch"].toString().toDouble())
                 .string(current.content)
                 .double(current.x)
@@ -65,7 +65,8 @@ object Banners {
     fun remove(uuid: UUID) = banners.remove(uuid)
 
     @JvmStatic
-    fun hide(player: Player, vararg uuid: UUID) = ModTransfer(uuid.toString()).send("banner:remove", player)
+    fun hide(player: Player, vararg uuid: UUID) =
+        ModTransfer(uuid.size).apply { uuid.forEach { string(it.toString()) } }.send("banner:remove", player)
 
     @JvmStatic
     fun hide(player: Player, vararg banner: Banner) = hide(player, *banner.map { it.uuid }.toTypedArray())
@@ -93,6 +94,10 @@ object Banners {
         motionSettings["offsetX"] = offsetX
         motionSettings["offsetY"] = offsetY
         motionSettings["offsetZ"] = offsetZ
+    }
+
+    fun Banner.shineBlocks(boolean: Boolean) {
+        motionSettings["xray"] = boolean
     }
 
     fun Banner.harmonicVibrations(dimension: Dimension, amplitude: Double, speed: Double, offset: Double) {

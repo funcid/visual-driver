@@ -5,6 +5,9 @@ import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import me.func.mod.Anime.provided
 import me.func.mod.Anime.sendEmptyBuffer
+import me.func.mod.Banners.eyeLocation
+import me.func.mod.Banners.location
+import me.func.mod.Banners.target
 import me.func.mod.Npc.npc
 import me.func.mod.Npc.onClick
 import me.func.mod.conversation.ModLoader

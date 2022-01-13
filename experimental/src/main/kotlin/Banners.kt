@@ -57,6 +57,7 @@ object Banners {
                             size = V3(banner.weight.toDouble(), banner.height.toDouble())
                             color = WHITE
                             shadow = true
+                            offset.z -= 0.01
                         }
                     }
 
@@ -67,11 +68,13 @@ object Banners {
                     rotation =
                         Rotation(Math.toRadians(banner.motionSettings["pitch"].toString().toDouble()), 1.0, 0.0, 0.0)
 
-                    beforeRender = {
-                        GlStateManager.disableDepth()
-                    }
-                    afterRender = {
-                        GlStateManager.enableDepth()
+                    if (banner.motionSettings["xray"].toString().toBoolean()) {
+                        beforeRender = {
+                            GlStateManager.disableDepth()
+                        }
+                        afterRender = {
+                            GlStateManager.enableDepth()
+                        }
                     }
                 })
                 UIEngine.worldContexts.add(context)
@@ -88,10 +91,12 @@ object Banners {
         }
 
         App::class.mod.registerChannel("banner:remove") {
-            val uuid = UUID.fromString(NetUtil.readUtf8(this))
-            banners[uuid]?.let {
-                UIEngine.worldContexts.remove(it.second)
-                banners.remove(uuid)
+            repeat(readInt()) {
+                val uuid = UUID.fromString(NetUtil.readUtf8(this))
+                banners[uuid]?.let {
+                    UIEngine.worldContexts.remove(it.second)
+                    banners.remove(uuid)
+                }
             }
         }
 

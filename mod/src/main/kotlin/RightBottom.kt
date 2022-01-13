@@ -17,9 +17,8 @@ object RightBottom {
     init {
         UIEngine.overlayContext + right
 
-        App::class.mod.registerChannel("func:bottom-right") {
+        App::class.mod.registerChannel("func:bottom") {
             right.content = NetUtil.readUtf8(this)
-            right.offset.y = -15.0 * right.content.split("\n").size
         }
     }
 

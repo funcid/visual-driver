@@ -8,6 +8,7 @@ import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.GraffitiManager
 import me.func.protocol.element.MotionType
 import net.minecraft.server.v1_12_R1.MinecraftServer
+import net.minecraft.server.v1_12_R1.SoundEffects.id
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Sound
@@ -75,7 +76,7 @@ enum class Kit(val fromUrl: String) : Listener {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("npc-bundle.jar", player)
 
-                npcs.forEach { (id, _) -> Npc.show(id, player) }
+                npcs.values.forEach { it.spawn(player) }
             }
         }
 
