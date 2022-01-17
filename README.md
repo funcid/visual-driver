@@ -118,6 +118,16 @@ dependencies {
 `Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
 `Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
 
+<h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
+
+Методы:<br>
+
+<img src ="https://user-images.githubusercontent.com/63064550/149799259-9129ba80-b2a8-4553-9638-666b5ba950ab.png" width="500">
+
+`Anime.reload(player: Player, seconds: Int, text: String)` простая перезарядка, с розовым цветом<br>
+`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor)` с использованием GlowColor<br>
+`Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int)` с любым цветом в RGB<br>
+
 <h3>Информация справа снизу (модуль STANDARD)</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/148701775-bd2afe54-b659-492a-b779-061269924130.png" width="500">
