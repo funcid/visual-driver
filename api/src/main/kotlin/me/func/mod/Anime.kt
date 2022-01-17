@@ -16,6 +16,7 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.graffiti.DefaultGraffitiClient
 import me.func.mod.graffiti.GraffitiClient
+import me.func.protocol.GlowColor
 import me.func.protocol.Indicators
 import me.func.protocol.Marker
 import me.func.protocol.ModChat
@@ -415,4 +416,21 @@ object Anime {
             .boolean(placed.local)
             .send("graffiti:create", player)
     }
+
+    @JvmStatic
+    fun reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int) {
+        ModTransfer()
+            .integer(seconds)
+            .string(text)
+            .integer(red)
+            .integer(green)
+            .integer(blue)
+            .send("func:recharge", player)
+    }
+
+    @JvmStatic
+    fun reload(player: Player, seconds: Int, text: String, glowColor: GlowColor) = reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
+
+    @JvmStatic
+    fun reload(player: Player, seconds: Int, text: String) = reload(player, seconds, text, 255,192,203)
 }
