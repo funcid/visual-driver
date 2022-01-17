@@ -411,4 +411,14 @@ object Anime {
             .boolean(placed.local)
             .send("graffiti:create", player)
     }
+    @JvmStatic
+    fun reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int) {
+        ModTransfer()
+            .integer(seconds)
+            .string(text)
+            .integer(red)
+            .integer(green)
+            .integer(blue)
+            .send("func:recharge", player)
+    }
 }
