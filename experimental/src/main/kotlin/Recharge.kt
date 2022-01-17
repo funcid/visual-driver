@@ -13,6 +13,8 @@ object Recharge {
     private lateinit var line: RectangleElement
     private lateinit var content: TextElement
 
+    private var added = false
+
     init {
         val cooldown = rectangle {
             offset.y -= 65
@@ -68,7 +70,9 @@ object Recharge {
                 line.size.x = 180.0
             }
         }
-
-        UIEngine.overlayContext + cooldown
+        if (!added) {
+            UIEngine.overlayContext + cooldown
+            added = true
+        }
     }
 }
