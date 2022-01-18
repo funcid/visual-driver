@@ -1,7 +1,8 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.44)
+# Cristalix Animation API DOCS (актуальная версия 1.1.48)
 
+![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
-<h2>1.1.40 up to 1.1.44</h2>
+<h2>1.1.40 up to 1.1.48</h2>
 
 1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
 2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
@@ -39,7 +40,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.44'
+  implementation 'me.func:animation-api:1.1.48'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -213,6 +214,16 @@ Banners.new(banner); // Добавление в список баннеров, �
 Очистка мест:<br>
 `Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
 `Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
+
+<h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
+
+Методы:<br>
+
+<img src ="https://user-images.githubusercontent.com/63064550/149799259-9129ba80-b2a8-4553-9638-666b5ba950ab.png" width="500">
+
+`Anime.reload(player: Player, seconds: Int, text: String)` простая перезарядка, с розовым цветом<br>
+`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor)` с использованием GlowColor<br>
+`Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int)` с любым цветом в RGB<br>
 
 <h3>Информация справа снизу (модуль STANDARD)</h3>
 

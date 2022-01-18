@@ -44,13 +44,7 @@ class App : KotlinMod() {
                 readBoolean()
             )
             NpcManager.spawn(data)
-
-            val world: World = clientApi.minecraft().world
-
-            // Если чанк прогружен - показать NPC
-            world.chunkProvider.getLoadedChunk(data.x.toInt() shr 4, data.z.toInt() shr 4)?.let {
-                NpcManager.show(data.uuid)
-            }
+            NpcManager.show(data.uuid)
         }
 
         // Скрыть NPC

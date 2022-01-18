@@ -5,6 +5,9 @@ import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import me.func.mod.Anime.provided
 import me.func.mod.Anime.sendEmptyBuffer
+import me.func.mod.Banners.eyeLocation
+import me.func.mod.Banners.location
+import me.func.mod.Banners.target
 import me.func.mod.Npc.npc
 import me.func.mod.Npc.onClick
 import me.func.mod.conversation.ModLoader
@@ -13,6 +16,7 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.graffiti.DefaultGraffitiClient
 import me.func.mod.graffiti.GraffitiClient
+import me.func.protocol.GlowColor
 import me.func.protocol.Indicators
 import me.func.protocol.Marker
 import me.func.protocol.ModChat
@@ -412,4 +416,22 @@ object Anime {
             .boolean(placed.local)
             .send("graffiti:create", player)
     }
+
+    @JvmStatic
+    fun reload(player: Player, seconds: Double, text: String, red: Int, green: Int, blue: Int) {
+        ModTransfer()
+            .double(seconds)
+            .string(text)
+            .integer(red)
+            .integer(green)
+            .integer(blue)
+            .send("func:recharge", player)
+    }
+
+    @JvmStatic
+    fun reload(player: Player, seconds: Double, text: String, glowColor: GlowColor) = reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
+
+    @JvmStatic
+    fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255,192,203)
+
 }

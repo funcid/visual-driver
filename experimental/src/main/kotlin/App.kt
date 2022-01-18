@@ -9,5 +9,6 @@ class App : KotlinMod() {
         GlowPlaces
         Banners
         Particles
+        Recharge
     }
 }
