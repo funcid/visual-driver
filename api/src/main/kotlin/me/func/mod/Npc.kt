@@ -14,7 +14,6 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerTeleportEvent
 import org.bukkit.inventory.EquipmentSlot
-import sun.audio.AudioPlayer.player
 import java.util.*
 import java.util.function.Consumer
 

@@ -418,9 +418,9 @@ object Anime {
     }
 
     @JvmStatic
-    fun reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int) {
+    fun reload(player: Player, seconds: Double, text: String, red: Int, green: Int, blue: Int) {
         ModTransfer()
-            .integer(seconds)
+            .double(seconds)
             .string(text)
             .integer(red)
             .integer(green)
@@ -429,8 +429,9 @@ object Anime {
     }
 
     @JvmStatic
-    fun reload(player: Player, seconds: Int, text: String, glowColor: GlowColor) = reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
+    fun reload(player: Player, seconds: Double, text: String, glowColor: GlowColor) = reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
 
     @JvmStatic
-    fun reload(player: Player, seconds: Int, text: String) = reload(player, seconds, text, 255,192,203)
+    fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255,192,203)
+
 }
