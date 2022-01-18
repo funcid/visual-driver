@@ -14,7 +14,6 @@ object Recharge {
     private lateinit var content: TextElement
 
     private var added = false
-
     init {
         val cooldown = rectangle {
             offset.y -= 65
@@ -39,7 +38,7 @@ object Recharge {
             enabled = false
         }
 
-        var time = 0
+        var time = 0.0
         var currentTime = System.currentTimeMillis()
 
         registerHandler<GameLoop> {
@@ -50,11 +49,11 @@ object Recharge {
         }
 
         App::class.mod.registerChannel("func:recharge") {
-            time = this.readInt()
+            time = this.readDouble()
             val text = NetUtil.readUtf8(this)
             line.color = Color(readInt(), readInt(), readInt(), 1.0)
 
-            if (time == 0) {
+            if (time == 0.0) {
                 line.size.x = 0.0
                 cooldown.enabled = false
                 return@registerChannel
