@@ -3,6 +3,8 @@ package me.func.mod
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.Anime.provided
 import me.func.mod.Npc.npcs
+import me.func.mod.Npc.spawn
+import me.func.mod.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.GraffitiManager
@@ -83,6 +85,16 @@ enum class Kit(val fromUrl: String) : Listener {
         @EventHandler
         fun PlayerUseUnknownEntityEvent.handle() {
             npcs[entityId]?.click?.accept(this)
+        }
+    },
+    BATTLEPASS("https://implario.dev/animation-api/battlepass-bundle.jar") {
+        @EventHandler(priority = EventPriority.HIGHEST)
+        fun PlayerJoinEvent.handle() {
+            MinecraftServer.SERVER.postToMainThread {
+                ModLoader.send("battlepass-bundle.jar", player)
+
+                BattlePass.battlePasses.values.forEach { BattlePass.send(player, it) }
+            }
         }
     },
     GRAFFITI("https://implario.dev/animation-api/graffiti-bundle.jar") {

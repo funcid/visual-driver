@@ -1,6 +1,9 @@
 package me.func.protocol.battlepass
 
+import java.util.*
+
 abstract class BattlePassPage(
-    val requiredExp: Int,
-    val quests: List<String>
+    open val uuid: UUID,
+    open var requiredExp: Int,
+    open var quests: List<String>
 )

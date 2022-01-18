@@ -25,7 +25,7 @@ object Recharge {
                 origin = LEFT
                 align = LEFT
                 size = V3(180.0, 5.0, 0.0)
-                color = Color(42, 102, 189, 1.0)
+                color = Color(42, 102, 189, 0.62)
             }
             content = +text {
                 origin = TOP
@@ -51,7 +51,7 @@ object Recharge {
         App::class.mod.registerChannel("func:recharge") {
             time = this.readDouble()
             val text = NetUtil.readUtf8(this)
-            line.color = Color(readInt(), readInt(), readInt(), 1.0)
+            line.color = Color(readInt(), readInt(), readInt(), 0.62)
 
             if (time == 0.0) {
                 line.size.x = 0.0

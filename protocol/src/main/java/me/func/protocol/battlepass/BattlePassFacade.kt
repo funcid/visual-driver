@@ -1,7 +1,7 @@
 package me.func.protocol.battlepass
 
 data class BattlePassFacade(
-    val price: Int,
-    val salePercent: Double,
-    val tags: List<String>,
+    var price: Int = 0,
+    var salePercent: Double = 0.0,
+    var tags: MutableList<String> = mutableListOf(),
 )
