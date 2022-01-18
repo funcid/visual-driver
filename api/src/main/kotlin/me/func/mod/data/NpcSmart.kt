@@ -89,33 +89,31 @@ data class NpcSmart(
         return this
     }
 
-    fun swingArm(mainHand: Boolean, player: Player) {
+    fun swingArm(mainHand: Boolean, player: Player): NpcSmart {
         ModTransfer(mainHand).send("npc:kick", player)
-    }
-
-    fun spawn(): NpcSmart {
-        Bukkit.getOnlinePlayers().forEach {
-            ModTransfer()
-                .integer(data.id)
-                .string(data.uuid.toString())
-                .double(data.x)
-                .double(data.y)
-                .double(data.z)
-                .integer(data.type)
-                .string(data.name ?: "")
-                .integer(data.behaviour.ordinal)
-                .double(data.yaw.toDouble())
-                .double(data.pitch.toDouble())
-                .string(data.skinUrl ?: "")
-                .string(data.skinDigest ?: "")
-                .boolean(data.slimArms)
-                .boolean(data.sneaking)
-                .boolean(data.sleeping)
-                .boolean(data.sitting)
-                .send("npc:spawn", it)
-        }
         return this
     }
 
+    fun spawn(player: Player): NpcSmart {
+        ModTransfer()
+            .integer(data.id)
+            .string(data.uuid.toString())
+            .double(data.x)
+            .double(data.y)
+            .double(data.z)
+            .integer(data.type)
+            .string(data.name ?: "")
+            .integer(data.behaviour.ordinal)
+            .double(data.yaw.toDouble())
+            .double(data.pitch.toDouble())
+            .string(data.skinUrl ?: "")
+            .string(data.skinDigest ?: "")
+            .boolean(data.slimArms)
+            .boolean(data.sneaking)
+            .boolean(data.sleeping)
+            .boolean(data.sitting)
+            .send("npc:spawn", player)
+        return this
+    }
 
 }

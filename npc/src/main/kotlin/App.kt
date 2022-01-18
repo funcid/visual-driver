@@ -44,13 +44,7 @@ class App : KotlinMod() {
                 readBoolean()
             )
             NpcManager.spawn(data)
-
-            val world: World = clientApi.minecraft().world
-
-            // Если чанк прогружен - показать NPC
-            world.chunkProvider.getLoadedChunk(data.x.toInt() shr 4, data.z.toInt() shr 4)?.let {
-                NpcManager.show(data.uuid)
-            }
+            NpcManager.show(data.uuid)
         }
 
         // Скрыть NPC
@@ -98,75 +92,63 @@ class App : KotlinMod() {
             }
         }
 
-        // Обновить метаданные NPC
-        registerChannel("npc:update") {
-
-            // Удалить всех NPC
-            registerChannel("npc:kill-all") {
-                NpcManager.each { uuid, _ ->
-                    NpcManager.hide(uuid)
-                    NpcManager.kill(uuid)
+        // Ударить рукой
+        registerChannel("npc:kick") {
+            UUID.fromString(NetUtil.readUtf8(this)).apply {
+                NpcManager.get(this)?.let { entity ->
+                    entity.entity?.swingArm(if (readBoolean()) EnumHand.MAIN_HAND else EnumHand.OFF_HAND)
                 }
             }
+        }
 
-            // Изменение предмета в инвентаре
-            registerChannel("npc:slot") {
-                NpcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
-                    it.entity?.let { npc ->
-                        readInt().let { slot ->
-                            val item = ItemTools.read(this)
+        // Удалить всех NPC
+        registerChannel("npc:kill-all") {
+            NpcManager.each { uuid, _ ->
+                NpcManager.hide(uuid)
+                NpcManager.kill(uuid)
+            }
+        }
 
-                            when (slot) {
-                                0 -> npc.setItemInSlot(EntityEquipmentSlot.MAINHAND, item)
-                                1 -> npc.setItemInSlot(EntityEquipmentSlot.OFFHAND, item)
-                                2 -> npc.setItemInSlot(EntityEquipmentSlot.FEET, item)
-                                3 -> npc.setItemInSlot(EntityEquipmentSlot.LEGS, item)
-                                4 -> npc.setItemInSlot(EntityEquipmentSlot.CHEST, item)
-                                5 -> npc.setItemInSlot(EntityEquipmentSlot.HEAD, item)
-                            }
+        // Изменение предмета в инвентаре
+        registerChannel("npc:slot") {
+            NpcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
+                it.entity?.let { npc ->
+                    readInt().let { slot ->
+                        val item = ItemTools.read(this)
+
+                        when (slot) {
+                            0 -> npc.setItemInSlot(EntityEquipmentSlot.MAINHAND, item)
+                            1 -> npc.setItemInSlot(EntityEquipmentSlot.OFFHAND, item)
+                            2 -> npc.setItemInSlot(EntityEquipmentSlot.FEET, item)
+                            3 -> npc.setItemInSlot(EntityEquipmentSlot.LEGS, item)
+                            4 -> npc.setItemInSlot(EntityEquipmentSlot.CHEST, item)
+                            5 -> npc.setItemInSlot(EntityEquipmentSlot.HEAD, item)
                         }
                     }
                 }
             }
+        }
 
-            // Постоянный цикл
-            var ticks = 0
+        registerHandler<GameLoop> {
+            val player = clientApi.minecraft().player
 
-            registerHandler<GameLoop> {
-                return@registerHandler
-                val tick = ticks++ % 600
-                val player = clientApi.minecraft().player
+            NpcManager.each { _, data ->
+                data.entity?.let { entity ->
+                    if (data.data.behaviour == NpcBehaviour.NONE)
+                        return@let
+                    val dx: Double = player.x - entity.x
+                    var dy: Double = player.y - entity.y
+                    val dz: Double = player.z - entity.z
 
-                NpcManager.each { _, data ->
-                    data.entity?.let { entity ->
-                        if (data.data.behaviour == NpcBehaviour.NONE)
-                            return@let
-                        val lookAround = data.data.behaviour == NpcBehaviour.STARE_AND_LOOK_AROUND
+                    val active = dx * dx + dy * dy + dz * dz < 196
 
-                        if (lookAround && (tick == 500 || tick == 510))
-                            entity.swingArm(EnumHand.MAIN_HAND)
+                    dy /= sqrt(dx * dx + dz * dz)
+                    val yaw = if (active) (atan2(-dx, dz) / Math.PI * 180).toFloat() else data.data.yaw
 
-                        val dYaw = if (tick in 41..69) -40f else if (tick in 76..129) +40f else 0f
-
-                        val resetPitch = tick in 41..129
-
-                        val dx: Double = player.x - entity.x
-                        var dy: Double = player.y - entity.y
-                        val dz: Double = player.z - entity.z
-
-                        val active = dx * dx + dy * dy + dz * dz < 36
-
-                        dy /= sqrt(dx * dx + dz * dz)
-                        var yaw =
-                            if (active) (atan2(-dx, dz) / Math.PI * 180).toFloat() else data.data.yaw
-                        if (lookAround)
-                            yaw += dYaw
-
-                        entity.apply {
-                            rotationYawHead = yaw
-                            setYaw(yaw)
-                            setPitch(if (!active || resetPitch && lookAround) 0f else (atan(-dy) / Math.PI * 180).toFloat())
-                        }
+                    entity.apply {
+                        rotationYawHead = yaw
+                        setYaw(yaw)
+                        setPitch((atan(-dy) / Math.PI * 180).toFloat())
                     }
                 }
             }

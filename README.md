@@ -1,4 +1,17 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.40)
+# Cristalix Animation API DOCS (актуальная версия 1.1.48)
+
+![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
+<br>
+<h2>1.1.40 up to 1.1.48</h2>
+
+1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
+2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
+3. Метод `spawn` теперь показывает NPC только указанному игроку, создан конструктор NPC для Java версии, при заходе игрока, NPC в списке автоматически отправляются игроку.<br>
+4. Класс Marker и связные методы помечены `@Deprecated`.<br>
+5. Появился новый инструмент - `Banners`, он позволяет создавать прямоугольник в мире (можно указать текстуру или цвет, координаты, точку взора, наклон, текст), можно использовать для отрисовки картинок, текстов и прочего.<br>
+6. `Anime#bottomRight` теперь поддерживает многострочные тексты.<br>
+7. Запись предмета в буффер использовала метод, которого нет в `Dark Paper`, теперь все работает хорошо.<br>
+8. Виньетка (`Glow`) теперь меняет своя размер при изменении окна.<br>
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -27,7 +40,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.22'
+  implementation 'me.func:animation-api:1.1.48'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -46,7 +59,91 @@ dependencies {
 
 При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
 
-<h3>Индикаторы (модуль STANDARD)</h3>
+<h3>Баннеры EXPERIMENTAL</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/148836905-914c3f10-bf65-4767-b28d-7a884fac6acd.png" width="250">
+
+Что представляет из себя баннер?<br>
+Это голограмма, рисунок в мире, маркер и прочее что является прямоугольником в мире.<br>
+```
+    val uuid: UUID = UUID.randomUUID(), // уникальный номер
+    var motionType: MotionType = MotionType.CONSTANT, // тип движения
+    var watchingOnPlayer: Boolean = false, // смотрит ли баннер вечно на игрока
+    var motionSettings: MutableMap<String, Any> = mutableMapOf(
+        "yaw" to 0.0,
+        "pitch" to 0.0
+    ), // магия
+    var content: String = "", // текст на прямоугольнике
+    var x: Double = 0.0, // координата x
+    var y: Double = 0.0, // координата y
+    var z: Double = 0.0, // координата z
+    var height: Int = 100, // высота
+    var weight: Int = 100, // ширина
+    var texture: String = "", // текстура, например minecraft:apple (не забывайте что текстуру можно загружать через мод по web-ссылке)
+    var red: Int = 0, // красный цвет прямоугольника
+    var green: Int = 0, // зеленый цвет прямоугольника
+    var blue: Int = 0, // синий цвет прямоугольника
+    var opacity: Double = 0.62 // степерь прозрачности, от 0.0 до 1.0
+```
+Что за типы движения?<br>
+```
+    STEP_BY_TARGET, // баннер следует за сущностью
+    PERIODIC, // баннер двигается по периодичной траектории 
+    CONSTANT, // баннер не двигается
+```
+
+<img src="https://user-images.githubusercontent.com/42806772/148837007-d52b93ca-1a52-4507-9c9b-648a05d3ec6d.png" width="250">
+
+Как создать Banner?<br>
+```
+// Kotlin пример
+Banners.new { // Баннер добавится в список баннеров и когда игроки будут заходить, они его увидят
+  // Элементарная заменя характеристик (указана лишь часть)
+  x = 1.0
+  y = 100.0
+  z = 1111000.0
+  texture = "minecraft:apple"
+  red = 255
+  opacity = 1.0
+  content = "Этот текст -\nмногострочный"
+  height = 120
+  weight = 200
+
+  // Продвинутые методы для замены свойств
+  location(player.location) // Указание места баннера через локацию
+  eyeLocation(player.bedSpawnLocation) // Указание поворота через точку, на которую нужно смотреть
+  target(player, 0.0, 0.0, 2.1) // Теперь баннер следует за игроком, баннер выше игрока на 2.1 блока
+  shineBlocks(false) // Чтобы баннер не просвечивался через стены
+}
+```
+```
+// Java пример
+Banner banner = new Banner.Builder() // Создание баннера
+  .x(location.x) 
+  .y(location.y + 50)
+  .z(location.z)
+  .opacity(0.0) // Прозрачность, от 0.0 до 1.0
+  .height(50) // Высота
+  .weight(50) // Ширина
+  .content("§aЯ голограмма", "§eОчень красивая", "§cИ приятная глазу") // Многострочный текст
+  .watchingOnPlayer(true) // Указание, чтобы баннер всегда смотрел на игрока
+  .build();
+  
+Banners.new(banner); // Добавление в список баннеров, которые будут показаны игроку при входе на сервер
+```
+
+Методы утилиты `Banners`:<br>
+`Banners.new(data: Banner.() -> Unit): Banner` kotlin версия конструктора для баннера (пример выше)<br>
+`Banners.new(banner: Banner): Banner` java версия конструктора для баннера (пример выше)<br>
+`Banners.content(player: Player, uuid: UUID, content: String)` отправка нового текста игроку на баннер<br>
+`Banners.content(player: Player, banner: Banner, content: String)` тоже самое, но через объект баннера<br>
+`Banners.show(player: Player, vararg uuid: UUID)` показать игроку все указанные баннеры по uuid (баннеры уже есть в списке глобальных)<br>
+`Banners.show(player: Player, vararg banner: Banner)` показать игроку все баннеры (они могут не быть в списке баннеров и созданы через конструктор `Banner`)<br>
+`Banners.remove(uuid: UUID)` удалить баннер из списка (не удаляет баннер игрокам)<br>
+`Banners.hide(player: Player, vararg uuid: UUID)` удалить игроку все указанные баннер(ы)<br>
+`Banners.hide(player: Player, vararg banner: Banner)` тоже самое, но через объекты класса Banner<br>
+ 
+<h3>Индикаторы STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144913370-bb9ecbad-a5be-40c0-95b2-158b0bcdc0ad.png" width="500">
 
@@ -63,7 +160,7 @@ dependencies {
 `Anime.hideIndicator(player: Player, vararg indicator: Indicators)` скрывает игроку указанные через запятую индикаторы<br>
 `Anime.showIndicator(player: Player, vararg indicator: Indicators)` показывает игроку указанные через запятую индикаторы<br>
 
-<h3>Мультичат</h3>
+<h3>Мультичат MULTICHAT</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/146237931-759b0902-50e4-44e3-a692-409089ef7d6a.png" width="500">
 
@@ -97,7 +194,7 @@ dependencies {
 `Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int)` то же самое, но без указания прозрачности (без прозрачности)<br>
 `Glow.animate(player: Player, seconds: Double, color: GlowColor)` то же самое, но через GlowColor<br>
 
-<h3>Подсвечивание границ места в мире (модуль EXPERIMENTAL)</h3>
+<h3>Подсвечивание границ места в мире EXPERIMENTAL</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/146236013-43fbd0d1-4aa3-4a8c-b0a2-2ed37260575a.png" width="500">
 
@@ -136,7 +233,7 @@ dependencies {
 `Anime.bottomRightMessage(player: Player, text: String)` поставить справа снизу информацию игроку (строка делится по `\n`)<br>
 `Anime.bottomRightMessage(player: Player, vararg text: String)` тоже самое, но удобнее, так как можно указать строки через запятую<br>
 
-<h3>NPC (модуль NPC)</h3>
+<h3>Искуственные игроки NPC</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/147400304-4ffc0399-8fa2-4ef1-8346-ac0ad7e18ab8.gif" width="500">
 
@@ -214,7 +311,7 @@ NpcData:<br>
   }.slot(EquipmentSlot.HAND, CraftItemStack.asNMSCopy(ItemStack(Material.DIAMOND_BLOCK))).spawn()
 ```
 
-<h3>Диалоги (модуль DIALOGS)</h3>
+<h3>Диалоги DIALOGS</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144916818-ff974368-878c-483d-a34b-79e3f2e576c8.png" width="500">
 
@@ -243,14 +340,14 @@ new Dialog(new Entrypoint(
 ))
 ```
 
-<h3>Меню ежедневных наград (модуль STANDARD)</h3>
+<h3>Меню ежедневных наград STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png" width="500">
 
 Метод показа окна награды:<br>
 `Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с указанием текущего дня [0..6], а также с указанием наград за каждый день в объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
 
-<h3>Лутбокс (модуль LOOTBOX)</h3>
+<h3>Лутбокс LOOTBOX</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144919787-00cdac9a-a01c-4c48-97af-62c2f8e5f8b5.png" width="500">
 
@@ -271,7 +368,7 @@ enum class DropRare(val title: String, val color: String) {
 }
 ```
 
-<h3>Маркеры в мире (модуль STANDARD)</h3>
+<h3>Маркеры в мире STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png" width="500">
 
@@ -305,7 +402,7 @@ enum class DropRare(val title: String, val color: String) {
 `Anime.moveMarker(player: Player, marker: Marker, seconds: Double)` обновить нахождение маркера у игрока анимированно за указанное время<br>
 `Anime.moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double)` обновить нахождение маркера у игрока анимированно за указанное время имея только UUID маркера<br>
 
-<h3>Всплывающие сообщения (модуль STANDARD)</h3>
+<h3>Всплывающие сообщения STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923669-6c52ffef-9359-4175-be7c-d6ead8d4ef3f.png" width="500">
 
@@ -335,7 +432,7 @@ enum class DropRare(val title: String, val color: String) {
 
 `Anime.counting321(player: Player)` начать на экране игрока отсчет 3 2 1 GO!<br>
 
-<h3>Системная информация (модуль STANDARD)</h3>
+<h3>Системная информация STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png" width="500">
 
@@ -348,7 +445,7 @@ enum class DropRare(val title: String, val color: String) {
 `Anime.timer(player: Player, text: String, duration: Int)` начать отсчет сверху с сообщением и продолжительностью<br>
 `Anime.timer(player: Player, duration: Int)` начать отсчет с сообщением по умолчанию<br>
 
-<h3>Прочее (модуль STANDARD)</h3>
+<h3>Прочее STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png" width="500">
 

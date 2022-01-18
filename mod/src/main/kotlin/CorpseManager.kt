@@ -7,6 +7,7 @@ import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.clientapi.mod
+import ru.cristalix.uiengine.UIEngine
 import java.util.*
 
 object CorpseManager {
@@ -64,6 +65,13 @@ object CorpseManager {
             corpse.setNoGravity(false)
 
             corpses.add(corpse)
+
+            readInt().apply {
+                UIEngine.schedule(this) {
+                    corpses.remove(corpse)
+                    JavaMod.clientApi.minecraft().world.removeEntity(corpse)
+                }
+            }
 
             JavaMod.clientApi.minecraft().world.spawnEntity(corpse)
         }
