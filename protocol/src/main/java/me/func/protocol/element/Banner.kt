@@ -30,6 +30,12 @@ class Banner(
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
         fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }
         fun content(vararg content: String) = apply { banner.content = content.joinToString("\n") }
+        fun resizeLine(lineIndex: Int, textScale: Double): Builder {
+            val list = (banner.motionSettings["line"] ?: mutableListOf<Pair<Int, Double>>()) as MutableList<Pair<Int, Double>>
+            list.add(lineIndex to textScale)
+            banner.motionSettings["line"] = list
+            return this
+        }
         fun x(x: Double) = apply { banner.x = x }
         fun y(y: Double) = apply { banner.y = y }
         fun z(z: Double) = apply { banner.z = z }

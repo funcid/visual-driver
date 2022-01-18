@@ -50,14 +50,21 @@ object Banners {
                 .double(current.x)
                 .double(current.y)
                 .double(current.z)
-                .integer(current.weight)
                 .integer(current.height)
+                .integer(current.weight)
                 .string(current.texture)
                 .integer(current.red)
                 .integer(current.green)
                 .integer(current.blue)
                 .double(current.opacity)
                 .send("banner:new", player)
+
+            current.motionSettings["line"]?.let {
+                val sizes = it as MutableList<Pair<Int, Double>>
+                val sizeTransfer = ModTransfer(current.uuid.toString(), sizes.size)
+                sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
+                sizeTransfer.send("banner:size-text", player)
+            }
         }
     }
 

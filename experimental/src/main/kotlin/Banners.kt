@@ -13,13 +13,33 @@ import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
+import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
 object Banners {
 
     private val banners = mutableMapOf<UUID, Pair<Banner, Context3D>>()
+    private val sizes = mutableMapOf<Pair<UUID, Int>, Double>()
 
     init {
+        fun text(text: String, banner: Banner, rectangle: RectangleElement) {
+            text.split("\n").forEachIndexed { index, line ->
+                rectangle +text {
+                    align = TOP
+                    origin = TOP
+                    content = line
+                    size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                    color = WHITE
+                    offset.z -= 0.01
+                    offset.y -= -10 - index * 12
+
+                    shadow = true
+
+                    sizes[banner.uuid to index]?.let { scale = V3(it, it, it) }
+                }
+            }
+        }
+
         App::class.mod.registerChannel("banner:new") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
@@ -50,15 +70,7 @@ object Banners {
                         textureLocation = UIEngine.clientApi.resourceManager().getLocation(parts[0], parts[1])
                     }
                     if (banner.content.isNotEmpty()) {
-                        +text {
-                            align = CENTER
-                            origin = CENTER
-                            content = banner.content
-                            size = V3(banner.weight.toDouble(), banner.height.toDouble())
-                            color = WHITE
-                            shadow = true
-                            offset.z -= 0.01
-                        }
+                        text(banner.content, banner, this)
                     }
 
                     size = V3(banner.weight.toDouble(), banner.height.toDouble())
@@ -84,9 +96,24 @@ object Banners {
 
         App::class.mod.registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
-            banners[uuid]?.let {
-                ((it.second.children[0] as RectangleElement).children[0] as TextElement).content =
-                    NetUtil.readUtf8(this)
+            banners[uuid]?.let { pair ->
+                val element = (pair.second.children[0] as RectangleElement)
+                element.children.clear()
+
+                text(NetUtil.readUtf8(this), pair.first, element)
+            }
+        }
+
+        App::class.mod.registerChannel("banner:size-text") {
+            val uuid = UUID.fromString(NetUtil.readUtf8(this))
+            banners[uuid]?.let { pair ->
+                repeat(readInt()) {
+                    val line = readInt()
+                    val scale = readDouble()
+
+                    sizes[uuid to line] = scale
+                    (pair.second.children[0] as RectangleElement).children[line].scale = V3(scale, scale, scale)
+                }
             }
         }
 
