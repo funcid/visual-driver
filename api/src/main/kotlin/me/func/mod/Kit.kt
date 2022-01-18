@@ -78,7 +78,7 @@ enum class Kit(val fromUrl: String) : Listener {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("npc-bundle.jar", player)
 
-                npcs.values.forEach { it.spawn(player) }
+                npcs.forEach { (_, value) -> value.spawn(player) }
             }
         }
 

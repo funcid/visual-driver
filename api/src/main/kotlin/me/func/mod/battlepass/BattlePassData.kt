@@ -4,11 +4,14 @@ import me.func.protocol.battlepass.BattlePassFacade
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
+import java.util.function.Function
 
 data class BattlePassData(
     var uuid: UUID = UUID.randomUUID(),
     var facade: BattlePassFacade = BattlePassFacade(),
     var pages: MutableList<BattlePassPageAdvanced> = mutableListOf(),
+    var quests: MutableList<String> = mutableListOf(),
+    var questStatusUpdater: Function<Player, List<String>>? = null,
     var buyAdvanced: Consumer<Player>? = null,
     var buyPage: Consumer<Player>? = null,
 ) {

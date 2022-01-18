@@ -25,8 +25,8 @@ object Npc {
         val data = NpcData()
         val npc = NpcSmart(data)
 
-        npcs[data.id] = npc
         npc.data = data.apply(init)
+        npcs[data.id] = npc
 
         return npc
     }

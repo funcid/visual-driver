@@ -1,5 +1,6 @@
 package me.func.mod.battlepass
 
+import com.mojang.brigadier.arguments.UuidArgumentType.uuid
 import dev.xdark.feder.NetUtil
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
@@ -48,14 +49,12 @@ object BattlePass {
 
     fun show(player: Player, uuid: UUID, data: BattlePassUserData) {
         battlePasses[uuid]?.let { battlepass ->
-            battlepass.pages.forEach {
-                val newQuests = it.questStatusUpdater?.apply(player)
-                if (!newQuests.isNullOrEmpty() && newQuests != it.quests) {
-                    it.quests = newQuests
-                    ModTransfer(uuid.toString(), it.uuid.toString(), newQuests.size)
-                        .apply { newQuests.forEach { line -> string(line) } }
-                        .send("battlepass:quests", player)
-                }
+            val newQuests = battlepass.questStatusUpdater?.apply(player)
+            if (!newQuests.isNullOrEmpty() && newQuests != battlepass.quests) {
+                battlepass.quests = newQuests.toMutableList()
+                ModTransfer(uuid.toString(), newQuests.size)
+                    .apply { newQuests.forEach { line -> string(line) } }
+                    .send("battlepass:quests", player)
             }
 
             ModTransfer(uuid.toString(), data.exp, data.advanced).send("battlepass:show", player)
@@ -76,9 +75,9 @@ object BattlePass {
                         page.items.forEach { item -> item(item) }
                         integer(page.advancedItems.size)
                         page.advancedItems.forEach { item -> item(item) }
-                        integer(page.quests.size)
-                        page.quests.forEach { quest -> string(quest) }
                     }
+                    integer(it.quests.size)
+                    it.quests.forEach { quest -> string(quest) }
                 }.send("battlepass:send", player)
         }
     }
