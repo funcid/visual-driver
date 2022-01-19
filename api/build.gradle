@@ -46,7 +46,7 @@ publishing {
         create(p.name, MavenPublication) {
             it.groupId = 'me.func'
             it.artifactId = 'animation-api'
-            it.version = '1.1.55'
+            it.version = '1.1.57'
             it.artifact p.tasks.jar
         }
     }
