@@ -60,7 +60,7 @@ enum class Kit(val fromUrl: String) : Listener {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("experimental-bundle.jar", player)
 
-                Banners.show(player, *Banners.banners.values.toTypedArray())
+                Banners.show(player, *Banners.banners.map { it.value }.toTypedArray())
             }
         }
     },

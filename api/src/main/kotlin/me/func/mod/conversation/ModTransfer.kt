@@ -35,6 +35,8 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
 
     fun string(string: String) = this.apply { putString(string) }
 
+    fun byteArray(vararg byte: Byte) = this.apply { serializer.writeBytes(byte) }
+
     fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = this.apply { writeItem(serializer, item) }
 
     fun item(item: ItemStack) = this.apply { writeItem(serializer, CraftItemStack.asNMSCopy(item)) }

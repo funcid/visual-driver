@@ -40,7 +40,7 @@ jar.from configurations.runtimeClasspath.collect(project.&zipTree)
 
 bundler {
     name 'Battlepass'
-    mainClass 'BattlePassMod'
+    mainClass 'BattlePass'
     version '1.0'
     author 'func'
 }

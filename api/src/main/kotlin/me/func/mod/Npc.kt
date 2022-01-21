@@ -31,6 +31,7 @@ object Npc {
         return npc
     }
 
+    @JvmStatic
     fun npc(data: NpcData): NpcSmart {
         val npc = NpcSmart(data)
         npcs[data.id] = npc

@@ -57,7 +57,14 @@ object Banners {
                 .integer(current.green)
                 .integer(current.blue)
                 .double(current.opacity)
-                .send("banner:new", player)
+                .apply {
+                    if (current.motionType == MotionType.STEP_BY_TARGET) {
+                        integer(current.motionSettings["target"].toString().toInt())
+                        double(current.motionSettings["offsetX"].toString().toDouble())
+                        double(current.motionSettings["offsetY"].toString().toDouble())
+                        double(current.motionSettings["offsetZ"].toString().toDouble())
+                    }
+                }.send("banner:new", player)
 
             current.motionSettings["line"]?.let {
                 val sizes = it as MutableList<Pair<Int, Double>>

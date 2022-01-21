@@ -1,3 +1,4 @@
+import dev.xdark.clientapi.entity.Entity
 import dev.xdark.clientapi.entity.EntityLiving
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.RenderTickPre
@@ -10,10 +11,8 @@ import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
-import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
-import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
 object Banners {
@@ -21,10 +20,12 @@ object Banners {
     private val banners = mutableMapOf<UUID, Pair<Banner, Context3D>>()
     private val sizes = mutableMapOf<Pair<UUID, Int>, Double>()
 
+    private fun toBlackText(string: String) = "¨222200" + string.replace(Regex("(§[0-9a-fA-F]|¨......)"), "¨222200")
+
     init {
         fun text(text: String, banner: Banner, rectangle: RectangleElement) {
             text.split("\n").forEachIndexed { index, line ->
-                rectangle +text {
+                rectangle + text {
                     align = TOP
                     origin = TOP
                     content = line
@@ -33,7 +34,17 @@ object Banners {
                     offset.z -= 0.01
                     offset.y -= -10 - index * 12
 
-                    shadow = true
+                    sizes[banner.uuid to index]?.let { scale = V3(it, it, it) }
+                }
+                rectangle + text {
+                    align = TOP
+                    origin = TOP
+                    content = toBlackText(line)
+                    size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                    color = Color(0, 0, 0, 0.82)
+                    offset.z -= 0.005
+                    offset.y -= -10 - index * 12 - 0.75
+                    offset.x += 0.75
 
                     sizes[banner.uuid to index]?.let { scale = V3(it, it, it) }
                 }
@@ -62,6 +73,14 @@ object Banners {
                     readInt(),
                     readDouble()
                 )
+
+                if (banner.motionType == MotionType.STEP_BY_TARGET) {
+                    banner.motionSettings["target"] = readInt()
+                    banner.motionSettings["offsetX"] = readDouble()
+                    banner.motionSettings["offsetY"] = readDouble()
+                    banner.motionSettings["offsetZ"] = readDouble()
+                }
+
                 val context = Context3D(V3(banner.x, banner.y, banner.z))
 
                 context.addChild(rectangle {
@@ -128,9 +147,9 @@ object Banners {
         }
 
         registerHandler<NameTemplateRender> {
-            if (entity !is EntityLiving)
+            if (entity !is Entity)
                 return@registerHandler
-            val current = entity as EntityLiving
+            val current = entity as Entity
             banners.filter { it.value.first.motionType == MotionType.STEP_BY_TARGET }.forEach { (_, pair) ->
                 pair.first.motionSettings["target"]?.let {
                     if (it.toString().toInt() == current.entityId) {

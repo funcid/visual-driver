@@ -43,8 +43,8 @@ object BattlePass {
     }
 
     init {
-        buy("battepass:buy-upgrade") { uuid, player -> battlePasses[uuid]?.buyAdvanced?.accept(player) }
-        buy("battepass:buy-page") { uuid, player -> battlePasses[uuid]?.buyPage?.accept(player) }
+        buy("bp:buy-upgrade") { uuid, player -> battlePasses[uuid]?.buyAdvanced?.accept(player) }
+        buy("bp:buy-page") { uuid, player -> battlePasses[uuid]?.buyPage?.accept(player) }
     }
 
     fun show(player: Player, uuid: UUID, data: BattlePassUserData) {
@@ -54,10 +54,10 @@ object BattlePass {
                 battlepass.quests = newQuests.toMutableList()
                 ModTransfer(uuid.toString(), newQuests.size)
                     .apply { newQuests.forEach { line -> string(line) } }
-                    .send("battlepass:quests", player)
+                    .send("bp:quests", player)
             }
 
-            ModTransfer(uuid.toString(), data.exp, data.advanced).send("battlepass:show", player)
+            ModTransfer(uuid.toString(), data.exp, data.advanced).send("bp:show", player)
         }
     }
 
@@ -78,7 +78,7 @@ object BattlePass {
                     }
                     integer(it.quests.size)
                     it.quests.forEach { quest -> string(quest) }
-                }.send("battlepass:send", player)
+                }.send("bp:send", player)
         }
     }
 
