@@ -51,7 +51,7 @@ object Recharge {
         App::class.mod.registerChannel("func:recharge") {
             time = this.readDouble()
             val text = NetUtil.readUtf8(this)
-            line.color = Color(readInt(), readInt(), readInt(), readDouble())
+            line.color = Color(readInt(), readInt(), readInt(), 1.0)
             
             if (time == 0.0) {
                 line.size.x = 0.0
