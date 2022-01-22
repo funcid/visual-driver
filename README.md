@@ -1,17 +1,7 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.57)
+# Cristalix Animation API DOCS (актуальная версия 1.1.63)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
-<h2>1.1.40 up to 1.1.57</h2>
-
-1. Теперь при создании трупа `Anime#corpse` можно указывать через сколько исчезает труп, по умолчанию 60 секунд.<br> 
-2. Метод, который пишет информацию в правом нижнем углу экрана `Anime#bottomRight` перемещен из модуля `experimental` в модуль `standard`.<br> 
-3. Метод `spawn` теперь показывает NPC только указанному игроку, создан конструктор NPC для Java версии, при заходе игрока, NPC в списке автоматически отправляются игроку.<br>
-4. Класс Marker и связные методы помечены `@Deprecated`.<br>
-5. Появился новый инструмент - `Banners`, он позволяет создавать прямоугольник в мире (можно указать текстуру или цвет, координаты, точку взора, наклон, текст), можно использовать для отрисовки картинок, текстов и прочего.<br>
-6. `Anime#bottomRight` теперь поддерживает многострочные тексты.<br>
-7. Запись предмета в буффер использовала метод, которого нет в `Dark Paper`, теперь все работает хорошо.<br>
-8. Виньетка (`Glow`) теперь меняет своя размер при изменении окна.<br>
 
 <br>
 <h2>Зачем нужно использовать этот инструмент?</h2>
@@ -40,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.57'
+  implementation 'me.func:animation-api:1.1.63'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -54,29 +44,33 @@ dependencies {
 `GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@funcid</a>)<br>
-`BATTLEPASS` - модуль для работы с BattlePass
+`BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>, <a href="https://vk.com/funcid">@funcid</a>)<br>
 
 <h3>Подключение модулей</h3>
 
 При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
 
 <h3>Батлпасс</h3>
-![image](https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png)
-Что представляет из себя батлпасс?
-Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи. 
+
+<img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
+
+Что представляет из себя батлпасс?<br>
+Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи.<br>
+
 ```
     val battlePass = BattlePass.new(300) {
         pages = arrayListOf(BattlePassPageAdvanced(300, 10,
         listOf(ItemStack(Material.STONE, 1)),
         listOf(ItemStack(Material.DIAMOND, 1))))
 
-        facade.salePercent = 0.5
+        facade.salePercent = 50.0
         facade.tags.add("Батлпасс - боевый пропуск...")
     }
     BattlePass.send(player, battlePass)
     BattlePass.show(player, battlePass, BattlePassUserData(100, false))
 ```
-Можно указывать награду на каждый уровень, требуемый опыт.
+
+Можно указывать награду на каждый уровень, требуемый опыт.<br>
 
 <h3>Подключение модулей</h3>
 
