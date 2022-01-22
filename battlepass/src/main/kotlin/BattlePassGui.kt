@@ -5,10 +5,12 @@ import dev.xdark.clientapi.nbt.NBTTagString
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
+import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
+import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import kotlin.math.PI
 import kotlin.math.roundToInt
@@ -28,7 +30,6 @@ class BattlePassGui(
     var level: Int = 1
     var exp: Int = 0
     var requiredExp: Int = 1
-    var isSkipPrice: Boolean = true
 
     private val battlepass: RectangleElement
     private var moveLeftButton: RectangleElement
@@ -102,6 +103,17 @@ class BattlePassGui(
     init {
         color = Color(0, 0, 0, 0.68)
 
+        afterRender {
+            val hoveredItem = hoveredReward ?: return@afterRender
+            JavaMod.clientApi.resolution().run {
+                val wholeDescription = hoveredItem.displayName
+                screen.drawHoveringText(
+                    wholeDescription, Mouse.getX() / 2,
+                    (scaledHeight_double * scaleFactor / 2 - Mouse.getY() / 2).toInt()
+                )
+            }
+        }
+
         battlepass = +rectangle {
             align = CENTER
             origin = CENTER
@@ -116,8 +128,8 @@ class BattlePassGui(
                 +text {
                     origin = CENTER
                     align = CENTER
-                    offset.x -= buyBlockTextOffsetX
-                    content = buyBlockText
+                    offset.x += buyBlockTextOffsetX
+                    content = " $buyBlockText"
                     lineHeight = 16.0
                 }
 
@@ -146,39 +158,48 @@ class BattlePassGui(
 
                         onClick {
                             close()
-                            JavaMod.clientApi.clientConnection().sendPayload("bps:buy-upgrade", Unpooled.buffer())
+                            JavaMod.clientApi.clientConnection().sendPayload("bp:buy-upgrade", Unpooled.buffer())
+                        }
+                        onHover {
+                            animate(0.05) {
+                                color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
+                            }
                         }
                     }
                 }
 
-                if (isSkipPrice) {
-                    +rectangle button@{
-                        origin = LEFT
-                        align = LEFT
-                        size = V3(buyButtonWidth, buyButtonHeight)
+                +rectangle button@{
+                    origin = LEFT
+                    align = LEFT
+                    size = V3(buyButtonWidth, buyButtonHeight)
 
-                        color = Color(226, 145, 25, 1.0)
-                        offset.x += (totalWidthPart * 30)
+                    color = Color(226, 145, 25, 1.0)
+                    offset.x += (totalWidthPart * 30)
 
-                        +item {
-                            stack = arrowUpItem
-                            offset = V3(buyButtonPickaxeOffsetX, buyButtonPickaxeOffsetY)
-                            size.y = this@button.size.y - offset.y * 2
-                            size.x = size.y
-                            color = WHITE
+                    +item {
+                        stack = arrowUpItem
+                        offset = V3(buyButtonPickaxeOffsetX, buyButtonPickaxeOffsetY)
+                        size.y = this@button.size.y - offset.y * 2
+                        size.x = size.y
+                        color = WHITE
+                    }
+
+                    +text {
+                        align = CENTER
+                        origin = CENTER
+                        content = "Пропустить"
+                    }
+
+                    onHover {
+                        animate(0.05) {
+                            color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
                         }
+                    }
 
-                        +text {
-                            align = CENTER
-                            origin = CENTER
-                            content = "Пропустить"
-
-                            onClick {
-                                if (!down) return@onClick
-                                close()
-                                JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer())
-                            }
-                        }
+                    onClick {
+                        if (!down) return@onClick
+                        close()
+                        JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer())
                     }
                 }
             }
@@ -351,16 +372,20 @@ class BattlePassGui(
             val item = (if (isAdvanced) advancedItems[i] else items[i]) ?: continue
 
             var rare = DropRare.COMMON
+            var taken = false
+
             val tagCompound = item.tagCompound
             if (tagCompound != null) {
                 val tag = tagCompound.getString("rarity")
                 if (tag != null) {
                     rare = DropRare.valueOf(tag.uppercase())
                 }
+
+                taken = tagCompound.getBoolean("taken")
             }
 
             +rectangle rewardMain@{
-                color = rewardBlockColor
+                color = if(taken) Color(34, 174, 73, 0.72) else rewardBlockColor
                 size = V3(rewardBlockWidth, rewardBlockHeight)
                 offset.x += offsetX
                 offsetX += rewardBetweenX + rewardBlockWidth
@@ -378,6 +403,14 @@ class BattlePassGui(
                     color = Color(rare.red, rare.green, rare.blue)
                 }
 
+                onHover {
+                    if (hovered) {
+                        hoveredReward = item
+                    } else if (hoveredReward == item) {
+                        hoveredReward = null
+                    }
+                }
+
                 onClick {
                     if (!down) return@onClick
                     close()
@@ -389,6 +422,8 @@ class BattlePassGui(
             }
         }
     }
+
+    private var hoveredReward: ItemStack? = null
 
     private fun getPriceText(): String {
         if (sale == 0.0) return "§a$price"
