@@ -72,10 +72,6 @@ dependencies {
 
 Можно указывать награду на каждый уровень, требуемый опыт.<br>
 
-<h3>Подключение модулей</h3>
-
-При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
-
 <h3>Баннеры EXPERIMENTAL</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/148836905-914c3f10-bf65-4767-b28d-7a884fac6acd.png" width="250">
