@@ -7,4 +7,5 @@ include 'graffiti'
 include 'graffiti-service'
 include 'npc'
 include 'battlepass'
+include 'dialog'
 

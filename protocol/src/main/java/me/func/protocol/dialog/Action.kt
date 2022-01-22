@@ -7,7 +7,7 @@ data class Action(var type: String) {
     var screen: Screen? = null
     var command: String? = null
 
-    fun screen(screen: Screen): Action {
+    fun screen(screen: Screen?): Action {
         this.screen = screen
 
         return this

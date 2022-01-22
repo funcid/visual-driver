@@ -1,4 +1,3 @@
-import dev.xdark.clientapi.event.render.HealthRender
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation

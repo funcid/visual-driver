@@ -2,9 +2,9 @@ package me.func.protocol.dialog
 
 data class Button(var text: String) {
 
-    var actions: List<me.func.protocol.dialog.Action>? = null
+    var actions: List<Action>? = null
 
-    fun actions(vararg actions: me.func.protocol.dialog.Action): Button {
+    fun actions(vararg actions: Action): Button {
         this.actions = actions.toList()
         return this
     }

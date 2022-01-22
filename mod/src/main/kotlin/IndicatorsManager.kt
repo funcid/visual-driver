@@ -25,17 +25,11 @@ object IndicatorsManager {
     }
 
     private inline fun <reified T> register(indicator: Indicators) where T : Event, T : Cancellable {
-        registerHandler<T> {
-            if (states[indicator] == true)
-                isCancelled = true
-        }
+        registerHandler<T>(priority = 1000) { isCancelled = states[indicator] == true }
     }
 
     private fun changeIt(channel: String, value: Boolean) {
-        App::class.mod.registerChannel(channel) {
-            val current = Indicators.values()[readInt()]
-            states[current] = value
-        }
+        App::class.mod.registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
     }
 
 }

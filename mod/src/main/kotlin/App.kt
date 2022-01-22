@@ -8,6 +8,7 @@ class App : KotlinMod() {
     override fun onEnable() {
         UIEngine.initialize(this)
 
+        IndicatorsManager
         MarkerManager
         ExternalManager
         ModelBlocker
@@ -16,7 +17,6 @@ class App : KotlinMod() {
         Alert
         TimeBar
         GlowEffect
-        IndicatorsManager
         RewardManager
         ItemTitle
         CorpseManager
