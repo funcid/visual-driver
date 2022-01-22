@@ -54,7 +54,29 @@ dependencies {
 `GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@funcid</a>)<br>
+`BATTLEPASS` - модуль для работы с BattlePass
 
+<h3>Подключение модулей</h3>
+
+При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
+
+<h3>Батлпасс</h3>
+![image](https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png)
+Что представляет из себя батлпасс?
+Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи. 
+```
+    val battlePass = BattlePass.new(300) {
+        pages = arrayListOf(BattlePassPageAdvanced(300, 10,
+        listOf(ItemStack(Material.STONE, 1)),
+        listOf(ItemStack(Material.DIAMOND, 1))))
+
+        facade.salePercent = 0.5
+        facade.tags.add("Батлпасс - боевый пропуск...")
+    }
+    BattlePass.send(player, battlePass)
+    BattlePass.show(player, battlePass, BattlePassUserData(100, false))
+```
+Можно указывать награду на каждый уровень, требуемый опыт.
 
 <h3>Подключение модулей</h3>
 
