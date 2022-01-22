@@ -55,6 +55,7 @@ dependencies {
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@funcid</a>)<br>
 
+
 <h3>Подключение модулей</h3>
 
 При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
