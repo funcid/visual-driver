@@ -27,7 +27,7 @@ class BattlePass : KotlinMod() {
                 repeat(readInt()) { items.add(ItemTools.read(this)) }
                 repeat(readInt()) { advancedItems.add(ItemTools.read(this)) }
 
-                BattlePage(it + 1, requiredExp)
+                BattlePage(it + 1, 0, requiredExp, readInt())
             }
 
             val quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
@@ -37,19 +37,23 @@ class BattlePass : KotlinMod() {
         }
         registerChannel("bp:show") {
             val gui = map[UUID.fromString(NetUtil.readUtf8(this))]!!
-            gui.exp = readInt()
+            val exp = readInt()
             gui.isAdvanced = readBoolean()
 
-            val page = getPage(gui.pages, gui.exp)!!
-            gui.requiredExp = page.exp
-            gui.level = page.index + 1
+            val page = getPage(gui.pages, exp)!!
+            gui.requiredExp = page.requiredExp
+            gui.exp = page.exp
+            gui.level = page.index
+            gui.skipPrice = page.skipPrice
 
+            gui.update()
             gui.open()
         }
 
         registerChannel("bp:quests") {
             map[UUID.fromString(NetUtil.readUtf8(this))]?.let {
                 it.quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
+                it.update()
             }
         }
     }

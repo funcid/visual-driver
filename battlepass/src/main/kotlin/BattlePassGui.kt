@@ -1,3 +1,5 @@
+import dev.xdark.clientapi.event.render.ScaleChange
+import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.nbt.NBTPrimitive
 import dev.xdark.clientapi.nbt.NBTTagCompound
@@ -7,6 +9,7 @@ import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
@@ -30,11 +33,12 @@ class BattlePassGui(
     var level: Int = 1
     var exp: Int = 0
     var requiredExp: Int = 1
+    var skipPrice: Int = 0
 
-    private val battlepass: RectangleElement
-    private var moveLeftButton: RectangleElement
-    private var moveRightButton: RectangleElement
-    private var rewards: RectangleElement
+    private var battlepass: RectangleElement? = null
+    private var moveLeftButton: RectangleElement? = null
+    private var moveRightButton: RectangleElement? = null
+    private var rewards: RectangleElement? = null
 
     private val arrowUpItem = loadItem("arrow_up")
     private val addItem = loadItem("add")
@@ -103,6 +107,8 @@ class BattlePassGui(
     init {
         color = Color(0, 0, 0, 0.68)
 
+        update()
+
         afterRender {
             val hoveredItem = hoveredReward ?: return@afterRender
             JavaMod.clientApi.resolution().run {
@@ -112,6 +118,12 @@ class BattlePassGui(
                     (scaledHeight_double * scaleFactor / 2 - Mouse.getY() / 2).toInt()
                 )
             }
+        }
+    }
+
+    fun update() {
+        if(battlepass != null) {
+            removeChild(battlepass!!)
         }
 
         battlepass = +rectangle {
@@ -125,15 +137,10 @@ class BattlePassGui(
                 size = V3(buyBlockWidth, buyBlockHeight)
                 color = Color(226, 145, 25, 0.28)
 
-                +text {
-                    origin = CENTER
-                    align = CENTER
-                    offset.x += buyBlockTextOffsetX
-                    content = " $buyBlockText"
-                    lineHeight = 16.0
-                }
+                val buyButtonNeed = !isAdvanced
+                val skipButtonNeed = skipPrice != 0
 
-                if (!isAdvanced) {
+                if (buyButtonNeed) {
                     +rectangle buy@{
                         origin = LEFT
                         align = LEFT
@@ -149,11 +156,19 @@ class BattlePassGui(
                             color = WHITE
                         }
 
-                        +text {
+                        val buyText = +text {
                             align = CENTER
                             origin = CENTER
                             offset.x += buyButtonTextOffsetX
-                            content = "Купить (${getPriceText()})"
+                            content = "Купить"
+                        }
+
+                        val priceText = +text {
+                            enabled = false
+                            align = CENTER
+                            origin = CENTER
+                            offset.x += buyButtonTextOffsetX
+                            content = getPriceText(price)
                         }
 
                         onClick {
@@ -164,43 +179,69 @@ class BattlePassGui(
                             animate(0.05) {
                                 color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
                             }
+                            buyText.enabled = !hovered
+                            priceText.enabled = !buyText.enabled
                         }
                     }
                 }
 
-                +rectangle button@{
-                    origin = LEFT
-                    align = LEFT
-                    size = V3(buyButtonWidth, buyButtonHeight)
+                if(skipButtonNeed) {
+                    +rectangle button@{
+                        origin = LEFT
+                        align = LEFT
+                        size = V3(buyButtonWidth, buyButtonHeight)
 
-                    color = Color(226, 145, 25, 1.0)
-                    offset.x += (totalWidthPart * 30)
+                        color = Color(226, 145, 25, 1.0)
+                        offset.x += if(buyButtonNeed) totalWidthPart * 30 else buyButtonOffsetX
 
-                    +item {
-                        stack = arrowUpItem
-                        offset = V3(buyButtonPickaxeOffsetX, buyButtonPickaxeOffsetY)
-                        size.y = this@button.size.y - offset.y * 2
-                        size.x = size.y
-                        color = WHITE
-                    }
+                        +item {
+                            stack = arrowUpItem
+                            offset = V3(buyButtonPickaxeOffsetX, buyButtonPickaxeOffsetY)
+                            size.y = this@button.size.y - offset.y * 2
+                            size.x = size.y
+                            color = WHITE
+                        }
 
-                    +text {
-                        align = CENTER
-                        origin = CENTER
-                        content = "Пропустить"
-                    }
+                        val skipText = +text {
+                            align = CENTER
+                            origin = CENTER
+                            content = "Пропустить"
+                        }
 
-                    onHover {
-                        animate(0.05) {
-                            color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
+                        val priceText = +text {
+                            enabled = false
+                            align = CENTER
+                            origin = CENTER
+                            content = getPriceText(skipPrice)
+                        }
+
+                        onHover {
+                            animate(0.05) {
+                                color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
+                            }
+
+                            skipText.enabled = !hovered
+                            priceText.enabled = !skipText.enabled
+                        }
+
+                        onClick {
+                            if (!down) return@onClick
+                            close()
+                            JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer())
                         }
                     }
+                }
 
-                    onClick {
-                        if (!down) return@onClick
-                        close()
-                        JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer())
+                +text {
+                    origin = CENTER
+                    align = CENTER
+                    offset.x += if(buyButtonNeed) {
+                        if(skipButtonNeed) buyBlockTextOffsetX else buyBlockTextOffsetX - buyButtonWidth
+                    } else {
+                        if(skipButtonNeed) buyBlockTextOffsetX - buyButtonWidth else buyBlockTextOffsetX - (buyButtonWidth * 2)
                     }
+                    content = " $buyBlockText"
+                    lineHeight = 12.0
                 }
             }
 
@@ -241,14 +282,16 @@ class BattlePassGui(
                 align = BOTTOM_LEFT
                 origin = BOTTOM_LEFT
 
-                content = if (quests.isEmpty()) "Все задания на сегодня выполнены!" else {
-                    "Задания:\n${quests.joinToString(separator = "\n")}"
+                offset.y -= totalHeightPart * 5.0
+
+                content = if (quests.isEmpty()) " Все задания на сегодня выполнены!" else {
+                    " Задания:\n${quests.joinToString(separator = "\n")}"
                 }
             }
         }
 
         rewards = addRewardRows()
-        battlepass + rewards
+        battlepass!! + rewards!!
         moveLeftButton = addMoveButton(true)
         moveRightButton = addMoveButton(false)
         updateMoveButtonsVisibility()
@@ -256,8 +299,8 @@ class BattlePassGui(
 
     private fun updateMoveButtonsVisibility() {
         val maxPage = levelsCount / rewardsCount
-        moveLeftButton.enabled = page > 0
-        moveRightButton.enabled = page < maxPage
+        moveLeftButton!!.enabled = page > 0
+        moveRightButton!!.enabled = page < maxPage
     }
 
     private fun addMoveButton(isToLeft: Boolean): RectangleElement = rectangle buttonMain@{
@@ -284,14 +327,14 @@ class BattlePassGui(
             if (enabled && down) {
                 page += if (isToLeft) -1 else 1
 
-                battlepass.removeChild(rewards)
+                battlepass!!.removeChild(rewards!!)
                 rewards = addRewardRows()
-                battlepass.addChild(rewards)
+                battlepass!!.addChild(rewards!!)
 
                 updateMoveButtonsVisibility()
             }
         }
-    }.also { battlepass.addChild(it) }
+    }.also { battlepass!!.addChild(it) }
 
     private var page = 0
 
@@ -412,7 +455,7 @@ class BattlePassGui(
                 }
 
                 onClick {
-                    if (!down) return@onClick
+                    if (!down || taken) return@onClick
                     close()
                     JavaMod.clientApi.clientConnection().sendPayload("bp:reward", Unpooled.buffer().apply {
                         writeInt(i)
@@ -425,9 +468,9 @@ class BattlePassGui(
 
     private var hoveredReward: ItemStack? = null
 
-    private fun getPriceText(): String {
-        if (sale == 0.0) return "§a$price"
-        return "§a§m$price§c§l ${(price * (100 - (sale * 100)) / 100.0).roundToInt()}"
+    private fun getPriceText(price: Int): String {
+        if (sale == 0.0) return "$price"
+        return "§m$price§c§l ${(price * (100 - (sale * 100)) / 100.0).roundToInt()}"
     }
 
 }
