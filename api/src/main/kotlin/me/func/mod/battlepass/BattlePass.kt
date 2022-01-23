@@ -75,6 +75,7 @@ object BattlePass {
                         page.items.forEach { item -> item(item) }
                         integer(page.advancedItems.size)
                         page.advancedItems.forEach { item -> item(item) }
+                        integer(page.skipPrice)
                     }
                     integer(it.quests.size)
                     it.quests.forEach { quest -> string(quest) }
