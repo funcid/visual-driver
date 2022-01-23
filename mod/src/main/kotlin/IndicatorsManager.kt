@@ -18,14 +18,14 @@ object IndicatorsManager {
         register<HealthRender>(Indicators.HEALTH)
         register<ExpBarRender>(Indicators.EXP)
         register<HungerRender>(Indicators.HUNGER)
-        register<PlayerListRender>(Indicators.TAB)
         register<ArmorRender>(Indicators.ARMOR)
-        register<HotbarRender>(Indicators.HOTBAR)
         register<VehicleHealthRender>(Indicators.VEHICLE)
+        register<PlayerListRender>(Indicators.TAB)
+        register<HotbarRender>(Indicators.HOTBAR)
     }
 
     private inline fun <reified T> register(indicator: Indicators) where T : Event, T : Cancellable {
-        registerHandler<T>(priority = 1000) { isCancelled = states[indicator] == true }
+        registerHandler<T> { if (states[indicator] == true) isCancelled = true }
     }
 
     private fun changeIt(channel: String, value: Boolean) {

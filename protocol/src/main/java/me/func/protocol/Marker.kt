@@ -10,10 +10,10 @@ data class Marker(
     val scale: Double = 16.0,
     val texture: String
 ) {
-    constructor(x: Double, y: Double, z: Double, scale: Double, type: me.func.protocol.MarkerSign) :
+    constructor(x: Double, y: Double, z: Double, scale: Double, type: MarkerSign) :
             this(UUID.randomUUID(), x, y, z, scale, type.texture)
 
-    constructor(x: Double, y: Double, z: Double, type: me.func.protocol.MarkerSign) :
+    constructor(x: Double, y: Double, z: Double, type: MarkerSign) :
             this(UUID.randomUUID(), x, y, z, 16.0, type.texture)
 
     constructor(x: Double, y: Double, z: Double, scale: Double, texture: String) :

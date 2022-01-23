@@ -1,5 +1,4 @@
 import dev.xdark.clientapi.entity.Entity
-import dev.xdark.clientapi.entity.EntityLiving
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.opengl.GlStateManager
@@ -25,16 +24,18 @@ object Banners {
     init {
         fun text(text: String, banner: Banner, rectangle: RectangleElement) {
             text.split("\n").forEachIndexed { index, line ->
+                val currentSize = sizes[banner.uuid to index] ?: 1.0
+                val v3 = V3(currentSize, currentSize, currentSize)
+
                 rectangle + text {
                     align = TOP
                     origin = TOP
                     content = line
                     size = V3(banner.weight.toDouble(), banner.height.toDouble())
                     color = WHITE
-                    offset.z -= 0.01
-                    offset.y -= -10 - index * 12
-
-                    sizes[banner.uuid to index]?.let { scale = V3(it, it, it) }
+                    offset.z = -0.01
+                    offset.y = -(-3 - index * 12) * currentSize
+                    scale = v3
                 }
                 rectangle + text {
                     align = TOP
@@ -42,11 +43,10 @@ object Banners {
                     content = toBlackText(line)
                     size = V3(banner.weight.toDouble(), banner.height.toDouble())
                     color = Color(0, 0, 0, 0.82)
-                    offset.z -= 0.005
-                    offset.y -= -10 - index * 12 - 0.75
-                    offset.x += 0.75
-
-                    sizes[banner.uuid to index]?.let { scale = V3(it, it, it) }
+                    offset.z = -0.005
+                    offset.y = -(-3 - index * 12 - 0.75) * currentSize
+                    offset.x += 0.75 * currentSize
+                    scale = v3
                 }
             }
         }
@@ -82,6 +82,7 @@ object Banners {
                 }
 
                 val context = Context3D(V3(banner.x, banner.y, banner.z))
+                banners[uuid] = banner to context
 
                 context.addChild(rectangle {
                     if (banner.texture.isNotEmpty()) {
@@ -109,7 +110,6 @@ object Banners {
                     }
                 })
                 UIEngine.worldContexts.add(context)
-                banners[uuid] = banner to context
             }
         }
 
@@ -118,7 +118,6 @@ object Banners {
             banners[uuid]?.let { pair ->
                 val element = (pair.second.children[0] as RectangleElement)
                 element.children.clear()
-
                 text(NetUtil.readUtf8(this), pair.first, element)
             }
         }
@@ -128,10 +127,18 @@ object Banners {
             banners[uuid]?.let { pair ->
                 repeat(readInt()) {
                     val line = readInt()
-                    val scale = readDouble()
+                    val newScale = readDouble()
 
-                    sizes[uuid to line] = scale
-                    (pair.second.children[0] as RectangleElement).children[line].scale = V3(scale, scale, scale)
+                    sizes[uuid to line] = newScale
+                    val element = pair.second.children[0] as RectangleElement
+                    element.children[line * 2].animate(0.2) {
+                        scale = V3(newScale, newScale, newScale)
+                        offset.y = -(-3 - line * 12) * newScale
+                    }
+                    element.children[line * 2 + 1].animate(0.2) {
+                        scale = V3(newScale, newScale, newScale)
+                        offset.y = -(-3 - line * 12 - 0.75) * newScale
+                    }
                 }
             }
         }
