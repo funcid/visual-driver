@@ -228,13 +228,13 @@ Banners.new(banner); // Добавление в список баннеров, �
 
 <h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
 
-Методы:<br>
-
 <img src ="https://user-images.githubusercontent.com/63064550/149799259-9129ba80-b2a8-4553-9638-666b5ba950ab.png" width="500">
 
+Методы:<br>
+
 `Anime.reload(player: Player, seconds: Int, text: String)` простая перезарядка, с розовым цветом<br>
-`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor)` с использованием GlowColor<br>
-`Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int)` с любым цветом в RGB<br>
+`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor, alpha: Double)` с использованием GlowColor<br>
+`Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int, alpha: Double)` с любым цветом в RGB<br>
 
 <h3>Информация справа снизу (модуль STANDARD)</h3>
 

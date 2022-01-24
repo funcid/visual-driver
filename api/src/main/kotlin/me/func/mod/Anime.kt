@@ -16,10 +16,7 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.graffiti.DefaultGraffitiClient
 import me.func.mod.graffiti.GraffitiClient
-import me.func.protocol.GlowColor
-import me.func.protocol.Indicators
-import me.func.protocol.Marker
-import me.func.protocol.ModChat
+import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.graffiti.GraffitiPlaced
 import me.func.protocol.npc.NpcBehaviour
@@ -434,4 +431,12 @@ object Anime {
     @JvmStatic
     fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255,192,203)
 
+    @JvmStatic
+    fun showEnding(player: Player, endStatus: EndStatus, key: String, value: String) {
+        ModTransfer()
+            .integer(endStatus.ordinal)
+            .string(key)
+            .string(value)
+            .send("crazy:ending", player)
+    }
 }

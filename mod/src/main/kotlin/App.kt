@@ -23,5 +23,6 @@ class App : KotlinMod() {
         ScreenAlert
         CursorAlert
         RightBottom
+        Ending
     }
 }
