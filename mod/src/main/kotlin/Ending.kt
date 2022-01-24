@@ -75,6 +75,7 @@ object Ending {
             key.content = readUtf8(this)
             value.content = readUtf8(this)
             text.content = endStatus.title
+            text.offset.z = 50.0
             filler?.color = Color(endStatus.red, endStatus.green, endStatus.blue, 0.86)
             cup.textureLocation = ResourceLocation.of("cache/animation", endStatus.texture)
             cup.size = V3(63.5, 104.0)

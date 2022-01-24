@@ -8,7 +8,7 @@ enum class EndStatus(
     val texture: String,
     val offset: Double
 ) {
-    WIN("Победа!", 35, 170, 65, "mF7DWoV.png", -60.7),
-    LOSE("Поражение", 185, 25, 25, "vxyu2tZ.png", -60.7),
-    NOONE("Ничья", 200, 119, 42, "zUxhQ7y.png", -55.7)
+    WIN("Победа!", 35, 170, 65, "mF7DWoV.png", 60.7),
+    LOSE("Поражение", 185, 25, 25, "vxyu2tZ.png", 60.7),
+    NOONE("Ничья", 200, 119, 42, "zUxhQ7y.png", 55.7)
 }
