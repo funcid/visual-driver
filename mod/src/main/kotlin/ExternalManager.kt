@@ -23,7 +23,7 @@ object ExternalManager {
         }
     }
 
-    private fun loadPaths(vararg paths: String) {
+    fun loadPaths(vararg paths: String) {
         val url = paths[0].split("/").dropLast(1).joinToString("/") + "/"
 
         loadTextures(
