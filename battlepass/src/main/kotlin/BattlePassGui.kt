@@ -157,7 +157,7 @@ class BattlePassGui(
                 +text {
                     origin = CENTER
                     align = CENTER
-                    val buyBlockTextOffsetX = guiSize.totalWidthPart * 10.5
+                    val buyBlockTextOffsetX = guiSize.totalWidthPart * 12.5
                     offset.x += if(buyButtonNeed) {
                         if(skipButtonNeed) buyBlockTextOffsetX * 2 else buyBlockTextOffsetX - guiSize.buyButtonWidth
                     } else {
@@ -165,7 +165,7 @@ class BattlePassGui(
                     }
                     content = " $buyBlockText"
                     lineHeight = 12.0
-                    scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
+                    scale = V3(guiSize.totalWidthPart * 0.18, guiSize.totalWidthPart * 0.18)
                 }
             }
 
