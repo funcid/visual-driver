@@ -376,6 +376,23 @@ enum class DropRare(val title: String, val color: String) {
     }
 }
 ```
+<h3>Сообщения об окончании игры</h3>
+
+<img src="https://user-images.githubusercontent.com/63064550/150874231-4958a0af-8652-4475-a014-f73d23504b30.png" width="500">
+
+Список экранов окончания игр (`enum EndStatus`): <br>
+`WIN` экран победы, <br>
+`LOSE` экран поражения, <br>
+`NOONE` экран ничьей, <br>
+
+Методы вызова экрана окончания игры:<br>
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с его статистикой за игру(статистику вы должны вносить сами!!! И так же, `\n \n` - в данном случае снос строки ниже, чтобы вместить все поля победы)
+
+Пример использования:<br>
+
+<img src="https://user-images.githubusercontent.com/63064550/150875417-0c0f35ba-efa9-4a83-8117-20940a7c1df9.png" width="500">
+
+Указаниие более чем 5 полей приведёт к нечитабельности статистки!
 
 <h3>Маркеры в мире STANDARD</h3>
 
