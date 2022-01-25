@@ -69,7 +69,7 @@ dependencies {
     BattlePass.send(player, battlePass)
     BattlePass.show(player, battlePass, BattlePassUserData(100, false))
 ```
-
+Редкость предмета берется из `NBTTag` предмета `rare` (DropRare), а статус собранности награды `taken` (Boolean).<br>
 Можно указывать награду на каждый уровень, требуемый опыт.<br>
 
 <h3>Баннеры EXPERIMENTAL</h3>
