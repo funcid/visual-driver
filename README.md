@@ -57,7 +57,7 @@ dependencies {
 Что представляет из себя батлпасс?<br>
 Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи.<br>
 
-```
+```kotlin
     val battlePass = BattlePass.new(399) {
         pages = mutableListOf(
             BattlePassPageAdvanced( // Первая страница баттлпасса
