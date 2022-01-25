@@ -57,14 +57,68 @@ dependencies {
 Что представляет из себя батлпасс?<br>
 Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи.<br>
 
-```
-    val battlePass = BattlePass.new(300) {
-        pages = arrayListOf(BattlePassPageAdvanced(300, 10,
-        listOf(ItemStack(Material.STONE, 1)),
-        listOf(ItemStack(Material.DIAMOND, 1))))
-
-        facade.salePercent = 50.0
-        facade.tags.add("Батлпасс - боевый пропуск...")
+```kotlin
+    val battlePass = BattlePass.new(399) {
+        pages = mutableListOf(
+            BattlePassPageAdvanced( // Первая страница баттлпасса
+                300, // Опыт для прохождения уровня
+                10, // Цена скипа уровня
+                listOf( // Список обычных предметов
+                    NameTag.TAG1.getIcon(),
+                    ArrowParticle.SLIME.getIcon(),
+                    ArrowParticle.WATER_DROP.getIcon(),
+                    StepParticle.SLIME.getIcon(),
+                    Mask.HOUSTON.getIcon(),
+                    KillMessage.GLOBAL.getIcon(),
+                    MoneyKit.SMALL.getIcon(),
+                    ArrowParticle.FALLING_DUST.getIcon(),
+                    ArrowParticle.SPELL_INSTANT.getIcon(),
+                    Mask.JASON.getIcon(),
+                ),
+                listOf( // Список премиум предметов
+                    NameTag.TAG3.getIcon(),
+                    Mask.TRADEGY.getIcon(),
+                    Mask.HORROR.getIcon(),
+                    MoneyKit.SMALL.getIcon(),
+                    NameTag.TAG28.getIcon(),
+                    Mask.COMEDY_MASK.getIcon(),
+                    KillMessage.END.getIcon(),
+                    ArrowParticle.REDSTONE.getIcon(),
+                    StepParticle.REDSTONE.getIcon(),
+                    Corpse.G1.getIcon(),
+                ),
+            ), BattlePassPageAdvanced( // Вторая страница баттлпасса
+                600,
+                20,
+                listOf(
+                    KillMessage.DEAD.getIcon(),
+                    MoneyKit.SMALL.getIcon(),
+                    Mask.SCREAM.getIcon(),
+                    NameTag.TAG10.getIcon(),
+                    StepParticle.REDSTONE.getIcon(),
+                    KillMessage.ROOM.getIcon(),
+                    Mask.DALLAS.getIcon(),
+                    NameTag.TAG16.getIcon(),
+                    Mask.CREWMATE_LIME.getIcon(),
+                    MoneyKit.NORMAL.getIcon()
+                ),
+                listOf(
+                    MoneyKit.SMALL.getIcon(),
+                    KillMessage.SLEEP.getIcon(),
+                    Mask.CREWMATE_WHITE.getIcon(),
+                    NameTag.TAG17.getIcon(),
+                    Mask.JASON.getIcon(),
+                    ArrowParticle.VILLAGER_ANGRY.getIcon(),
+                    NameTag.TAG20.getIcon(),
+                    MoneyKit.NORMAL.getIcon(),
+                    Mask.CREWMATE_PURPLE.getIcon(),
+                    StepParticle.VILLAGER_ANGRY.getIcon()
+                ),
+            )
+        )
+        sale(50.0) // Скидка 50%
+        facade.tags.add("Выполняйте квесты - получайте призы!")
+        facade.tags.add("BattlePass завершится в 01.04.2022")
     }
     BattlePass.send(player, battlePass)
     BattlePass.show(player, battlePass, BattlePassUserData(100, false))
