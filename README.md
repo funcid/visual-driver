@@ -383,7 +383,7 @@ enum class DropRare(val title: String, val color: String) {
 Список экранов окончания игр (`enum EndStatus`): <br>
 `WIN` экран победы, <br>
 `LOSE` экран поражения, <br>
-`NOONE` экран ничьей, <br>
+`DRAW` экран ничьей, <br>
 
 Методы вызова экрана окончания игры:<br>
 `Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с информацией. `key` - сообщения слева, `value` - сообщения справа. Используйте `\n \n` - для переноса строки.
