@@ -25,8 +25,8 @@ class BattlePassGuiSize {
 
     fun calculate(): BattlePassGuiSize {
         val resolution = JavaMod.clientApi.resolution()
-        totalWidth = resolution.scaledWidth_double * resolution.scaleFactor / 3.84
-        totalHeight = resolution.scaledHeight_double * resolution.scaleFactor / 4.46
+        totalWidth = resolution.scaledWidth_double / 1.92
+        totalHeight = resolution.scaledHeight_double / 2.23
 
         totalWidthPart = totalWidth / 100
         totalHeightPart = totalHeight / 100
