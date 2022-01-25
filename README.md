@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.63)
+# Cristalix Animation API DOCS (актуальная версия 1.1.71)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.63'
+  implementation 'me.func:animation-api:1.1.71'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -383,14 +383,21 @@ enum class DropRare(val title: String, val color: String) {
 Список экранов окончания игр (`enum EndStatus`): <br>
 `WIN` экран победы, <br>
 `LOSE` экран поражения, <br>
-`NOONE` экран ничьей, <br>
+`DRAW` экран ничьей, <br>
 
 Методы вызова экрана окончания игры:<br>
-`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с его статистикой за игру(статистику вы должны вносить сами!!! И так же, `\n \n` - в данном случае снос строки ниже, чтобы вместить все поля победы)
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с информацией. `key` - сообщения слева, `value` - сообщения справа. Используйте `\n \n` - для переноса строки.<br>
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>)` показывает экран окончания игроку. `key` - список строк слева, `value` - список строк справа.
 
 Пример использования:<br>
-
-<img src="https://user-images.githubusercontent.com/63064550/150875417-0c0f35ba-efa9-4a83-8117-20940a7c1df9.png" width="500">
+```
+Anime.showEnding(
+  player, 
+  EndStatus.WIN, 
+  listOf("Убийств:", "Смертей:"), 
+  listOf("${user.kills}", "${user.deaths}")
+)
+```
 
 Указаниие более чем 5 полей приведёт к нечитабельности статистки!
 
