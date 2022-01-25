@@ -337,17 +337,12 @@ class BattlePassGui(
         var offsetX = guiSize.rewardSizeX + guiSize.rewardBetweenX
 
         (if (isAdvanced) pages[page].advancedItems else pages[page].items).forEachIndexed { index, it ->
-            var rare = DropRare.COMMON
+            var currentRare = DropRare.COMMON
             var taken = false
 
-            val tagCompound = it?.tagCompound
-            if (tagCompound != null) {
-                val tag = tagCompound.getString("rarity")
-                if (tag != null) {
-                    rare = DropRare.valueOf(tag.uppercase())
-                }
-
-                taken = tagCompound.getBoolean("taken")
+            it?.tagCompound?.let {
+                it.getInteger("rare").let { currentRare = DropRare.values()[it] }
+                taken = if (it.hasKey("taken")) it.getBoolean("taken") else false
             }
 
             +rectangle rewardMain@{
@@ -366,7 +361,7 @@ class BattlePassGui(
                     align = BOTTOM_LEFT
                     origin = BOTTOM_LEFT
                     size = V3(this@rewardMain.size.x, guiSize.totalHeightPart * 0.87)
-                    color = Color(rare.red, rare.green, rare.blue)
+                    color = Color(currentRare.red, currentRare.green, currentRare.blue)
                 }
 
                 onHover {
@@ -392,8 +387,8 @@ class BattlePassGui(
     private var hoveredReward: ItemStack? = null
 
     private fun getPriceText(price: Int): String {
-        if (sale == 0.0) return "§b§l$price кристалликов"
-        return "§c§l§m$price§b§l ${(price * sale / 100.0).roundToInt()} кристалликов"
+        if (sale == 0.0) return "§f§l$price кристаликов"
+        return "§c§l§m$price§f§l ${(price * sale / 100.0).roundToInt()} кристаликов"
     }
 
 }
