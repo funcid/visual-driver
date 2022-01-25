@@ -31,6 +31,8 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
 
     fun json(string: Any) = this.apply { string(GlobalSerializers.toJson(string)) }
 
+    fun varInt(integer: Int) = this.apply { NetUtil.writeVarInt(integer, serializer) }
+
     fun putString(string: String) = this.apply { NetUtil.writeUtf8(string, serializer) }
 
     fun string(string: String) = this.apply { putString(string) }
@@ -58,6 +60,8 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun send(channel: String?, player: Player?) {
         if (player == null)
             return
+
+        serializer.a = serializer.retainedSlice()
 
         (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
     }

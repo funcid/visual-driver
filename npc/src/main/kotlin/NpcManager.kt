@@ -39,7 +39,8 @@ object NpcManager {
             customNameTag = data.name
 
             teleport(data.x, data.y, data.z)
-            setYaw(data.yaw)
+            rotationYawHead = (data.yaw / Math.PI * 180).toFloat()
+            setYaw((data.yaw / Math.PI * 180).toFloat())
             setPitch(data.pitch)
 
             if (data.sitting)
