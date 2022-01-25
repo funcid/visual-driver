@@ -1,16 +1,12 @@
 import dev.xdark.clientapi.event.render.ScaleChange
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemStack
-import dev.xdark.clientapi.nbt.NBTPrimitive
-import dev.xdark.clientapi.nbt.NBTTagCompound
-import dev.xdark.clientapi.nbt.NBTTagString
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.clientapi.registerHandler
-import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -22,11 +18,8 @@ class BattlePassGui(
     private val buyBlockText: String,
     private val price: Int,
     private val sale: Double,
-    private val levelsCount: Int,
     val pages: List<BattlePage> = listOf(),
     var quests: List<String> = listOf(),
-    private val items: List<ItemStack?> = listOf(),
-    private val advancedItems: List<ItemStack?> = listOf()
 ) : ContextGui() {
 
     var isAdvanced: Boolean = false
@@ -41,25 +34,6 @@ class BattlePassGui(
     private var moveLeftButton: RectangleElement? = null
     private var moveRightButton: RectangleElement? = null
     private var rewards: RectangleElement? = null
-
-    private val arrowUpItem = loadItem("arrow_up")
-    private val addItem = loadItem("add")
-
-    private fun loadItem(tag: String): ItemStack = ItemStack.of(
-        NBTTagCompound.of(
-            mapOf(
-                "id" to NBTTagString.of("clay_ball"),
-                "Count" to NBTPrimitive.of(1),
-                "Damage" to NBTPrimitive.of(0),
-                "tag" to NBTTagCompound.of(
-                    mapOf(
-                        "other" to NBTTagString.of(tag)
-                    )
-                )
-            )
-        )
-    )
-
     private val rewardsCount = 10
 
     init {
@@ -67,12 +41,8 @@ class BattlePassGui(
 
         update()
 
-        registerHandler<ScaleChange>(UIEngine.listener) {
-            update()
-        }
-        registerHandler<WindowResize>(UIEngine.listener) {
-            update()
-        }
+        registerHandler<ScaleChange> { update() }
+        registerHandler<WindowResize> { update() }
 
         afterRender {
             val hoveredItem = hoveredReward ?: return@afterRender
@@ -249,9 +219,8 @@ class BattlePassGui(
     }
 
     private fun updateMoveButtonsVisibility() {
-        val maxPage = levelsCount / rewardsCount
         moveLeftButton!!.enabled = page > 0
-        moveRightButton!!.enabled = page < maxPage
+        moveRightButton!!.enabled = page < pages.size - 1
     }
 
     private fun addMoveButton(isToLeft: Boolean): RectangleElement = rectangle buttonMain@{
@@ -292,25 +261,18 @@ class BattlePassGui(
     private var page = 0
 
     private fun addRewardRows(): RectangleElement = rectangle rewardMain@{
-        val firstIndex = page * rewardsCount
-        val lastIndex = (firstIndex + rewardsCount).coerceAtMost(levelsCount) - 1
-
         align = CENTER
         origin = CENTER
         size = V3(guiSize.totalWidth, guiSize.totalHeightPart * 45.5)
         offset.y += guiSize.totalHeightPart * 22
 
         +addRewardRow(
-            firstIndex,
-            lastIndex,
             false,
             Color(124, 124, 124, 0.62),
             Color(124, 124, 124, 0.28),
             0.0
         )
         +addRewardRow(
-            firstIndex,
-            lastIndex,
             true,
             Color(226, 132, 44, 0.62),
             Color(185, 122, 27, 0.28),
@@ -319,7 +281,7 @@ class BattlePassGui(
 
         val betweenX = guiSize.rewardBetweenX
         var offsetX = (guiSize.totalWidthPart * 11.45) + betweenX
-        for (index in firstIndex..lastIndex) {
+        repeat(rewardsCount) {
             +rectangle {
                 size = V3(guiSize.totalWidthPart * 8.27, guiSize.totalHeightPart * 7.3)
                 offset.x += offsetX
@@ -329,15 +291,13 @@ class BattlePassGui(
                 +text {
                     origin = CENTER
                     align = CENTER
-                    content = (index + 1).toString()
+                    content = (page * rewardsCount + it + 1).toString()
                 }
             }
         }
     }
 
     private fun addRewardRow(
-        firstIndex: Int,
-        lastIndex: Int,
         isAdvanced: Boolean,
         firstBlockColor: Color,
         rewardBlockColor: Color,
@@ -366,13 +326,11 @@ class BattlePassGui(
 
         var offsetX = guiSize.rewardSizeX + guiSize.rewardBetweenX
 
-        for (i in firstIndex until lastIndex + 1) {
-            val item = (if (isAdvanced) advancedItems[i] else items[i]) ?: continue
-
+        (if (isAdvanced) pages[page].advancedItems else pages[page].items).forEachIndexed { index, it ->
             var rare = DropRare.COMMON
             var taken = false
 
-            val tagCompound = item.tagCompound
+            val tagCompound = it?.tagCompound
             if (tagCompound != null) {
                 val tag = tagCompound.getString("rarity")
                 if (tag != null) {
@@ -391,7 +349,7 @@ class BattlePassGui(
                 +item {
                     origin = CENTER
                     align = CENTER
-                    stack = item
+                    stack = it!!
                     scale = V3(1.7, 1.7, 1.7)
                 }
                 +rectangle {
@@ -403,8 +361,8 @@ class BattlePassGui(
 
                 onHover {
                     if (hovered) {
-                        hoveredReward = item
-                    } else if (hoveredReward == item) {
+                        hoveredReward = it
+                    } else if (hoveredReward == it) {
                         hoveredReward = null
                     }
                 }
@@ -413,7 +371,7 @@ class BattlePassGui(
                     if (!down || taken) return@onClick
                     close()
                     JavaMod.clientApi.clientConnection().sendPayload("bp:reward", Unpooled.buffer().apply {
-                        writeInt(i)
+                        writeInt(index + page * rewardsCount)
                         writeBoolean(isAdvanced)
                     })
                 }
@@ -424,8 +382,8 @@ class BattlePassGui(
     private var hoveredReward: ItemStack? = null
 
     private fun getPriceText(price: Int): String {
-        if (sale == 0.0) return "$price"
-        return "§m$price§c§l ${(price * (100 - (sale * 100)) / 100.0).roundToInt()}"
+        if (sale == 0.0) return "§b§l$price кристаликов"
+        return "§c§l§m$price§b§l ${(price * sale / 100.0).roundToInt()} кристаликов"
     }
 
 }

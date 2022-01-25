@@ -1,4 +1,13 @@
-data class BattlePage(val index: Int, val exp: Int, val requiredExp: Int, val skipPrice: Int)
+import dev.xdark.clientapi.item.ItemStack
+
+data class BattlePage(
+    val index: Int,
+    val items: List<ItemStack?> = listOf(),
+    val advancedItems: List<ItemStack?> = listOf(),
+    val exp: Int,
+    val requiredExp: Int,
+    val skipPrice: Int
+)
 
 fun getPage(pages: List<BattlePage>, expCurrent: Int): BattlePage? {
     var level = 1
@@ -8,7 +17,7 @@ fun getPage(pages: List<BattlePage>, expCurrent: Int): BattlePage? {
             level++
             exp -= page.requiredExp
         } else {
-            return BattlePage(page.index, exp, page.requiredExp, page.skipPrice)
+            return BattlePage(page.index, page.items, page.advancedItems, exp, page.requiredExp, page.skipPrice)
         }
     }
     return null

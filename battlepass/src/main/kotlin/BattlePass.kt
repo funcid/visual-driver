@@ -18,23 +18,24 @@ class BattlePass : KotlinMod() {
             val sale = readDouble()
 
             val tags = MutableList(readInt()) { NetUtil.readUtf8(this) }
-            val items = arrayListOf<ItemStack>()
-            val advancedItems = arrayListOf<ItemStack>()
 
             val pages = MutableList(readInt()) {
                 val requiredExp = readInt()
 
+                val items = arrayListOf<ItemStack>()
+                val advancedItems = arrayListOf<ItemStack>()
+
                 repeat(readInt()) { items.add(ItemTools.read(this)) }
                 repeat(readInt()) { advancedItems.add(ItemTools.read(this)) }
 
-                BattlePage(it + 1, 0, requiredExp, readInt())
+                BattlePage(it + 1, items, advancedItems, 0, requiredExp, readInt())
             }
 
             val quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
 
-            map[uuid] =
-                BattlePassGui(tags.joinToString("\n"), price, sale, pages.size, pages, quests, items, advancedItems)
+            map[uuid] = BattlePassGui(tags.joinToString("\n"), price, sale, pages, quests)
         }
+
         registerChannel("bp:show") {
             val gui = map[UUID.fromString(NetUtil.readUtf8(this))]!!
             val exp = readInt()

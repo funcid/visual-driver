@@ -39,9 +39,9 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
 
     fun byteArray(vararg byte: Byte) = this.apply { serializer.writeBytes(byte) }
 
-    fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = this.apply { writeItem(serializer, item) }
+    fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = this.apply { serializer.writeItem(item) }
 
-    fun item(item: ItemStack) = this.apply { writeItem(serializer, CraftItemStack.asNMSCopy(item)) }
+    fun item(item: ItemStack) = this.apply { item(CraftItemStack.asNMSCopy(item)) }
 
     fun nbt(nbt: NBTTagCompound) = this.apply { writeNbtCompound(serializer, nbt) }
 
@@ -64,24 +64,6 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
         serializer.a = serializer.retainedSlice()
 
         (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
-    }
-
-    fun writeItem(data: PacketDataSerializer, input: net.minecraft.server.v1_12_R1.ItemStack): PacketDataSerializer {
-        var item = input
-        item = NetworkHooks.rewriteItem(item)
-        if (!item.isEmpty && item.getItem() != null) {
-            data.writeShort(Item.getId(item.getItem())).writeByte(item.getCount()).writeShort(item.data)
-            var nbttagcompound: NBTTagCompound? = null
-            if (item.getItem().usesDurability()) {
-                item = item.cloneItemStack()
-                CraftItemStack.setItemMeta(item, CraftItemStack.getItemMeta(item))
-                nbttagcompound = item.getTag()
-            }
-            writeNbtCompound(data, nbttagcompound)
-        } else {
-            data.writeShort(-1)
-        }
-        return data
     }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {

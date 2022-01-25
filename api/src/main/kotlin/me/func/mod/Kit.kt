@@ -93,7 +93,7 @@ enum class Kit(val fromUrl: String) : Listener {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("battlepass-bundle.jar", player)
 
-                BattlePass.battlePasses.values.forEach { BattlePass.send(player, it) }
+                BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) }
             }
         }
     },
