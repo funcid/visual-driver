@@ -49,8 +49,8 @@ class BattlePassGui(
             JavaMod.clientApi.resolution().run {
                 val wholeDescription = hoveredItem.displayName
                 screen.drawHoveringText(
-                    wholeDescription, Mouse.getX() / 2,
-                    (scaledHeight_double * scaleFactor / 2 - Mouse.getY() / 2).toInt()
+                    wholeDescription, Mouse.getX() / scaleFactor,
+                    (scaledHeight_double * scaleFactor / scaleFactor - Mouse.getY() / scaleFactor).toInt()
                 )
             }
         }
@@ -88,6 +88,7 @@ class BattlePassGui(
                             align = CENTER
                             origin = CENTER
                             content = "Купить"
+                            scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
 
                         val priceText = +text {
@@ -95,6 +96,7 @@ class BattlePassGui(
                             align = CENTER
                             origin = CENTER
                             content = getPriceText(price)
+                            scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
 
                         onClick {
@@ -124,6 +126,7 @@ class BattlePassGui(
                             align = CENTER
                             origin = CENTER
                             content = "Пропустить"
+                            scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
 
                         val priceText = +text {
@@ -131,6 +134,7 @@ class BattlePassGui(
                             align = CENTER
                             origin = CENTER
                             content = getPriceText(skipPrice)
+                            scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
 
                         onHover {
@@ -155,12 +159,13 @@ class BattlePassGui(
                     align = CENTER
                     val buyBlockTextOffsetX = guiSize.totalWidthPart * 10.5
                     offset.x += if(buyButtonNeed) {
-                        if(skipButtonNeed) buyBlockTextOffsetX else buyBlockTextOffsetX - guiSize.buyButtonWidth
+                        if(skipButtonNeed) buyBlockTextOffsetX * 2 else buyBlockTextOffsetX - guiSize.buyButtonWidth
                     } else {
                         if(skipButtonNeed) buyBlockTextOffsetX - guiSize.buyButtonWidth else buyBlockTextOffsetX - (guiSize.buyButtonWidth * 2)
                     }
                     content = " $buyBlockText"
                     lineHeight = 12.0
+                    scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                 }
             }
 
@@ -175,6 +180,7 @@ class BattlePassGui(
                     lineHeight = 10.0
                     offset.x += guiSize.totalWidthPart * 1.8
                     content = "Уровень\n    $level"
+                    scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                 }
 
                 val progressLineOffsetX = guiSize.totalWidthPart * 11.9
@@ -196,6 +202,7 @@ class BattlePassGui(
                     content = "Опыт: $exp из $requiredExp"
                     offset.x += progressLineOffsetX
                     offset.y += guiSize.totalHeightPart * 4.6
+                    scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                 }
             }
 
@@ -204,6 +211,8 @@ class BattlePassGui(
                 origin = BOTTOM_LEFT
 
                 offset.y -= guiSize.totalHeightPart * 4
+
+                scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
 
                 content = if (quests.isEmpty()) " Все задания на сегодня выполнены!" else {
                     " Задания:\n${quests.joinToString(separator = "\n")}"
@@ -292,6 +301,7 @@ class BattlePassGui(
                     origin = CENTER
                     align = CENTER
                     content = (page * rewardsCount + it + 1).toString()
+                    scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                 }
             }
         }
@@ -319,7 +329,7 @@ class BattlePassGui(
         +text {
             origin = BOTTOM
             align = BOTTOM
-            scale = V3(0.9, 0.9)
+            scale = V3(guiSize.totalWidthPart * 0.18, guiSize.totalWidthPart * 0.18)
             offset.y -= guiSize.totalHeightPart * 3.4
             content = if (isAdvanced) "Премиум" else "Базовый"
         }
@@ -350,12 +360,12 @@ class BattlePassGui(
                     origin = CENTER
                     align = CENTER
                     stack = it!!
-                    scale = V3(1.7, 1.7, 1.7)
+                    scale = V3(guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34)
                 }
                 +rectangle {
                     align = BOTTOM_LEFT
                     origin = BOTTOM_LEFT
-                    size = V3(this@rewardMain.size.x, 2.0)
+                    size = V3(this@rewardMain.size.x, guiSize.totalHeightPart * 0.87)
                     color = Color(rare.red, rare.green, rare.blue)
                 }
 
@@ -382,8 +392,8 @@ class BattlePassGui(
     private var hoveredReward: ItemStack? = null
 
     private fun getPriceText(price: Int): String {
-        if (sale == 0.0) return "§b§l$price кристаликов"
-        return "§c§l§m$price§b§l ${(price * sale / 100.0).roundToInt()} кристаликов"
+        if (sale == 0.0) return "§b§l$price кристалликов"
+        return "§c§l§m$price§b§l ${(price * sale / 100.0).roundToInt()} кристалликов"
     }
 
 }
