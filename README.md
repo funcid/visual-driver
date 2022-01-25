@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.70)
+# Cristalix Animation API DOCS (актуальная версия 1.1.71)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.70'
+  implementation 'me.func:animation-api:1.1.71'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -386,7 +386,7 @@ enum class DropRare(val title: String, val color: String) {
 `DRAW` экран ничьей, <br>
 
 Методы вызова экрана окончания игры:<br>
-`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с информацией. `key` - сообщения слева, `value` - сообщения справа. Используйте `\n \n` - для переноса строки.
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с информацией. `key` - сообщения слева, `value` - сообщения справа. Используйте `\n \n` - для переноса строки.<br>
 `Anime.showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>)` показывает экран окончания игроку. `key` - список строк слева, `value` - список строк справа.
 
 Пример использования:<br>
