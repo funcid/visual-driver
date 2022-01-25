@@ -377,11 +377,12 @@ enum class DropRare(val title: String, val color: String) {
 `NOONE` экран ничьей, <br>
 
 Методы вызова экрана окончания игры:<br>
-`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с его статистикой за игру(статистику вы должны вносить сами!!! И так же, `\n \n` - в данном случае снос строки ниже, чтобы вместить все поля победы)
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с его статистикой за игру. `key` - сообщения слева, `value` - сообщения слева. Используйте `\n \n` - для переноса строки.
 
 Пример использования:<br>
-
-<img src="https://user-images.githubusercontent.com/63064550/150875417-0c0f35ba-efa9-4a83-8117-20940a7c1df9.png" width="500">
+```
+Anime.showEnding(player, EndStatus.WIN, "Убийств:\n \nСмертей:", "${user.kills}\n \n${user.deaths}")
+```
 
 Указаниие более чем 5 полей приведёт к нечитабельности статистки!
 
