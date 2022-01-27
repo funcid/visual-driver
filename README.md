@@ -41,10 +41,10 @@ dependencies {
 `DIALOG` - кит с квестовыми диалогами (by <a href="https://vk.com/sworroo">@sworroo</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
-`GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@funcid</a>)<br>
-`EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@funcid</a>)<br>
-`NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@funcid</a>)<br>
-`BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>, <a href="https://vk.com/funcid">@funcid</a>)<br>
+`GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@func</a>)<br>
+`EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@func</a>)<br>
+`NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@func</a>)<br>
+`BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 
 <h3>Подключение модулей</h3>
 
