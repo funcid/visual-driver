@@ -87,6 +87,7 @@ class BattlePassGui(
                         val buyText = +text {
                             align = CENTER
                             origin = CENTER
+                            shadow = true
                             content = "Купить"
                             scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
@@ -95,6 +96,7 @@ class BattlePassGui(
                             enabled = false
                             align = CENTER
                             origin = CENTER
+                            shadow = true
                             content = getPriceText(price)
                             scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
@@ -125,6 +127,7 @@ class BattlePassGui(
                         val skipText = +text {
                             align = CENTER
                             origin = CENTER
+                            shadow = true
                             content = "Пропустить"
                             scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
@@ -133,6 +136,7 @@ class BattlePassGui(
                             enabled = false
                             align = CENTER
                             origin = CENTER
+                            shadow = true
                             content = getPriceText(skipPrice)
                             scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                         }
@@ -157,6 +161,7 @@ class BattlePassGui(
                 +text {
                     origin = CENTER
                     align = CENTER
+                    shadow = true
                     val buyBlockTextOffsetX = guiSize.totalWidthPart * 12.5
                     offset.x += if(buyButtonNeed) {
                         if(skipButtonNeed) buyBlockTextOffsetX * 2 else buyBlockTextOffsetX - guiSize.buyButtonWidth
@@ -177,6 +182,7 @@ class BattlePassGui(
                 offset.y -= guiSize.totalHeightPart * 10.8
 
                 +text {
+                    shadow = true
                     lineHeight = 10.0
                     offset.x += guiSize.totalWidthPart * 1.8
                     content = "Уровень\n    $level"
@@ -199,6 +205,7 @@ class BattlePassGui(
                 }
 
                 +text {
+                    shadow = true
                     content = "Опыт: $exp из $requiredExp"
                     offset.x += progressLineOffsetX
                     offset.y += guiSize.totalHeightPart * 4.6
@@ -209,6 +216,7 @@ class BattlePassGui(
             +text {
                 align = BOTTOM_LEFT
                 origin = BOTTOM_LEFT
+                shadow = true
 
                 offset.y -= guiSize.totalHeightPart * 4
 
@@ -233,12 +241,12 @@ class BattlePassGui(
     }
 
     private fun addMoveButton(isToLeft: Boolean): RectangleElement = rectangle buttonMain@{
-        size = V3(guiSize.totalWidthPart * 2.85, guiSize.rewardSizeY * 2.1)
+        size = V3(guiSize.totalWidthPart * 3.0, guiSize.rewardSizeY * 2.1)
         origin = if (isToLeft) TOP_LEFT else TOP_RIGHT
         align = if (isToLeft) TOP_LEFT else TOP_RIGHT
         offset.x = if (isToLeft) -20.0 else 23.0
         offset.y += guiSize.advancedOffsetY * 2.42
-        color = Color(42, 102, 189, 0.62)
+        color = Color(42, 102, 189, 0.28)
 
         +rectangle {
             size.x = this@buttonMain.size.x * 2 / 3
@@ -329,6 +337,7 @@ class BattlePassGui(
         +text {
             origin = BOTTOM
             align = BOTTOM
+            shadow = true
             scale = V3(guiSize.totalWidthPart * 0.18, guiSize.totalWidthPart * 0.18)
             offset.y -= guiSize.totalHeightPart * 3.4
             content = if (isAdvanced) "Премиум" else "Базовый"
@@ -387,8 +396,8 @@ class BattlePassGui(
     private var hoveredReward: ItemStack? = null
 
     private fun getPriceText(price: Int): String {
-        if (sale == 0.0) return "§f§l$price кристаликов"
-        return "§c§l§m$price§f§l ${(price * sale / 100.0).roundToInt()} кристаликов"
+        if (sale == 0.0) return "§f§l$price кристалов"
+        return "§c§l§m$price§f§l ${(price * sale / 100.0).roundToInt()} кристалов"
     }
 
 }
