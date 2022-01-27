@@ -62,7 +62,7 @@ class BattlePassGui(
         }
 
         guiSize.calculate()
-        battlepass = +rectangle {
+        battlepass = +rectangle main@ {
             align = CENTER
             origin = CENTER
             size = V3(guiSize.totalWidth, guiSize.totalHeight)
@@ -222,8 +222,23 @@ class BattlePassGui(
 
                 scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
 
-                content = if (quests.isEmpty()) " Все задания на сегодня выполнены!" else {
-                    " Задания:\n${quests.joinToString(separator = "\n")}"
+                content = if (quests.isEmpty()) "Все задания на сегодня выполнены!" else {
+                    "Задания:"
+                }
+
+                if(quests.isNotEmpty()) {
+                    var offsetY = guiSize.totalHeightPart * 4
+                    quests.forEach { quest ->
+                        this@main.addChild(text {
+                            align = BOTTOM_LEFT
+                            origin = BOTTOM_LEFT
+                            shadow = true
+                            scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
+                            offsetY -= guiSize.totalHeightPart * 3.6
+                            offset.y -= offsetY
+                            content = quest
+                        })
+                    }
                 }
             }
         }
@@ -244,7 +259,7 @@ class BattlePassGui(
         size = V3(guiSize.totalWidthPart * 3.0, guiSize.rewardSizeY * 2.1)
         origin = if (isToLeft) TOP_LEFT else TOP_RIGHT
         align = if (isToLeft) TOP_LEFT else TOP_RIGHT
-        offset.x = if (isToLeft) -20.0 else 23.0
+        offset.x = if (isToLeft) guiSize.totalWidthPart * -4 else guiSize.totalWidthPart * 4
         offset.y += guiSize.advancedOffsetY * 2.42
         color = Color(42, 102, 189, 0.28)
 
