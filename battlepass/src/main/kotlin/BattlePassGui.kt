@@ -3,6 +3,7 @@ import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
+import jdk.nashorn.internal.objects.NativeArray.forEach
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
@@ -222,19 +223,18 @@ class BattlePassGui(
 
                 scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
 
-                content = if (quests.isEmpty()) "Все задания на сегодня выполнены!" else {
-                    "Задания:"
-                }
+                content = if (quests.isEmpty()) "Все задания на сегодня выполнены!" else quests[0]
+
 
                 if(quests.isNotEmpty()) {
                     var offsetY = guiSize.totalHeightPart * 4
-                    quests.forEach { quest ->
+                    quests.drop(1).forEach { quest ->
                         this@main.addChild(text {
                             align = BOTTOM_LEFT
                             origin = BOTTOM_LEFT
                             shadow = true
                             scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
-                            offsetY -= guiSize.totalHeightPart * 3.6
+                            offsetY -= guiSize.totalHeightPart * 5.0
                             offset.y -= offsetY
                             content = quest
                         })
@@ -412,7 +412,7 @@ class BattlePassGui(
 
     private fun getPriceText(price: Int): String {
         if (sale == 0.0) return "§f§l$price кристалов"
-        return "§c§l§m$price§f§l ${(price * sale / 100.0).roundToInt()} кристалов"
+        return "§c§l§m$price§f§l ${(price - price * sale / 100.0).roundToInt()} кристалов"
     }
 
 }
