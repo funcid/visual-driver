@@ -33,7 +33,7 @@ class BattlePass : KotlinMod() {
 
             val quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
 
-            map[uuid] = BattlePassGui(tags.joinToString("\n"), price, sale, pages, quests)
+            map[uuid] = BattlePassGui(uuid, tags.joinToString("\n"), price, sale, pages, quests)
         }
 
         registerChannel("bp:show") {

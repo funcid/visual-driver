@@ -6,6 +6,7 @@ import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.battlepass.BattlePassUserData
 import org.bukkit.entity.Player
+import sun.security.jgss.GSSToken.readInt
 import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.Consumer
@@ -27,14 +28,14 @@ object BattlePass {
         return data
     }
 
-    fun buy(channel: String, consumer: BiConsumer<UUID, Player>) {
+    fun buy(channel: String, consumer: BiConsumer<Pair<UUID, Int>, Player>) {
         Anime.createReader(channel) { player, buffer ->
             if (!player.isOnline)
                 return@createReader
 
             consumer.accept(
                 try {
-                    UUID.fromString(NetUtil.readUtf8(buffer))
+                    UUID.fromString(NetUtil.readUtf8(buffer)) to if (buffer.isReadable) buffer.readInt() else 0
                 } catch (exception: Exception) {
                     return@createReader
                 }, player
@@ -43,8 +44,8 @@ object BattlePass {
     }
 
     init {
-        buy("bp:buy-upgrade") { uuid, player -> battlePasses[uuid]?.buyAdvanced?.accept(player) }
-        buy("bp:buy-page") { uuid, player -> battlePasses[uuid]?.buyPage?.accept(player) }
+        buy("bp:buy-upgrade") { data, player -> battlePasses[data.first]?.buyAdvanced?.accept(player) }
+        buy("bp:buy-page") { data, player -> battlePasses[data.first]?.buyPage?.accept(player, data.second) }
     }
 
     fun show(player: Player, uuid: UUID, data: BattlePassUserData) {
@@ -93,7 +94,7 @@ object BattlePass {
         buyAdvanced = accept
     }
 
-    fun BattlePassData.onBuyPage(accept: Consumer<Player>) {
+    fun BattlePassData.onBuyPage(accept: BiConsumer<Player, Int>) {
         buyPage = accept
     }
 }

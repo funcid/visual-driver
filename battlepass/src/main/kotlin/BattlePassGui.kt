@@ -8,26 +8,30 @@ import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.writeUtf8
+import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
+import java.util.*
 import kotlin.math.PI
 import kotlin.math.roundToInt
 
 class BattlePassGui(
+    var uuid: UUID,
     private val buyBlockText: String,
     private val price: Int,
     private val sale: Double,
     val pages: List<BattlePage> = listOf(),
     var quests: List<String> = listOf(),
 ) : ContextGui() {
-
     var isAdvanced: Boolean = false
     var level: Int = 1
     var exp: Int = 0
     var requiredExp: Int = 1
     var skipPrice: Int = 0
+    var lock = false
 
     private val guiSize = BattlePassGuiSize()
 
@@ -78,6 +82,8 @@ class BattlePassGui(
                 val skipButtonNeed = skipPrice != 0
 
                 if (buyButtonNeed) {
+                    var approve = false
+
                     +rectangle buy@{
                         origin = LEFT
                         align = LEFT
@@ -103,12 +109,30 @@ class BattlePassGui(
                         }
 
                         onClick {
-                            close()
-                            JavaMod.clientApi.clientConnection().sendPayload("bp:buy-upgrade", Unpooled.buffer())
+                            if (lock)
+                                return@onClick
+                            if (!approve) {
+                                approve = true
+                                priceText.content = "Да, купить!"
+                                color = Color(55, 200, 55, 1.0)
+                                lock = true
+                                UIEngine.schedule(0.2) { lock = false }
+                            } else {
+                                JavaMod.clientApi.clientConnection().sendPayload("bp:buy-upgrade", Unpooled.buffer().apply {
+                                    writeUtf8(uuid.toString())
+                                })
+                                lock = false
+                                close()
+                            }
                         }
                         onHover {
                             animate(0.05) {
                                 color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
+                            }
+                            if (approve && !hovered) {
+                                priceText.content = getPriceText(price)
+                                color = Color(226, 145, 25)
+                                approve = false
                             }
                             buyText.enabled = !hovered
                             priceText.enabled = !buyText.enabled
@@ -117,6 +141,8 @@ class BattlePassGui(
                 }
 
                 if(skipButtonNeed) {
+                    var approve = false
+
                     +rectangle button@{
                         origin = LEFT
                         align = LEFT
@@ -143,6 +169,12 @@ class BattlePassGui(
                         }
 
                         onHover {
+                            if (approve && !hovered) {
+                                priceText.content = getPriceText(skipPrice)
+                                color = Color(226, 145, 25)
+                                approve = false
+                            }
+
                             animate(0.05) {
                                 color = if (this@onHover.hovered) Color(244, 170, 61) else Color(226, 145, 25)
                             }
@@ -153,8 +185,22 @@ class BattlePassGui(
 
                         onClick {
                             if (!down) return@onClick
-                            close()
-                            JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer())
+                            if (lock)
+                                return@onClick
+                            if (!approve) {
+                                approve = true
+                                priceText.content = "Да, купить!"
+                                color = Color(55, 200, 55, 1.0)
+                                lock = true
+                                UIEngine.schedule(0.2) { lock = false }
+                            } else {
+                                JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer().apply {
+                                    writeUtf8(uuid.toString())
+                                    writeInt(skipPrice)
+                                })
+                                lock = false
+                                close()
+                            }
                         }
                     }
                 }
@@ -164,11 +210,7 @@ class BattlePassGui(
                     align = CENTER
                     shadow = true
                     val buyBlockTextOffsetX = guiSize.totalWidthPart * 12.5
-                    offset.x += if(buyButtonNeed) {
-                        if(skipButtonNeed) buyBlockTextOffsetX * 2 else buyBlockTextOffsetX - guiSize.buyButtonWidth
-                    } else {
-                        if(skipButtonNeed) buyBlockTextOffsetX - guiSize.buyButtonWidth else buyBlockTextOffsetX - (guiSize.buyButtonWidth * 2)
-                    }
+                    offset.x += buyBlockTextOffsetX * 2
                     content = " $buyBlockText"
                     lineHeight = 12.0
                     scale = V3(guiSize.totalWidthPart * 0.18, guiSize.totalWidthPart * 0.18)

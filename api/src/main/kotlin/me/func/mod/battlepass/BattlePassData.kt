@@ -15,14 +15,14 @@ data class BattlePassData(
     var quests: MutableList<String> = mutableListOf(),
     var questStatusUpdater: Function<Player, List<String>>? = null,
     var buyAdvanced: Consumer<Player>? = null,
-    var buyPage: Consumer<Player>? = null,
+    var buyPage: BiConsumer<Player, Int>? = null,
 ) {
     constructor(init: BattlePassData.() -> Unit) : this() { this.init() }
 
     data class Builder(val battlepass: BattlePassData = BattlePassData()) {
 
         fun onBuyAdvanced(consumer: Consumer<Player>) = apply { battlepass.buyAdvanced = consumer }
-        fun onBuyPage(consumer: Consumer<Player>) = apply { battlepass.buyPage = consumer }
+        fun onBuyPage(consumer: BiConsumer<Player, Int>) = apply { battlepass.buyPage = consumer }
         fun price(price: Int) = apply { battlepass.facade.price = price }
         fun salePercent(percent: Double) = apply { battlepass.facade.salePercent = percent }
         fun tags(vararg tags: String) = apply { battlepass.facade.tags.addAll(tags) }
