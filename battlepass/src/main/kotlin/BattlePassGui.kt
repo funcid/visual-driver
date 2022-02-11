@@ -405,14 +405,16 @@ class BattlePassGui(
         (if (isAdvanced) pages[page].advancedItems else pages[page].items).forEachIndexed { index, it ->
             var currentRare = DropRare.COMMON
             var taken = false
+            var canTake = false
 
             it?.tagCompound?.let {
                 it.getInteger("rare").let { currentRare = DropRare.values()[it] }
                 taken = if (it.hasKey("taken")) it.getBoolean("taken") else false
+                canTake = if (it.hasKey("canTake")) it.getBoolean("canTake") else false
             }
 
             +rectangle rewardMain@{
-                color = if(taken) Color(34, 174, 73, 0.72) else rewardBlockColor
+                color = if(taken) Color(235, 66, 66, 0.28) else if(canTake) Color(59, 193, 80, 0.28) else rewardBlockColor
                 size = V3(guiSize.rewardBlockWidth, guiSize.totalHeightPart * 18.9)
                 offset.x += offsetX
                 offsetX += guiSize.rewardBetweenX + guiSize.rewardBlockWidth
