@@ -43,10 +43,14 @@ object MarkerManager {
 
         App::class.mod.registerChannel("func:marker-kill") {
             val uuid = NetUtil.readUtf8(this)
+            holos[uuid]?.let {
+                UIEngine.worldContexts.remove(it)
+            }
             holos.remove(uuid)
         }
 
         App::class.mod.registerChannel("func:clear") {
+            holos.forEach { UIEngine.worldContexts.remove(it.value) }
             holos.clear()
         }
 

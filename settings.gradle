@@ -8,4 +8,5 @@ include 'graffiti-service'
 include 'npc'
 include 'battlepass'
 include 'dialog'
+include 'lootbox'
 
