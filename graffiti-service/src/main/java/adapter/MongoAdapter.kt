@@ -1,88 +1,63 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package adapter
 
 import com.mongodb.ClientSessionOptions
-import com.mongodb.async.SingleResultCallback
-import com.mongodb.async.client.MongoClients
-import com.mongodb.async.client.MongoCollection
-import com.mongodb.bulk.BulkWriteResult
-import com.mongodb.client.model.Filters
-import com.mongodb.client.model.UpdateOneModel
-import com.mongodb.client.model.UpdateOptions
-import com.mongodb.client.model.WriteModel
-import com.mongodb.session.ClientSession
+import com.mongodb.reactivestreams.client.ClientSession
+import kotlinx.coroutines.runBlocking
 import me.func.protocol.Unique
+import me.func.protocol.graffiti.UserGraffitiData
 import org.bson.Document
+import org.litote.kmongo.coroutine.CoroutineCollection
+import org.litote.kmongo.coroutine.CoroutineDatabase
+import org.litote.kmongo.coroutine.coroutine
+import org.litote.kmongo.eq
+import org.litote.kmongo.reactivestreams.KMongo
+import org.litote.kmongo.updateOne
+import org.litote.kmongo.upsert
 import ru.cristalix.core.GlobalSerializers
-import java.util.*
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.TimeUnit
+import java.util.UUID
+import kotlin.reflect.KClass
 
-class MongoAdapter(val url: String, val database: String, val collection: String) {
+class CollectionTypeNotRegisteredException(name: String) : RuntimeException(name)
 
-    val UPSERT = UpdateOptions().upsert(true)
-    var info: MongoCollection<Document>
-    var session: ClientSession
+class MongoAdapter(
+    val url: String, val databaseName: String, val collectionName: String
+) {
 
-    private fun connect(): CompletableFuture<ClientSession> {
-        val client = MongoClients.create(url)
-        info = client.getDatabase(database).getCollection(collection)
+    val collections: MutableMap<KClass<out Unique>, CoroutineCollection<out Unique>> = hashMapOf()
+    lateinit var session: ClientSession
 
-        val future = CompletableFuture<ClientSession>()
-
-        client.startSession(
-            ClientSessionOptions.builder()
-                .causallyConsistent(true)
-                .build()
-        ) { response, throwable: Throwable? ->
-            if (throwable != null) future.completeExceptionally(throwable)
-            else future.complete(response)
-        }
-
-        return future
-    }
+    private var database: CoroutineDatabase
 
     init {
-        val client = MongoClients.create(url)
-        info = client
-            .getDatabase(database)
-            .getCollection(collection)
+        runBlocking {
+            val client = KMongo.createClient(url).coroutine
+            client.startSession(ClientSessionOptions.builder().causallyConsistent(true).build())
+            database = client.getDatabase(databaseName)
 
-        session = connect().get(10, TimeUnit.SECONDS)
+            // Регистрирует типы, которые могут быть в коллекции $collectionName
+            registerCollection<UserGraffitiData>()
+        }
     }
 
-    inline fun <reified T : Unique> find(uuid: UUID): CompletableFuture<T> {
-        val future = CompletableFuture<T>()
+    private inline fun <reified T : Unique> registerCollection() =
+        collections.put(T::class, database.getCollection<T>(collectionName))
 
-        info.find(session, Filters.eq("uuid", uuid.toString()))
-            .first { result: Document?, throwable: Throwable? ->
-                throwable.apply {
-                    throwable?.printStackTrace()
-                    future.complete(readDocument(result))
-                }
-            }
-        return future
-    }
+    inline fun <reified T : Unique> findCollection(): CoroutineCollection<T> = collections[T::class]?.run {
+        return this as CoroutineCollection<T>
+    } ?: throw CollectionTypeNotRegisteredException(T::class.simpleName ?: "null")
 
-    inline fun <reified T : Unique> save(unique: T) {
-        save(listOf(unique))
-    }
+    suspend inline fun <reified T : Unique> find(uuid: UUID): T? = findCollection<T>().findOne(
+        session, Unique::uuid eq uuid
+    )
 
-    inline fun <reified T : Unique> save(uniques: List<T>) {
-        val models: MutableList<WriteModel<Document>> = ArrayList()
-        for (unique in uniques) {
-            val model: WriteModel<Document> = UpdateOneModel(
-                Filters.eq("uuid", unique.getUuid().toString()),
-                Document("\$set", Document.parse(GlobalSerializers.toJson(unique))),
-                UPSERT
+    suspend inline fun <reified T : Unique> save(unique: T) = save(listOf(unique))
+
+    suspend inline fun <reified T : Unique> save(uniques: List<T>) =
+        findCollection<T>().bulkWrite(session, uniques.map {
+            updateOne(
+                Unique::uuid eq it.uuid, Document("\$set", Document.parse(GlobalSerializers.toJson(it))), upsert()
             )
-            models.add(model)
-        }
-        if (models.isNotEmpty()) info.bulkWrite(session, models) { _, throwable: Throwable? ->
-            throwable?.printStackTrace()
-        }
-    }
-
-    inline fun <reified T : Unique> readDocument(document: Document?): T? {
-        return if (document == null) null else GlobalSerializers.fromJson(document.toJson(), T::class.java)
-    }
+        })
 }

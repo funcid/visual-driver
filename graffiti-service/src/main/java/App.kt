@@ -1,5 +1,11 @@
+@file:Suppress("UNCHECKED_CAST")
+
 import adapter.MongoAdapter
 import io.netty.channel.Channel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import me.func.protocol.DropRare
 import me.func.protocol.graffiti.Graffiti
 import me.func.protocol.graffiti.GraffitiPack
@@ -11,12 +17,11 @@ import me.func.protocol.packet.DataPackage
 import ru.cristalix.core.microservice.MicroServicePlatform
 import ru.cristalix.core.microservice.MicroserviceBootstrap
 import ru.cristalix.core.network.ISocketClient
-import ru.cristalix.core.network.SocketClient
 import ru.cristalix.core.network.packages.MoneyTransactionRequestPackage
 import ru.cristalix.core.network.packages.MoneyTransactionResponsePackage
 import socket.ServerSocket
 import socket.ServerSocketHandler
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
 const val PASSWORD = "PASSWORD"
@@ -32,8 +37,7 @@ class App {
                 Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 3, 0, 219, "func"),
                 Graffiti("307264a1-2c69-11e8-b5ea-1cb72caa35f4", 219 * 4, 0, 219, "func"),
             ), "Тест", "func", 999, DropRare.LEGENDARY.ordinal, true
-        ),
-        GraffitiPack(
+        ), GraffitiPack(
             UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fa"), mutableListOf(
                 Graffiti("30726433-2c69-11e8-b5ea-1cb72caa35f1", 0, 219, 219, "func"),
                 Graffiti("30726431-2c69-11e8-b5ea-1cb72caa35f2", 219, 219, 219, "func"),
@@ -43,8 +47,7 @@ class App {
                 Graffiti("30726433-2c69-1148-b5ea-1cb72caa35f4", 219 * 5, 219, 219, "func"),
                 Graffiti("30726433-2c69-11e5-b5ea-1cb72caa35f4", 219 * 6, 219, 219, "func"),
             ), "Тест 2", "func", 999, DropRare.COMMON.ordinal, true
-        ),
-        GraffitiPack(
+        ), GraffitiPack(
             UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fb"), mutableListOf(
                 Graffiti("307264a2-2c69-11e8-b5e1-1cb72caa35f1", 0, 219 * 2, 219, "func"),
                 Graffiti("307264a2-2c69-11e8-b5ea-2cb72caa35f2", 219, 219 * 2, 219, "func"),
@@ -57,21 +60,20 @@ class App {
         )
     )
     val handlers: MutableMap<Class<out DataPackage>, PackageHandler<in DataPackage>> = mutableMapOf()
-    lateinit var mongoAdapter: MongoAdapter
+    private lateinit var mongoAdapter: MongoAdapter
+
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            App().run()
+            runBlocking { App().run() }
         }
     }
 
-    fun run() {
+    suspend fun run() {
         app = this
 
         mongoAdapter = MongoAdapter(
-            System.getenv("MONGO_URI"),
-            System.getenv("MONGO_DB"),
-            System.getenv("MONGO_COLLECTION")
+            System.getenv("MONGO_URI"), System.getenv("MONGO_DB"), System.getenv("MONGO_COLLECTION")
         )
 
         MicroserviceBootstrap.bootstrap(MicroServicePlatform(2))
@@ -98,6 +100,8 @@ class App {
         registerHandler<GraffitiBuyPackage> { channel, _, pckg ->
             // Загрузка профиля игрока
             loadProfile(pckg.playerUUID) { userData ->
+                val scope = CoroutineScope(Dispatchers.Default)
+
                 // Покупка граффити
                 if (userData == null) {
                     answer(channel, pckg)
@@ -111,14 +115,13 @@ class App {
                             println("${pckg.playerUUID} payed ${pckg.price} for ${pckg.packUUID}!")
 
                             // Начисление граффити
-                            userData.packs.filter { it.getUuid() == pckg.packUUID }
-                                .forEach { pack ->
-                                    pack.graffiti.forEach { it.uses += it.address.maxUses }
-                                    println("${pckg.playerUUID} got ${pckg.packUUID} pack")
-                                }
+                            userData.packs.filter { it.uuid == pckg.packUUID }.forEach { pack ->
+                                pack.graffiti.forEach { it.uses += it.address.maxUses }
+                                println("${pckg.playerUUID} got ${pckg.packUUID} pack")
+                            }
 
                             // Сохранение данных
-                            mongoAdapter.save(userData)
+                            scope.launch { mongoAdapter.save(userData) }
                         }
 
                         // Отправка пакета назад
@@ -134,8 +137,8 @@ class App {
                 // Если данные игрока успешно загружены
 
                 // Получение пака
-                userData?.packs?.firstOrNull { it.getUuid() == pckg.packUUID }?.let { pack ->
-                    pack.graffiti.firstOrNull { it.getUuid() == pckg.graffitiUUID && it.uses > 0 }?.let {
+                userData?.packs?.firstOrNull { it.uuid == pckg.packUUID }?.let { pack ->
+                    pack.graffiti.firstOrNull { it.uuid == pckg.graffitiUUID && it.uses > 0 }?.let {
                         // Разрешить ставить граффити если оно есть
                         pckg.boolean = true
 
@@ -153,8 +156,8 @@ class App {
         }
     }
 
-    private fun loadProfile(uuid: UUID, accept: (UserGraffitiData?) -> (Any)) {
-        mongoAdapter.find<UserGraffitiData>(uuid).exceptionally { null }.thenAccept { accept(it) }
+    private suspend fun loadProfile(uuid: UUID, accept: suspend (UserGraffitiData?) -> (Any)) {
+        accept(mongoAdapter.find(uuid))
     }
 
     private inline fun <reified T : DataPackage> registerHandler(packageHandler: PackageHandler<T>) {
