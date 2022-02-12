@@ -30,7 +30,7 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
     var session: ClientSession
 
     init {
-        runBlocking {
+        runBlocking<Unit> {
             withTimeout(10000L) {
                 val client = KMongo.createClient(url).coroutine
                 session = client.startSession(ClientSessionOptions.builder().causallyConsistent(true).build())

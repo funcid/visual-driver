@@ -64,9 +64,7 @@ class App {
 
     companion object {
         @JvmStatic
-        fun main(args: Array<String>) {
-            runBlocking { App().run() }
-        }
+        fun main(args: Array<String>) = runBlocking { App().run() }
     }
 
     suspend fun run() {
