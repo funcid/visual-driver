@@ -5,6 +5,9 @@ package adapter
 import com.mongodb.ClientSessionOptions
 import com.mongodb.reactivestreams.client.ClientSession
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withTimeout
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import me.func.protocol.Unique
 import me.func.protocol.graffiti.UserGraffitiData
 import org.bson.Document
@@ -15,29 +18,27 @@ import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.updateOne
 import org.litote.kmongo.upsert
-import ru.cristalix.core.GlobalSerializers
 import java.util.UUID
 import kotlin.reflect.KClass
 
 class CollectionTypeNotRegisteredException(name: String) : RuntimeException(name)
 
-class MongoAdapter(
-    val url: String, val databaseName: String, val collectionName: String
-) {
+class MongoAdapter(private val url: String, private val databaseName: String, private val collectionName: String) {
 
     val collections: MutableMap<KClass<out Unique>, CoroutineCollection<out Unique>> = hashMapOf()
-    lateinit var session: ClientSession
-
     private var database: CoroutineDatabase
+    var session: ClientSession
 
     init {
         runBlocking {
-            val client = KMongo.createClient(url).coroutine
-            client.startSession(ClientSessionOptions.builder().causallyConsistent(true).build())
-            database = client.getDatabase(databaseName)
+            withTimeout(10000L) {
+                val client = KMongo.createClient(url).coroutine
+                session = client.startSession(ClientSessionOptions.builder().causallyConsistent(true).build())
+                database = client.getDatabase(databaseName)
 
-            // Регистрирует типы, которые могут быть в коллекции $collectionName
-            registerCollection<UserGraffitiData>()
+                // Регистрирует типы, которые могут быть в коллекции $collectionName
+                registerCollection<UserGraffitiData>()
+            }
         }
     }
 
@@ -57,7 +58,7 @@ class MongoAdapter(
     suspend inline fun <reified T : Unique> save(uniques: List<T>) =
         findCollection<T>().bulkWrite(session, uniques.map {
             updateOne(
-                Unique::uuid eq it.uuid, Document("\$set", Document.parse(GlobalSerializers.toJson(it))), upsert()
+                Unique::uuid eq it.uuid, Document("\$set", Document.parse(Json.encodeToString(it))), upsert()
             )
         })
 }

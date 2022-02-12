@@ -1,5 +1,6 @@
 package me.func.protocol.graffiti
 
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import me.func.protocol.Unique
 import me.func.protocol.util.UUIDSerializer
@@ -10,6 +11,7 @@ data class Graffiti(
     var address: GraffitiInfo,
     var author: String,
     var uses: Int = address.maxUses,
+    @SerialName("uuid")
     @Serializable(with = UUIDSerializer::class)
     override var uuid: UUID = address.uuid
 ) : Unique {
