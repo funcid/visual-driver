@@ -132,10 +132,10 @@ enum class Kit(val fromUrl: String) : Listener {
                         val transfer = ModTransfer(player.uniqueId.toString(), data.packs.size)
 
                         data.packs.forEach { pack ->
-                            transfer.string(pack.getUuid().toString()).integer(pack.graffiti.size)
+                            transfer.string(pack.uuid.toString()).integer(pack.graffiti.size)
 
                             pack.graffiti.forEach { graffiti ->
-                                transfer.string(graffiti.getUuid().toString())
+                                transfer.string(graffiti.uuid.toString())
                                     .integer(graffiti.address.x)
                                     .integer(graffiti.address.y)
                                     .integer(graffiti.address.size)

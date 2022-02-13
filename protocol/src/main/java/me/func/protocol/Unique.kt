@@ -1,9 +1,9 @@
 package me.func.protocol
 
+import kotlinx.serialization.SerialName
 import java.util.*
 
 interface Unique {
-
-    fun getUuid(): UUID
-
+    @SerialName("uuid")
+    val uuid: UUID
 }
