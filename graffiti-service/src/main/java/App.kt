@@ -28,7 +28,7 @@ const val PASSWORD = "PASSWORD"
 lateinit var app: App
 
 class App {
-    val scope = CoroutineScope(Dispatchers.Default)
+    private val scope = CoroutineScope(Dispatchers.Default)
 
     private val actualGraffitiPacks = mutableListOf(
         GraffitiPack(
