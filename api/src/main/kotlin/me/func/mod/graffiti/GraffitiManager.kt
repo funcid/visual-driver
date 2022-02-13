@@ -29,7 +29,7 @@ object GraffitiManager {
         needed.forEach { place ->
             transfer.string(place.owner.toString())
                 .string(place.world)
-                .string(place.graffiti.getUuid().toString())
+                .string(place.graffiti.uuid.toString())
                 .integer(place.graffiti.address.x)
                 .integer(place.graffiti.address.y)
                 .integer(place.graffiti.address.size)
@@ -83,7 +83,7 @@ object GraffitiManager {
             val packUuid = Anime.safeReadUUID(buffer) ?: return@createReader
 
             // Если указанный пак вообще существует
-            val pack = data.packs.find { it.getUuid() == packUuid }
+            val pack = data.packs.find { it.uuid == packUuid }
 
             // Если указанное граффити есть у игрока
             if (pack == null) {
@@ -96,7 +96,7 @@ object GraffitiManager {
 
             // Если указанное граффити существует
             val graffitiUuid = Anime.safeReadUUID(buffer) ?: return@createReader
-            val graffiti = pack.graffiti.firstOrNull { it.getUuid() == graffitiUuid } ?: return@createReader
+            val graffiti = pack.graffiti.firstOrNull { it.uuid == graffitiUuid } ?: return@createReader
 
             // Если указанное граффити есть у игрока
             if (graffiti.uses < 1) {
@@ -164,7 +164,7 @@ object GraffitiManager {
             val packUuid = Anime.safeReadUUID(buffer) ?: return@createReader
 
             // Если такого пака не существует
-            val pack = data.packs.find { it.getUuid() == packUuid } ?: return@createReader
+            val pack = data.packs.find { it.uuid == packUuid } ?: return@createReader
 
             // Попробовать купить пак граффити
             Anime.graffitiClient?.buy(player.uniqueId, packUuid, pack.price)?.thenAccept { error ->

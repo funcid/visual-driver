@@ -8,6 +8,7 @@ import io.netty.channel.SimpleChannelInboundHandler
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame
 import io.netty.handler.codec.http.websocketx.WebSocketFrame
 import io.netty.util.AttributeKey
+import kotlinx.coroutines.runBlocking
 import me.func.protocol.packet.DataPackage
 import me.func.protocol.packet.GreetingPackage
 import util.UtilNetty.readFrame
@@ -54,7 +55,7 @@ class ServerSocketHandler : SimpleChannelInboundHandler<WebSocketFrame>() {
                 }
                 val info = channel.attr(serverInfoKey).get()
 
-                app.handlers[dataPackage::class.java]?.handle(channel, info, dataPackage)
+                runBlocking { app.handlers[dataPackage::class.java]?.handle(channel, info, dataPackage) }
             }
         }
     }

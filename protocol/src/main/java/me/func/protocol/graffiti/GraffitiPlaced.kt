@@ -1,6 +1,6 @@
 package me.func.protocol.graffiti
 
-import java.util.*
+import java.util.UUID
 
 data class GraffitiPlaced(
     var owner: UUID,

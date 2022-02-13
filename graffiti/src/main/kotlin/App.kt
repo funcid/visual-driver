@@ -41,7 +41,7 @@ class App : KotlinMod() {
 
     fun getPack(uuid: UUID): GraffitiPack {
         // Получить пак по UUID
-        return userData.packs.first { it.getUuid() == uuid }
+        return userData.packs.first { it.uuid == uuid }
     }
 
     private fun getActivePack(): LocalPack {
@@ -123,7 +123,7 @@ class App : KotlinMod() {
         val buffer = Unpooled.buffer()
 
         NetUtil.writeUtf8(getActivePack().packUuid.toString(), buffer)
-        NetUtil.writeUtf8(graffiti.graffiti.getUuid().toString(), buffer)
+        NetUtil.writeUtf8(graffiti.graffiti.uuid.toString(), buffer)
         buffer.writeDouble(graffiti.x)
         buffer.writeDouble(graffiti.y)
         buffer.writeDouble(graffiti.z)
@@ -252,7 +252,7 @@ class App : KotlinMod() {
                     )
                 }, readInt() // active pack
             )
-            packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.getUuid(), index) }.toMutableList()
+            packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.uuid, index) }.toMutableList()
 
             inited = true
 

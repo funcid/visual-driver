@@ -394,7 +394,7 @@ object Anime {
         ModTransfer()
             .string(placed.owner.toString())
             .string(placed.world)
-            .string(placed.graffiti.getUuid().toString())
+            .string(placed.graffiti.uuid.toString())
             .integer(placed.graffiti.address.x)
             .integer(placed.graffiti.address.y)
             .integer(placed.graffiti.address.size)
