@@ -28,6 +28,8 @@ const val PASSWORD = "PASSWORD"
 lateinit var app: App
 
 class App {
+    val scope = CoroutineScope(Dispatchers.Default)
+
     private val actualGraffitiPacks = mutableListOf(
         GraffitiPack(
             UUID.fromString("307264a1-2c69-11e8-b5ea-1cb72caa35fd"), mutableListOf(
@@ -98,8 +100,6 @@ class App {
         registerHandler<GraffitiBuyPackage> { channel, _, pckg ->
             // Загрузка профиля игрока
             loadProfile(pckg.playerUUID) { userData ->
-                val scope = CoroutineScope(Dispatchers.Default)
-
                 // Покупка граффити
                 if (userData == null) {
                     answer(channel, pckg)
