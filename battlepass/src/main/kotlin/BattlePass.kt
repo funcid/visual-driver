@@ -33,7 +33,7 @@ class BattlePass : KotlinMod() {
 
             val quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
 
-            map[uuid] = BattlePassGui(uuid, tags.joinToString("\n"), price, sale, pages, quests)
+            map[uuid] = BattlePassGui(uuid, tags.joinToString("\n"), price, sale, pages, quests, mutableListOf())
         }
 
         registerChannel("bp:show") {
@@ -41,10 +41,10 @@ class BattlePass : KotlinMod() {
             val exp = readInt()
             gui.isAdvanced = readBoolean()
 
-            val page = getPage(gui.pages, exp)!!
-            gui.requiredExp = page.requiredExp
+            val (page, level) = getPage(gui.pages, exp)
+            gui.requiredExp = page!!.requiredExp
             gui.exp = page.exp
-            gui.level = page.index
+            gui.level = level
             gui.skipPrice = page.skipPrice
 
             gui.update()
@@ -55,6 +55,12 @@ class BattlePass : KotlinMod() {
             map[UUID.fromString(NetUtil.readUtf8(this))]?.let {
                 it.quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
                 it.update()
+            }
+        }
+
+        registerChannel("bp:claimed") {
+            map[UUID.fromString(NetUtil.readUtf8(this))]?.let {
+                it.claimed = MutableList(readInt()) { readInt() }
             }
         }
     }

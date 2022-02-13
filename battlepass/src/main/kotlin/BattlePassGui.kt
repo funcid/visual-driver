@@ -3,7 +3,6 @@ import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
-import jdk.nashorn.internal.objects.NativeArray.forEach
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
@@ -25,6 +24,7 @@ class BattlePassGui(
     private val sale: Double,
     val pages: List<BattlePage> = listOf(),
     var quests: List<String> = listOf(),
+    var claimed: MutableList<Int>
 ) : ContextGui() {
     var isAdvanced: Boolean = false
     var level: Int = 1
@@ -62,12 +62,12 @@ class BattlePassGui(
     }
 
     fun update() {
-        if(battlepass != null) {
+        if (battlepass != null) {
             removeChild(battlepass!!)
         }
 
         guiSize.calculate()
-        battlepass = +rectangle main@ {
+        battlepass = +rectangle main@{
             align = CENTER
             origin = CENTER
             size = V3(guiSize.totalWidth, guiSize.totalHeight)
@@ -118,9 +118,10 @@ class BattlePassGui(
                                 lock = true
                                 UIEngine.schedule(0.2) { lock = false }
                             } else {
-                                JavaMod.clientApi.clientConnection().sendPayload("bp:buy-upgrade", Unpooled.buffer().apply {
-                                    writeUtf8(uuid.toString())
-                                })
+                                JavaMod.clientApi.clientConnection()
+                                    .sendPayload("bp:buy-upgrade", Unpooled.buffer().apply {
+                                        writeUtf8(uuid.toString())
+                                    })
                                 lock = false
                                 close()
                             }
@@ -140,7 +141,7 @@ class BattlePassGui(
                     }
                 }
 
-                if(skipButtonNeed) {
+                if (skipButtonNeed) {
                     var approve = false
 
                     +rectangle button@{
@@ -149,7 +150,7 @@ class BattlePassGui(
                         size = V3(guiSize.buyButtonWidth, guiSize.buyButtonHeight)
 
                         color = Color(226, 145, 25, 1.0)
-                        offset.x += if(buyButtonNeed) guiSize.totalWidthPart * 30 else guiSize.buyButtonOffsetX
+                        offset.x += if (buyButtonNeed) guiSize.totalWidthPart * 30 else guiSize.buyButtonOffsetX
 
                         val skipText = +text {
                             align = CENTER
@@ -194,10 +195,11 @@ class BattlePassGui(
                                 lock = true
                                 UIEngine.schedule(0.2) { lock = false }
                             } else {
-                                JavaMod.clientApi.clientConnection().sendPayload("bp:buy-page", Unpooled.buffer().apply {
-                                    writeUtf8(uuid.toString())
-                                    writeInt(skipPrice)
-                                })
+                                JavaMod.clientApi.clientConnection()
+                                    .sendPayload("bp:buy-page", Unpooled.buffer().apply {
+                                        writeUtf8(uuid.toString())
+                                        writeInt((skipPrice - skipPrice * sale / 100.0).toInt())
+                                    })
                                 lock = false
                                 close()
                             }
@@ -268,7 +270,7 @@ class BattlePassGui(
                 content = if (quests.isEmpty()) "Все задания на сегодня выполнены!" else quests[0]
 
 
-                if(quests.isNotEmpty()) {
+                if (quests.isNotEmpty()) {
                     var offsetY = guiSize.totalHeightPart * 4
                     quests.drop(1).forEach { quest ->
                         this@main.addChild(text {
@@ -373,7 +375,7 @@ class BattlePassGui(
     }
 
     private fun addRewardRow(
-        isAdvanced: Boolean,
+        advanced: Boolean,
         firstBlockColor: Color,
         rewardBlockColor: Color,
         offsetY: Double
@@ -397,24 +399,28 @@ class BattlePassGui(
             shadow = true
             scale = V3(guiSize.totalWidthPart * 0.18, guiSize.totalWidthPart * 0.18)
             offset.y -= guiSize.totalHeightPart * 3.4
-            content = if (isAdvanced) "Премиум" else "Базовый"
+            content = if (advanced) "Премиум" else "Базовый"
         }
 
         var offsetX = guiSize.rewardSizeX + guiSize.rewardBetweenX
 
-        (if (isAdvanced) pages[page].advancedItems else pages[page].items).forEachIndexed { index, it ->
+        (if (advanced) pages[page].advancedItems else pages[page].items).forEachIndexed { index, it ->
             var currentRare = DropRare.COMMON
             var taken = false
-            var canTake = false
 
             it?.tagCompound?.let {
                 it.getInteger("rare").let { currentRare = DropRare.values()[it] }
                 taken = if (it.hasKey("taken")) it.getBoolean("taken") else false
-                canTake = if (it.hasKey("canTake")) it.getBoolean("canTake") else false
             }
 
+            taken =
+                taken || claimed.contains(page * rewardsCount + index + if (advanced) pages.size * rewardsCount else 0)
+
+            val canTake = index + page * rewardsCount < level && !taken && (!advanced || isAdvanced)
+
             +rectangle rewardMain@{
-                color = if(taken) Color(235, 66, 66, 0.28) else if(canTake) Color(59, 193, 80, 0.28) else rewardBlockColor
+                color =
+                    if (taken) Color(235, 66, 66, 0.28) else if (canTake) Color(59, 193, 80, 0.28) else rewardBlockColor
                 size = V3(guiSize.rewardBlockWidth, guiSize.totalHeightPart * 18.9)
                 offset.x += offsetX
                 offsetX += guiSize.rewardBetweenX + guiSize.rewardBlockWidth
@@ -423,7 +429,8 @@ class BattlePassGui(
                     origin = CENTER
                     align = CENTER
                     stack = it!!
-                    scale = V3(guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34)
+                    scale =
+                        V3(guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34)
                 }
                 +rectangle {
                     align = BOTTOM_LEFT
@@ -442,10 +449,16 @@ class BattlePassGui(
 
                 onClick {
                     if (!down || taken) return@onClick
-                    close()
+                    if (!canTake) return@onClick
+
+                    color = Color(235, 66, 66, 0.28)
+
                     JavaMod.clientApi.clientConnection().sendPayload("bp:reward", Unpooled.buffer().apply {
-                        writeInt(index + page * rewardsCount)
-                        writeBoolean(isAdvanced)
+                        writeBoolean(advanced)
+                        writeInt(page)
+                        writeInt(index)
+
+                        claimed.add(page * rewardsCount + index + if (advanced) pages.size * rewardsCount else 0)
                     })
                 }
             }
