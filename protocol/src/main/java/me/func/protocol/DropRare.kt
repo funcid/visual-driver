@@ -1,5 +1,8 @@
 package me.func.protocol
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 enum class DropRare(val title: String, val color: String, val red: Int, val green: Int, val blue: Int) {
 
     COMMON("Обычный", "§a", 170, 170, 170),
