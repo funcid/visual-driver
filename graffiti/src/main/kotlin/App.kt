@@ -215,6 +215,13 @@ class App : KotlinMod() {
         }
     }
 
+    private fun readSticker(buf: ByteBuf) = Sticker(
+        UUID.fromString(NetUtil.readUtf8(buf)), // uuid
+        NetUtil.readUtf8(buf), // name
+        DropRare.valueOf(NetUtil.readUtf8(buf)), // rare
+        buf.readLong() // openTime
+    )
+
     override fun onEnable() {
         app = this
         UIEngine.initialize(this)
@@ -273,21 +280,12 @@ class App : KotlinMod() {
                         readInt(), // rare
                         readBoolean() // available
                     )
-                }, if (readBoolean()) { // present
-                    Sticker(
-                        UUID.fromString(NetUtil.readUtf8(this)), // uuid
-                        NetUtil.readUtf8(this), // name
-                        DropRare.valueOf(NetUtil.readUtf8(this)), // rare
-                        readLong() // openTime
-                    )
-                } else null, MutableList(readInt()) { // count
-                    Sticker(
-                        UUID.fromString(NetUtil.readUtf8(this)), // uuid
-                        NetUtil.readUtf8(this), // name
-                        DropRare.valueOf(NetUtil.readUtf8(this)), // rare
-                        readLong() // openTime
-                    )
-                }, readInt() // active pack
+                }, MutableList(readInt()) { // count
+                    readSticker(this)
+                }, readInt(), // active pack,
+                if (isReadable) { // present
+                    readSticker(this)
+                } else null
             )
             packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.uuid, index) }.toMutableList()
 

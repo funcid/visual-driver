@@ -14,4 +14,12 @@ data class FeatureUserData(
     var activeSticker: Sticker?,
     var stickers: MutableList<Sticker>,
     var activePack: Int
-) : Unique
+) : Unique {
+    constructor(
+        uuid: UUID,
+        packs: MutableList<GraffitiPack>,
+        stickers: MutableList<Sticker>,
+        activePack: Int,
+        activeSticker: Sticker?
+    ) : this(uuid, packs, activeSticker, stickers, activePack)
+}
