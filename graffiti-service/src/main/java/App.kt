@@ -9,11 +9,12 @@ import kotlinx.coroutines.runBlocking
 import me.func.protocol.DropRare
 import me.func.protocol.graffiti.Graffiti
 import me.func.protocol.graffiti.GraffitiPack
-import me.func.protocol.graffiti.UserGraffitiData
+import me.func.protocol.graffiti.FeatureUserData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
 import me.func.protocol.packet.DataPackage
+import me.func.protocol.sticker.packet.StickersAvailablePackage
 import ru.cristalix.core.microservice.MicroServicePlatform
 import ru.cristalix.core.microservice.MicroserviceBootstrap
 import ru.cristalix.core.network.ISocketClient
@@ -29,6 +30,8 @@ lateinit var app: App
 
 class App {
     private val scope = CoroutineScope(Dispatchers.Default)
+
+    // TODO: actualStickers
 
     private val actualGraffitiPacks = mutableListOf(
         GraffitiPack(
@@ -81,13 +84,24 @@ class App {
         val serverSocket = ServerSocket(System.getenv("GRAFFITI_SERVICE_PORT").toInt())
         serverSocket.start()
 
+        registerHandler<StickersAvailablePackage> { channel, _, p ->
+            p.list = mutableListOf()
+            answer(channel, p)
+        }
+
         registerHandler<GraffitiLoadUserPackage> { channel, _, pckg ->
             // Загрузка профиля игрока
             loadProfile(pckg.playerUuid) { data ->
                 // Если данные уже есть - обновляем набор паков, если нет - создаем новые
                 pckg.data = data?.apply {
                     data.packs.addAll(actualGraffitiPacks.filter { !this.packs.contains(it) })
-                } ?: UserGraffitiData(pckg.playerUuid, actualGraffitiPacks, 0)
+                } ?: FeatureUserData(
+                    pckg.playerUuid,
+                    actualGraffitiPacks,
+                    activeSticker = null, // TODO: See #L33
+                    stickers = mutableListOf(),
+                    0
+                )
 
                 // Если данные только что были сгенерированы - сохранить
                 mongoAdapter.save(pckg.data!!)
@@ -154,7 +168,7 @@ class App {
         }
     }
 
-    private suspend fun loadProfile(uuid: UUID, accept: suspend (UserGraffitiData?) -> (Any)) {
+    private suspend fun loadProfile(uuid: UUID, accept: suspend (FeatureUserData?) -> (Any)) {
         accept(mongoAdapter.find(uuid))
     }
 

@@ -9,7 +9,8 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.func.protocol.Unique
-import me.func.protocol.graffiti.UserGraffitiData
+import me.func.protocol.sticker.Sticker
+import me.func.protocol.graffiti.FeatureUserData
 import org.bson.Document
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
@@ -37,7 +38,7 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
                 database = client.getDatabase(databaseName)
 
                 // Регистрирует типы, которые могут быть в коллекции $collectionName
-                registerCollection<UserGraffitiData>()
+                registerCollection<FeatureUserData>()
             }
         }
     }

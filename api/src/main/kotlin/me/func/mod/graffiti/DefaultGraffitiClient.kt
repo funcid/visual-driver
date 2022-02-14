@@ -16,13 +16,12 @@ import io.netty.handler.codec.http.HttpObjectAggregator
 import io.netty.handler.codec.http.websocketx.*
 import me.func.mod.util.UtilNetty
 import me.func.mod.util.UtilNetty.toFrame
-import me.func.protocol.graffiti.UserGraffitiData
+import me.func.protocol.graffiti.FeatureUserData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
 import me.func.protocol.packet.DataPackage
 import me.func.protocol.packet.GreetingPackage
-import ru.cristalix.core.realm.IRealmService
 import java.net.URI
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -32,8 +31,8 @@ import java.util.function.Consumer
 @ChannelHandler.Sharable
 class DefaultGraffitiClient(val host: String, val password: String, val port: Int, val serverClient: String) : GraffitiClient, SimpleChannelInboundHandler<WebSocketFrame>() {
 
-    override fun loadUser(uuid: UUID): CompletableFuture<UserGraffitiData?> {
-        val future = CompletableFuture<UserGraffitiData?>()
+    override fun loadUser(uuid: UUID): CompletableFuture<FeatureUserData?> {
+        val future = CompletableFuture<FeatureUserData?>()
         writeAndAwaitResponse(GraffitiLoadUserPackage(uuid)).exceptionally { null }.thenAcceptAsync {
             future.complete(it.data)
         }

@@ -3,7 +3,7 @@ package me.func.mod.graffiti
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.graffiti.GraffitiPlaced
-import me.func.protocol.graffiti.UserGraffitiData
+import me.func.protocol.graffiti.FeatureUserData
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import ru.cristalix.core.formatting.Formatting
@@ -18,7 +18,7 @@ object GraffitiManager {
     private const val MAX_GRAFFITI_PER_PLAYER = 3
     private const val MAX_PLACE_DISTANCE = 10
 
-    private val graffiti: HashMap<UUID, UserGraffitiData> = hashMapOf()
+    private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
     private val placed: MutableList<GraffitiPlaced> = mutableListOf()
 
     fun sendGraffitiBulk(player: Player) {
@@ -55,7 +55,7 @@ object GraffitiManager {
         graffiti.remove(player.uniqueId)
     }
 
-    fun safeRead(player: Player?): UserGraffitiData? {
+    fun safeRead(player: Player?): FeatureUserData? {
         // Если игрок вышел и потом пришло сообщение
         if (player == null || !player.isOnline)
             return null
@@ -184,8 +184,8 @@ object GraffitiManager {
         }
     }
 
-    fun tryPutData(uuid: UUID): CompletableFuture<UserGraffitiData?> {
-        val future = CompletableFuture<UserGraffitiData?>()
+    fun tryPutData(uuid: UUID): CompletableFuture<FeatureUserData?> {
+        val future = CompletableFuture<FeatureUserData?>()
         val value = graffiti[uuid]
 
         // Если каким-то образом в мапе уже был данный игрок, то данные не грузить

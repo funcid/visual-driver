@@ -1,12 +1,21 @@
 import dev.xdark.clientapi.event.entity.RotateAround
 import dev.xdark.clientapi.event.input.KeyPress
-import dev.xdark.clientapi.event.render.*
+import dev.xdark.clientapi.event.render.ArmorRender
+import dev.xdark.clientapi.event.render.ExpBarRender
+import dev.xdark.clientapi.event.render.HealthRender
+import dev.xdark.clientapi.event.render.HungerRender
+import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
-import me.func.protocol.graffiti.*
+import me.func.protocol.graffiti.FeatureUserData
+import me.func.protocol.graffiti.Graffiti
+import me.func.protocol.graffiti.GraffitiInfo
+import me.func.protocol.graffiti.GraffitiPack
+import me.func.protocol.graffiti.GraffitiPlaced
+import me.func.protocol.sticker.Sticker
 import org.lwjgl.input.Keyboard
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
@@ -15,8 +24,15 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
-import java.util.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Rotation
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.rotationMatrix
+import ru.cristalix.uiengine.utility.text
+import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -33,7 +49,7 @@ class App : KotlinMod() {
     var open = false
     private var inited = false
 
-    lateinit var userData: UserGraffitiData
+    lateinit var userData: FeatureUserData
     lateinit var packs: MutableList<LocalPack>
 
     var activeGraffiti: LocalGraffitiPlaced? = null
@@ -73,9 +89,12 @@ class App : KotlinMod() {
             color = WHITE
 
             textureLocation = app.texture
-            textureFrom = V3(mark.graffiti.address.x.toDouble() / PICTURE_SIZE, mark.graffiti.address.y.toDouble() / PICTURE_SIZE)
-            textureSize =
-                V3(mark.graffiti.address.size.toDouble() / PICTURE_SIZE, mark.graffiti.address.size.toDouble() / PICTURE_SIZE)
+            textureFrom =
+                V3(mark.graffiti.address.x.toDouble() / PICTURE_SIZE, mark.graffiti.address.y.toDouble() / PICTURE_SIZE)
+            textureSize = V3(
+                mark.graffiti.address.size.toDouble() / PICTURE_SIZE,
+                mark.graffiti.address.size.toDouble() / PICTURE_SIZE
+            )
 
             size = V3(20.0, 20.0)
             offset = V3(10.0, 10.0)
@@ -104,14 +123,18 @@ class App : KotlinMod() {
                     buffer.readInt(),
                     buffer.readInt(),
                     buffer.readInt()
-                ), NetUtil.readUtf8(buffer),
-                buffer.readInt()
+                ), NetUtil.readUtf8(buffer), buffer.readInt()
             ),
-            buffer.readDouble(), buffer.readDouble(),
-            buffer.readDouble(), buffer.readInt(),
-            buffer.readDouble(), buffer.readDouble(),
-            buffer.readDouble(), buffer.readDouble(),
-            buffer.readBoolean(), buffer.readBoolean()
+            buffer.readDouble(),
+            buffer.readDouble(),
+            buffer.readDouble(),
+            buffer.readInt(),
+            buffer.readDouble(),
+            buffer.readDouble(),
+            buffer.readDouble(),
+            buffer.readDouble(),
+            buffer.readBoolean(),
+            buffer.readBoolean()
         )
 
         return LocalGraffitiPlaced(graffiti, Context3D(V3(graffiti.x, graffiti.y, graffiti.z)))
@@ -174,7 +197,7 @@ class App : KotlinMod() {
             color = Color(42, 102, 189, 1.0)
             size = V3(UIEngine.clientApi.fontRenderer().getStringWidth(text) + 12.0, 17.0)
             offset.y += OVAL_RADIUS + 20
-            + text {
+            +text {
                 align = CENTER
                 origin = CENTER
                 color = WHITE
@@ -227,7 +250,7 @@ class App : KotlinMod() {
         // Получение данных о граффити игрока
         registerChannel("graffiti:init") {
             // Загрузка данных
-            userData = UserGraffitiData(
+            userData = FeatureUserData(
                 UUID.fromString(NetUtil.readUtf8(this)), // user uuid
                 MutableList(readInt()) { // packs amount
                     GraffitiPack(
@@ -250,6 +273,20 @@ class App : KotlinMod() {
                         readInt(), // rare
                         readBoolean() // available
                     )
+                }, if (readBoolean()) { // present
+                    Sticker(
+                        UUID.fromString(NetUtil.readUtf8(this)), // uuid
+                        NetUtil.readUtf8(this), // name
+                        DropRare.valueOf(NetUtil.readUtf8(this)), // rare
+                        readLong() // openTime
+                    )
+                } else null, MutableList(readInt()) { // count
+                    Sticker(
+                        UUID.fromString(NetUtil.readUtf8(this)), // uuid
+                        NetUtil.readUtf8(this), // name
+                        DropRare.valueOf(NetUtil.readUtf8(this)), // rare
+                        readLong() // openTime
+                    )
                 }, readInt() // active pack
             )
             packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.uuid, index) }.toMutableList()
@@ -269,8 +306,7 @@ class App : KotlinMod() {
         }
 
         registerHandler<KeyPress> {
-            if (!inited)
-                return@registerHandler
+            if (!inited) return@registerHandler
 
             // Выбрать другое граффити
             if (key == Keyboard.KEY_H) {
@@ -302,8 +338,7 @@ class App : KotlinMod() {
 
     private fun startPickPlace() {
         registerHandler<RotateAround> {
-            if (activeGraffiti == null)
-                return@registerHandler
+            if (activeGraffiti == null) return@registerHandler
 
             val player = clientApi.minecraft().player
             val viewDistance = 4.5
@@ -367,20 +402,17 @@ class App : KotlinMod() {
                         in 225.0..315.0 -> {
                             moveY += 0.5
                             moveZ -= 0.5
-                            if (!onGround)
-                                setRotation(activeGraffiti!!, Rotation(-Math.PI / 2, 0.0, 1.0, 0.0))
+                            if (!onGround) setRotation(activeGraffiti!!, Rotation(-Math.PI / 2, 0.0, 1.0, 0.0))
                         }
                         !in 135.0..225.0 -> {
                             moveY += 0.5
                             moveX += 0.5
-                            if (!onGround)
-                                setRotation(activeGraffiti!!, Rotation(-Math.PI, 0.0, 1.0, 0.0))
+                            if (!onGround) setRotation(activeGraffiti!!, Rotation(-Math.PI, 0.0, 1.0, 0.0))
                         }
                         else -> {
                             moveY += 0.5
                             moveX -= 0.5
-                            if (!onGround)
-                                setRotation(activeGraffiti!!, Rotation(Math.PI * 2, 0.0, 1.0, 0.0))
+                            if (!onGround) setRotation(activeGraffiti!!, Rotation(Math.PI * 2, 0.0, 1.0, 0.0))
                         }
                     }
 
