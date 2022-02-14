@@ -1,6 +1,5 @@
 package me.func.mod
 
-import com.google.gson.Gson
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.alert.AlertColor
 import me.func.protocol.alert.NotificationButton
@@ -11,26 +10,27 @@ import java.util.*
 
 object Alert {
 
-    fun send(player: Player, text: String, timeout: Long, alertColor: AlertColor, chatMessage: String, buttons: List<NotificationButton>) {
-        if(buttons.size > 2) throw RuntimeException("Too many buttons!")
-
+    @JvmStatic
+    private fun toRGB(alertColor: AlertColor): Int {
         var rgb: Int = alertColor.red
         rgb = (rgb shl 8) + alertColor.green
         rgb = (rgb shl 8) + alertColor.blue
+        return rgb
+    }
 
-        val notification = NotificationData(UUID.randomUUID(), "notify", text, rgb, rgb, timeout, buttons, chatMessage)
-        val json = Gson().toJson(notification)
+    @JvmStatic
+    fun send(player: Player, text: String, seconds: Long, frontColor: AlertColor, backGroundColor: AlertColor, chatMessage: String, vararg buttons: NotificationButton) {
+        if(buttons.size > 2) throw RuntimeException("Too many buttons!")
 
+        val notification = NotificationData(UUID.randomUUID(), "notify", text, toRGB(frontColor), toRGB(backGroundColor), seconds, buttons.asList(), chatMessage)
         ModTransfer()
-            .json(json)
+            .json(notification)
             .send("socials:notify", player)
     }
 
-    fun createButton(alertType: AlertColor, text: String, command: String, removeButton: Boolean, removeNotification: Boolean): NotificationButton {
-        var rgb: Int = alertType.red
-        rgb = (rgb shl 8) + alertType.green
-        rgb = (rgb shl 8) + alertType.blue
+    @JvmStatic
+    fun createButton(text: String, command: String, color: AlertColor, removeButton: Boolean, removeNotification: Boolean): NotificationButton {
 
-        return NotificationButton(text, rgb, command, removeButton, removeNotification)
+        return NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
     }
 }
