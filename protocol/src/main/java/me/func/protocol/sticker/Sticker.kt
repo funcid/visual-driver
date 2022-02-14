@@ -12,5 +12,8 @@ import java.util.UUID
 @Serializable
 data class Sticker(
     @Serializable(with = UUIDSerializer::class)
-    override val uuid: UUID, val name: String, val rare: DropRare, val openTime: Long
+    override val uuid: UUID,
+    val name: String,
+    val rare: DropRare,
+    val openTime: Long
 ) : Unique
