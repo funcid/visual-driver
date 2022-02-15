@@ -63,16 +63,8 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
-jar {
-    from configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
-}
-
 afterEvaluate {
     jar {
         archiveBaseName.set 'animation-api'
-        from {
-            configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
-        }
-        duplicatesStrategy DuplicatesStrategy.EXCLUDE
     }
 }

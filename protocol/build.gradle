@@ -16,11 +16,3 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     }
 }
 
-afterEvaluate {
-    jar {
-        from {
-            configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
-        }
-        duplicatesStrategy DuplicatesStrategy.EXCLUDE
-    }
-}
