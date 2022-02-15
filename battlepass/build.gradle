@@ -12,7 +12,6 @@ buildscript {
 }
 
 apply plugin: 'ru.cristalix.uiengine.bundler'
-apply plugin: 'kotlin'
 
 dependencies {
     compileOnly 'ru.cristalix:client-api:latest-SNAPSHOT'
