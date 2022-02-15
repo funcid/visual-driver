@@ -12,7 +12,6 @@ buildscript {
 }
 
 apply plugin: 'ru.cristalix.uiengine.bundler'
-apply plugin: 'kotlin'
 
 dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.4.30'
