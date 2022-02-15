@@ -2,7 +2,6 @@ package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.GlowColor
-import me.func.protocol.alert.AlertColor
 import me.func.protocol.alert.NotificationButton
 import me.func.protocol.alert.NotificationData
 import org.bukkit.entity.Player
@@ -30,8 +29,6 @@ object Alert {
     }
 
     @JvmStatic
-    fun createButton(text: String, command: String, color: GlowColor, removeButton: Boolean, removeNotification: Boolean): NotificationButton {
-
-        return NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
-    }
+    fun createButton(text: String, command: String, color: GlowColor, removeButton: Boolean, removeNotification: Boolean): NotificationButton =
+        NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
 }
