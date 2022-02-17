@@ -39,6 +39,7 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
                 is ItemStack -> item(info)
                 is net.minecraft.server.v1_12_R1.ItemStack -> item(info)
                 is Int -> integer(info)
+                is Short -> short(info)
                 is Boolean -> boolean(info)
                 is Double -> double(info)
                 is NBTTagCompound -> nbt(info)
@@ -69,6 +70,8 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     }
 
     fun integer(integer: Int) = this.apply { serializer.writeInt(integer) }
+
+    fun short(short: Short) = this.apply { serializer.writeShort(short.toInt()) }
 
     @JvmName("putDouble")
     fun double(double: Double) = this.apply { serializer.writeDouble(double) }
