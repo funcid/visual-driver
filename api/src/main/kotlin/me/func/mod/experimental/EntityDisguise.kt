@@ -1,12 +1,10 @@
 package me.func.mod.experimental
 
 import me.func.mod.conversation.ModTransfer
-import org.apiguardian.api.API
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 
-@API(status = API.Status.EXPERIMENTAL)
 object EntityDisguise {
     private const val channel = "anime:disguise"
 
