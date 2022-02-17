@@ -1,13 +1,13 @@
 package me.func.protocol.graffiti
 
-import kotlinx.serialization.Serializable
+// import kotlinx.serialization.Serializable
 import me.func.protocol.Unique
-import me.func.protocol.util.UUIDSerializer
+// import me.func.protocol.util.UUIDSerializer
 import java.util.UUID
 
-@Serializable
+// @Serializable
 data class GraffitiPack(
-    @Serializable(with = UUIDSerializer::class)
+    // @Serializable(with = UUIDSerializer::class)
     override var uuid: UUID,
     var graffiti: MutableList<Graffiti>,
     var title: String,
