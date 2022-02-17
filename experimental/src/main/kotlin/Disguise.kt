@@ -6,17 +6,20 @@ object Disguise {
     private val entityProvider = UIEngine.clientApi.entityProvider()
 
     init {
-        App::class.mod.registerChannel("kamillaova:disguise") {
-            val world = minecraft.world
+        App::class.mod.registerChannel("anime:disguise") {
+            try {
+                val world = minecraft.world
 
-            val entityId = readInt() // Entity ID
-            val entity = world.getEntity(entityId)
+                val entityId = readInt() // Entity ID
+                val entity = world.getEntity(entityId)
 
-            if (readBoolean()) { // Reset
-                entity.renderingEntity = entity
-            } else {
-                val entityType = readShort() // Entity Type
-                entity.renderingEntity = entityProvider.newEntity(entityType.toInt(), world)
+                if (readBoolean()) { // Reset
+                    entity.renderingEntity = entity
+                } else {
+                    val entityType = readShort() // Entity Type
+                    entity.renderingEntity = entityProvider.newEntity(entityType.toInt(), world)
+                }
+            } catch (_: Exception) {
             }
         }
     }

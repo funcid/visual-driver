@@ -8,7 +8,7 @@ import org.bukkit.entity.Player
 
 @API(status = API.Status.EXPERIMENTAL)
 object EntityDisguise {
-    private const val channel = "kamillaova:disguise"
+    private const val channel = "anime:disguise"
 
     /**
      * Заменяет тип энтити на клиенте у игроков из [players]
