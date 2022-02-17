@@ -21,7 +21,7 @@ object EntityDisguise {
         ModTransfer(
             entity.entityId, // Entity ID
             false, // Reset
-            type.typeId.toInt() // Entity Type // TODO: Short
+            type.typeId // Entity Type
         ).run { players.forEach { send(channel, it) } }
     }
 

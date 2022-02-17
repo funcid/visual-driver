@@ -15,8 +15,8 @@ object Disguise {
             if (readBoolean()) { // Reset
                 entity.renderingEntity = entity
             } else {
-                val entityType = readInt() // Entity Type
-                entity.renderingEntity = entityProvider.newEntity(entityType, world)
+                val entityType = readShort() // Entity Type
+                entity.renderingEntity = entityProvider.newEntity(entityType.toInt(), world)
             }
         }
     }
