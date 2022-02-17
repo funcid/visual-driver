@@ -10,5 +10,6 @@ class App : KotlinMod() {
         Banners
         Particles
         Recharge
+        Disguise
     }
 }
