@@ -16,6 +16,7 @@ object EntityDisguise {
      * @param type Новый тип энтити
      * @param players Игроки, у которых тип будет заменен
      */
+    @JvmStatic // TODO: Remove it
     @API(status = API.Status.EXPERIMENTAL)
     fun disguise(entity: Entity, type: EntityType, vararg players: Player) {
         ModTransfer(
@@ -31,6 +32,7 @@ object EntityDisguise {
      * @param type Новый тип энтити
      * @param players Игроки, у которых тип будет заменен
      */
+    @JvmStatic
     @API(status = API.Status.EXPERIMENTAL)
     fun disguise(entity: Entity, type: EntityType, players: List<Player>) = disguise(
         entity, type, *players.toTypedArray()
@@ -41,6 +43,7 @@ object EntityDisguise {
      * @param entity Энтити, тип которой будет восстановлен
      * @param players Игоки, у которых тип энтити будет восстановлен
      */
+    @JvmStatic
     @API(status = API.Status.EXPERIMENTAL)
     fun reset(entity: Entity, vararg players: Player) {
         ModTransfer(
@@ -54,6 +57,7 @@ object EntityDisguise {
      * @param entity Энтити, тип которой будет восстановлен
      * @param players Игоки, у которых тип энтити будет восстановлен
      */
+    @JvmStatic
     @API(status = API.Status.EXPERIMENTAL)
     fun reset(entity: Entity, players: List<Player>) = reset(entity, *players.toTypedArray())
 }
