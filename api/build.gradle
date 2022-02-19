@@ -54,18 +54,17 @@ publishing {
             it.groupId = 'me.func'
             it.artifactId = 'animation-api'
             it.version = 'live-SNAPSHOT'
-            it.artifact p.tasks.shadowJar
+            it.artifact p.tasks.jar
         }
     }
 }
 
 tasks {
     build { dependsOn(shadowJar) }
-    jar { enabled = false }
-    shadowJar {
-        configurations = [project.configurations.shade]
+    jar {
         archiveBaseName.set 'animation-api'
-        archiveClassifier.set null
+        from configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
+        duplicatesStrategy DuplicatesStrategy.EXCLUDE
     }
 }
 
@@ -73,9 +72,4 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-}
-
-configurations.all {
-    exclude group: "io.reactivex", module:"rxjava"
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
