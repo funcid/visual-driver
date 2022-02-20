@@ -24,7 +24,7 @@ object Alert {
 
         val notification = NotificationData(UUID.randomUUID(), "notify", text, toRGB(frontColor), toRGB(backGroundColor), seconds, buttons.asList(), chatMessage)
         ModTransfer()
-            .json(notification)
+            .byteArray(*ru.cristalix.core.GlobalSerializers.toJson(notification).toByteArray(StandardCharsets.UTF_8))
             .send("socials:notify", player)
     }
 
