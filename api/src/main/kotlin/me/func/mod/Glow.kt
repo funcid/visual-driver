@@ -21,6 +21,14 @@ object Glow : Listener {
         Bukkit.getPluginManager().registerEvents(this, Anime.provided)
     }
 
+    @JvmStatic
+    fun toRGB(alertColor: GlowColor): Int {
+        var rgb: Int = alertColor.red
+        rgb = (rgb shl 8) + alertColor.green
+        rgb = (rgb shl 8) + alertColor.blue
+        return rgb
+    }
+
     @EventHandler
     fun PlayerMoveEvent.handle() {
         if (to.x != from.x || to.y != from.y || to.z != from.z) {
@@ -44,9 +52,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun set(player: Player, color: GlowColor) {
-        set(player, color.red, color.blue, color.green, 1.0)
-    }
+    fun set(player: Player, color: GlowColor) = set(player, color.red, color.blue, color.green, 1.0)
 
     @JvmStatic
     fun animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int, alpha: Double) {
@@ -75,29 +81,30 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit): GlowingPlace {
-        return addPlace(GlowingPlace(UUID.randomUUID(), red, blue, green, x, y, z), onJoin)
-    }
+    fun addPlace(
+        red: Int,
+        blue: Int,
+        green: Int,
+        x: Double,
+        y: Double,
+        z: Double,
+        onJoin: (Player) -> Unit
+    ) = addPlace(GlowingPlace(UUID.randomUUID(), red, blue, green, x, y, z), onJoin)
 
     @JvmStatic
-    fun addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double): GlowingPlace {
-        return addPlace(GlowingPlace(UUID.randomUUID(), red, blue, green, x, y, z))
-    }
+    fun addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double) =
+        addPlace(GlowingPlace(UUID.randomUUID(), red, blue, green, x, y, z))
 
     @JvmStatic
-    fun addPlace(color: GlowColor, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit): GlowingPlace {
-        return addPlace(GlowingPlace(color, x, y, z), onJoin)
-    }
+    fun addPlace(color: GlowColor, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit) =
+        addPlace(GlowingPlace(color, x, y, z), onJoin)
 
     @JvmStatic
-    fun addPlace(color: GlowColor, x: Double, y: Double, z: Double): GlowingPlace {
-        return addPlace(GlowingPlace(color, x, y, z))
-    }
+    fun addPlace(color: GlowColor, x: Double, y: Double, z: Double) = addPlace(GlowingPlace(color, x, y, z))
 
     @JvmStatic
-    fun addPlace(place: GlowingPlace, onJoin: Consumer<Player>): GlowingPlace {
-        return addPlace(place).also { playerAccepter[place.uuid] = onJoin }
-    }
+    fun addPlace(place: GlowingPlace, onJoin: Consumer<Player>) =
+        addPlace(place).also { playerAccepter[place.uuid] = onJoin }
 
     @JvmStatic
     fun addPlace(place: GlowingPlace): GlowingPlace {
@@ -140,9 +147,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun showAllPlaces(player: Player) {
-        glowingPlaces.values.forEach { showLoadedPlace(player, it.uuid) }
-    }
+    fun showAllPlaces(player: Player) = glowingPlaces.values.forEach { showLoadedPlace(player, it.uuid) }
 
     @JvmStatic
     fun removePlace(place: GlowingPlace, vararg players: Player): GlowingPlace {

@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.74)
+# Cristalix Animation API DOCS (актуальная версия live-SNAPSHOT)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.74'
+  implementation 'me.func:animation-api:live-SNAPSHOT'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```

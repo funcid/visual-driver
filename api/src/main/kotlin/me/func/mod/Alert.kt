@@ -1,5 +1,6 @@
 package me.func.mod
 
+import me.func.mod.Glow.toRGB
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.GlowColor
 import me.func.protocol.alert.NotificationButton
@@ -11,14 +12,6 @@ import java.util.*
 object Alert {
 
     private val alertMap = hashMapOf<String, NotificationButton>()
-
-    @JvmStatic
-    private fun toRGB(alertColor: GlowColor): Int {
-        var rgb: Int = alertColor.red
-        rgb = (rgb shl 8) + alertColor.green
-        rgb = (rgb shl 8) + alertColor.blue
-        return rgb
-    }
 
     @JvmStatic
     fun send(player: Player, text: String, seconds: Long, frontColor: GlowColor, backGroundColor: GlowColor, chatMessage: String, vararg buttons: NotificationButton) {
@@ -35,9 +28,7 @@ object Alert {
         NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
 
     @JvmStatic
-    fun find(key: String): NotificationButton {
-        return alertMap[key]!!
-    }
+    fun find(key: String) =  alertMap[key]!!
 
     @JvmStatic
     fun put(key: String, alert: NotificationButton) = alertMap.put(key, alert)
