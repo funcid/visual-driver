@@ -1,15 +1,11 @@
 package me.func.protocol.alert
 
 data class NotificationButton(
-    val text: String? = null,
+    var text: String? = null,
     val color: Int,
     val command: String? = null,
     val removeButton: Boolean,
-    val removeNotification: Boolean) {
-
-    fun replace(replacement: String) {
-        if (text == null) return
-        text.replace(text, replacement)
-    }
+    val removeNotification: Boolean
+) : Cloneable {
+    public override fun clone() = NotificationButton(text, color, command, removeButton, removeNotification)
 }
-

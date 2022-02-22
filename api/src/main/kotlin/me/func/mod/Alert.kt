@@ -11,25 +11,54 @@ import java.util.*
 
 object Alert {
 
-    private val alertMap = hashMapOf<String, NotificationButton>()
+    private val alertTemplates = hashMapOf<String, NotificationData>()
 
     @JvmStatic
-    fun send(player: Player, text: String, seconds: Long, frontColor: GlowColor, backGroundColor: GlowColor, chatMessage: String, vararg buttons: NotificationButton) {
-        if(buttons.size > 2) throw RuntimeException("Too many buttons!")
+    fun send(
+        player: Player,
+        text: String,
+        seconds: Long,
+        frontColor: GlowColor,
+        backGroundColor: GlowColor,
+        chatMessage: String,
+        vararg buttons: NotificationButton
+    ) {
+        if (buttons.size > 2) throw RuntimeException("Too many buttons!")
 
-        val notification = NotificationData(UUID.randomUUID(), "notify", text, toRGB(frontColor), toRGB(backGroundColor), seconds, buttons.asList(), chatMessage)
-        ModTransfer()
-            .byteArray(*ru.cristalix.core.GlobalSerializers.toJson(notification).toByteArray(StandardCharsets.UTF_8))
-            .send("socials:notify", player)
+        NotificationData(
+            UUID.randomUUID(),
+            "notify",
+            text,
+            toRGB(frontColor),
+            toRGB(backGroundColor),
+            seconds,
+            buttons.asList(),
+            chatMessage
+        ).send(player)
     }
 
     @JvmStatic
-    fun createButton(text: String, command: String, color: GlowColor, removeButton: Boolean, removeNotification: Boolean): NotificationButton =
-        NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
+    fun button(
+        message: String,
+        command: String,
+        color: GlowColor,
+        removeButton: Boolean = false,
+        removeNotification: Boolean = true
+    ): NotificationButton =
+        NotificationButton(message, toRGB(color), command, removeButton, removeNotification)
 
     @JvmStatic
-    fun find(key: String) =  alertMap[key]!!
+    fun find(key: String) = alertTemplates[key]!!
 
     @JvmStatic
-    fun put(key: String, alert: NotificationButton) = alertMap.put(key, alert)
+    fun put(key: String, alert: NotificationData) = alertTemplates.put(key, alert)
+
+    // Метод для замены текста в сообщении
+    fun NotificationData.replace(placeholder: String, content: String) =
+        clone().apply { this.content?.let { this.content = this.content!!.replace(placeholder, content) } }
+
+    // Метод для отправки готового сообщения игроку
+    fun NotificationData.send(player: Player) = ModTransfer()
+            .byteArray(*ru.cristalix.core.GlobalSerializers.toJson(this).toByteArray(StandardCharsets.UTF_8))
+            .send("socials:notify", player)
 }
