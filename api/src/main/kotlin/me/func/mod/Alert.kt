@@ -5,10 +5,12 @@ import me.func.protocol.GlowColor
 import me.func.protocol.alert.NotificationButton
 import me.func.protocol.alert.NotificationData
 import org.bukkit.entity.Player
+import java.nio.charset.StandardCharsets
 import java.util.*
 
-
 object Alert {
+
+    private val alertMap = hashMapOf<String, Alert>()
 
     @JvmStatic
     private fun toRGB(alertColor: GlowColor): Int {
@@ -31,4 +33,10 @@ object Alert {
     @JvmStatic
     fun createButton(text: String, command: String, color: GlowColor, removeButton: Boolean, removeNotification: Boolean): NotificationButton =
         NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
+
+    @JvmStatic
+    fun find(key: String) = alertMap[key]!!
+
+    @JvmStatic
+    fun put(key: String, alert: Alert) = alertMap.put(key, alert)
 }
