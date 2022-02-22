@@ -12,6 +12,16 @@ data class NotificationData(
     val buttons: List<NotificationButton>?,
     val chatMessage: String?
 ) : Cloneable {
-    public override fun clone() =
-        NotificationData(source, type, content, timeoutBarColor, backgroundColor, timeout, buttons, chatMessage)
+    private var original: Boolean = true
+
+    public override fun clone() = if (original) NotificationData(
+        source,
+        type,
+        content,
+        timeoutBarColor,
+        backgroundColor,
+        timeout,
+        buttons,
+        chatMessage
+    ).apply { original = true } else this
 }
