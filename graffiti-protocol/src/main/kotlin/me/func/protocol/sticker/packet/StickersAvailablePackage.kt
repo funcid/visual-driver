@@ -1,8 +1,8 @@
 package me.func.protocol.sticker.packet
 
-import me.func.protocol.packet.DataPackage
 import me.func.protocol.sticker.Sticker
+import ru.cristalix.core.network.CorePackage
 
-class StickersAvailablePackage : DataPackage() {
+class StickersAvailablePackage : CorePackage() {
     var list: MutableList<Sticker> = mutableListOf()
 }

@@ -1,6 +1,6 @@
 package me.func.protocol.graffiti.packet
 
-import me.func.protocol.packet.DataPackage
+import ru.cristalix.core.network.CorePackage
 import java.util.*
 
 data class GraffitiBuyPackage(
@@ -8,4 +8,4 @@ data class GraffitiBuyPackage(
     val packUUID: UUID, // request
     var price: Int, // request
     var errorMessage: String? = null // response
-): DataPackage()
+) : CorePackage()

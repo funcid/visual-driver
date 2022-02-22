@@ -8,7 +8,8 @@ sourceCompatibility = '1.8'
 targetCompatibility = '1.8'
 
 dependencies {
-    implementation project(":protocol")
+    compileOnly project(":graffiti-protocol")
+    compileOnly project(":protocol")
 
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.litote.kmongo:kmongo-coroutine-serialization:4.4.0'
