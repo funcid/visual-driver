@@ -3,28 +3,18 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import me.func.mod.Anime.provided
-import me.func.mod.Anime.sendEmptyBuffer
-import me.func.mod.Banners.eyeLocation
-import me.func.mod.Banners.location
-import me.func.mod.Banners.target
-import me.func.mod.Npc.npc
-import me.func.mod.Npc.onClick
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
-import me.func.mod.graffiti.DefaultGraffitiClient
+import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiClient
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.graffiti.GraffitiPlaced
-import me.func.protocol.npc.NpcBehaviour
 import org.bukkit.Bukkit
-import org.bukkit.Material
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
-import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.util.*
@@ -42,12 +32,7 @@ object Anime {
             kit.init()
 
             if (kit == Kit.GRAFFITI) {
-                graffitiClient = graffitiClient ?: DefaultGraffitiClient(
-                    System.getenv("GRAFFITI_SERVICE_HOST"),
-                    System.getenv("GRAFFITI_SERVICE_PASSWORD"),
-                    System.getenv("GRAFFITI_SERVICE_PORT").toInt(),
-                    UUID.randomUUID().toString()
-                ).connect()
+                graffitiClient = graffitiClient ?: CoreGraffitiClient().connect()
             }
         }
     }

@@ -1,0 +1,16 @@
+group 'me.func.protocol'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+dependencies {
+    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
+    compileOnly 'cristalix:bukkit-core:21.01.30'
+    compileOnly project(':protocol')
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}

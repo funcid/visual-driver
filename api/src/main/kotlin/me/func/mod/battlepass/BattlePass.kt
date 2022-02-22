@@ -1,12 +1,10 @@
 package me.func.mod.battlepass
 
-import com.mojang.brigadier.arguments.UuidArgumentType.uuid
 import dev.xdark.feder.NetUtil
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.battlepass.BattlePassUserData
 import org.bukkit.entity.Player
-import sun.security.jgss.GSSToken.readInt
 import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.Consumer

@@ -29,6 +29,7 @@ configurations {
 
 dependencies {
     shade project(':protocol')
+    shade project(':graffiti-protocol')
 
     compileOnly 'cristalix:dark-paper:21.02.03'
 

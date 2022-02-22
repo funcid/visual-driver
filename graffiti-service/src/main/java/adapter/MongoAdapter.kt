@@ -9,7 +9,6 @@ import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.func.protocol.Unique
-import me.func.protocol.sticker.Sticker
 import me.func.protocol.graffiti.FeatureUserData
 import org.bson.Document
 import org.litote.kmongo.coroutine.CoroutineCollection
