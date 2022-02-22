@@ -4,6 +4,8 @@ import me.func.protocol.graffiti.FeatureUserData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
+import me.func.protocol.sticker.packet.StickersAvailablePackage
+import ru.cristalix.core.network.Capability
 import ru.cristalix.core.network.ISocketClient
 import java.util.*
 import java.util.concurrent.CompletableFuture
@@ -11,7 +13,26 @@ import java.util.concurrent.CompletableFuture
 class CoreGraffitiClient : GraffitiClient {
 
     override fun connect(): GraffitiClient =
-        TODO("Not yet implemented")
+        this.apply {
+            ISocketClient.get().registerCapabilities(
+                Capability.builder()
+                    .className(GraffitiBuyPackage::class.java.name)
+                    .notification(true)
+                    .build(),
+                Capability.builder()
+                    .className(GraffitiUsePackage::class.java.name)
+                    .notification(true)
+                    .build(),
+                Capability.builder()
+                    .className(GraffitiLoadUserPackage::class.java.name)
+                    .notification(true)
+                    .build(),
+                Capability.builder()
+                    .className(StickersAvailablePackage::class.java.name)
+                    .notification(true)
+                    .build()
+            )
+        }
 
     override fun loadUser(uuid: UUID): CompletableFuture<FeatureUserData?> =
         ISocketClient.get()

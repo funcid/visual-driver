@@ -15,6 +15,7 @@ import me.func.protocol.graffiti.packet.GraffitiUsePackage
 import me.func.protocol.sticker.packet.StickersAvailablePackage
 import ru.cristalix.core.microservice.MicroServicePlatform
 import ru.cristalix.core.microservice.MicroserviceBootstrap
+import ru.cristalix.core.network.Capability
 import ru.cristalix.core.network.CorePackage
 import ru.cristalix.core.network.ISocketClient
 import ru.cristalix.core.network.packages.MoneyTransactionRequestPackage
@@ -76,6 +77,25 @@ class App {
         )
 
         MicroserviceBootstrap.bootstrap(MicroServicePlatform(2))
+
+        ISocketClient.get().registerCapabilities(
+            Capability.builder()
+                .className(GraffitiBuyPackage::class.java.name)
+                .notification(true)
+                .build(),
+            Capability.builder()
+                .className(GraffitiUsePackage::class.java.name)
+                .notification(true)
+                .build(),
+            Capability.builder()
+                .className(GraffitiLoadUserPackage::class.java.name)
+                .notification(true)
+                .build(),
+            Capability.builder()
+                .className(StickersAvailablePackage::class.java.name)
+                .notification(true)
+                .build()
+        )
 
         registerHandler<StickersAvailablePackage> { _, p ->
             p.list = mutableListOf()

@@ -32,7 +32,7 @@ object Anime {
             kit.init()
 
             if (kit == Kit.GRAFFITI) {
-                graffitiClient = graffitiClient ?: CoreGraffitiClient()
+                graffitiClient = graffitiClient ?: CoreGraffitiClient().connect()
             }
         }
     }
