@@ -10,7 +10,7 @@ import java.util.*
 
 object Alert {
 
-    private val alertMap = hashMapOf<String, Alert>()
+    private val alertMap = hashMapOf<String, NotificationButton>()
 
     @JvmStatic
     private fun toRGB(alertColor: GlowColor): Int {
@@ -35,8 +35,10 @@ object Alert {
         NotificationButton(text, toRGB(color), command, removeButton, removeNotification)
 
     @JvmStatic
-    fun find(key: String) = alertMap[key]!!
+    fun find(key: String): NotificationButton {
+        return alertMap[key]!!
+    }
 
     @JvmStatic
-    fun put(key: String, alert: Alert) = alertMap.put(key, alert)
+    fun put(key: String, alert: NotificationButton) = alertMap.put(key, alert)
 }

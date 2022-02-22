@@ -5,5 +5,11 @@ data class NotificationButton(
     val color: Int,
     val command: String? = null,
     val removeButton: Boolean,
-    val removeNotification: Boolean
-)
+    val removeNotification: Boolean) {
+
+    fun replace(replacement: String) {
+        if (text == null) return
+        text.replace(text, replacement)
+    }
+}
+
