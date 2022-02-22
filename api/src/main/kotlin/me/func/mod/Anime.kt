@@ -7,6 +7,8 @@ import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
+import me.func.mod.graffiti.CoreGraffitiClient
+import me.func.mod.graffiti.GraffitiClient
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.graffiti.GraffitiPlaced
@@ -21,12 +23,17 @@ import java.util.function.BiConsumer
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
+    var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
     fun include(vararg kits: Kit) {
         for (kit in kits) {
             ModLoader.loadFromWeb(kit.fromUrl, "anime")
             kit.init()
+
+            if (kit == Kit.GRAFFITI) {
+                graffitiClient = graffitiClient ?: CoreGraffitiClient()
+            }
         }
     }
 
