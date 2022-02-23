@@ -17,7 +17,7 @@ object Alert {
     fun send(
         player: Player,
         text: String,
-        seconds: Long,
+        millis: Long,
         frontColor: GlowColor,
         backGroundColor: GlowColor,
         chatMessage: String,
@@ -31,7 +31,7 @@ object Alert {
             text,
             toRGB(frontColor),
             toRGB(backGroundColor),
-            seconds,
+            millis,
             buttons.asList(),
             chatMessage
         ).send(player)
@@ -59,6 +59,6 @@ object Alert {
 
     // Метод для отправки готового сообщения игроку
     fun NotificationData.send(player: Player) = ModTransfer()
-            .byteArray(*ru.cristalix.core.GlobalSerializers.toJson(this).toByteArray(StandardCharsets.UTF_8))
-            .send("socials:notify", player)
+        .byteArray(*ru.cristalix.core.GlobalSerializers.toJson(this).toByteArray(StandardCharsets.UTF_8))
+        .send("socials:notify", player)
 }

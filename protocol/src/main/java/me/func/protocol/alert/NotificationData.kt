@@ -8,7 +8,7 @@ data class NotificationData(
     var content: String?,
     val timeoutBarColor: Int,
     val backgroundColor: Int,
-    val timeout: Long,
+    var timeout: Long,
     val buttons: List<NotificationButton>?,
     val chatMessage: String?
 ) : Cloneable {
