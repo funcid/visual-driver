@@ -33,7 +33,8 @@ import java.lang.UnsupportedOperationException
 import net.minecraft.server.v1_12_R1.Entity as NMSEntity
 
 /**
- * Not works!
+ * Скорее всего работает все, кроме ресета игроков
+ * (не все ресетается, например игрок не будет гореть после дизгаса + ресета)
  */
 internal class PacketEntityDisguiser : EntityDisguiser {
     private val fakeWorld = object : WorldServer(
