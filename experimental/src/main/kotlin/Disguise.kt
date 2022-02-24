@@ -12,8 +12,8 @@ object Disguise {
 
     private val entityProvider = UIEngine.clientApi.entityProvider()
 
-    private val players = mutableMapOf<String, EntityPlayer>()
-    private val disguised = mutableMapOf<String, Entity>()
+    private val players = hashMapOf<String, EntityPlayer>()
+    private val disguised = hashMapOf<String, Entity>()
 
     private fun disguise() {
         disguised.forEach { players[it.key]?.renderingEntity = it.value }
