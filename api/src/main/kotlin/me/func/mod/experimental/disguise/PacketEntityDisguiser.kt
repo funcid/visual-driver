@@ -1,3 +1,5 @@
+@file:Suppress("NAME_SHADOWING")
+
 package me.func.mod.experimental.disguise
 
 import net.minecraft.server.v1_12_R1.DataWatcher
@@ -50,6 +52,8 @@ internal class PacketEntityDisguiser : EntityDisguiser {
     private val entityTypeCache = mutableMapOf<EntityType, Pair<Class<out NMSEntity>, DataWatcher>>()
 
     override fun disguise(entity: Entity, type: EntityType, vararg players: Player) {
+        val players = players.filter { it != entity }
+
         val et = entityTypeCache.getOrPut(type) {
             val clazz = try {
                 EntityTypes.clsToTypeMap.filter { it.value.equals(type) }.keys.first()
