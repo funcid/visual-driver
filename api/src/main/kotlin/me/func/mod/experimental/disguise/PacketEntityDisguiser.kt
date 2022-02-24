@@ -1,5 +1,6 @@
 package me.func.mod.experimental.disguise
 
+import net.minecraft.server.v1_12_R1.DataWatcher
 import net.minecraft.server.v1_12_R1.EntityLiving
 import net.minecraft.server.v1_12_R1.EntityPlayer
 import net.minecraft.server.v1_12_R1.EntityTracker
@@ -29,6 +30,7 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.lang.IllegalStateException
 import java.lang.UnsupportedOperationException
+import net.minecraft.server.v1_12_R1.Entity as NMSEntity
 
 /**
  * Not works!
@@ -44,13 +46,22 @@ internal class PacketEntityDisguiser : EntityDisguiser {
 
     private val disguised = mutableMapOf<Entity, EntityType>()
 
-    override fun disguise(entity: Entity, type: EntityType, vararg players: Player) { // TODO: add cache
-        val clazz = try {
-            EntityTypes.clsToTypeMap.filter { it.value.equals(type) }.keys.first()
-        } catch (e: NoSuchElementException) {
-            if (type == EntityType.PLAYER) EntityPlayer::class.java
-            else Nothing::class.java
+    private val entityTypeCache = mutableMapOf<EntityType, Pair<Class<out NMSEntity>, DataWatcher>>()
+
+    override fun disguise(entity: Entity, type: EntityType, vararg players: Player) {
+        val et = entityTypeCache.getOrPut(type) {
+            val clazz = try {
+                EntityTypes.clsToTypeMap.filter { it.value.equals(type) }.keys.first()
+            } catch (e: NoSuchElementException) {
+                if (type == EntityType.PLAYER) EntityPlayer::class.java
+                else Nothing::class.java
+            }
+
+            clazz to clazz.getDeclaredConstructor(World::class.java).newInstance(fakeWorld).datawatcher
         }
+
+        val clazz = et.first
+        val dw = et.second
 
         // TODO: one packet for all players???
 
@@ -84,7 +95,7 @@ internal class PacketEntityDisguiser : EntityDisguiser {
                 conn.sendPacket(PacketPlayOutEntityDestroy(intArrayOf(entity.entityId)))
                 conn.sendPacket(PacketPlayOutSpawnEntityLiving((entity as CraftLivingEntity).handle).apply {
                     c = type.typeId.toInt()
-                    m = clazz.getDeclaredConstructor(World::class.java).newInstance(fakeWorld).datawatcher
+                    m = dw
                 })
             }
         } else {
