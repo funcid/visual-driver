@@ -1,12 +1,15 @@
-package me.func.mod.experimental
+package me.func.mod.experimental.disguise
 
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 
+internal const val CHANNEL = "anime:disguise"
+
 interface EntityDisguiser {
     companion object {
         val packet: EntityDisguiser = PacketEntityDisguiser()
+        val mod: EntityDisguiser = ModEntityDisguiser()
     }
 
     /**

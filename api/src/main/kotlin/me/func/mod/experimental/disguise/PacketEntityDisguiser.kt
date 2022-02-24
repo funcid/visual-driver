@@ -1,9 +1,8 @@
-package me.func.mod.experimental
+package me.func.mod.experimental.disguise
 
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityDestroy
 import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityLiving
-import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Entity
@@ -12,6 +11,9 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.lang.IllegalStateException
 
+/**
+ * Not works!
+ */
 internal class PacketEntityDisguiser : EntityDisguiser {
     private val entityTypeField = PacketPlayOutSpawnEntityLiving::class.java.getDeclaredField("c").apply {
         isAccessible = true
