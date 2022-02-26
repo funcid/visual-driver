@@ -13,6 +13,7 @@ class App : KotlinMod() {
         ExternalManager
         ModelBlocker
         KillBoardManager
+        SphereManager
         Title
         Alert
         TimeBar
