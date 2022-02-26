@@ -13,10 +13,12 @@ import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.graffiti.GraffitiPlaced
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
+import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
 
@@ -353,6 +355,87 @@ object Anime {
             .integer(secondsAlive)
             .send("func:corpse", to)
     }
+
+    @JvmStatic
+    fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, diameter: Double) =
+        ModTransfer()
+            .integer(0)
+            .long(uuid.mostSignificantBits)
+            .long(uuid.leastSignificantBits)
+            .double(x)
+            .double(y)
+            .double(z)
+            .integer(color.red)
+            .integer(color.green)
+            .integer(color.blue)
+            .double(color.alpha / 255.0)
+            .double(diameter)
+            .send("fiwka:sphere", to)
+
+    @JvmStatic
+    fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, sX: Double, sY: Double, sZ: Double) =
+        ModTransfer()
+            .integer(1)
+            .long(uuid.mostSignificantBits)
+            .long(uuid.leastSignificantBits)
+            .double(x)
+            .double(y)
+            .double(z)
+            .integer(color.red)
+            .integer(color.green)
+            .integer(color.blue)
+            .double(color.alpha / 255.0)
+            .double(sX)
+            .double(sY)
+            .double(sZ)
+            .send("fiwka:sphere", to)
+
+    @JvmStatic
+    fun teleportSphereTo(to: Player, uuid: UUID, x: Double, y: Double, z: Double) =
+        ModTransfer()
+            .integer(2)
+            .long(uuid.mostSignificantBits)
+            .long(uuid.leastSignificantBits)
+            .double(x)
+            .double(y)
+            .double(z)
+            .send("fiwka:sphere", to)
+
+    @JvmStatic
+    fun moveSphereTo(to: Player, uuid: UUID, x: Double, y: Double, z: Double, time: Double) =
+        ModTransfer()
+            .integer(3)
+            .long(uuid.mostSignificantBits)
+            .long(uuid.leastSignificantBits)
+            .double(x)
+            .double(y)
+            .double(z)
+            .double(time)
+            .send("fiwka:sphere", to)
+
+    @JvmStatic
+    fun sphere(to: Player, uuid: UUID, location: Location, color: Color, radius: Double) =
+        sphere(to, uuid, location.getX(), location.getY(), location.getZ(), color, radius)
+
+    @JvmStatic
+    fun sphere(to: Player, uuid: UUID, location: Location, color: Color, sX: Double, sY: Double, sZ: Double) =
+        sphere(to, uuid, location.getX(), location.getY(), location.getZ(), color, sX, sY, sZ)
+
+    @JvmStatic
+    fun teleportSphereTo(to: Player, uuid: UUID, location: Location) =
+        teleportSphereTo(to, uuid, location.getX(), location.getY(), location.getZ())
+
+    @JvmStatic
+    fun moveSphereTo(to: Player, uuid: UUID, location: Location, time: Double) =
+        moveSphereTo(to, uuid, location.getX(), location.getY(), location.getZ(), time)
+
+    @JvmStatic
+    fun removeSphere(to: Player, uuid: UUID) =
+        ModTransfer()
+            .integer(4)
+            .long(uuid.mostSignificantBits)
+            .long(uuid.leastSignificantBits)
+            .send("fiwka:sphere", to)
 
     @JvmStatic
     fun chat(player: Player, chat: ModChat, message: String) {

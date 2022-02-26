@@ -225,6 +225,18 @@ Banners.new(banner); // Добавление в список баннеров, �
 `Anime.hideIndicator(player: Player, vararg indicator: Indicators)` скрывает игроку указанные через запятую индикаторы<br>
 `Anime.showIndicator(player: Player, vararg indicator: Indicators)` показывает игроку указанные через запятую индикаторы<br>
 
+<h3>Сферы STANDARD</h3>
+
+![Сфера](screenshots/sphere.png)
+
+Методы взаимодействия с клиентом:<br>
+`Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, radius: Double)` создать сферу по указанным координатам с указанным радиусом<br>
+`Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, sX: Double, sY: Double, sZ: Double)` создать сферу по указанным координатам с указанными размерами<br>
+`Anime.teleportSphereTo(to: Player, uuid: UUID, location: Location)` телепортировать сферу<br>
+`Anime.removeSphere(to: Player, uuid: UUID)` удалить сферу<br>
+`Anime.moveSphereTo(to: Player, uuid: UUID, location: Location, time: Double)` плавно переместить сферу по указанным координатам за указанное количество секунд<br>
+
+
 <h3>Мультичат MULTICHAT</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/146237931-759b0902-50e4-44e3-a692-409089ef7d6a.png" width="500">

@@ -71,6 +71,9 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
 
     fun integer(integer: Int) = this.apply { serializer.writeInt(integer) }
 
+    @JvmName("putLong")
+    fun long(long: Long) = this.apply { serializer.writeLong(long) }
+
     fun short(short: Short) = this.apply { serializer.writeShort(short.toInt()) }
 
     @JvmName("putDouble")
