@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 1.1.74)
+# Cristalix Animation API DOCS (актуальная версия live-SNAPSHOT)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -30,7 +30,7 @@ repositories {
 }
 
 dependencies {
-  implementation 'me.func:animation-api:1.1.74'
+  implementation 'me.func:animation-api:live-SNAPSHOT'
   implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 ```
@@ -421,6 +421,66 @@ new Dialog(new Entrypoint(
 
 Метод показа окна награды:<br>
 `Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с указанием текущего дня [0..6], а также с указанием наград за каждый день в объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
+
+<h3>Уведомления (зависит от предустановленного всеми cristalix-socials)</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/155223931-23d3cafe-1028-435f-aa97-6702226ec3d9.png" width="500">
+
+Уведомления возникают у игрока справа сверху, можно отправлять несколько, уведомление содержит UUID отправителя, в нем может быть максимум 2 кнопки. Данная возможность не зависит от модулей `animation-api`, мод предустановлен через `bangeecord` всем игрокам (Исходники мода `cristalix-socials` не будут добавлены в данный репозиторий).
+<br>
+Для начала рассмотрим создание кнопок уведомлений:<br>
+<br>
+
+```kotlin
+Alert.button( // метод возвращает кнопку
+  "Принять", // сообщение на кнопке
+  "/ok", // команда при нажатии
+  GlowColor.GOLD, // цвет кнопки
+  false, // после нажатия удалится ли эта кнопка
+  true // после нажатия скрыть все уведомление
+)
+```
+<br>
+Всего есть два подхода к отправке уведомлений игроку:<br>
+1. Генерация уведомления прямо на месте отправки<br>
+2. Создание шаблона уведомления, затем замена контента под ситуацию, отправка<br>
+<br>
+Рассмотрим первый вариант:
+
+```kotlin
+Alert.send(
+        player: Player, // кому отослать
+        text: String, // сообщение
+        millis: Long, // милисекунд до скрытия уведомления (1000 = 1 секунда)
+        frontColor: GlowColor, // внешний цвет
+        backGroundColor: GlowColor, // цвет фона
+        chatMessage: String, // сообщение в чате
+        vararg buttons: NotificationButton // кнопки (максимум две)
+)
+```
+
+Рассмотрим второй вариант:
+
+1. Создание шаблона уведомления<br>
+
+```kotlin
+Alert.put(
+  "hello", // ключ
+  NotificationData( // содержимое
+    null, "notify", "Привет %nick%,\nкак дела?",
+    toRGB(GlowColor.GREEN), toRGB(GlowColor.GREEN), 3000, listOf(
+      button("Принять", "/ok", GlowColor.GOLD) // создание кнопки
+    ), "Вам уведомление!"
+  )
+)
+```
+2. Получение шаблона, замена текста, отправка:<br>
+```kotlin
+Aler.find("hello") // найти шаблон по ключу
+    .replace("%nick", player.name) // заменить placeholder
+    .replace("как дела?", "как спалось?")
+    .send(player) // отправить игроку
+```
 
 <h3>Лутбокс LOOTBOX</h3>
 

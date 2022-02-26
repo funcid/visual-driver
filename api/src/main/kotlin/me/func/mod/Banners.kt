@@ -15,20 +15,19 @@ object Banners {
 
     val banners = mutableMapOf<UUID, Banner>()
 
-    fun new(data: Banner.() -> Unit): Banner {
-        val banner = Banner().apply(data)
-        banners[banner.uuid] = banner
-        return banner
-    }
+    fun new(data: Banner.() -> Unit) = new(Banner().apply(data))
 
     @JvmStatic
     fun new(banner: Banner): Banner {
+        if (banners.size > 500)
+            throw RuntimeException("Banners map size > 500! Stop add banners!")
         banners[banner.uuid] = banner
         return banner
     }
 
     @JvmStatic
-    fun content(player: Player, uuid: UUID, content: String) = ModTransfer(uuid.toString(), content).send("banner:change-content", player)
+    fun content(player: Player, uuid: UUID, content: String) =
+        ModTransfer(uuid.toString(), content).send("banner:change-content", player)
 
     @JvmStatic
     fun content(player: Player, banner: Banner, content: String) = content(player, banner.uuid, content)
@@ -103,7 +102,7 @@ object Banners {
         )
     }
 
-    fun Banner.target(entity: LivingEntity, offsetX: Double = 0.0, offsetY: Double = 0.0, offsetZ: Double = 0.0,) {
+    fun Banner.target(entity: LivingEntity, offsetX: Double = 0.0, offsetY: Double = 0.0, offsetZ: Double = 0.0) {
         motionSettings["target"] = entity.entityId
         motionSettings["offsetX"] = offsetX
         motionSettings["offsetY"] = offsetY
