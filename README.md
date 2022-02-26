@@ -227,7 +227,7 @@ Banners.new(banner); // Добавление в список баннеров, �
 
 <h3>Сферы STANDARD</h3>
 
-![Сфера](screenshots/sphere.png)
+<img alt="Сфера" src="https://i.imgur.com/z3eNuZZ.png" width="500"/>
 
 Методы взаимодействия с клиентом:<br>
 `Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, radius: Double)` создать сферу по указанным координатам с указанным радиусом<br>
