@@ -8,7 +8,6 @@ class App : KotlinMod() {
 
         GlowPlaces
         Banners
-        Figures
         Particles
         Recharge
         Disguise

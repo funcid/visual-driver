@@ -9,6 +9,9 @@ data class Figure(
     var y: Double,
     var z: Double,
     var size: Double,
-    var color: Int,
+    var red: Int,
+    var green: Int,
+    var blue: Int,
+    var alpha: Double,
     var texture: String?
 )

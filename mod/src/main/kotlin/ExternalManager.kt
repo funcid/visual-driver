@@ -6,6 +6,8 @@ import ru.cristalix.uiengine.UIEngine
 
 object ExternalManager {
 
+    private val textures = mutableListOf<ResourceLocation>()
+
     init {
         App::class.mod.registerChannel("func:load-paths") {
             val count = readInt()
@@ -21,6 +23,11 @@ object ExternalManager {
         App::class.mod.registerChannel("func:load-path") {
             loadPaths(NetUtil.readUtf8(this))
         }
+
+        App::class.mod.onDisable.add {
+            val renderEngine = UIEngine.clientApi.renderEngine()
+            textures.forEach { renderEngine.deleteTexture(it) }
+        }
     }
 
     fun loadPaths(vararg paths: String) {
@@ -29,7 +36,7 @@ object ExternalManager {
         loadTextures(
             url,
             *paths.map { load(it.split("/").last(), "FUNC${it.hashCode()}FUNC") }
-                .toTypedArray(),
+                .toTypedArray().apply { textures.addAll(map { it.location }) },
         ).thenAccept {
             UIEngine.clientApi.clientConnection().sendPayload("func:loaded", Unpooled.buffer())
         }

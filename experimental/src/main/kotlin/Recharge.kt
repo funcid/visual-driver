@@ -15,8 +15,6 @@ object Recharge {
 
     private var cooldown: RectangleElement? = null
 
-    private var added = false
-
     init {
         var time = 0.0
         var currentTime = System.currentTimeMillis()
@@ -29,8 +27,8 @@ object Recharge {
         }
 
         App::class.mod.registerChannel("func:recharge") {
-            if (!added || cooldown == null) {
-                cooldown = rectangle {
+            if (cooldown == null) {
+                cooldown = UIEngine.overlayContext + rectangle {
                     offset.y -= 65
                     origin = BOTTOM
                     align = BOTTOM
@@ -72,10 +70,6 @@ object Recharge {
                 cooldown?.enabled = false
                 line.size.x = 180.0
             }
-        }
-        if (!added) {
-            UIEngine.overlayContext + cooldown!!
-            added = true
         }
     }
 }
