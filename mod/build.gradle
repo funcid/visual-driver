@@ -34,9 +34,6 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
-
-jar.from configurations.runtimeClasspath.collect(project.&zipTree)
-
 bundler {
     name 'Animation API'
     mainClass 'App'

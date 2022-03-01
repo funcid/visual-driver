@@ -1,6 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
 
 import adapter.MongoAdapter
+import com.mongodb.client.model.IndexOptions
+import com.mongodb.client.model.Indexes
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -74,7 +76,11 @@ class App {
 
         mongoAdapter = MongoAdapter(
             System.getenv("MONGO_URI"), System.getenv("MONGO_DB"), System.getenv("MONGO_COLLECTION")
-        )
+        ).apply {
+            collections.forEach { (_, value) ->
+                runBlocking { value.createIndex(Indexes.ascending("uuid")) }
+            }
+        }
 
         MicroserviceBootstrap.bootstrap(MicroServicePlatform(2))
 
@@ -97,20 +103,21 @@ class App {
                 .build()
         )
 
-        registerHandler<StickersAvailablePackage> { _, p ->
-            p.list = mutableListOf()
-            ISocketClient.get().write(p)
+        registerHandler<StickersAvailablePackage> { _, packet ->
+            // Ответ серверу списком доступных стикеров
+            packet.list = mutableListOf()
+            ISocketClient.get().write(packet)
         }
 
-        registerHandler<GraffitiLoadUserPackage> { _, pckg ->
+        registerHandler<GraffitiLoadUserPackage> { _, packet ->
             // Загрузка профиля игрока
             runBlocking {
-                loadProfile(pckg.playerUuid) { data ->
+                loadProfile(packet.playerUuid) { data ->
                     // Если данные уже есть - обновляем набор паков, если нет - создаем новые
-                    pckg.data = data?.apply {
+                    packet.data = data?.apply {
                         data.packs.addAll(actualGraffitiPacks.filter { !this.packs.contains(it) })
                     } ?: FeatureUserData(
-                        pckg.playerUuid,
+                        packet.playerUuid,
                         actualGraffitiPacks,
                         activeSticker = null, // TODO: See #L33
                         stickers = mutableListOf(),
@@ -118,10 +125,10 @@ class App {
                     )
 
                     // Если данные только что были сгенерированы - сохранить
-                    mongoAdapter.save(pckg.data!!)
+                    mongoAdapter.save(packet.data!!)
 
                     // Ответ серверу
-                    ISocketClient.get().write(pckg)
+                    ISocketClient.get().write(packet)
                 }
             }
         }
@@ -160,7 +167,7 @@ class App {
             }
         }
 
-        registerHandler<GraffitiUsePackage> { channel, pckg ->
+        registerHandler<GraffitiUsePackage> { _, pckg ->
             // Загрузка профиля игрока
             runBlocking {
                 loadProfile(pckg.playerUUID) { userData ->
