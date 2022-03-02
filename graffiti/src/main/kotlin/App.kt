@@ -17,6 +17,7 @@ import me.func.protocol.graffiti.GraffitiPack
 import me.func.protocol.graffiti.GraffitiPlaced
 import me.func.protocol.sticker.Sticker
 import org.lwjgl.input.Keyboard
+import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
 import ru.cristalix.clientapi.KotlinMod
@@ -37,9 +38,9 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 lateinit var app: App
-const val PICTURE_SIZE = 1536
+const val PICTURE_SIZE = 1920
 const val OVAL_RADIUS = 90
-const val ICON_PACK_SIZE = 20.0
+const val ICON_PACK_SIZE = 50.0
 
 class App : KotlinMod() {
 
@@ -204,7 +205,7 @@ class App : KotlinMod() {
                 shadow = true
                 content = text
             }
-            onClick { buyPack(active) }
+            onClick { if (Mouse.isButtonDown(0)) buyPack(active) }
         }
         packs.forEachIndexed { index, it ->
             gui + it.icon.apply {
@@ -290,6 +291,7 @@ class App : KotlinMod() {
             packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.uuid, index) }.toMutableList()
 
             inited = true
+            println("Graffiti mod successfully loaded!")
 
             // Включить возможность выбора места под граффити
             startPickPlace()

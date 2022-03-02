@@ -3,14 +3,11 @@ package me.func.mod
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.Anime.provided
 import me.func.mod.Npc.npcs
-import me.func.mod.Npc.spawn
 import me.func.mod.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.GraffitiManager
-import me.func.protocol.element.MotionType
 import net.minecraft.server.v1_12_R1.MinecraftServer
-import net.minecraft.server.v1_12_R1.SoundEffects.id
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Sound
@@ -127,6 +124,7 @@ enum class Kit(val fromUrl: String) : Listener {
 
                 // Загрузка персональных граффити
                 GraffitiManager.tryPutData(player.uniqueId).thenAccept { data ->
+
                     // Если данные игрока успешно загрузились - отправить их
                     data?.let {
                         val transfer = ModTransfer(player.uniqueId.toString(), data.packs.size)
@@ -154,6 +152,7 @@ enum class Kit(val fromUrl: String) : Listener {
                         transfer.integer(data.activePack).send("graffiti:init", player)
                         return@thenAccept
                     }
+
                     // Если же данные не загрузились
                     player.sendMessage(Formatting.error("Сервер не получил данных от сервиса граффити."))
                 }
@@ -167,7 +166,5 @@ enum class Kit(val fromUrl: String) : Listener {
         }
     };
 
-    fun init() {
-        getPluginManager().registerEvents(this, provided)
-    }
+    fun init() = getPluginManager().registerEvents(this, provided)
 }

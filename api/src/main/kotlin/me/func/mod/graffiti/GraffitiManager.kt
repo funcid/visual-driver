@@ -59,7 +59,7 @@ object GraffitiManager {
         graffiti.remove(player.uniqueId)
     }
 
-    fun safeRead(player: Player?): FeatureUserData? {
+    private fun safeRead(player: Player?): FeatureUserData? {
         // Если игрок вышел и потом пришло сообщение
         if (player == null || !player.isOnline)
             return null

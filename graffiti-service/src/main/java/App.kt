@@ -145,12 +145,14 @@ class App {
 
     suspend fun run() {
         app = this
-
         mongoAdapter = MongoAdapter(
             System.getenv("MONGO_URI"), System.getenv("MONGO_DB"), System.getenv("MONGO_COLLECTION")
         ).apply {
             collections.forEach { (_, value) ->
-                runBlocking { value.createIndex(Indexes.ascending("uuid")) }
+                runBlocking {
+                    value.createIndex(Indexes.ascending("uuid"))
+                    println("Created index for collection.")
+                }
             }
         }
 
@@ -194,13 +196,14 @@ class App {
                         activeSticker = null, // TODO: See #L33
                         stickers = mutableListOf(),
                         0
-                    )
-
-                    // Если данные только что были сгенерированы - сохранить
-                    mongoAdapter.save(packet.data!!)
+                    ).apply {
+                        // Если данные только что были сгенерированы - сохранить
+                        mongoAdapter.save(packet.data!!)
+                    }
 
                     // Ответ серверу
                     ISocketClient.get().write(packet)
+                    println("Wrote graffiti load to ${data?.uuid}.")
                 }
             }
         }
@@ -212,6 +215,7 @@ class App {
                     // Покупка граффити
                     if (userData == null) {
                         ISocketClient.get().write(pckg)
+                        println("Cannot buy pack! UserData is null.")
                     } else {
                         // Если данные игрока успешно загружены
                         invoice(pckg.playerUUID, pckg.price, "Покупка граффити ${pckg.packUUID}").thenAccept { response ->
@@ -229,6 +233,7 @@ class App {
 
                                 // Сохранение данных
                                 scope.launch { mongoAdapter.save(userData) }
+                                println("Successful payment! ${pckg.playerUUID} bought pack ${pckg.packUUID}")
                             }
 
                             // Отправка пакета назад
@@ -256,6 +261,7 @@ class App {
 
                             // Сохранить изменение
                             mongoAdapter.save(userData)
+                            println("Player use graffiti! ${pckg.playerUUID} used ${pckg.packUUID}")
                         }
                     }
 
