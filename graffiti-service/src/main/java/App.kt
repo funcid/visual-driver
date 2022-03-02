@@ -1,16 +1,19 @@
 @file:Suppress("UNCHECKED_CAST")
 
 import adapter.MongoAdapter
-import com.mongodb.client.model.IndexOptions
 import com.mongodb.client.model.Indexes
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.future.await
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import me.func.protocol.DropRare
+import me.func.protocol.graffiti.FeatureUserData
 import me.func.protocol.graffiti.Graffiti
 import me.func.protocol.graffiti.GraffitiPack
-import me.func.protocol.graffiti.FeatureUserData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
@@ -24,12 +27,11 @@ import ru.cristalix.core.network.packages.MoneyTransactionRequestPackage
 import ru.cristalix.core.network.packages.MoneyTransactionResponsePackage
 import ru.cristalix.core.realm.RealmId
 import java.util.UUID
-import java.util.concurrent.CompletableFuture
 
 lateinit var app: App
 
 class App {
-    private val scope = CoroutineScope(Dispatchers.Default)
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     // TODO: actualStickers
 
@@ -62,7 +64,9 @@ class App {
                 Graffiti("4cdc8c23-4db5-49fe-81fd-6486f66c7aff", 83 + 69 + 55 + 65, 192 * 2, 192, "func"),
                 Graffiti("8ac71aa5-f34b-4e44-8591-0bebb5596676", 83 + 69 + 55 + 65 + 91, 192 * 2, 192, "func"),
                 Graffiti("58487e34-0faf-4d32-ad4f-78e7ca9783e0", 83 + 69 + 55 + 65 + 91 + 61, 192 * 2, 192, "func"),
-                Graffiti("6fee1070-a907-4aa4-918e-006f2cbce616", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 2, 192, "func"),
+                Graffiti(
+                    "6fee1070-a907-4aa4-918e-006f2cbce616", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 2, 192, "func"
+                ),
             ), "Тест 3", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("c46002de-25ef-404a-b3ea-df66d142bb81"), mutableListOf(
@@ -72,7 +76,9 @@ class App {
                 Graffiti("4bab1c4d-95c8-4e2d-904c-3ddcc62de4de", 83 + 69 + 55 + 65, 192 * 3, 192, "func"),
                 Graffiti("a85430f7-5eeb-477e-a138-9de09c07366e", 83 + 69 + 55 + 65 + 91, 192 * 3, 192, "func"),
                 Graffiti("57641929-4269-4ac7-bbd0-72ce6d8c8013", 83 + 69 + 55 + 65 + 91 + 61, 192 * 3, 192, "func"),
-                Graffiti("fe75c6f8-4977-4c18-a421-5bab0b799652", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 3, 192, "func"),
+                Graffiti(
+                    "fe75c6f8-4977-4c18-a421-5bab0b799652", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 3, 192, "func"
+                ),
             ), "Тест 4", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("6a0b6461-13da-4d8d-afc2-8b391097605f"), mutableListOf(
@@ -82,7 +88,9 @@ class App {
                 Graffiti("58863006-0c97-4318-8617-50b3d95cdf9f", 83 + 69 + 55 + 65, 192 * 4, 192, "func"),
                 Graffiti("edfb758a-377b-4105-a7d4-8bf4deed3a0a", 83 + 69 + 55 + 65 + 91, 192 * 4, 192, "func"),
                 Graffiti("012dbdc8-7a8d-4a1a-8612-c48063b2726e", 83 + 69 + 55 + 65 + 91 + 61, 192 * 4, 192, "func"),
-                Graffiti("0629ec28-e683-4633-9a02-c68ab19b2a20", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 4, 192, "func"),
+                Graffiti(
+                    "0629ec28-e683-4633-9a02-c68ab19b2a20", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 4, 192, "func"
+                ),
             ), "Тест 5", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("43c2c419-e866-4a2b-8778-6e4b35c95d6a"), mutableListOf(
@@ -92,7 +100,9 @@ class App {
                 Graffiti("bac0a1e0-7d3f-413c-af90-9e4bdf2c1fc0", 83 + 69 + 55 + 65, 192 * 5, 192, "func"),
                 Graffiti("03e3b6ae-5c4b-421a-89b7-921888532b96", 83 + 69 + 55 + 65 + 91, 192 * 5, 192, "func"),
                 Graffiti("3a2f8713-d234-4273-bea3-b945ecb9516e", 83 + 69 + 55 + 65 + 91 + 61, 192 * 5, 192, "func"),
-                Graffiti("1ec24bf8-4844-4b58-811d-76006c73b688", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 5, 192, "func"),
+                Graffiti(
+                    "1ec24bf8-4844-4b58-811d-76006c73b688", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 5, 192, "func"
+                ),
             ), "Тест 6", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("92c5d468-829d-4ea5-bd39-2669681624dc"), mutableListOf(
@@ -102,7 +112,9 @@ class App {
                 Graffiti("efa9472d-1660-4400-8df1-e01af31ab1f4", 83 + 69 + 55 + 65, 192 * 6, 192, "func"),
                 Graffiti("4bcb9ec9-e42b-44ac-91bf-a4a415b96abf", 83 + 69 + 55 + 65 + 91, 192 * 6, 192, "func"),
                 Graffiti("dcdda835-1931-4c5d-a433-6327eba7b6c2", 83 + 69 + 55 + 65 + 91 + 61, 192 * 6, 192, "func"),
-                Graffiti("5c190495-74e8-4ac0-a0d3-f98d510fc07b", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 6, 192, "func"),
+                Graffiti(
+                    "5c190495-74e8-4ac0-a0d3-f98d510fc07b", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 6, 192, "func"
+                ),
             ), "Тест 7", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("4d48c377-540b-4313-b870-bc03c9b47993"), mutableListOf(
@@ -112,7 +124,9 @@ class App {
                 Graffiti("c4ffaaf1-fb4c-4c82-a49b-98a813a99c7f", 83 + 69 + 55 + 65, 192 * 7, 192, "func"),
                 Graffiti("54615d94-98e2-4eda-bc6a-386ca35086c7", 83 + 69 + 55 + 65 + 91, 192 * 7, 192, "func"),
                 Graffiti("13f0d871-0798-496d-83fd-9c853beff015", 83 + 69 + 55 + 65 + 91 + 61, 192 * 7, 192, "func"),
-                Graffiti("04a18e4b-1cf2-4e59-8608-4d87d819088e", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 7, 192, "func"),
+                Graffiti(
+                    "04a18e4b-1cf2-4e59-8608-4d87d819088e", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 7, 192, "func"
+                ),
             ), "Тест 8", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("deaafb8d-5254-40da-942e-9f7a91d9ced3"), mutableListOf(
@@ -122,7 +136,9 @@ class App {
                 Graffiti("92614f67-814b-45ff-8cac-2d72293cbe84", 83 + 69 + 55 + 65, 192 * 8, 192, "func"),
                 Graffiti("076bd846-52e8-4544-8ad0-4568464c8ee4", 83 + 69 + 55 + 65 + 91, 192 * 8, 192, "func"),
                 Graffiti("9b71de91-0dbd-4751-96ba-21ec33d9cd80", 83 + 69 + 55 + 65 + 91 + 61, 192 * 8, 192, "func"),
-                Graffiti("6d95cece-1dd2-48e0-b6e2-ad50a148f006", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 8, 192, "func"),
+                Graffiti(
+                    "6d95cece-1dd2-48e0-b6e2-ad50a148f006", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 8, 192, "func"
+                ),
             ), "Тест 9", "func", 999, DropRare.EPIC.ordinal, true
         ), GraffitiPack(
             UUID.fromString("7f1acdca-03de-40b4-ba47-f242e6ac36d3"), mutableListOf(
@@ -132,7 +148,9 @@ class App {
                 Graffiti("de4a8b35-3ceb-4800-8144-e578cdd1463a", 83 + 69 + 55 + 65, 192 * 9, 192, "func"),
                 Graffiti("d9dbd4a1-2238-4081-9756-7bab77d9f189", 83 + 69 + 55 + 65 + 91, 192 * 9, 192, "func"),
                 Graffiti("7924f8de-b9d2-499e-9014-a9b4bd3a0861", 83 + 69 + 55 + 65 + 91 + 61, 192 * 9, 192, "func"),
-                Graffiti("8db35be6-69f0-4946-a506-ce40b571e6fc", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 9, 192, "func"),
+                Graffiti(
+                    "8db35be6-69f0-4946-a506-ce40b571e6fc", 83 + 69 + 55 + 65 + 91 + 61 + 39, 192 * 9, 192, "func"
+                ),
             ), "Тест 10", "func", 999, DropRare.EPIC.ordinal, true
         )
     )
@@ -149,32 +167,18 @@ class App {
             System.getenv("MONGO_URI"), System.getenv("MONGO_DB"), System.getenv("MONGO_COLLECTION")
         ).apply {
             collections.forEach { (_, value) ->
-                runBlocking {
-                    value.createIndex(Indexes.ascending("uuid"))
-                    println("Created index for collection.")
-                }
+                value.createIndex(Indexes.ascending("uuid"))
+                println("Created index for collection.")
             }
         }
 
         MicroserviceBootstrap.bootstrap(MicroServicePlatform(2))
 
         ISocketClient.get().registerCapabilities(
-            Capability.builder()
-                .className(GraffitiBuyPackage::class.java.name)
-                .notification(true)
-                .build(),
-            Capability.builder()
-                .className(GraffitiUsePackage::class.java.name)
-                .notification(true)
-                .build(),
-            Capability.builder()
-                .className(GraffitiLoadUserPackage::class.java.name)
-                .notification(true)
-                .build(),
-            Capability.builder()
-                .className(StickersAvailablePackage::class.java.name)
-                .notification(true)
-                .build()
+            Capability.builder().className(GraffitiBuyPackage::class.java.name).notification(true).build(),
+            Capability.builder().className(GraffitiUsePackage::class.java.name).notification(true).build(),
+            Capability.builder().className(GraffitiLoadUserPackage::class.java.name).notification(true).build(),
+            Capability.builder().className(StickersAvailablePackage::class.java.name).notification(true).build()
         )
 
         registerHandler<StickersAvailablePackage> { _, packet ->
@@ -185,17 +189,14 @@ class App {
 
         registerHandler<GraffitiLoadUserPackage> { _, packet ->
             // Загрузка профиля игрока
-            runBlocking {
+            scope.launch {
                 loadProfile(packet.playerUuid) { data ->
                     // Если данные уже есть - обновляем набор паков, если нет - создаем новые
                     packet.data = data?.apply {
                         data.packs.addAll(actualGraffitiPacks.filter { !this.packs.contains(it) })
                     } ?: FeatureUserData(
-                        packet.playerUuid,
-                        actualGraffitiPacks,
-                        activeSticker = null, // TODO: See #L33
-                        stickers = mutableListOf(),
-                        0
+                        packet.playerUuid, actualGraffitiPacks, activeSticker = null, // TODO: See #L33
+                        stickers = mutableListOf(), 0
                     ).apply {
                         // Если данные только что были сгенерированы - сохранить
                         mongoAdapter.save(packet.data!!)
@@ -210,7 +211,7 @@ class App {
 
         registerHandler<GraffitiBuyPackage> { _, pckg ->
             // Загрузка профиля игрока
-            runBlocking {
+            scope.launch {
                 loadProfile(pckg.playerUUID) { userData ->
                     // Покупка граффити
                     if (userData == null) {
@@ -218,27 +219,37 @@ class App {
                         println("Cannot buy pack! UserData is null.")
                     } else {
                         // Если данные игрока успешно загружены
-                        invoice(pckg.playerUUID, pckg.price, "Покупка граффити ${pckg.packUUID}").thenAccept { response ->
-                            pckg.errorMessage = response.errorMessage
+                        val response = invoice(
+                            pckg.playerUUID, pckg.price, "Покупка граффити ${pckg.packUUID}"
+                        ).await()
 
-                            if (pckg.errorMessage.isNullOrEmpty()) {
-                                // Если покупка прошла успешно
-                                println("${pckg.playerUUID} payed ${pckg.price} for ${pckg.packUUID}!")
+                        pckg.errorMessage = response.errorMessage
 
-                                // Начисление граффити
-                                userData.packs.filter { it.uuid == pckg.packUUID }.forEach { pack ->
-                                    pack.graffiti.forEach { it.uses += it.address.maxUses }
-                                    println("${pckg.playerUUID} got ${pckg.packUUID} pack")
-                                }
+                        if (pckg.errorMessage.isNullOrEmpty()) {
+                            // Если покупка прошла успешно
+                            println("${pckg.playerUUID} payed ${pckg.price} for ${pckg.packUUID}!")
 
-                                // Сохранение данных
-                                scope.launch { mongoAdapter.save(userData) }
-                                println("Successful payment! ${pckg.playerUUID} bought pack ${pckg.packUUID}")
+                            // Начисление граффити
+                            userData.packs.filter { it.uuid == pckg.packUUID }.forEach { pack ->
+                                pack.graffiti.forEach { it.uses += it.address.maxUses }
+                                println("${pckg.playerUUID} got ${pckg.packUUID} pack")
                             }
 
-                            // Отправка пакета назад
-                            ISocketClient.get().write(pckg)
+                            // Сохранение данных
+                            async { mongoAdapter.save(userData) }.invokeOnCompletion {
+                                if (it == null) println(
+                                    "Successful payment! ${pckg.playerUUID} bought pack ${
+                                        pckg.packUUID
+                                    }"
+                                ) else {
+                                    println("Payment save error")
+                                    it.printStackTrace()
+                                }
+                            }
                         }
+
+                        // Отправка пакета назад
+                        ISocketClient.get().write(pckg)
                     }
                 }
             }
@@ -246,7 +257,7 @@ class App {
 
         registerHandler<GraffitiUsePackage> { _, pckg ->
             // Загрузка профиля игрока
-            runBlocking {
+            scope.launch {
                 loadProfile(pckg.playerUUID) { userData ->
                     // Если данные игрока успешно загружены
 
@@ -280,7 +291,14 @@ class App {
         ISocketClient.get().addListener(T::class.java, packageHandler)
     }
 
-    private fun invoice(user: UUID, price: Int, desc: String): CompletableFuture<MoneyTransactionResponsePackage> {
-        return ISocketClient.get().writeAndAwaitResponse(MoneyTransactionRequestPackage(user, price, true, desc))
-    }
+    private suspend fun invoice(user: UUID, price: Int, desc: String): Deferred<MoneyTransactionResponsePackage> =
+        coroutineScope {
+            async {
+                ISocketClient.get().writeAndAwaitResponse<MoneyTransactionResponsePackage>(
+                    MoneyTransactionRequestPackage(
+                        user, price, true, desc
+                    )
+                ).await()
+            }
+        }
 }
