@@ -1,10 +1,6 @@
 import dev.xdark.clientapi.event.entity.RotateAround
 import dev.xdark.clientapi.event.input.KeyPress
-import dev.xdark.clientapi.event.render.ArmorRender
-import dev.xdark.clientapi.event.render.ExpBarRender
-import dev.xdark.clientapi.event.render.HealthRender
-import dev.xdark.clientapi.event.render.HungerRender
-import dev.xdark.clientapi.event.render.RenderTickPre
+import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
@@ -20,15 +16,8 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Rotation
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.rotationMatrix
-import ru.cristalix.uiengine.utility.text
-import java.util.UUID
+import ru.cristalix.uiengine.utility.*
+import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -211,13 +200,6 @@ class App : KotlinMod() {
         }
     }
 
-    private fun readSticker(buffer: ByteBuf) = Sticker(
-        UUID.fromString(NetUtil.readUtf8(buffer)), // uuid
-        NetUtil.readUtf8(buffer), // name
-        DropRare.valueOf(NetUtil.readUtf8(buffer)), // rare
-        buffer.readLong() // openTime
-    )
-
     override fun onEnable() {
         app = this
         UIEngine.initialize(this)
@@ -276,12 +258,18 @@ class App : KotlinMod() {
                         readInt(), // rare
                         readBoolean() // available
                     )
-                }, MutableList(readInt()) { // count
-                    readSticker(this)
                 }, readInt(), // active pack,
-                if (isReadable) { // present
-                    readSticker(this)
-                } else null
+                MutableList(readInt()) { // count
+                    Sticker(
+                        UUID.fromString(NetUtil.readUtf8(this)), // uuid
+                        NetUtil.readUtf8(this), // name
+                        DropRare.values()[readInt()], // rare
+                        readLong() // openTime
+                    )
+                },
+                if (isReadable)  // present
+                    UUID.fromString(NetUtil.readUtf8(this))
+                else null
             )
             packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.uuid, index) }.toMutableList()
 

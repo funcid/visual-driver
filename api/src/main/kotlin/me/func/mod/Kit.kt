@@ -1,12 +1,15 @@
 package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
+import dev.xdark.feder.NetUtil
 import me.func.mod.Anime.provided
 import me.func.mod.Npc.npcs
 import me.func.mod.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.GraffitiManager
+import me.func.protocol.DropRare
+import me.func.protocol.sticker.Sticker
 import net.minecraft.server.v1_12_R1.MinecraftServer
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
@@ -17,6 +20,8 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
+import sun.security.jgss.GSSToken.readInt
+import java.util.*
 
 enum class Kit(val fromUrl: String) : Listener {
 
@@ -148,9 +153,18 @@ enum class Kit(val fromUrl: String) : Listener {
                                 .boolean(pack.available)
                         }
 
-                        // TODO: Не хватает отправки информации о стикерах на клиент
+                        transfer.integer(data.activePack).integer(data.stickers.size)
 
-                        transfer.integer(data.activePack).send("graffiti:init", player)
+                        data.stickers.forEach {
+                            transfer.string(it.uuid.toString())
+                                .string(it.name)
+                                .integer(it.rare.ordinal)
+                                .long(it.openTime)
+                        }
+
+                        data.activeSticker?.toString()?.let { transfer.string(it) }
+
+                        transfer.send("graffiti:init", player)
                         return@thenAccept
                     }
 
