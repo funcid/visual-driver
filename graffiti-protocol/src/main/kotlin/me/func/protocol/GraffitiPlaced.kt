@@ -1,4 +1,4 @@
-package me.func.protocol.graffiti
+package me.func.protocol
 
 import java.util.UUID
 

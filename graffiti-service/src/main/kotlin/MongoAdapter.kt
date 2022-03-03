@@ -7,10 +7,8 @@ import com.mongodb.client.model.Indexes
 import com.mongodb.reactivestreams.client.ClientSession
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import me.func.protocol.FeatureUserData
 import me.func.protocol.Unique
-import me.func.protocol.graffiti.FeatureUserData
 import org.bson.Document
 import org.bson.UuidRepresentation
 import org.litote.kmongo.coroutine.CoroutineCollection
@@ -19,7 +17,6 @@ import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.updateOne
-import org.litote.kmongo.upsert
 import ru.cristalix.core.GlobalSerializers
 import java.util.*
 import kotlin.reflect.KClass
@@ -35,10 +32,11 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
     init {
         runBlocking {
             withTimeout(10000L) {
-                val client = KMongo.createClient(MongoClientSettings.builder()
-                    .uuidRepresentation(UuidRepresentation.JAVA_LEGACY)
-                    .applyConnectionString(ConnectionString(url))
-                    .build()
+                val client = KMongo.createClient(
+                    MongoClientSettings.builder()
+                        .uuidRepresentation(UuidRepresentation.JAVA_LEGACY)
+                        .applyConnectionString(ConnectionString(url))
+                        .build()
                 ).coroutine
                 session = client.startSession(ClientSessionOptions.builder().causallyConsistent(true).build())
                 database = client.getDatabase(databaseName)

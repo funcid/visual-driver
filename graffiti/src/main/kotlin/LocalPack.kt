@@ -1,4 +1,4 @@
-import me.func.protocol.graffiti.GraffitiPlaced
+import me.func.protocol.GraffitiPlaced
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement

@@ -1,7 +1,6 @@
-package me.func.protocol.graffiti
+package me.func.protocol
 
 // import kotlinx.serialization.Serializable
-import me.func.protocol.Unique
 // import me.func.protocol.util.UUIDSerializer
 import java.util.UUID
 

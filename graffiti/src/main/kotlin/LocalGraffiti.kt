@@ -1,5 +1,5 @@
-import me.func.protocol.graffiti.Graffiti
-import me.func.protocol.graffiti.GraffitiPack
+import me.func.protocol.Graffiti
+import me.func.protocol.GraffitiPack
 import ru.cristalix.uiengine.element.RectangleElement
 
 data class LocalGraffiti(
