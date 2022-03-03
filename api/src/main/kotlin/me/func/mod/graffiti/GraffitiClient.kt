@@ -6,8 +6,6 @@ import java.util.concurrent.CompletableFuture
 
 interface GraffitiClient {
 
-    fun connect(): GraffitiClient
-
     fun loadUser(uuid: UUID): CompletableFuture<FeatureUserData?>
 
     fun use(uuid: UUID, pack: UUID, graffiti: UUID): CompletableFuture<Boolean>

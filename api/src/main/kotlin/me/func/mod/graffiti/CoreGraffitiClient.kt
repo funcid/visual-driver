@@ -12,27 +12,26 @@ import java.util.concurrent.CompletableFuture
 
 class CoreGraffitiClient : GraffitiClient {
 
-    override fun connect(): GraffitiClient =
-        this.apply {
-            ISocketClient.get().registerCapabilities(
-                Capability.builder()
-                    .className(GraffitiBuyPackage::class.java.name)
-                    .notification(true)
-                    .build(),
-                Capability.builder()
-                    .className(GraffitiUsePackage::class.java.name)
-                    .notification(true)
-                    .build(),
-                Capability.builder()
-                    .className(GraffitiLoadUserPackage::class.java.name)
-                    .notification(true)
-                    .build(),
-                Capability.builder()
-                    .className(StickersAvailablePackage::class.java.name)
-                    .notification(true)
-                    .build()
-            )
-        }
+    init {
+        ISocketClient.get().registerCapabilities(
+            Capability.builder()
+                .className(GraffitiBuyPackage::class.java.name)
+                .notification(true)
+                .build(),
+            Capability.builder()
+                .className(GraffitiUsePackage::class.java.name)
+                .notification(true)
+                .build(),
+            Capability.builder()
+                .className(GraffitiLoadUserPackage::class.java.name)
+                .notification(true)
+                .build(),
+            Capability.builder()
+                .className(StickersAvailablePackage::class.java.name)
+                .notification(true)
+                .build()
+        )
+    }
 
     override fun loadUser(uuid: UUID): CompletableFuture<FeatureUserData?> =
         ISocketClient.get()

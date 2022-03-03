@@ -216,11 +216,11 @@ class App : KotlinMod() {
         }
     }
 
-    private fun readSticker(buf: ByteBuf) = Sticker(
-        UUID.fromString(NetUtil.readUtf8(buf)), // uuid
-        NetUtil.readUtf8(buf), // name
-        DropRare.valueOf(NetUtil.readUtf8(buf)), // rare
-        buf.readLong() // openTime
+    private fun readSticker(buffer: ByteBuf) = Sticker(
+        UUID.fromString(NetUtil.readUtf8(buffer)), // uuid
+        NetUtil.readUtf8(buffer), // name
+        DropRare.valueOf(NetUtil.readUtf8(buffer)), // rare
+        buffer.readLong() // openTime
     )
 
     override fun onEnable() {

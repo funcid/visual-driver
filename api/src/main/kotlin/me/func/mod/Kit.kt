@@ -149,6 +149,8 @@ enum class Kit(val fromUrl: String) : Listener {
                                 .boolean(pack.available)
                         }
 
+                        // TODO: Не хватает отправки информации о стикерах на клиент
+
                         transfer.integer(data.activePack).send("graffiti:init", player)
                         return@thenAccept
                     }
