@@ -1,6 +1,6 @@
 package me.func.mod.graffiti
 
-import me.func.protocol.graffiti.FeatureUserData
+import me.func.protocol.FeatureUserData
 import java.util.*
 import java.util.concurrent.CompletableFuture
 

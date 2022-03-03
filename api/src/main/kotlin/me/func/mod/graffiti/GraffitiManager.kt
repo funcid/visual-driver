@@ -2,8 +2,8 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
-import me.func.protocol.graffiti.GraffitiPlaced
-import me.func.protocol.graffiti.FeatureUserData
+import me.func.protocol.FeatureUserData
+import me.func.protocol.GraffitiPlaced
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage

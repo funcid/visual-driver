@@ -18,7 +18,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
 
-
 enum class Kit(val fromUrl: String) : Listener {
 
     STANDARD("https://implario.dev/animation-api/mod-bundle-v1.jar") {

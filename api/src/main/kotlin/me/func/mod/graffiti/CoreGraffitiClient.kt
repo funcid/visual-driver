@@ -1,6 +1,6 @@
 package me.func.mod.graffiti
 
-import me.func.protocol.graffiti.FeatureUserData
+import me.func.protocol.FeatureUserData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
