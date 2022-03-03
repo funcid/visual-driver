@@ -1,8 +1,10 @@
 @file:Suppress("UNCHECKED_CAST")
 
-import com.mongodb.client.model.Indexes
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.future.await
+import kotlinx.coroutines.launch
 import me.func.protocol.DropRare
 import me.func.protocol.graffiti.FeatureUserData
 import me.func.protocol.graffiti.Graffiti
@@ -19,7 +21,7 @@ import ru.cristalix.core.network.ISocketClient
 import ru.cristalix.core.network.packages.MoneyTransactionRequestPackage
 import ru.cristalix.core.network.packages.MoneyTransactionResponsePackage
 import ru.cristalix.core.realm.RealmId
-import java.util.*
+import java.util.UUID
 
 private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -266,12 +268,8 @@ private inline fun <reified T : CorePackage> registerHandler(noinline packageHan
     ISocketClient.get().addListener(T::class.java, packageHandler)
 
 private suspend fun invoice(user: UUID, price: Int, desc: String): MoneyTransactionResponsePackage =
-    coroutineScope {
-        async {
-            ISocketClient.get().writeAndAwaitResponse<MoneyTransactionResponsePackage>(
-                MoneyTransactionRequestPackage(
-                    user, price, true, desc
-                )
-            ).await()
-        }
-    }.await()
+    ISocketClient.get().writeAndAwaitResponse<MoneyTransactionResponsePackage>(
+        MoneyTransactionRequestPackage(
+            user, price, true, desc
+        )
+    ).await()
