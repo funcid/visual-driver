@@ -7,7 +7,6 @@ import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
 import me.func.protocol.personalization.FeatureUserData
 import me.func.protocol.personalization.packet.StickersAvailablePackage
-import ru.cristalix.core.GlobalSerializers
 import ru.cristalix.core.microservice.MicroServicePlatform
 import ru.cristalix.core.microservice.MicroserviceBootstrap
 import ru.cristalix.core.network.Capability

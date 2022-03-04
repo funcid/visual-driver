@@ -10,17 +10,13 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import me.func.protocol.Unique
 import me.func.protocol.personalization.FeatureUserData
-import org.bson.Document
 import org.bson.UuidRepresentation
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
-import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.replaceUpsert
-import ru.cristalix.core.GlobalSerializers
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
 class CollectionTypeNotRegisteredException(name: String) : RuntimeException(name)
