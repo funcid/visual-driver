@@ -10,6 +10,7 @@ targetCompatibility = '1.8'
 dependencies {
     implementation project(":graffiti-protocol")
     implementation project(":protocol")
+    implementation project(":protocol-serialization")
 
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'org.litote.kmongo:kmongo-coroutine-serialization:4.4.0'

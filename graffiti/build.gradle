@@ -23,6 +23,7 @@ apply plugin: 'ru.cristalix.uiengine.bundler'
 
 dependencies {
     implementation project(':protocol')
+    implementation project(':protocol-mod')
 
     compileOnly 'ru.cristalix:client-api:latest-SNAPSHOT'
 

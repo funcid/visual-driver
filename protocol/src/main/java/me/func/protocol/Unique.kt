@@ -2,7 +2,7 @@ package me.func.protocol
 
 // import kotlinx.serialization.SerialName
 // import kotlinx.serialization.Serializable
-// import me.func.protocol.util.UUIDSerializer
+// import UUIDSerializer
 import java.util.*
 
 interface Unique {
