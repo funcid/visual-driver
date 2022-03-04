@@ -13,6 +13,8 @@ import ru.cristalix.uiengine.UIEngine.overlayContext
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseDown
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 
 open class Dialog : KotlinMod() {
@@ -138,6 +140,8 @@ open class Dialog : KotlinMod() {
             buttonCursor.size.x = maxWidth + 19.0
         }
 
+        dialogBG.onMouseDown { shiftButtonCursor(1) }
+        dialogBG.onMouseUp { shiftButtonCursor(-1) }
 
         fun update() {
             windowWidth = UIEngine.clientApi.resolution().scaledWidth_double
