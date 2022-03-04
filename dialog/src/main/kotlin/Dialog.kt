@@ -2,10 +2,12 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import dev.xdark.clientapi.event.input.KeyPress
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.event.window.WindowResize
 import me.func.protocol.dialog.*
 import org.lwjgl.input.Keyboard
+import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
@@ -13,9 +15,8 @@ import ru.cristalix.uiengine.UIEngine.overlayContext
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.onMouseDown
-import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
+import kotlin.math.sign
 
 open class Dialog : KotlinMod() {
 
@@ -38,8 +39,6 @@ open class Dialog : KotlinMod() {
     private lateinit var entrypoint: Entrypoint
     private lateinit var screen: Screen
     private var history: ArrayList<Screen> = arrayListOf()
-
-    data class ButtonAction(var actionType: String, var actionData: String?)
 
     private var yMargin = 2.34
     private var windowWidth: Double = 0.0
@@ -139,9 +138,6 @@ open class Dialog : KotlinMod() {
             buttonsBG.children[pickedItem].enabled = false
             buttonCursor.size.x = maxWidth + 19.0
         }
-
-        dialogBG.onMouseDown { shiftButtonCursor(1) }
-        dialogBG.onMouseUp { shiftButtonCursor(-1) }
 
         fun update() {
             windowWidth = UIEngine.clientApi.resolution().scaledWidth_double
@@ -397,7 +393,11 @@ open class Dialog : KotlinMod() {
                 }
             }
         }
-
+        registerHandler<GameLoop> {
+            val wheel = Mouse.getDWheel()
+            if (visible && wheel != 0)
+                shiftButtonCursor(sign(-wheel.toDouble()).toInt())
+        }
         registerHandler<WindowResize> { if (visible) update() }
         registerHandler<HotbarRender> { if (visible) isCancelled = true }
         registerHandler<HungerRender> { if (visible) isCancelled = true }
