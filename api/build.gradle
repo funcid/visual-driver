@@ -25,7 +25,7 @@ dependencies {
     shade project(':protocol')
     shade project(':graffiti-protocol')
 
-    api 'cristalix:dark-paper:21.02.03'
+    compileOnlyApi 'cristalix:dark-paper:21.02.03'
     api 'cristalix:bukkit-core:21.01.30'
     api 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
     api 'dev.xdark:feder:live-SNAPSHOT'
