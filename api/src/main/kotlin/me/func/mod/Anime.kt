@@ -11,6 +11,7 @@ import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiClient
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
+import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack

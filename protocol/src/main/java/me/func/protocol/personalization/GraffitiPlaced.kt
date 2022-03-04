@@ -1,4 +1,4 @@
-package me.func.protocol
+package me.func.protocol.personalization
 
 import java.util.UUID
 

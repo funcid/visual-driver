@@ -3,12 +3,13 @@
 import com.mongodb.ClientSessionOptions
 import com.mongodb.ConnectionString
 import com.mongodb.MongoClientSettings
+import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Indexes
 import com.mongodb.reactivestreams.client.ClientSession
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
-import me.func.protocol.FeatureUserData
 import me.func.protocol.Unique
+import me.func.protocol.personalization.FeatureUserData
 import org.bson.Document
 import org.bson.UuidRepresentation
 import org.litote.kmongo.coroutine.CoroutineCollection
@@ -16,9 +17,10 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.eq
 import org.litote.kmongo.reactivestreams.KMongo
-import org.litote.kmongo.updateOne
+import org.litote.kmongo.replaceUpsert
 import ru.cristalix.core.GlobalSerializers
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.reflect.KClass
 
 class CollectionTypeNotRegisteredException(name: String) : RuntimeException(name)
@@ -48,6 +50,7 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
                 collections.forEach { (_, value) ->
                     value.createIndex(Indexes.ascending("uuid"))
                     println("Created index for collection.")
+                    println("Documents total: ${value.countDocuments()}")
                 }
             }
         }
@@ -61,12 +64,8 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
     } ?: throw CollectionTypeNotRegisteredException(T::class.simpleName ?: "null")
 
     suspend inline fun <reified T : Unique> find(uuid: UUID) =
-        findCollection<T>().findOne(session, Unique::uuid eq uuid)
+        findCollection<T>().findOne(session, Filters.eq(uuid.toString()))
 
-    suspend inline fun <reified T : Unique> save(unique: T) = save(listOf(unique))
-
-    suspend inline fun <reified T : Unique> save(uniques: List<T>) =
-        findCollection<T>().bulkWrite(session, uniques.map {
-            updateOne(Unique::uuid eq it.uuid, Document("\$set", GlobalSerializers.toJson(it)))
-        })
+    suspend inline fun <reified T : Unique> save(unique: T) =
+        findCollection<T>().replaceOne(session, Filters.eq(unique.uuid.toString()), unique, replaceUpsert())
 }

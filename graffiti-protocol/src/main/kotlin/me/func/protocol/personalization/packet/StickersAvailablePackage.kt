@@ -1,6 +1,6 @@
-package me.func.protocol.sticker.packet
+package me.func.protocol.personalization.packet
 
-import me.func.protocol.sticker.Sticker
+import me.func.protocol.personalization.Sticker
 import ru.cristalix.core.network.CorePackage
 
 class StickersAvailablePackage : CorePackage() {

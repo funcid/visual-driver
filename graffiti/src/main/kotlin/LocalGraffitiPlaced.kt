@@ -1,4 +1,4 @@
-import me.func.protocol.GraffitiPlaced
+import me.func.protocol.personalization.GraffitiPlaced
 import ru.cristalix.uiengine.element.Context3D
 
 class LocalGraffitiPlaced(

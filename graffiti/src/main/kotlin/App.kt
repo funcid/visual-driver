@@ -6,7 +6,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import me.func.protocol.*
-import me.func.protocol.sticker.Sticker
+import me.func.protocol.personalization.*
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Matrix4f
@@ -24,7 +24,7 @@ import kotlin.math.sin
 lateinit var app: App
 const val PICTURE_SIZE = 1920
 const val OVAL_RADIUS = 90
-const val ICON_PACK_SIZE = 50.0
+const val ICON_PACK_SIZE = 20.0
 
 class App : KotlinMod() {
 
@@ -259,17 +259,18 @@ class App : KotlinMod() {
                         readBoolean() // available
                     )
                 }, readInt(), // active pack,
-                MutableList(readInt()) { // count
-                    Sticker(
-                        UUID.fromString(NetUtil.readUtf8(this)), // uuid
-                        NetUtil.readUtf8(this), // name
-                        DropRare.values()[readInt()], // rare
-                        readLong() // openTime
-                    )
-                },
-                if (isReadable)  // present
-                    UUID.fromString(NetUtil.readUtf8(this))
-                else null
+                mutableListOf(), UUID.randomUUID()
+                //MutableList(readInt()) { // count
+                //    Sticker(
+                //        UUID.fromString(NetUtil.readUtf8(this)), // uuid
+                //        NetUtil.readUtf8(this), // name
+                //        DropRare.values()[readInt()], // rare
+                //        readLong() // openTime
+                //        )
+                //}, UUID.randomUUID()
+                //if (isReadable)  // present
+                //    UUID.fromString(NetUtil.readUtf8(this))
+                //else null
             )
             packs = userData.packs.mapIndexed { index, pack -> LocalPack(pack.uuid, index) }.toMutableList()
 

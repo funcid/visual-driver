@@ -1,6 +1,6 @@
 package me.func.protocol.graffiti.packet
 
-import me.func.protocol.FeatureUserData
+import me.func.protocol.personalization.FeatureUserData
 import ru.cristalix.core.network.CorePackage
 import java.util.*
 
