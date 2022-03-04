@@ -1,21 +1,15 @@
+//file:noinspection GroovyAssignabilityCheck
+//file:noinspection DifferentStdlibGradleVersion
 plugins {
     id 'java'
+    id 'java-library'
     id 'maven-publish'
-    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id 'org.jetbrains.kotlin.jvm'
 }
 
-apply plugin: 'org.jetbrains.kotlin.jvm'
-apply plugin: 'maven-publish'
-
-group 'me.func'
-
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
-tasks.withType(JavaCompile) {
+compileJava {
     options.encoding = "UTF-8"
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
+    sourceCompatibility = targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 compileKotlin {
@@ -31,11 +25,11 @@ dependencies {
     shade project(':protocol')
     shade project(':graffiti-protocol')
 
-    compileOnly 'cristalix:dark-paper:21.02.03'
+    api 'cristalix:dark-paper:21.02.03'
 
-    implementation 'cristalix:bukkit-core:21.01.30'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
-    implementation 'dev.xdark:feder:live-SNAPSHOT'
+    api 'cristalix:bukkit-core:21.01.30'
+    api 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+    api 'dev.xdark:feder:live-SNAPSHOT'
 }
 
 publishing {
@@ -49,24 +43,23 @@ publishing {
             }
         }
     }
-    def p = project
+
+
     publications {
-        create(p.name, MavenPublication) {
-            it.groupId = 'me.func'
-            it.artifactId = 'animation-api'
-            it.version = 'live-SNAPSHOT'
-            it.artifact p.tasks.jar
+        mavenBinary(MavenPublication) {
+            groupId = 'me.func'
+            artifactId = 'animation-api'
+            version = 'live-SNAPSHOT'
+
+            from components.java
         }
     }
 }
 
-tasks {
-    build { dependsOn(shadowJar) }
-    jar {
-        archiveBaseName.set 'animation-api'
-        from configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
-        duplicatesStrategy DuplicatesStrategy.EXCLUDE
-    }
+jar {
+    archiveBaseName.set 'animation-api'
+    from configurations.shade.collect { it.isDirectory() ? it : zipTree(it) }
+    duplicatesStrategy DuplicatesStrategy.EXCLUDE
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
