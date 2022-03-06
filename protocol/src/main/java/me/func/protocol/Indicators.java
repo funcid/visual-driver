@@ -7,5 +7,9 @@ public enum Indicators {
 	ARMOR,
 	VEHICLE,
 	TAB,
-	HOTBAR
+	HOT_BAR,
+	AIR_BAR,
+	POTIONS,
+	HAND,
+	NAME_TEMPLATE
 }

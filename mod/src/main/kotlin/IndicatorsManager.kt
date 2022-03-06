@@ -21,7 +21,11 @@ object IndicatorsManager {
         register<ArmorRender>(Indicators.ARMOR)
         register<VehicleHealthRender>(Indicators.VEHICLE)
         register<PlayerListRender>(Indicators.TAB)
-        register<HotbarRender>(Indicators.HOTBAR)
+        register<HotbarRender>(Indicators.HOT_BAR)
+        register<AirBarRender>(Indicators.AIR_BAR)
+        register<PotionsRender>(Indicators.POTIONS)
+        register<HandRender>(Indicators.HAND)
+        register<NameTemplateRender>(Indicators.NAME_TEMPLATE)
     }
 
     private inline fun <reified T> register(indicator: Indicators) where T : Event, T : Cancellable {
