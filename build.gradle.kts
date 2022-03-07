@@ -42,5 +42,6 @@ subprojects {
 
     tasks {
         withType<KotlinCompile> { kotlinOptions { jvmTarget = "1.8" } }
+        withType<JavaCompile> { options.encoding = "UTF-8" }
     }
 }
