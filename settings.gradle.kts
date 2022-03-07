@@ -13,5 +13,6 @@ arrayOf(
     "dialog",
     "lootbox",
     "protocol-serialization",
-    "protocol-mod"
+    "protocol-mod",
+    "backport-artifact"
 ).forEach { include(":$it") }
