@@ -1,7 +1,5 @@
 group 'me.func.protocol'
 
 dependencies {
-    compileOnly 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
-
     implementation project(":protocol")
 }

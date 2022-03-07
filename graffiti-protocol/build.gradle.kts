@@ -1,9 +1,4 @@
-plugins {
-    `maven-publish`
-}
-
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20-M1")
     implementation("cristalix:bukkit-core:21.01.30")
     api(project(":protocol"))
     api(project(":protocol-serialization"))

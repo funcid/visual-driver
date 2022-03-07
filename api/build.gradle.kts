@@ -1,7 +1,3 @@
-plugins {
-    `maven-publish`
-}
-
 dependencies {
     compileOnlyApi("cristalix:dark-paper:21.02.03")
 
