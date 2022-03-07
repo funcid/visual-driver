@@ -25,15 +25,8 @@ dependencies {
     compileOnly 'ru.cristalix:client-api:latest-SNAPSHOT'
     implementation 'ru.cristalix:uiengine:3.15.3'
     implementation 'ru.cristalix:client-sdk:5.1.0'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
 
     implementation project(':protocol')
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }
 
 configurations.all {
