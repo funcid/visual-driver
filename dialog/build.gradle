@@ -23,17 +23,10 @@ dependencies {
     implementation project(':protocol')
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
 configurations.all {
     exclude group: "io.reactivex", module:"rxjava"
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
-
 
 jar.from configurations.runtimeClasspath.collect(project.&zipTree)
 
