@@ -8,6 +8,20 @@ dependencies {
     api(project(":protocol-serialization"))
 }
 
+// Ого, костыли! Я хз как сделать по нормальному)
+tasks {
+    publishAllPublicationsToFuncRepository {
+        dependsOn(":protocol:publishAllPublicationsToFuncRepository")
+        dependsOn(":graffiti-protocol:publishAllPublicationsToFuncRepository")
+        dependsOn(":protocol-serialization:publishAllPublicationsToFuncRepository")
+    }
+    publishAllPublicationsToMavenLocalRepository {
+        dependsOn(":protocol:publishAllPublicationsToMavenLocalRepository")
+        dependsOn(":graffiti-protocol:publishAllPublicationsToMavenLocalRepository")
+        dependsOn(":protocol-serialization:publishAllPublicationsToMavenLocalRepository")
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {

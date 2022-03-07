@@ -44,4 +44,18 @@ subprojects {
         withType<KotlinCompile> { kotlinOptions { jvmTarget = "1.8" } }
         withType<JavaCompile> { options.encoding = "UTF-8" }
     }
+
+    publishing {
+        repositories {
+            mavenLocal()
+            maven {
+                name = "func"
+                url = uri("https://repo.implario.dev/cristalix")
+                credentials {
+                    username = System.getenv("IMPLARIO_REPO_USER")
+                    password = System.getenv("IMPLARIO_REPO_PASSWORD")
+                }
+            }
+        }
+    }
 }
