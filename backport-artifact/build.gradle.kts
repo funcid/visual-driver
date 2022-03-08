@@ -3,22 +3,18 @@ tasks {
     publishAllPublicationsToMavenLocalRepository { dependsOn(":api:publishAllPublicationsToMavenLocalRepository") }
 }
 
+dependencies {
+    api(project(":api"))
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            pom {
-                group = "me.func"
-                artifactId = "animation-api"
-                version = project.version.toString()
+            group = "me.func"
+            artifactId = "animation-api"
+            version = project.version.toString()
 
-                distributionManagement {
-                    relocation {
-                        groupId.set(project.group.toString())
-                        artifactId.set("animation-api")
-                        message.set("api artifact location has been changed")
-                    }
-                }
-            }
+            from(components["java"])
         }
     }
 }
