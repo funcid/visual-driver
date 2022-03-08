@@ -15,7 +15,6 @@ publishing {
                     relocation {
                         groupId.set(project.group.toString())
                         artifactId.set("animation-api")
-                        version.set(project.version.toString())
                         message.set("api artifact location has been changed")
                     }
                 }
