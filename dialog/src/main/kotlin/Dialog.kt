@@ -2,6 +2,7 @@ import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import dev.xdark.clientapi.event.input.KeyPress
+import dev.xdark.clientapi.event.input.MousePress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.event.window.WindowResize
@@ -139,6 +140,69 @@ open class Dialog : KotlinMod() {
             buttonCursor.size.x = maxWidth + 19.0
         }
 
+        fun resolve() {
+            dialogRunning = false
+            npcPart.animate(0, Easings.NONE) {
+                rotation.z = 0.0
+            }
+            for (child in npcDialog.children) {
+                child.animate(-1, Easings.NONE) {
+                    rotation.z = 0.0
+                }
+                child.scale = V3(1.0, 1.0)
+            }
+            buttonPart.animate(0.3, Easings.CUBIC_OUT) { align.x = 0.5 }
+            buttonCursor.animate(0.1, Easings.NONE) { offset.x = -10.0 }
+            buttonsBG.animate(0.1, Easings.NONE) { offset.x = -10.0 }
+        }
+
+        fun close(target: Entrypoint) {
+            buttonPart.align.x = 0.0
+            buttonCursor.offset.x = 1.0
+            buttonsBG.offset.x = 0.0
+            entrypoint = target
+            visible = false
+            pickedItem = -1
+            npcPart.size.y = 0.0
+            buttonPart.align.x = 1.0
+        }
+
+        fun openEntrypoint(target: Entrypoint) {
+            maxWidth = 0
+            entrypoint = target
+            history = arrayListOf()
+            screen = target.screen
+            history.add(screen)
+            visible = true
+            pickedItem = 0
+        }
+
+        fun openScreen(target: Screen) {
+            maxWidth = 0
+            history.add(target)
+            screen = target
+            visible = true
+            pickedItem = 0
+        }
+
+        fun activateButton(button: Button) {
+            button.actions?.forEach {
+                when (it.type) {
+                    "command" -> {
+                        clientApi.chat().sendChatMessage(it.command!!)
+                        close(entrypoint)
+                    }
+                    "open_screen" -> openScreen(it.screen!!)
+                    "previous_screen" -> {
+                        history.removeLast()
+                        val screen = history.last()
+                        openScreen(screen)
+                    }
+                    "close" -> close(entrypoint)
+                }
+            }
+        }
+
         fun update() {
             windowWidth = UIEngine.clientApi.resolution().scaledWidth_double
             windowHeight = UIEngine.clientApi.resolution().scaledHeight_double
@@ -206,21 +270,8 @@ open class Dialog : KotlinMod() {
                 rotation.z = 0.0
             }
             UIEngine.schedule(1 * delay * 0.001) {
-                if (dialogRunning) {
-                    dialogRunning = false
-                    npcPart.animate(0, Easings.NONE) {
-                        rotation.z = 0.0
-                    }
-                    for (child in npcDialog.children) {
-                        child.animate(-1, Easings.NONE) {
-                            rotation.z = 0.0
-                        }
-                        child.scale = V3(1.0, 1.0)
-                    }
-                    buttonPart.animate(0.3, Easings.CUBIC_OUT) { align.x = 0.5 }
-                    buttonCursor.animate(0.1, Easings.NONE) { offset.x = -10.0 }
-                    buttonsBG.animate(0.1, Easings.NONE) { offset.x = -10.0 }
-                }
+                if (dialogRunning)
+                    resolve()
             }
             npcPart.animate(0.3, Easings.CUBIC_OUT) {
                 size.y = index * 10 + 64.0
@@ -246,6 +297,13 @@ open class Dialog : KotlinMod() {
                     offset = V3(y = buttonHeight * buttonIndex + 3.0 + 5 * buttonIndex)
                     align = Relative.CENTER
                     color = Color(0, 0, 0, 100.0 / 255)
+
+                    onClick {
+                        if (Mouse.isButtonDown(0)) {
+                            activateButton(it)
+                            update()
+                        }
+                    }
                 }
                 buttonsBG.addChild(bg)
                 bg.animate(0.3, Easings.CUBIC_OUT) {
@@ -256,79 +314,15 @@ open class Dialog : KotlinMod() {
             }
             buttonPart.offset.y = -buttonIndex * buttonHeight + 0.25 * (windowHeight - npcPartHeight)
             shiftButtonCursor(0)
-
-        }
-
-        fun close(target: Entrypoint) {
-            buttonPart.align.x = 0.0
-            buttonCursor.offset.x = 1.0
-            buttonsBG.offset.x = 0.0
-            entrypoint = target
-            visible = false
-            pickedItem = -1
-            npcPart.size.y = 0.0
-            buttonPart.align.x = 1.0
-            update()
-        }
-
-        fun openEntrypoint(target: Entrypoint) {
-            maxWidth = 0
-            entrypoint = target
-            history = arrayListOf()
-            screen = target.screen
-            history.add(screen)
-            visible = true
-            pickedItem = 0
-            update()
-        }
-
-        fun openScreen(target: Screen) {
-            maxWidth = 0
-            history.add(target)
-            screen = target
-            visible = true
-            pickedItem = 0
-            update()
-        }
-
-        fun previousScreen() {
-            history.removeLast()
-            val screen = history.last()
-            openScreen(screen)
-        }
-
-        fun activateButton(button: Button) {
-            button.actions?.forEach {
-                when (it.type) {
-                    "command" -> {
-                        clientApi.chat().sendChatMessage(it.command!!)
-                        close(entrypoint)
-                    }
-                    "open_screen" -> openScreen(it.screen!!)
-                    "previous_screen" -> previousScreen()
-                    "close" -> close(entrypoint)
-                }
-            }
         }
 
         fun pressEnter() {
             if (dialogRunning) {
-                dialogRunning = false
-                npcPart.animate(0, Easings.NONE) {
-                    rotation.z = 0.0
-                }
-                for (child in npcDialog.children) {
-                    child.animate(-1, Easings.NONE) {
-                        rotation.z = 0.0
-                    }
-                    child.scale = V3(1.0, 1.0)
-                }
-                buttonPart.animate(0.3, Easings.CUBIC_OUT) { align.x = 0.5 }
-                buttonCursor.animate(0.1, Easings.NONE) { offset.x = -10.0 }
-                buttonsBG.animate(0.1, Easings.NONE) { offset.x = -10.0 }
+                resolve()
                 return
             }
             activateButton(screen.buttons!![pickedItem])
+            update()
         }
 
         registerChannel("rise:dialog-screen") {
@@ -355,6 +349,7 @@ open class Dialog : KotlinMod() {
                     entrypoints.filter { it.id == id }.forEach {
                         success = true
                         openEntrypoint(it)
+                        update()
                     }
 
                     if (!success) println("Entrypoint $id is not exists!")
@@ -368,6 +363,7 @@ open class Dialog : KotlinMod() {
                     entrypoints.filter { it.id == id }.forEach {
                         success = true
                         close(it)
+                        update()
                     }
                     if (!success) println("Entrypoint $id is not exists!")
                 }
@@ -382,6 +378,7 @@ open class Dialog : KotlinMod() {
                 while (i < buttonHotkeys.size) {
                     if (this.key == buttonHotkeys[i]) {
                         activateButton(screen.buttons!![i])
+                        update()
                         println("" + screen.buttons!![i] + ' ' + i)
                     }
                     i++
