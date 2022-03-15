@@ -1,5 +1,8 @@
 @file:Suppress("UNCHECKED_CAST")
 
+import data.FeatureUserStorage
+import data.GraffitiPackStorage
+import data.GraffitiUnitStorage
 import kotlinx.coroutines.*
 import kotlinx.coroutines.future.await
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
@@ -42,7 +45,7 @@ fun main() {
     }
 
     val standardProfile = FeatureUserData(
-        UUID.randomUUID(), actualGraffitiPacks.toMutableList(), 0, mutableListOf(), null
+        UUID.randomUUID(), actualGraffitiPacks.values.toMutableList(), 0, mutableListOf(), null
     )
 
     registerHandler<GraffitiLoadUserPackage> { realm, packet ->
@@ -50,9 +53,24 @@ fun main() {
         scope.launch {
             loadProfile(packet.playerUuid) { data ->
                 // Если данные уже есть - обновляем набор паков, если нет - создаем новые
-                packet.data = data?.apply {
-                    // Добавление новых паков
-                    packs.addAll(actualGraffitiPacks.filter { !packs.contains(it) }.map { it.clone() })
+                packet.data = data?.let {
+                    println("Loaded $data.")
+                    FeatureUserData(
+                        it.uuid,
+                        it.packs.mapNotNull { it.toFullData() }.toMutableList().apply {
+                            // Если не хватает новых паков - добавить и сохранить
+                            val actual =
+                                actualGraffitiPacks.values.filter { pack -> it.packs.none { it.uuid == pack.uuid } }
+                            if (actual.isNotEmpty()) {
+                                addAll(actual)
+                                // Если данные только что были сгенерированы - сохранить
+                                mongoAdapter.save(it)
+                            }
+                        },
+                        it.activePack,
+                        it.stickers,
+                        it.activeSticker
+                    )
                 } ?: standardProfile.apply {
                     uuid = packet.playerUuid
 
@@ -74,7 +92,7 @@ fun main() {
                 // Покупка граффити
                 if (userData == null) {
                     ISocketClient.get().write(pckg)
-                    println("Cannot buy pack! UserData is null.")
+                    println("Cannot buy pack! UserData is null, player uuid: ${pckg.playerUUID}.")
                 } else {
                     // Если данные игрока успешно загружены
                     pckg.errorMessage = invoice(
@@ -86,13 +104,19 @@ fun main() {
                         println("${pckg.playerUUID} payed ${pckg.price} for ${pckg.packUUID}!")
 
                         // Начисление граффити
-                        actualGraffitiPacks.filter { it.uuid == pckg.packUUID }.forEach { pack ->
+                        actualGraffitiPacks[pckg.packUUID]?.apply {
                             // Если у игрока нет этого пака - добавить
-                            if (!userData.packs.contains(pack))
-                                userData.packs.add(pack.clone())
+                            if (userData.packs.none { it.uuid == this.uuid }) {
+                                userData.packs.add(
+                                    GraffitiPackStorage(
+                                        uuid,
+                                        graffiti.map { GraffitiUnitStorage(it.uses, it.uuid) }.toMutableList()
+                                    )
+                                )
+                            }
 
                             // Выдача граффити
-                            userData.packs.firstOrNull { pack.uuid == it.uuid }?.graffiti?.forEach { it.uses += it.address.maxUses }
+                            userData.packs.firstOrNull { uuid == it.uuid }?.data?.forEachIndexed { i, it -> it.uses += graffiti[i].address.maxUses }
                             println("${pckg.playerUUID} got ${pckg.packUUID} pack")
                         }
 
@@ -123,7 +147,7 @@ fun main() {
                 // Если данные игрока успешно загружены
                 // Получение пака
                 userData?.packs?.firstOrNull { it.uuid == pckg.packUUID }?.let { pack ->
-                    pack.graffiti.firstOrNull { it.uuid == pckg.graffitiUUID && it.uses > 0 }?.let {
+                    pack.data.firstOrNull { it.uuid == pckg.graffitiUUID && it.uses > 0 }?.let {
                         // Разрешить ставить граффити если оно есть
                         pckg.success = true
 
@@ -143,8 +167,13 @@ fun main() {
     }
 }
 
-private suspend fun loadProfile(uuid: UUID, accept: suspend (FeatureUserData?) -> (Any)) =
-    accept(mongoAdapter.find(uuid) ?: FeatureUserData(uuid, mutableListOf(), 0, mutableListOf(), null))
+private suspend fun loadProfile(uuid: UUID, accept: suspend (FeatureUserStorage?) -> (Any)) =
+    accept(mongoAdapter.find(uuid) ?: FeatureUserStorage(uuid, actualGraffitiPacks.values.map {
+        GraffitiPackStorage(
+            uuid,
+            it.graffiti.map { GraffitiUnitStorage(it.uses, it.uuid) }.toMutableList()
+        )
+    }.toMutableList(), 0, mutableListOf(), null))
 
 private inline fun <reified T : CorePackage> registerHandler(noinline packageHandler: (RealmId, T) -> Unit) =
     ISocketClient.get().addListener(T::class.java, packageHandler)

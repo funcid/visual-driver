@@ -6,10 +6,12 @@ import com.mongodb.MongoClientSettings
 import com.mongodb.client.model.Filters
 import com.mongodb.client.model.Indexes
 import com.mongodb.reactivestreams.client.ClientSession
+import data.FeatureUserStorage
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import me.func.protocol.Unique
 import me.func.protocol.personalization.FeatureUserData
+import org.bson.Document
 import org.bson.UuidRepresentation
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
@@ -40,7 +42,7 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
                 database = client.getDatabase(databaseName)
 
                 // Регистрирует типы, которые могут быть в коллекции $collectionName
-                registerCollection<FeatureUserData>()
+                registerCollection<FeatureUserStorage>()
 
                 // Создание индекса UUID для быстрого поиска
                 collections.forEach { (_, value) ->

@@ -13,7 +13,7 @@ data class Graffiti(
     @Serializable(with = UUIDSerializer::class)
     override var uuid: UUID = address.uuid
 ) : Unique, Cloneable {
-    constructor(uuid: String, x: Int, y: Int, size: Int, author: String, maxUses: Int = 50, uses: Int = maxUses) : this(
+    constructor(uuid: String, x: Int, y: Int, size: Int, author: String, maxUses: Int = 30, uses: Int = maxUses) : this(
         GraffitiInfo(uuid, x, y, size, maxUses), author, uses
     )
 
