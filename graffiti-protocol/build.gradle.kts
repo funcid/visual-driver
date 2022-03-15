@@ -1,5 +1,5 @@
 dependencies {
-    implementation("cristalix:bukkit-core:21.01.30")
+    compileOnly("cristalix:bukkit-core:21.01.30")
     api(project(":protocol"))
     api(project(":protocol-serialization"))
 }
