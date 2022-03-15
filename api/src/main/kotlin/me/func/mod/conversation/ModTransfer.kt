@@ -38,6 +38,7 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
                 is String -> string(info)
                 is ItemStack -> item(info)
                 is net.minecraft.server.v1_12_R1.ItemStack -> item(info)
+                is Byte -> byte(info)
                 is Int -> integer(info)
                 is Short -> short(info)
                 is Boolean -> boolean(info)
@@ -75,6 +76,8 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun long(long: Long) = this.apply { serializer.writeLong(long) }
 
     fun short(short: Short) = this.apply { serializer.writeShort(short.toInt()) }
+
+    fun byte(byte: Byte) = this.apply { serializer.writeByte(byte.toInt()) }
 
     @JvmName("putDouble")
     fun double(double: Double) = this.apply { serializer.writeDouble(double) }
