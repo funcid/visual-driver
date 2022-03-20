@@ -98,8 +98,6 @@ enum class Kit(val fromUrl: String) : Listener {
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("healthbar-bundle.jar", player)
-
-                BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) }
             }
         }
     },
