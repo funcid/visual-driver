@@ -15,5 +15,6 @@ arrayOf(
 "protocol-serialization",
 "protocol-mod",
 "backport-artifact",
-"store"
+"store",
+"health-bar"
 ).forEach { include(":$it") }
