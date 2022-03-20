@@ -45,6 +45,7 @@ dependencies {
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@func</a>)<br>
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@func</a>)<br>
 `BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>, <a href="https://vk.com/funcid">@func</a>)<br>
+`HEALTH_BAR` - модуль добавляющий полоску здоровья (by <a href="https://vk.com/delfikpro">@delfikpro</a>)<br>
 
 <h3>Подключение модулей</h3>
 
