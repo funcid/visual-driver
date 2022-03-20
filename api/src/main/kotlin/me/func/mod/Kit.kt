@@ -93,6 +93,16 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
+    HEALTH_BAR("https://implario.dev/animation-api/healthbar-bundle.jar") {
+        @EventHandler(priority = EventPriority.HIGHEST)
+        fun PlayerJoinEvent.handle() {
+            MinecraftServer.SERVER.postToMainThread {
+                ModLoader.send("healthbar-bundle.jar", player)
+
+                BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) }
+            }
+        }
+    },
     GRAFFITI("https://implario.dev/animation-api/graffiti-bundle.jar") {
         @EventHandler
         fun AsyncPlayerPreLoginEvent.handle() {
