@@ -16,5 +16,6 @@ arrayOf(
 "protocol-mod",
 "backport-artifact",
 "store",
-"health-bar"
+"health-bar",
+"chat"
 ).forEach { include(":$it") }
