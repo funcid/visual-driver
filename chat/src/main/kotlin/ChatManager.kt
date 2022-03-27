@@ -1,4 +1,3 @@
-
 import dev.xdark.clientapi.event.chat.ChatReceive
 import dev.xdark.clientapi.gui.ChatOverlay
 import dev.xdark.clientapi.text.Text
@@ -10,9 +9,21 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.onMouseDown
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.BOTTOM_LEFT
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
 
 object ChatManager {
+    data class Chat(
+        val name: String,
+        val hover: String,
+        val overlay: ChatOverlay,
+        var button: RectangleElement,
+        var unseen: Int = 0
+    )
 
     private val chats = mutableMapOf(
         1 to createChat("О", "Общий межсерверный чат"),
@@ -21,10 +32,10 @@ object ChatManager {
         4 to createChat("Г", "Групповой чат"),
         5 to createChat("Т", "Торговый чат"),
     )
+
     private var currentChat = 1
 
-    init {
-
+    fun initChats() {
         val activeColor = Color(42, 102, 189, 1.0)
         val nonActiveColor = Color(alpha = 0.68)
 
@@ -53,18 +64,35 @@ object ChatManager {
                 name.content = chat.name
                 button.size.x = 15.0
 
-                var offsetX = 5.0
+                var offsetX2 = 5.0
+
                 chats.values.forEach {
-                    val button = it.button
-                    button.offset.x = offsetX
-                    offsetX += button.size.x + 5.0
+                    val button2 = it.button
+                    button2.offset.x = offsetX2
+                    offsetX2 += button2.size.x + 5.0
                 }
 
-                UIEngine.clientApi.clientConnection()
-                    .sendPayload("zabelix:select_chat", Unpooled.copyInt(currentChat))
+                UIEngine.clientApi.clientConnection().sendPayload(
+                    "zabelix:select_chat", Unpooled.copyInt(currentChat)
+                )
             }
+
             button.addChild(name)
             UIEngine.overlayContext.addChild(button)
+        }
+    }
+
+    init {
+        initChats()
+
+        App::class.mod.registerChannel("multichat:createchat") {
+            val index = readInt()
+            val name = readUtf8()
+            val hover = readUtf8()
+
+            chats += index to createChat(name, hover)
+
+            initChats() // @funcid fix)
         }
 
         App::class.mod.registerChannel("delete-chat") {
@@ -77,6 +105,10 @@ object ChatManager {
             handleMessage(readInt(), TextJSON.jsonToText(readUtf8()))
         }
 
+        App::class.mod.registerChannel("multichat:text_message") {
+            handleMessage(readInt(), Text.of(readUtf8()))
+        }
+
         ru.cristalix.clientapi.registerHandler<ChatReceive> {
             val raw = text.unformattedText
             if (currentChat != 1 && raw.startsWith("[VC]")) {
@@ -84,10 +116,15 @@ object ChatManager {
                 chats[1]!!.overlay.printText(text)
             }
         }
+
+        UIEngine.clientApi.clientConnection().sendPayload(
+            "multichat:init",
+            Unpooled.buffer(0)
+        )
     }
 
     private fun handleMessage(chatId: Int, message: Text) {
-        chats[chatId]?.apply {
+        chats[chatId]?.run {
             if (currentChat != chatId) {
                 unseen++
                 val content = "$name §c+$unseen"
@@ -110,25 +147,16 @@ object ChatManager {
         }
     }
 
-    private fun createChat(name: String, hover: String): Chat {
-        return Chat(
-            name,
-            hover,
-            ChatOverlay.Builder.builder().minecraft(UIEngine.clientApi.minecraft()).build(),
-            rectangle {
+    private fun createChat(name: String, hover: String) = //
+        Chat(
+            name = name,
+            hover = hover,
+            overlay = ChatOverlay.Builder.builder().minecraft(UIEngine.clientApi.minecraft()).build(),
+            button = rectangle {
                 align = BOTTOM_LEFT
                 origin = BOTTOM_LEFT
                 offset.y = -20.0
                 size = V3(15.0, 15.0)
             }
         )
-    }
-
-    data class Chat(
-        val name: String,
-        val hover: String,
-        val overlay: ChatOverlay,
-        var button: RectangleElement,
-        var unseen: Int = 0
-    )
 }
