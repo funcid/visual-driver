@@ -11,14 +11,6 @@ buildscript {
     }
 }
 
-repositories {
-    mavenLocal()
-    maven {
-        url 'https://repo.implario.dev/public'
-    }
-    mavenCentral()
-}
-
 apply plugin: 'ru.cristalix.uiengine.bundler'
 
 dependencies {

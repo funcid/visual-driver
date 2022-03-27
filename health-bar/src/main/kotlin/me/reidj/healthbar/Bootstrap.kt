@@ -7,16 +7,20 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
-import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Relative
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.rotationMatrix
 
 /**
  * @project animation-api
  * @author Рейдж
  */
-class Bootstrap : JavaMod() {
+class Bootstrap : KotlinMod() {
 
     override fun onEnable() {
         UIEngine.initialize(this)

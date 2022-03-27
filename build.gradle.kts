@@ -1,11 +1,12 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     java
     `java-library`
     `maven-publish`
-    kotlin("jvm") version "1.6.20-M1" apply false
-    kotlin("plugin.serialization") version "1.6.20-M1" apply false
+    kotlin("jvm") apply false
 }
 
 allprojects {
@@ -18,18 +19,6 @@ subprojects {
     apply(plugin = "java-library")
     apply(plugin = "org.jetbrains.kotlin.jvm")
     apply(plugin = "maven-publish")
-
-    repositories {
-        maven("https://repo.implario.dev/public/")
-        maven {
-            url = uri("https://repo.implario.dev/cristalix/")
-            credentials {
-                username = System.getenv("IMPLARIO_REPO_USER")
-                password = System.getenv("IMPLARIO_REPO_PASSWORD")
-            }
-        }
-        mavenCentral()
-    }
 
     dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20-M1")

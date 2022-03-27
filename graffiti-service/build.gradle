@@ -1,6 +1,7 @@
-apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
-apply plugin: 'application'
-
+plugins {
+    id 'org.jetbrains.kotlin.plugin.serialization'
+    id 'application'
+}
 mainClassName = 'App'
 group 'me.func'
 
@@ -21,8 +22,4 @@ dependencies {
 
 jar {
     from configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
-}
-
-repositories {
-    mavenCentral()
 }

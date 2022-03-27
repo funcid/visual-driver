@@ -33,7 +33,7 @@ jar {
 
 bundler {
     name 'Store'
-    mainClass 'App'
+    mainClass 'me.func.store.App'
     version '1.1'
     author 'func'
 }
