@@ -1,11 +1,13 @@
 package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
+import me.func.mod.Anime.graffitiClient
 import me.func.mod.Anime.provided
 import me.func.mod.Npc.npcs
 import me.func.mod.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import net.minecraft.server.v1_12_R1.MinecraftServer
 import org.bukkit.Bukkit
@@ -55,7 +57,6 @@ enum class Kit(val fromUrl: String) : Listener {
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("experimental-bundle.jar", player)
-
                 Banners.show(player, *Banners.banners.map { it.value }.toTypedArray())
             }
         }
@@ -73,7 +74,6 @@ enum class Kit(val fromUrl: String) : Listener {
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
                 ModLoader.send("npc-bundle.jar", player)
-
                 npcs.forEach { (_, value) -> value.spawn(player) }
             }
         }
@@ -119,6 +119,9 @@ enum class Kit(val fromUrl: String) : Listener {
 
         @EventHandler
         fun PlayerJoinEvent.handle() {
+            // Загрузка нового клиента
+            graffitiClient = graffitiClient ?: CoreGraffitiClient()
+
             Bukkit.getScheduler().runTaskLater(provided, {
                 // Отправить картинку с граффити
                 Anime.loadTexture(player, "https://implario.dev/animation-api/graffiti.png")

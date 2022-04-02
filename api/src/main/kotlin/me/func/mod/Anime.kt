@@ -3,11 +3,11 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.mod.Anime.sendEmptyBuffer
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
-import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiClient
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
@@ -25,19 +25,16 @@ import java.util.function.BiConsumer
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
+    private val loadedKits: MutableSet<Kit> = mutableSetOf()
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
-    fun include(vararg kits: Kit) {
-        for (kit in kits) {
-            ModLoader.loadFromWeb(kit.fromUrl, "anime")
-            kit.init()
-
-            if (kit == Kit.GRAFFITI) {
-                graffitiClient = graffitiClient ?: CoreGraffitiClient()
-            }
+    fun include(vararg kits: Kit) = loadedKits.addAll(kits.onEach {
+        it.apply {
+            ModLoader.loadFromWeb(fromUrl, "anime")
+            init()
         }
-    }
+    })
 
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) {
@@ -245,7 +242,7 @@ object Anime {
     }
 
     @JvmStatic
-    fun moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double) {
+    fun moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double) =
         ModTransfer()
             .string(uuid.toString())
             .double(toX)
@@ -253,44 +250,29 @@ object Anime {
             .double(toZ)
             .double(seconds)
             .send("func:marker-move", player)
-    }
 
     @JvmStatic
-    fun moveMarker(player: Player, marker: Marker, seconds: Double): Marker {
+    fun moveMarker(player: Player, marker: Marker, seconds: Double) =
         moveMarker(player, marker.uuid, marker.x, marker.y, marker.z, seconds)
-        return marker
-    }
 
     @JvmStatic
-    fun moveMarker(player: Player, marker: Marker): Marker {
+    fun moveMarker(player: Player, marker: Marker) =
         moveMarker(player, marker.uuid, marker.x, marker.y, marker.z, 0.01)
-        return marker
-    }
 
     @JvmStatic
     @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
-    fun markers(player: Player, vararg markers: Marker) {
-        for (marker in markers)
-            marker(player, marker)
-    }
+    fun markers(player: Player, vararg markers: Marker) = markers.forEach { marker(player, it) }
 
     @JvmStatic
-    fun removeMarker(player: Player, uuid: UUID) {
-        ModTransfer()
-            .string(uuid.toString())
-            .send("func:marker-kill", player)
-    }
+    fun removeMarker(player: Player, uuid: UUID) = ModTransfer()
+        .string(uuid.toString())
+        .send("func:marker-kill", player)
 
     @JvmStatic
-    fun removeMarker(player: Player, marker: Marker): Marker {
-        removeMarker(player, marker.uuid)
-        return marker
-    }
+    fun removeMarker(player: Player, marker: Marker) = removeMarker(player, marker.uuid)
 
     @JvmStatic
-    fun clearMarkers(player: Player) {
-        sendEmptyBuffer("func:clear", player)
-    }
+    fun clearMarkers(player: Player) = sendEmptyBuffer("func:clear", player)
 
     @JvmStatic
     fun openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward) {
@@ -306,14 +288,12 @@ object Anime {
     }
 
     @JvmStatic
-    fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double) {
-        ModTransfer()
+    fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double) = ModTransfer()
             .item(item)
             .string(title ?: "")
             .string(subtitle ?: "")
             .double(duration)
             .send("func:drop-item", player)
-    }
 
     @JvmStatic
     fun hideIndicator(player: Player, vararg indicator: Indicators) {
@@ -334,17 +314,14 @@ object Anime {
     }
 
     @JvmStatic
-    fun clearAllCorpses(player: Player) {
-        sendEmptyBuffer("func:corpse-clear", player)
-    }
+    fun clearAllCorpses(player: Player) = sendEmptyBuffer("func:corpse-clear", player)
 
     @JvmStatic
-    fun corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60) {
+    fun corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60) =
         corpse(to, name ?: "", "https://webdata.c7x.dev/textures/skin/$uuid", x, y, z, secondsAlive)
-    }
 
     @JvmStatic
-    fun corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60) {
+    fun corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60) =
         ModTransfer()
             .string(name ?: "")
             .string(skinUrl)
@@ -354,7 +331,6 @@ object Anime {
             .double(z)
             .integer(secondsAlive)
             .send("func:corpse", to)
-    }
 
     @JvmStatic
     fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, diameter: Double) =
@@ -373,7 +349,17 @@ object Anime {
             .send("fiwka:sphere", to)
 
     @JvmStatic
-    fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, sX: Double, sY: Double, sZ: Double) =
+    fun sphere(
+        to: Player,
+        uuid: UUID,
+        x: Double,
+        y: Double,
+        z: Double,
+        color: Color,
+        sX: Double,
+        sY: Double,
+        sZ: Double
+    ) =
         ModTransfer()
             .integer(1)
             .long(uuid.mostSignificantBits)
@@ -494,10 +480,11 @@ object Anime {
     }
 
     @JvmStatic
-    fun reload(player: Player, seconds: Double, text: String, glowColor: GlowColor) = reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
+    fun reload(player: Player, seconds: Double, text: String, glowColor: GlowColor) =
+        reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
 
     @JvmStatic
-    fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255,192,203)
+    fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255, 192, 203)
 
     @JvmStatic
     fun showEnding(player: Player, endStatus: EndStatus, key: String, value: String) {
@@ -509,5 +496,6 @@ object Anime {
     }
 
     @JvmStatic
-    fun showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>) = showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
+    fun showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>) =
+        showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
 }
