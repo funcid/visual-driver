@@ -596,6 +596,10 @@ Anime.showEnding(
 
 `Anime.counting321(player: Player)` начать на экране игрока отсчет 3 2 1 GO!<br>
 
+<img src="https://i.imgur.com/sF9mxpL.png" width="500">
+
+`Anime.bigAlert(player: Player, message: String)` отправляет текст на экран над хотбаром
+
 <h3>Системная информация STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png" width="500">

@@ -25,5 +25,6 @@ class App : KotlinMod() {
         CursorAlert
         RightBottom
         Ending
+        BigAlert
     }
 }

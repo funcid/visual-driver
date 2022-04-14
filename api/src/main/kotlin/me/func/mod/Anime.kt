@@ -496,6 +496,13 @@ object Anime {
     }
 
     @JvmStatic
+    fun bigTitle(player: Player, message: String) {
+        ModTransfer()
+            .string(message)
+            .send("ilisov:bigtitle", player)
+    }
+
+    @JvmStatic
     fun showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>) =
         showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
 }
