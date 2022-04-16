@@ -15,12 +15,12 @@ object CorpseManager {
     private val corpses = mutableListOf<AbstractClientPlayer>()
 
     init {
-        App::class.mod.registerChannel("func:corpse-clear") {
+        App::class.java.mod.registerChannel("func:corpse-clear") {
             corpses.forEach { JavaMod.clientApi.minecraft().world.removeEntity(it) }
             corpses.clear()
         }
 
-        App::class.mod.registerChannel("func:corpse") {
+        App::class.java.mod.registerChannel("func:corpse") {
             val name = NetUtil.readUtf8(this)
 
             if (corpses.size > 36)

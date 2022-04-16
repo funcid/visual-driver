@@ -3,9 +3,9 @@ plugins {
 }
 
 dependencies {
-    compileOnly 'ru.cristalix:client-api:latest-SNAPSHOT'
-    implementation 'ru.cristalix:uiengine:3.13.8'
-    implementation 'ru.cristalix:client-sdk:5.3.0'
+    compileOnly 'ru.cristalix:client-api:live-SNAPSHOT'
+    implementation 'ru.cristalix:uiengine:live-SNAPSHOT'
+    implementation 'ru.cristalix:client-sdk:live-SNAPSHOT'
     implementation 'implario:humanize:1.1.3'
 }
 

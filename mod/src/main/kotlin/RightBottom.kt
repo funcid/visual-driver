@@ -17,7 +17,7 @@ object RightBottom {
     init {
         UIEngine.overlayContext + right
 
-        App::class.mod.registerChannel("func:bottom") {
+        App::class.java.mod.registerChannel("func:bottom") {
             right.content = NetUtil.readUtf8(this)
         }
     }

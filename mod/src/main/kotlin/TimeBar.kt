@@ -49,7 +49,7 @@ object TimeBar {
             }
         }
 
-        App::class.mod.registerChannel("func:bar") {
+        App::class.java.mod.registerChannel("func:bar") {
             val text = NetUtil.readUtf8(this) + " XX:XX ⏳"
             time = this.readInt()
 
@@ -99,7 +99,7 @@ object TimeBar {
             }
         }
 
-        App::class.mod.registerChannel("func:attention") {
+        App::class.java.mod.registerChannel("func:attention") {
             val secondsTotal = 3
 
             dropNumber(3.toString(), 5.0, Color(255, 255, 85))

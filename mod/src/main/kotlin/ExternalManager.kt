@@ -9,7 +9,7 @@ object ExternalManager {
     private val textures = mutableListOf<ResourceLocation>()
 
     init {
-        App::class.mod.registerChannel("func:load-paths") {
+        App::class.java.mod.registerChannel("func:load-paths") {
             val count = readInt()
             val paths = mutableListOf<String>()
 
@@ -20,11 +20,11 @@ object ExternalManager {
             loadPaths(*paths.toTypedArray())
         }
 
-        App::class.mod.registerChannel("func:load-path") {
+        App::class.java.mod.registerChannel("func:load-path") {
             loadPaths(NetUtil.readUtf8(this))
         }
 
-        App::class.mod.onDisable.add {
+        App::class.java.mod.onDisable.add {
             val renderEngine = UIEngine.clientApi.renderEngine()
             textures.forEach { renderEngine.deleteTexture(it) }
         }

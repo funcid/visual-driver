@@ -67,13 +67,13 @@ object ChatManager {
             UIEngine.overlayContext.addChild(button)
         }
 
-        App::class.mod.registerChannel("delete-chat") {
+        App::class.java.mod.registerChannel("delete-chat") {
             val index = readInt()
             chats[index]!!.button.enabled = false
             chats.remove(index)
         }
 
-        App::class.mod.registerChannel("zabelix:chat_message") {
+        App::class.java.mod.registerChannel("zabelix:chat_message") {
             handleMessage(readInt(), TextJSON.jsonToText(readUtf8()))
         }
 

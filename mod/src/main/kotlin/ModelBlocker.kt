@@ -43,12 +43,12 @@ object ModelBlocker {
     }
 
     init {
-        App::class.mod.registerChannel("func:break-ui") {
+        App::class.java.mod.registerChannel("func:break-ui") {
             if (locker == null)
                 lazyAdd()
         }
 
-        App::class.mod.registerChannel("func:return-ui") {
+        App::class.java.mod.registerChannel("func:return-ui") {
             locker = null
         }
     }

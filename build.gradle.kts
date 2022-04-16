@@ -39,10 +39,14 @@ subprojects {
             mavenLocal()
             maven {
                 name = "func"
-                url = uri("https://repo.implario.dev/cristalix")
+                url = uri(
+                    "https://repo.c7x.ru/repository/maven-${
+                        if (project.version.toString().contains("SNAPSHOT")) "snapshots" else "releases"
+                    }/"
+                )
                 credentials {
-                    username = System.getenv("IMPLARIO_REPO_USER")
-                    password = System.getenv("IMPLARIO_REPO_PASSWORD")
+                    username = System.getenv("CRI_REPO_LOGIN")
+                    password = System.getenv("CRI_REPO_PASSWORD")
                 }
             }
         }

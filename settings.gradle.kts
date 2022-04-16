@@ -4,27 +4,46 @@ rootProject.name = "animation-api"
 
 pluginManagement {
     repositories {
-        maven("https://repo.implario.dev/public")
+        maven {
+            url = uri("https://repo.c7x.ru/repository/maven-snapshots/")
+            credentials {
+                username = System.getenv("CRI_REPO_LOGIN")
+                password = System.getenv("CRI_REPO_PASSWORD")
+            }
+        }
+        maven {
+            url = uri("https://repo.c7x.ru/repository/maven-releases/")
+            credentials {
+                username = System.getenv("CRI_REPO_LOGIN")
+                password = System.getenv("CRI_REPO_PASSWORD")
+            }
+        }
         mavenCentral()
         gradlePluginPortal()
     }
 
     plugins {
-        kotlin("jvm") version "1.6.20-M1"
-        kotlin("plugin.serialization") version "1.6.20-M1"
+        kotlin("jvm") version "1.6.20"
+        kotlin("plugin.serialization") version "1.6.20"
 
-        id("dev.implario.bundler") version "3.0.2"
+        id("dev.implario.bundler") version "fuck1-SNAPSHOT"
     }
 }
 
 dependencyResolutionManagement {
     repositories {
-        maven("https://repo.implario.dev/public/")
         maven {
-            url = uri("https://repo.implario.dev/cristalix/")
+            url = uri("https://repo.c7x.ru/repository/maven-snapshots/")
             credentials {
-                username = System.getenv("IMPLARIO_REPO_USER")
-                password = System.getenv("IMPLARIO_REPO_PASSWORD")
+                username = System.getenv("CRI_REPO_LOGIN")
+                password = System.getenv("CRI_REPO_PASSWORD")
+            }
+        }
+        maven {
+            url = uri("https://repo.c7x.ru/repository/maven-releases/")
+            credentials {
+                username = System.getenv("CRI_REPO_LOGIN")
+                password = System.getenv("CRI_REPO_PASSWORD")
             }
         }
         mavenCentral()

@@ -51,7 +51,7 @@ object Alert {
     init {
         UIEngine.overlayContext + dayTitleBox
 
-        App::class.mod.registerChannel("func:alert") {
+        App::class.java.mod.registerChannel("func:alert") {
             dayTitle.content = readUtf8()
             lore.content = readUtf8()
 
