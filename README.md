@@ -21,10 +21,10 @@ repositories {
   mavenLocal()
   mavenCentral()
   maven {
-    url 'https://repo.implario.dev/cristalix/'
+    url 'https://repo.c7x.ru/repository/maven-public/'
     credentials {
-      username System.getenv("IMPLARIO_REPO_USER")
-      password System.getenv("IMPLARIO_REPO_PASSWORD")
+      username System.getenv("CRI_REPO_LOGIN")
+      password System.getenv("CRI_REPO_PASSWORD")
     }
   }
 }
