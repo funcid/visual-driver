@@ -47,9 +47,9 @@ internal class PacketEntityDisguiser : EntityDisguiser {
         override fun getTracker(): EntityTracker? = null
     }
 
-    private val disguised = mutableMapOf<Entity, EntityType>()
+    private val disguised = hashMapOf<Entity, EntityType>()
 
-    private val entityTypeCache = mutableMapOf<EntityType, Pair<Class<out NMSEntity>, DataWatcher>>()
+    private val entityTypeCache = hashMapOf<EntityType, Pair<Class<out NMSEntity>, DataWatcher>>()
 
     override fun disguise(entity: Entity, type: EntityType, vararg players: Player) {
         val players = players.filter { it != entity }
@@ -150,5 +150,6 @@ internal class PacketEntityDisguiser : EntityDisguiser {
     override fun reset(entity: Entity, vararg players: Player) {
         // TODO: Full reset players
         disguised[entity]?.let { disguise(entity, it, *players) }
+        disguised.remove(entity)
     }
 }
