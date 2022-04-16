@@ -22,15 +22,15 @@ import ru.cristalix.core.formatting.Formatting
 
 enum class Kit(val fromUrl: String) : Listener {
 
-    STANDARD("https://implario.dev/animation-api/mod-bundle-v1.jar") {
+    STANDARD("https://storage.c7x.ru/func/animation-api/mod-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("mod-bundle-v1.jar", player)
+                ModLoader.send("mod-bundle.jar", player)
             }
         }
     },
-    LOOTBOX("https://implario.dev/animation-api/cristalix-lootbox.jar") {
+    LOOTBOX("https://storage.c7x.ru/func/animation-api/cristalix-lootbox.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -44,7 +44,7 @@ enum class Kit(val fromUrl: String) : Listener {
                 player.playSound(player.location, Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1f, 2f)
         }
     },
-    DIALOG("https://implario.dev/animation-api/cristalix-dialog.jar") {
+    DIALOG("https://storage.c7x.ru/func/animation-api/cristalix-dialog.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -52,7 +52,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    EXPERIMENTAL("https://implario.dev/animation-api/experimental-bundle.jar") {
+    EXPERIMENTAL("https://storage.c7x.ru/func/animation-api/experimental-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -61,7 +61,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    MULTI_CHAT("https://implario.dev/animation-api/multichat-bundle.jar") {
+    MULTI_CHAT("https://storage.c7x.ru/func/animation-api/multichat-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -69,7 +69,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    NPC("https://implario.dev/animation-api/npc-bundle.jar") {
+    NPC("https://storage.c7x.ru/func/animation-api/npc-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -83,7 +83,7 @@ enum class Kit(val fromUrl: String) : Listener {
             npcs[entityId]?.click?.accept(this)
         }
     },
-    BATTLEPASS("https://implario.dev/animation-api/battlepass-bundle.jar") {
+    BATTLEPASS("https://storage.c7x.ru/func/animation-api/battlepass-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -93,7 +93,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    HEALTH_BAR("https://implario.dev/animation-api/healthbar-bundle.jar") {
+    HEALTH_BAR("https://storage.c7x.ru/func/animation-api/healthbar-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -101,7 +101,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    GRAFFITI("https://implario.dev/animation-api/graffiti-bundle.jar") {
+    GRAFFITI("https://storage.c7x.ru/func/animation-api/graffiti-bundle.jar") {
         @EventHandler
         fun AsyncPlayerPreLoginEvent.handle() {
             // Если он на самом деле не заходит, то не грузить
@@ -124,7 +124,7 @@ enum class Kit(val fromUrl: String) : Listener {
 
             Bukkit.getScheduler().runTaskLater(provided, {
                 // Отправить картинку с граффити
-                Anime.loadTexture(player, "https://implario.dev/animation-api/graffiti.png")
+                Anime.loadTexture(player, "https://storage.c7x.ru/func/animation-api/graffiti.png")
 
                 // Отправить игроку мод
                 ModLoader.send("graffiti-bundle.jar", player)
