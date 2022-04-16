@@ -10,7 +10,7 @@ import org.apache.commons.io.IOUtils
 import org.bukkit.Bukkit
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
-import ru.cristalix.core.display.DisplayChannels
+import ru.cristalix.core.display.DisplayChannels.MOD_CHANNEL
 import ru.cristalix.core.util.UtilNetty
 import java.io.File
 import java.io.FileInputStream
@@ -97,14 +97,9 @@ object ModLoader {
     }
 
     @JvmStatic
-    fun send(modName: String, player: Player) {
-        val mod = mods.getOrDefault(modName, null)
-            ?: throw RuntimeException("Mod sending failure, mod is null: $modName")
+    fun send(modName: String, player: Player) = mods[modName]?.let {
         (player as CraftPlayer).handle.playerConnection.sendPacket(
-            PacketPlayOutCustomPayload(
-                DisplayChannels.MOD_CHANNEL,
-                PacketDataSerializer(mod.retainedSlice())
-            )
+            PacketPlayOutCustomPayload(MOD_CHANNEL, PacketDataSerializer(it.retainedSlice()))
         )
     }
 
