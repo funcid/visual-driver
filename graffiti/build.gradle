@@ -17,6 +17,12 @@ configurations.all {
     resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
 }
 
+tasks {
+    bundle {
+        optimizationpasses(5)
+    }
+}
+
 jar {
     from configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
 }

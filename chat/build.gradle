@@ -9,6 +9,12 @@ dependencies {
     implementation 'implario:humanize:1.1.3'
 }
 
+tasks {
+    bundle {
+        optimizationpasses(5)
+    }
+}
+
 bundler {
     name 'ChatMod'
     mainClass 'App'
