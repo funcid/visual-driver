@@ -11,7 +11,7 @@ plugins {
 
 allprojects {
     group = "me.func.animation-api"
-    version = "stable-SNAPSHOT"
+    version = "live-SNAPSHOT"
 }
 
 subprojects {
