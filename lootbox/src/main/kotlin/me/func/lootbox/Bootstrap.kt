@@ -9,9 +9,9 @@ import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.registerHandler
-import ru.cristalix.uiengine.element.animate
+import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 
@@ -24,7 +24,7 @@ class Bootstrap : JavaMod() {
         var ready = false
         var pressed = false
 
-        registerHandler(GameLoop::class.java) {
+        registerHandler<GameLoop> {
             if (!ready && !crateScreen.opened)
                 return@registerHandler
 
@@ -53,7 +53,7 @@ class Bootstrap : JavaMod() {
                         ready = false
                         open()
                         if (hasNextItem()) {
-                            UIEngine.overlayContext.schedule(0.5) {
+                            UIEngine.schedule(0.5) {
                                 pressed = false
                                 ready = true
                             }
@@ -63,9 +63,9 @@ class Bootstrap : JavaMod() {
             }
         }
 
-        registerHandler(MousePress::class.java) { isCancelled = ready }
+        registerHandler<MousePress> { isCancelled = ready }
 
-        registerHandler(PluginMessage::class.java) {
+        registerHandler<PluginMessage> {
             if (channel == "lootbox") {
                 val amount = data.readInt()
 
@@ -97,7 +97,7 @@ class Bootstrap : JavaMod() {
             }
         }
 
-        registerHandler(RenderTickPre::class.java) {
+        registerHandler<RenderTickPre> {
             if (!crateScreen.opened)
                 return@registerHandler
 

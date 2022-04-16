@@ -13,7 +13,7 @@ object SphereManager {
     private val lock = ClientApiAllowedLock()
 
     init {
-        App::class.mod.registerChannel("fiwka:sphere") {
+        App::class.java.mod.registerChannel("fiwka:sphere") {
             when (readInt()) {
                 0 -> {
                     drawSphere(

@@ -70,7 +70,7 @@ object Ending {
                 }
             }
         }
-        App::class.mod.registerChannel("crazy:ending") {
+        App::class.java.mod.registerChannel("crazy:ending") {
             val endStatus = EndStatus.values()[readInt()]
             key.content = readUtf8(this)
             value.content = readUtf8(this)

@@ -15,7 +15,7 @@ object MarkerManager {
     private var holos: MutableMap<String, Context3D> = HashMap()
 
     init {
-        App::class.mod.registerChannel("func:marker-new") {
+        App::class.java.mod.registerChannel("func:marker-new") {
             val uuid = NetUtil.readUtf8(this)
             val x = readDouble()
             val y = readDouble()
@@ -25,7 +25,7 @@ object MarkerManager {
             addHolo(uuid, x, y, z, scale, texture)
         }
 
-        App::class.mod.registerChannel("func:marker-move") {
+        App::class.java.mod.registerChannel("func:marker-move") {
             val uuid = NetUtil.readUtf8(this)
             val x = readDouble()
             val y = readDouble()
@@ -41,7 +41,7 @@ object MarkerManager {
         }
 
 
-        App::class.mod.registerChannel("func:marker-kill") {
+        App::class.java.mod.registerChannel("func:marker-kill") {
             val uuid = NetUtil.readUtf8(this)
             holos[uuid]?.let {
                 UIEngine.worldContexts.remove(it)
@@ -49,7 +49,7 @@ object MarkerManager {
             holos.remove(uuid)
         }
 
-        App::class.mod.registerChannel("func:clear") {
+        App::class.java.mod.registerChannel("func:clear") {
             holos.forEach { UIEngine.worldContexts.remove(it.value) }
             holos.clear()
         }

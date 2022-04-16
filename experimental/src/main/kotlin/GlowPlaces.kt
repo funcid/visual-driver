@@ -16,7 +16,7 @@ object GlowPlaces {
     private val places = arrayListOf<GlowingPlace>()
 
     init {
-        App::class.mod.registerChannel("func:place") {
+        App::class.java.mod.registerChannel("func:place") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             places.add(
                 GlowingPlace(
@@ -33,11 +33,11 @@ object GlowPlaces {
             )
         }
 
-        App::class.mod.registerChannel("func:place-clear") {
+        App::class.java.mod.registerChannel("func:place-clear") {
             places.clear()
         }
 
-        App::class.mod.registerChannel("func:place-kill") {
+        App::class.java.mod.registerChannel("func:place-kill") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             places.filter { it.uuid == uuid }.forEach { places.remove(it) }
         }

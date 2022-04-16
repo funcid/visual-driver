@@ -20,7 +20,7 @@ object Disguise {
     }
 
     init {
-        App::class.mod.run {
+        App::class.java.mod.run {
             minecraft.player.run { players.put(name, this) }
 
             registerHandler<NameTemplateRender> {

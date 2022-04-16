@@ -13,7 +13,7 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.ItemElement
-import ru.cristalix.uiengine.element.animate
+import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
 class CrateScreen {
@@ -288,7 +288,7 @@ class CrateScreen {
         wrapper.rotation.degrees = -1.0
         wrapper.animate(0.8) { wrapper.rotation.degrees = Math.PI + 0.4 }
 
-        UIEngine.overlayContext.schedule(0.8) {
+        UIEngine.schedule(0.8) {
             wrapper.animate(0.4, Easings.BACK_OUT) { wrapper.rotation.degrees = Math.PI }
         }
         itemRect.enabled = false
@@ -336,7 +336,7 @@ class CrateScreen {
         }
         vignette.animate(0.2) { vignette.color.alpha = 0.8 }
 
-        UIEngine.overlayContext.schedule(0.5) {
+        UIEngine.schedule(0.5) {
             vignette.animate(0.8, Easings.CUBIC_OUT) { color.alpha = 0.0 }
         }
 
@@ -358,6 +358,10 @@ class CrateScreen {
         text.content = if (hasNext) "Нажмите [ЛКМ], чтобы продолжить" else "Нажмите [ЛКМ], чтобы закрыть меню"
         text.animate(0.5) { color.alpha = 1.0 }
 
-        if (!hasNext) { UIEngine.overlayContext.schedule(0.5) { opened = true } }
+        if (!hasNext) {
+            UIEngine.schedule(0.5) {
+                opened = true
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ object ItemTitle {
 
         UIEngine.overlayContext.addChild(title, subtitle)
 
-        App::class.mod.registerChannel("func:drop-item") {
+        App::class.java.mod.registerChannel("func:drop-item") {
             UIEngine.clientApi.overlayRenderer().displayItemActivation(ItemTools.read(this))
             title.content = NetUtil.readUtf8(this)
             subtitle.content = NetUtil.readUtf8(this)
