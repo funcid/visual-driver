@@ -22,6 +22,8 @@ import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
 
+val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
+
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)

@@ -3,6 +3,7 @@ package me.func.mod.conversation
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
+import me.func.mod.Anime
 import me.func.mod.Kit
 import net.minecraft.server.v1_12_R1.PacketDataSerializer
 import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload
@@ -19,6 +20,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
 import java.util.*
+import java.util.logging.Level
+import java.util.logging.LogRecord
 
 
 object ModLoader {
@@ -44,7 +47,8 @@ object ModLoader {
             }
             file.path
         } catch (exception: Exception) {
-            throw RuntimeException(exception)
+            Anime.provided.logger.log(LogRecord(Level.WARNING, exception.message))
+            ""
         }
     }
 
@@ -70,7 +74,9 @@ object ModLoader {
     }
 
     @JvmStatic
-    fun load(filePath: String) {
+    fun load(filePath: String?) {
+        if (filePath.isNullOrEmpty())
+            return
         try {
             mods[filePath.split('/').last()] = Unpooled.buffer().also { readMod(it, File(filePath)) }
         } catch (exception: Exception) {

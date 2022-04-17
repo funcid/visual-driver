@@ -22,7 +22,7 @@ import ru.cristalix.core.formatting.Formatting
 
 enum class Kit(val fromUrl: String) : Listener {
 
-    STANDARD("https://storage.c7x.ru/func/animation-api/mod-bundle.jar") {
+    STANDARD(MOD_STORAGE_URL + "mod-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -30,7 +30,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    LOOTBOX("https://storage.c7x.ru/func/animation-api/cristalix-lootbox.jar") {
+    LOOTBOX(MOD_STORAGE_URL + "cristalix-lootbox.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -44,7 +44,7 @@ enum class Kit(val fromUrl: String) : Listener {
                 player.playSound(player.location, Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1f, 2f)
         }
     },
-    DIALOG("https://storage.c7x.ru/func/animation-api/cristalix-dialog.jar") {
+    DIALOG(MOD_STORAGE_URL + "cristalix-dialog.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -52,7 +52,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    EXPERIMENTAL("https://storage.c7x.ru/func/animation-api/experimental-bundle.jar") {
+    EXPERIMENTAL(MOD_STORAGE_URL + "experimental-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -61,7 +61,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    MULTI_CHAT("https://storage.c7x.ru/func/animation-api/multichat-bundle.jar") {
+    MULTI_CHAT(MOD_STORAGE_URL + "multichat-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -69,7 +69,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    NPC("https://storage.c7x.ru/func/animation-api/npc-bundle.jar") {
+    NPC(MOD_STORAGE_URL + "npc-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -83,7 +83,7 @@ enum class Kit(val fromUrl: String) : Listener {
             npcs[entityId]?.click?.accept(this)
         }
     },
-    BATTLEPASS("https://storage.c7x.ru/func/animation-api/battlepass-bundle.jar") {
+    BATTLEPASS(MOD_STORAGE_URL + "battlepass-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -93,7 +93,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    HEALTH_BAR("https://storage.c7x.ru/func/animation-api/healthbar-bundle.jar") {
+    HEALTH_BAR(MOD_STORAGE_URL + "healthbar-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
@@ -101,7 +101,7 @@ enum class Kit(val fromUrl: String) : Listener {
             }
         }
     },
-    GRAFFITI("https://storage.c7x.ru/func/animation-api/graffiti-bundle.jar") {
+    GRAFFITI(MOD_STORAGE_URL + "graffiti-bundle.jar") {
         @EventHandler
         fun AsyncPlayerPreLoginEvent.handle() {
             // Если он на самом деле не заходит, то не грузить
