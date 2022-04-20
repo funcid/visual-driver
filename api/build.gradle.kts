@@ -1,6 +1,6 @@
 dependencies {
     compileOnly("cristalix:bukkit-core:21.01.30")
-    compileOnlyApi("cristalix:dark-paper:21.02.03")
+    compileOnly("cristalix:dark-paper:21.02.03")
 
     implementation("dev.xdark:feder:1.0")
     api(project(":protocol"))
