@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
 import me.func.mod.Anime
 import me.func.mod.Kit
+import me.func.mod.log
 import net.minecraft.server.v1_12_R1.PacketDataSerializer
 import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload
 import org.apache.commons.io.IOUtils
@@ -46,7 +47,7 @@ object ModLoader {
             }
             file.path
         } catch (exception: Exception) {
-            Anime.provided.logger.log(LogRecord(Level.WARNING, exception.message))
+            log(exception.message ?: "Download failure! File: $fileUrl, directory: $saveDir")
             ""
         }
     }
@@ -78,12 +79,7 @@ object ModLoader {
             val key = filePath.split('/').last()
 
             if (mods.containsKey(key)) {
-                Anime.provided.logger.log(
-                    LogRecord(
-                        Level.WARNING,
-                        "Mod loading abort! Mod `$key` already loaded!"
-                    )
-                )
+                log("Mod loading abort! Mod `$key` already loaded!")
                 return
             }
 
@@ -95,7 +91,10 @@ object ModLoader {
 
     @JvmStatic
     fun loadAll(dirPath: String) = File("./$dirPath").listFiles()?.apply {
-        if (size > 100) throw UnsupportedOperationException("To many files in dir: $dirPath")
+        if (size > 100) {
+            log("To many files in dir: $dirPath")
+            return@apply
+        }
         forEach { load(it.path) }
     }
 

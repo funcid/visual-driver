@@ -23,7 +23,10 @@ object Alert {
         chatMessage: String,
         vararg buttons: NotificationButton
     ) {
-        if (buttons.size > 2) throw RuntimeException("Too many buttons!")
+        if (buttons.size > 2) {
+            log("Too many buttons!")
+            return
+        }
 
         NotificationData(
             UUID.randomUUID(),

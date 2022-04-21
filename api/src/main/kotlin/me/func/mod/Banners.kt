@@ -19,8 +19,10 @@ object Banners {
 
     @JvmStatic
     fun new(banner: Banner): Banner {
-        if (banners.size > 500)
-            throw RuntimeException("Banners map size > 500! Stop add banners!")
+        if (banners.size > 500) {
+            log("Banners map size > 500! Stop add banners!")
+            return banner
+        }
         banners[banner.uuid] = banner
         return banner
     }
