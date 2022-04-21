@@ -26,7 +26,7 @@ pluginManagement {
         kotlin("jvm") version "1.6.20"
         kotlin("plugin.serialization") version "1.6.20"
 
-        id("dev.implario.bundler") version "fuck1-SNAPSHOT"
+        id("dev.implario.bundler") version "9999-SNAPSHOT"
     }
 }
 

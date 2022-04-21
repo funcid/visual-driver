@@ -22,11 +22,11 @@ import ru.cristalix.core.formatting.Formatting
 
 enum class Kit(val fromUrl: String) : Listener {
 
-    STANDARD(MOD_STORAGE_URL + "mod-bundle.jar") {
+    STANDARD(MOD_STORAGE_URL + "standard-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("mod-bundle.jar", player)
+                ModLoader.send("standard-bundle.jar", player)
             }
         }
     },

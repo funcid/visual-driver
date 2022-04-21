@@ -19,7 +19,6 @@ import java.net.URL
 import java.nio.file.Files
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
-import java.util.*
 import java.util.logging.Level
 import java.util.logging.LogRecord
 
@@ -53,14 +52,12 @@ object ModLoader {
     }
 
     @JvmStatic
-    fun loadFromWeb(fileUrl: String, saveDir: String) {
+    fun loadFromWeb(fileUrl: String, saveDir: String) =
         load(download(fileUrl, saveDir))
-    }
 
     @JvmStatic
-    fun loadManyFromWeb(saveDir: String, vararg fileUrls: String) {
-        for (url in fileUrls) loadFromWeb(url, saveDir)
-    }
+    fun loadManyFromWeb(saveDir: String, vararg fileUrls: String) =
+        fileUrls.forEach { loadFromWeb(it, saveDir) }
 
     @JvmStatic
     private fun readMod(buffer: ByteBuf, file: File) {
@@ -78,28 +75,28 @@ object ModLoader {
         if (filePath.isNullOrEmpty())
             return
         try {
-            mods[filePath.split('/').last()] = Unpooled.buffer().also { readMod(it, File(filePath)) }
+            val key = filePath.split('/').last()
+
+            if (mods.containsKey(key)) {
+                Anime.provided.logger.log(
+                    LogRecord(
+                        Level.WARNING,
+                        "Mod loading abort! Mod `$key` already loaded!"
+                    )
+                )
+                return
+            }
+
+            mods[key] = Unpooled.buffer().also { readMod(it, File(filePath)) }
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
     }
 
     @JvmStatic
-    fun loadAll(dirPath: String) {
-        val files = Objects.requireNonNull(
-            File(
-                "./$dirPath"
-            ).listFiles()
-        )
-        if (files.size > 100) throw UnsupportedOperationException("To many files in dir: $dirPath")
-        for (file in files) {
-            // Чтобы при поломке одного мода, цикл продолжился
-            try {
-                mods[file.name] = Unpooled.buffer().also { readMod(it, file) }
-            } catch (exception: Exception) {
-                exception.printStackTrace()
-            }
-        }
+    fun loadAll(dirPath: String) = File("./$dirPath").listFiles()?.apply {
+        if (size > 100) throw UnsupportedOperationException("To many files in dir: $dirPath")
+        forEach { load(it.path) }
     }
 
     @JvmStatic
@@ -110,26 +107,13 @@ object ModLoader {
     }
 
     @JvmStatic
-    fun manyToOne(player: Player) {
-        for ((key, _) in mods) {
-            if (Kit.values().any { it.fromUrl.split('/').last() == key })
-                continue
-
-            send(key, player)
-        }
-    }
+    fun manyToOne(player: Player) =
+        mods.keys.filter { mod -> Kit.values().none { it.fromUrl.split('/').last() == mod } }
+            .forEach { send(it, player) }
 
     @JvmStatic
-    fun oneToMany(modName: String) {
-        for (player in Bukkit.getOnlinePlayers()) {
-            send(modName, player)
-        }
-    }
+    fun oneToMany(modName: String) = Bukkit.getOnlinePlayers().forEach { send(modName, it) }
 
     @JvmStatic
-    fun sendAll() {
-        for (player in Bukkit.getOnlinePlayers()) {
-            manyToOne(player)
-        }
-    }
+    fun sendAll() = Bukkit.getOnlinePlayers().forEach { manyToOne(it) }
 }
