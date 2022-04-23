@@ -637,6 +637,7 @@ Anime.showEnding(
 `Anime.loadTexture(player: Player, url: String)` загрузить игроку фотографию по ссылке в папку `cache/animation/`<br>
 `Anime.loadTextures(player: Player, vararg url: String)` загрузить игроку фотографии по ссылкам в папку `cache/animation/`<br>
 Когда игрок скачает фотографию/и от отправит серверу пустой буффер в канал `func:loaded` <br>
+Пример получения фото на моде: `ResourceLocation.of("cache/animation", "файл.png")`
 
 <b>Регистрация канала для входящих сообщений</b>:
 
