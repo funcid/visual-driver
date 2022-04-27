@@ -7,15 +7,15 @@ pluginManagement {
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-snapshots/")
             credentials {
-                username = System.getenv("CRI_REPO_LOGIN")
-                password = System.getenv("CRI_REPO_PASSWORD")
+                username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-releases/")
             credentials {
-                username = System.getenv("CRI_REPO_LOGIN")
-                password = System.getenv("CRI_REPO_PASSWORD")
+                username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
         mavenCentral()
@@ -35,15 +35,15 @@ dependencyResolutionManagement {
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-snapshots/")
             credentials {
-                username = System.getenv("CRI_REPO_LOGIN")
-                password = System.getenv("CRI_REPO_PASSWORD")
+                username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-releases/")
             credentials {
-                username = System.getenv("CRI_REPO_LOGIN")
-                password = System.getenv("CRI_REPO_PASSWORD")
+                username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
         mavenCentral()

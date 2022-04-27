@@ -45,8 +45,8 @@ subprojects {
                     }/"
                 )
                 credentials {
-                    username = System.getenv("CRI_REPO_LOGIN")
-                    password = System.getenv("CRI_REPO_PASSWORD")
+                    username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                    password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
                 }
             }
         }

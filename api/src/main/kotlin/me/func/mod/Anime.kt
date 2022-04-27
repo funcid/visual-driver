@@ -18,7 +18,10 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
+import ru.cristalix.modcompressor.ModCompressor
 import java.awt.Color
+import java.nio.file.Path
+import java.nio.file.Paths
 import java.util.*
 import java.util.function.BiConsumer
 
@@ -31,12 +34,35 @@ object Anime {
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
-    fun include(vararg kits: Kit) = loadedKits.addAll(kits.onEach {
-        it.apply {
-            ModLoader.loadFromWeb(fromUrl, "anime")
-            init()
+    fun include(vararg kits: Kit, compress: Boolean = true) {
+        if (kits.size > 1 && compress) {
+            val paths = arrayListOf<Path>()
+            val joiner = StringJoiner(" - ")
+
+            loadedKits.addAll(kits.onEach {
+                it.apply {
+                    paths.add(Paths.get(ModLoader.download(fromUrl, "anime")))
+                    joiner.add(name)
+                    init()
+                }
+            })
+
+            val modCompressor = ModCompressor("ru.cristalix.anime", "Cristalix", "Animation Api", "last", paths)
+            val bundlePath = Paths.get("anime", "$joiner.jar")
+
+            modCompressor.loadFiles()
+            modCompressor.compress(bundlePath)
+
+            ModLoader.load(bundlePath.toAbsolutePath().toString())
+        } else {
+            loadedKits.addAll(kits.onEach {
+                it.apply {
+                    ModLoader.loadFromWeb(fromUrl, "anime")
+                    init()
+                }
+            })
         }
-    })
+    }
 
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) {
