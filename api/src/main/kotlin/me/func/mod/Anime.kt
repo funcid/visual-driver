@@ -34,6 +34,12 @@ object Anime {
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
+    fun include(vararg kits: Kit) {
+        include(*kits, compress = true) // НЕ ПРОБУЙТЕ УБИРАТЬ compress = true АХ*ЕТЕ
+    }
+
+    // kotlin only
+    @JvmStatic
     fun include(vararg kits: Kit, compress: Boolean = true) {
         if (kits.size > 1 && compress) {
             val paths = arrayListOf<Path>()
