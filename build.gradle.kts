@@ -45,8 +45,8 @@ subprojects {
                     }/"
                 )
                 credentials {
-                    username = System.getenv("CRI_REPO_LOGIN")
-                    password = System.getenv("CRI_REPO_PASSWORD")
+                    username = System.getenv("CRI_REPO_LOGIN") ?: project.properties["CRI_REPO_LOGIN"] as String
+                    password = System.getenv("CRI_REPO_PASSWORD") ?: project.properties["CRI_REPO_PASSWORD"] as String
                 }
             }
         }
