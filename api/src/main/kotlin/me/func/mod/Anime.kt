@@ -28,7 +28,6 @@ import java.io.File
 import java.nio.file.Paths
 import java.util.*
 import java.util.function.BiConsumer
-import kotlin.io.path.absolutePathString
 import kotlin.io.path.fileSize
 import kotlin.io.path.name
 import kotlin.math.round
@@ -43,8 +42,10 @@ object Anime {
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
-    @JvmOverloads
-    fun include(vararg kits: Kit, compress: Boolean = true) {
+    fun include(vararg kits: Kit) = include(true, *kits)
+
+    @JvmStatic
+    fun include(compress: Boolean = true, vararg kits: Kit) {
         if (kits.contains(Kit.DEBUG)) {
             warn("Running in debug mode!")
             ModLoader.loadAll(ModWatcher.testingPath)
