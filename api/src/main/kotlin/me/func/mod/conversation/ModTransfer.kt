@@ -4,7 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
-import me.func.mod.warn
+import me.func.mod.util.warn
 import net.minecraft.server.v1_12_R1.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack

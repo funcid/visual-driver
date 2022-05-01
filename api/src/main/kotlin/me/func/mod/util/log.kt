@@ -1,5 +1,5 @@
-package me.func.mod
+package me.func.mod.util
 
-fun warn(message: String) = println("§e$message")
+fun warn(message: String) = println("[ANIME] §e$message")
 
-fun log(message: String) = println(message)
+fun log(message: String) = println("[ANIME] $message")

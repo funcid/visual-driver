@@ -9,6 +9,10 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
+import me.func.mod.util.log
+import me.func.mod.util.dir
+import me.func.mod.util.fileLastName
+import me.func.mod.util.warn
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.personalization.GraffitiPlaced
@@ -30,43 +34,40 @@ import kotlin.io.path.name
 import kotlin.math.round
 
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
-const val MOD_LOCAL_DIR_NAME = "anime"
+val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
+val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
-    private val loadedKits: MutableSet<Kit> = mutableSetOf()
-    private var debug = false
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
     @JvmOverloads
     fun include(vararg kits: Kit, compress: Boolean = true) {
-        debug = kits.contains(Kit.DEBUG)
-
-        val filteredKits = if (debug) kits.filterNot { it == Kit.DEBUG } else kits.toList()
-
-        if (debug) {
-            log("Animation Api running in debug mode!")
-            ModWatcher
-            ModLoader.loadAll(ModWatcher.TEST_PATH)
+        if (kits.contains(Kit.DEBUG)) {
+            warn("Running in debug mode!")
+            ModLoader.loadAll(ModWatcher.testingPath)
         }
-        
-        if (kits.size > 1 && compress) {
+
+        val toLoad = kits.filter { it != Kit.DEBUG }
+
+        if (toLoad.size > 1 && compress) {
             ModCompressor(
                 "ru.cristalix.anime",
                 "func, delfikpro, sworroo, fiwka, reidj, kamilaova",
                 "Animation Api",
                 "1.0",
-                kits.map { Paths.get(ModLoader.download(it.fromUrl)) }
+                toLoad.map { Paths.get(ModLoader.download(it.fromUrl)) }
             ).run {
                 Paths.get(MOD_LOCAL_DIR_NAME, "fat.jar")?.let { path ->
                     loadFiles()
                     compress(path)
-                    ModLoader.onJoinMods(path.name)
+                    ModLoader.onJoining(path.name)
 
                     val size = path.fileSize() / 1024
-                    val storage = File(MOD_LOCAL_DIR_NAME).listFiles().sumOf { it.length() } / 1024 - size
+                    val storage = File(MOD_LOCAL_DIR_NAME).listFiles().sumOf { it.length() } / 1024
+                    +File(MOD_LOCAL_TEST_DIR_NAME).listFiles().sumOf { it.length() } / 1024 - size
 
                     log(
                         "Mod compression enabled! Mods allocation size: ${size}KB, directory size: ${storage}KB, saved ${
@@ -78,11 +79,11 @@ object Anime {
                 }
             }
         } else {
-            if (kits.size > 1)
+            if (toLoad.size > 1)
                 warn("Mod compression disabled, it will freeze player joining!")
-            kits.forEach { ModLoader.loadFromWeb(it.fromUrl, MOD_LOCAL_DIR_NAME) }
+            toLoad.forEach { ModLoader.loadFromWeb(it.fromUrl, MOD_LOCAL_DIR_NAME) }
         }
-        kits.forEach { it.init() }
+        toLoad.forEach { it.init() }
     }
 
     @JvmStatic

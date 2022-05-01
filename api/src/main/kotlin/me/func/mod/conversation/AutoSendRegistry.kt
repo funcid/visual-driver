@@ -2,7 +2,7 @@ package me.func.mod.conversation
 
 import me.func.mod.Anime
 import me.func.mod.MOD_LOCAL_DIR_NAME
-import me.func.mod.warn
+import me.func.mod.util.warn
 import net.minecraft.server.v1_12_R1.MinecraftServer
 import org.bukkit.Bukkit
 import org.bukkit.event.EventHandler

@@ -1,7 +1,7 @@
 package me.func.mod.experimental.disguise
 
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.warn
+import me.func.mod.util.warn
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player

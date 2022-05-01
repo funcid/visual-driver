@@ -5,7 +5,8 @@ import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
 import me.func.mod.Kit
 import me.func.mod.MOD_LOCAL_DIR_NAME
-import me.func.mod.warn
+import me.func.mod.util.fileLastName
+import me.func.mod.util.warn
 import net.minecraft.server.v1_12_R1.PacketDataSerializer
 import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload
 import org.apache.commons.io.IOUtils
@@ -23,7 +24,7 @@ import kotlin.io.path.absolutePathString
 
 object ModLoader {
 
-    private val mods: MutableMap<String, ByteBuf?> = HashMap()
+    val mods: MutableMap<String, ByteBuf?> = HashMap()
 
     @JvmStatic
     @JvmOverloads
@@ -34,7 +35,7 @@ object ModLoader {
                 Files.createDirectory(dir)
 
             val website = URL(fileUrl)
-            val file = File(saveDir + "/" + fileUrl.split('/').last())
+            val file = File(saveDir + "/" + fileUrl.fileLastName())
             file.createNewFile()
             website.openStream().use { `in` ->
                 Files.copy(
@@ -75,13 +76,14 @@ object ModLoader {
     fun load(path: Path) = load(path.absolutePathString())
 
     @JvmStatic
-    fun load(filePath: String?) {
+    @JvmOverloads
+    fun load(filePath: String?, overload: Boolean = false) {
         if (filePath.isNullOrEmpty())
             return
         try {
             val key = filePath.split('/').last()
 
-            if (mods.containsKey(key)) {
+            if (mods.containsKey(key) && !overload) {
                 warn("Mod loading abort! Mod `$key` already loaded!")
                 return
             }
@@ -123,7 +125,6 @@ object ModLoader {
     fun remove(modName: String) =
         mods.remove(modName)
 
-
     @JvmStatic
     fun manyToOne(player: Player) =
         mods.keys.filter { mod -> Kit.values().none { it.fromUrl.split('/').last() == mod } }
@@ -139,5 +140,5 @@ object ModLoader {
     fun isLoaded(name: String) = mods.containsKey(name)
 
     @JvmStatic
-    fun onJoinMods(vararg mods: String?) = AutoSendRegistry.add(*mods)
+    fun onJoining(vararg mods: String?) = AutoSendRegistry.add(*mods)
 }
