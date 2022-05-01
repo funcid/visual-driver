@@ -127,7 +127,7 @@ val data = ModTransfer().integer(items.size)
 players.forEach { player -> data.send("lootbox", player) }  
 ```
   
-<h3>Режим DUBUG (Для удобной разработки)</h3> 
+<h3>Режим DEBUG (Для удобной разработки)</h3> 
 
 Простым языком: вы кидаете мод в папку, API это видит и перезагружает мод у игроков.
   
