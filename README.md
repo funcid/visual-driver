@@ -37,7 +37,7 @@ dependencies {
 
 <h3>Модули</h3>
 
-`STANDARD` - стандартный набор модов (by <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
+`STANDARD` - стандартный набор модов (by <a href="https://vk.com/kostyan_konovalov">@fiwka</a>, <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
 `DIALOG` - кит с квестовыми диалогами (by <a href="https://vk.com/sworroo">@sworroo</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
@@ -46,6 +46,7 @@ dependencies {
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@func</a>)<br>
 `BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `HEALTH_BAR` - модуль добавляющий полоску здоровья (by <a href="https://vk.com/delfikpro">@delfikpro</a>)<br>
+`DEBUG` - модуль для удобной разработки модов (by <a href="https://vk.com/func">@func</a>, <a href="https://vk.com/kostyan_konovalov">@fiwka</a>)<br>
 
 <h3>Подключение модулей</h3>
 
@@ -125,7 +126,14 @@ val data = ModTransfer().integer(items.size)
 
 players.forEach { player -> data.send("lootbox", player) }  
 ```
+  
+<h3>Режим DEBUG (Для удобной разработки)</h3> 
 
+Простым языком: вы кидаете мод в папку, API это видит и перезагружает мод у игроков.
+  
+Данный режим позволяет мнгновенно обновлять мод на клиенте игрока, что очень удобно для быстрого тестировая. Обычные этапы разработки: написание кода -> компиляция -> заливка мода в папку сервера -> перезагрузка сервера -> вход на сервер -> загрузка мода, всего 6 этопов. С данным режимом: написание кода -> компиляция -> заливка мода в папку сервера -> смотрим, всего 4 этапа. Так же можно автоматически загруждать мод в папку прямо из среды разработки, но это уже задача вашей среды.
+Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods` является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
+  
 <h3>Батлпасс</h3>
 
 <img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
