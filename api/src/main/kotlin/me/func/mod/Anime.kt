@@ -7,6 +7,7 @@ import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
+import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
@@ -23,6 +24,7 @@ import java.io.File
 import java.nio.file.Paths
 import java.util.*
 import java.util.function.BiConsumer
+import kotlin.io.path.absolutePathString
 import kotlin.io.path.fileSize
 import kotlin.io.path.name
 import kotlin.math.round
@@ -33,11 +35,23 @@ const val MOD_LOCAL_DIR_NAME = "anime"
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
+    private val loadedKits: MutableSet<Kit> = mutableSetOf()
+    private var debug = false
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
     @JvmOverloads
     fun include(vararg kits: Kit, compress: Boolean = true) {
+        debug = kits.contains(Kit.DEBUG)
+
+        val filteredKits = if (debug) kits.filterNot { it == Kit.DEBUG } else kits.toList()
+
+        if (debug) {
+            log("Animation Api running in debug mode!")
+            ModWatcher
+            ModLoader.loadAll(ModWatcher.TEST_PATH)
+        }
+        
         if (kits.size > 1 && compress) {
             ModCompressor(
                 "ru.cristalix.anime",
