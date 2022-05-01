@@ -4,7 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
-import me.func.mod.log
+import me.func.mod.warn
 import net.minecraft.server.v1_12_R1.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
@@ -84,7 +84,7 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun nbt(item: ItemStack) = nbt(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
     fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) =
-        nbt(item.tag ?: NBTTagCompound().apply { log("Tag is null!") })
+        nbt(item.tag ?: NBTTagCompound().apply { warn("Tag is null!") })
 
     fun integer(integer: Int) = apply { serializer.writeInt(integer) }
 

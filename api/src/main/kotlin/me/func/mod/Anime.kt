@@ -3,7 +3,6 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import me.func.mod.Anime.sendEmptyBuffer
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
@@ -20,60 +19,61 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import ru.cristalix.modcompressor.ModCompressor
 import java.awt.Color
-import java.nio.file.Path
+import java.io.File
 import java.nio.file.Paths
 import java.util.*
 import java.util.function.BiConsumer
+import kotlin.io.path.fileSize
+import kotlin.io.path.name
+import kotlin.math.round
 
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
+const val MOD_LOCAL_DIR_NAME = "anime"
 
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
-    private val loadedKits: MutableSet<Kit> = mutableSetOf()
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
-    fun include(vararg kits: Kit) {
-        include(*kits, compress = true) // НЕ ПРОБУЙТЕ УБИРАТЬ compress = true АХ*ЕТЕ
-    }
-
-    // kotlin only
-    @JvmStatic
+    @JvmOverloads
     fun include(vararg kits: Kit, compress: Boolean = true) {
         if (kits.size > 1 && compress) {
-            val paths = arrayListOf<Path>()
-            val joiner = StringJoiner(" - ")
+            ModCompressor(
+                "ru.cristalix.anime",
+                "func, delfikpro, sworroo, fiwka, reidj, kamilaova",
+                "Animation Api",
+                "1.0",
+                kits.map { Paths.get(ModLoader.download(it.fromUrl)) }
+            ).run {
+                Paths.get(MOD_LOCAL_DIR_NAME, "fat.jar")?.let { path ->
+                    loadFiles()
+                    compress(path)
+                    ModLoader.onJoinMods(path.name)
 
-            loadedKits.addAll(kits.onEach {
-                it.apply {
-                    paths.add(Paths.get(ModLoader.download(fromUrl, "anime")))
-                    joiner.add(name)
-                    init()
+                    val size = path.fileSize() / 1024
+                    val storage = File(MOD_LOCAL_DIR_NAME).listFiles().sumOf { it.length() } / 1024 - size
+
+                    log(
+                        "Mod compression enabled! Mods allocation size: ${size}KB, directory size: ${storage}KB, saved ${
+                            round(
+                                100 - size * 99.9 / storage.coerceAtLeast(1)
+                            )
+                        }%"
+                    )
                 }
-            })
-
-            val modCompressor = ModCompressor("ru.cristalix.anime", "Cristalix", "Animation Api", "last", paths)
-            val bundlePath = Paths.get("anime", "$joiner.jar")
-
-            modCompressor.loadFiles()
-            modCompressor.compress(bundlePath)
-
-            ModLoader.load(bundlePath.toAbsolutePath().toString())
+            }
         } else {
-            loadedKits.addAll(kits.onEach {
-                it.apply {
-                    ModLoader.loadFromWeb(fromUrl, "anime")
-                    init()
-                }
-            })
+            if (kits.size > 1)
+                warn("Mod compression disabled, it will freeze player joining!")
+            kits.forEach { ModLoader.loadFromWeb(it.fromUrl, MOD_LOCAL_DIR_NAME) }
         }
+        kits.forEach { it.init() }
     }
 
     @JvmStatic
-    fun sendEmptyBuffer(channel: String, player: Player) {
+    fun sendEmptyBuffer(channel: String, player: Player) =
         ModTransfer().send(channel, player)
-    }
 
     @JvmStatic
     fun openLootBox(player: Player, vararg items: LootDrop) {
@@ -323,11 +323,11 @@ object Anime {
 
     @JvmStatic
     fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double) = ModTransfer()
-            .item(item)
-            .string(title ?: "")
-            .string(subtitle ?: "")
-            .double(duration)
-            .send("func:drop-item", player)
+        .item(item)
+        .string(title ?: "")
+        .string(subtitle ?: "")
+        .double(duration)
+        .send("func:drop-item", player)
 
     @JvmStatic
     fun hideIndicator(player: Player, vararg indicator: Indicators) {
