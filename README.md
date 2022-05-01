@@ -53,6 +53,77 @@ dependencies {
 <br>
 Моды берутся по вшитой ссылке на `cristalix storage`, если вы хотите заменить ссылку на наборы модов, используйте `env MOD_STORAGE_URL`, ссылка должна оканчиваться на `/`, не рекомендуется.
 
+<h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
+
+<h3>Быстрый старт без подробностей<h3>
+
+![image](https://user-images.githubusercontent.com/42806772/166143350-fc66de27-e38b-4866-b764-2a73032c62bf.png)
+  
+```kotlin
+  // Вариант 1
+  ModLoader.loadFromWeb("https://storage.c7x.ru/func/cristalix-dialogs.jar") // Загрузка мода в стандартную папку MOD_LOCAL_DIR_NAME
+  ModLoader.onJoining("cristalix-dialogs") // Загрузка мода в плагин, отправка игрокам мода при входе
+  
+  // Вариант 2
+  ModLoader.onJoining("mod-bundle", "cristalix-dialogs") // Пойдет искать загруженные моды, если кто-то не загружен, загрузит его из стандартной папки "anime", затем моды будут отправлены игрокам при входах на сервер
+  
+  // Вариант 3
+  ModLoader.load("mods/mod-bundle.jar") // Загрузит мод по пути
+  ModLoader.send("mod-bundle.jar", player) // Отправит мод игроку
+  
+  // Вариант 4
+  ModLoader.loadAll("mods") // Загрузит все моды из папки mods
+  ModLoader.send("mod-bundle.jar", player) // Отправит мод игроку
+```
+  
+<h3>Скачивание модов (интернет -> машина)</h3>
+
+`download(fileUrl: String, saveDir: String)` скачивание файла по ссылке, в указанную папку (если файл уже скачан - он перезапишется), пример `download("http://cristalix.ru/cristalix-standard-mod.jar", "mods")`
+
+<h3>Загрузка модов в плагин (машина -> оперативная память)</h3>
+
+`loadFromWeb(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME)` загрузка файла в стандартную папку `anime` по адресу, затем прогрузка мода на уровнь плагина<br>
+`loadManyFromWeb(vararg fileUrls: String)` то же самое, но можно указывать адреса через запятую<br>
+
+`load(filePath: String)` прогрузка мода указав путь к файлу (не web), мод сохраняется по ключу имени файла, например `mod-bundle.jar`<br>
+`loadAll(dirPath: String)` загрузить все моды из папки по путю к папке<br>
+
+<h3>Отправка мода игроку (оперативная память -> клиент игрока)</h3>
+
+`send(modName: String, player: Player)` отправка мода игроку, пример имени `mod-bundle.jar`<br>
+`manyToOne(player: Player)` отправить все прогруженные моды игроку<br>
+`oneToMany(modName: String)` отправить один мод по имени всем игрокам<br>
+`sendAll()` отправить все прогруженные моды всем игрокам<br>
+
+<h2>Отправка данных на моды - конструктор ModTransfer</h2>
+
+![image](https://user-images.githubusercontent.com/42806772/166143593-594bba87-0879-4843-b439-b0ec286c94c6.png)
+  
+```kotlin
+// Пример 1 (Умный конструктор)
+ModTransfer("Осталось %n% жизней!", 76666).send("func:health", player)
+  
+// Пример 2 (Билдер)
+ModTransfer()
+  .item(ItemStack(AIR)) // Предмет, можно NMS, Bukkit
+  .nbt(NBTTagCompound()) // Любой тег
+  .string("Привет") // Строка
+  .json(object) // Любой объект, будет превращен в JSON строку
+  .byteBuffer("heyy".bytes()) // Массив byte
+  .double(43.5) // Прочие числа
+  .varInt(4) 
+  .putDouble(5.6) // Методы c "put" для Java
+  .send("func:lol", player)
+
+// Привет 3 (Переиспользование буффера) 
+val data = ModTransfer().integer(items.size)
+  .item(item.itemStack)
+  .string(item.title)
+  .string(item.rare.name)
+
+players.forEach { player -> data.send("lootbox", player) }  
+```
+
 <h3>Батлпасс</h3>
 
 <img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
@@ -642,32 +713,3 @@ Anime.showEnding(
 <b>Регистрация канала для входящих сообщений</b>:
 
 `createReader(channel: String, listener: PluginMessageListener)`
-
-<h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
-
-<h3>Скачивание модов</h3>
-
-`download(fileUrl: String, saveDir: String)` скачивание файла по ссылке, в указанную папку (если файл уже скачан - он перезапишется), пример `download("http://cristalix.ru/cristalix-standard-mod.jar", "mods")`
-<h3>Загрузка модов в плагин</h3>
-
-`loadFromWeb(fileUrl: String)` загрузка файла в стандартную папку `mods` по адресу, затем прогрузка мода на уровнь плагина<br>
-`loadManyFromWeb(vararg fileUrls: String)` то же самое, но можно указывать адреса через запятую<br>
-
-`load(filePath: String)` прогрузка мода указав путь к файлу (не web), мод сохраняется по ключу имени файла, например `mod-bundle.jar`<br>
-`loadAll(dirPath: String)` загрузить все моды из папки по путю к папке<br>
-<h3>Отправка мода игроку</h3>
-
-`send(modName: String, player: Player)` отправка мода игроку, пример имени `mod-bundle.jar`<br>
-`manyToOne(player: Player)` отправить все прогруженные моды игроку<br>
-`oneToMany(modName: String)` отправить один мод по имени всем игрокам<br>
-`sendAll()` отправить все прогруженные моды всем игрокам<br>
-
-<h2>Отправка данных на моды - конструктор ModTransfer</h2>
-Пример #1:<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771556-c024a5fc-910e-4c23-bb95-ab0c58d8bc3a.png" width="500">
-
-Пример #2 (Kotlin):<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771588-b6836e50-0c0d-4fee-8fe5-54b681d25ecd.png" width="500">
-
-Пример #3:<br>
-<img src="https://user-images.githubusercontent.com/42806772/144771670-73be5c2a-173b-4da9-8ee0-d67a8b291a61.png" width="500">
