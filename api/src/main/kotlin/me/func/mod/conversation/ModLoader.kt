@@ -3,7 +3,6 @@ package me.func.mod.conversation
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
-import me.func.mod.Anime
 import me.func.mod.Kit
 import me.func.mod.log
 import net.minecraft.server.v1_12_R1.PacketDataSerializer
@@ -17,12 +16,9 @@ import ru.cristalix.core.util.UtilNetty
 import java.io.File
 import java.io.FileInputStream
 import java.net.URL
-import java.nio.file.Files
-import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
-import java.util.logging.Level
-import java.util.logging.LogRecord
-
+import java.nio.file.*
+import java.nio.file.attribute.BasicFileAttributes
+import kotlin.io.path.absolutePathString
 
 object ModLoader {
 
@@ -90,6 +86,17 @@ object ModLoader {
     }
 
     @JvmStatic
+    fun loadAll(path: Path) = Files.walkFileTree(path, object :
+        SimpleFileVisitor<Path>() {
+
+        override fun visitFile(file: Path, attrs: BasicFileAttributes): FileVisitResult {
+            if (file.toString().endsWith(".jar") && !Files.isDirectory(file))
+                load(file.absolutePathString())
+            return super.visitFile(file, attrs)
+        }
+    })
+
+    @JvmStatic
     fun loadAll(dirPath: String) = File("./$dirPath").listFiles()?.apply {
         if (size > 100) {
             log("To many files in dir: $dirPath")
@@ -104,6 +111,11 @@ object ModLoader {
             PacketPlayOutCustomPayload(MOD_CHANNEL, PacketDataSerializer(it.retainedSlice()))
         )
     }
+
+    @JvmStatic
+    fun remove(modName: String) =
+        mods.remove(modName)
+
 
     @JvmStatic
     fun manyToOne(player: Player) =

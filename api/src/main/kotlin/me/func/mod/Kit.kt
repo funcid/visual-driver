@@ -185,7 +185,8 @@ enum class Kit(val fromUrl: String) : Listener {
             // Если игрок был телепортирован, отправить ему граффити в его мире
             MinecraftServer.SERVER.postToMainThread { GraffitiManager.sendGraffitiBulk(player) }
         }
-    };
+    },
+    DEBUG("");
 
     fun init() = getPluginManager().registerEvents(this, provided)
 }

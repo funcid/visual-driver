@@ -8,6 +8,7 @@ import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
+import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
@@ -24,6 +25,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.*
 import java.util.function.BiConsumer
+import kotlin.io.path.absolutePathString
 
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
 
@@ -31,21 +33,27 @@ object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
     private val loadedKits: MutableSet<Kit> = mutableSetOf()
+    private var debug = false
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
-    fun include(vararg kits: Kit) {
-        include(*kits, compress = true) // НЕ ПРОБУЙТЕ УБИРАТЬ compress = true АХ*ЕТЕ
-    }
-
-    // kotlin only
-    @JvmStatic
+    @JvmOverloads
     fun include(vararg kits: Kit, compress: Boolean = true) {
-        if (kits.size > 1 && compress) {
+        debug = kits.contains(Kit.DEBUG)
+
+        val filteredKits = if (debug) kits.filterNot { it == Kit.DEBUG } else kits.toList()
+
+        if (debug) {
+            log("Animation Api running in debug mode!")
+            ModWatcher
+            ModLoader.loadAll(ModWatcher.TEST_PATH)
+        }
+
+        if (filteredKits.size > 1 && compress) {
             val paths = arrayListOf<Path>()
             val joiner = StringJoiner(" - ")
 
-            loadedKits.addAll(kits.onEach {
+            loadedKits.addAll(filteredKits.onEach {
                 it.apply {
                     paths.add(Paths.get(ModLoader.download(fromUrl, "anime")))
                     joiner.add(name)
@@ -61,7 +69,7 @@ object Anime {
 
             ModLoader.load(bundlePath.toAbsolutePath().toString())
         } else {
-            loadedKits.addAll(kits.onEach {
+            loadedKits.addAll(filteredKits.onEach {
                 it.apply {
                     ModLoader.loadFromWeb(fromUrl, "anime")
                     init()

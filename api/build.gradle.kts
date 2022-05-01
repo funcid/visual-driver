@@ -4,6 +4,7 @@ dependencies {
 
     implementation("dev.xdark:feder:1.0")
     implementation("ru.cristalix:mod-compressor:live-SNAPSHOT")
+
     api(project(":protocol"))
     api(project(":graffiti-protocol"))
     api(project(":protocol-serialization"))
