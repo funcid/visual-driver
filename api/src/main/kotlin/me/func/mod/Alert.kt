@@ -24,7 +24,7 @@ object Alert {
         vararg buttons: NotificationButton
     ) {
         if (buttons.size > 2) {
-            log("Too many buttons!")
+            warn("Too many buttons!")
             return
         }
 

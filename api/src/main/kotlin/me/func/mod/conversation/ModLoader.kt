@@ -4,7 +4,8 @@ import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
 import me.func.mod.Kit
-import me.func.mod.log
+import me.func.mod.MOD_LOCAL_DIR_NAME
+import me.func.mod.warn
 import net.minecraft.server.v1_12_R1.PacketDataSerializer
 import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload
 import org.apache.commons.io.IOUtils
@@ -25,7 +26,8 @@ object ModLoader {
     private val mods: MutableMap<String, ByteBuf?> = HashMap()
 
     @JvmStatic
-    fun download(fileUrl: String, saveDir: String): String {
+    @JvmOverloads
+    fun download(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME): String {
         return try {
             val dir = Paths.get(saveDir)
             if (Files.notExists(dir))
@@ -43,17 +45,19 @@ object ModLoader {
             }
             file.path
         } catch (exception: Exception) {
-            log(exception.message ?: "Download failure! File: $fileUrl, directory: $saveDir")
+            warn(exception.message ?: "Download failure! File: $fileUrl, directory: $saveDir")
             ""
         }
     }
 
     @JvmStatic
-    fun loadFromWeb(fileUrl: String, saveDir: String) =
+    @JvmOverloads
+    fun loadFromWeb(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME) =
         load(download(fileUrl, saveDir))
 
     @JvmStatic
-    fun loadManyFromWeb(saveDir: String, vararg fileUrls: String) =
+    @JvmOverloads
+    fun loadManyFromWeb(saveDir: String = MOD_LOCAL_DIR_NAME, vararg fileUrls: String) =
         fileUrls.forEach { loadFromWeb(it, saveDir) }
 
     @JvmStatic
@@ -68,6 +72,9 @@ object ModLoader {
     }
 
     @JvmStatic
+    fun load(path: Path) = load(path.absolutePathString())
+
+    @JvmStatic
     fun load(filePath: String?) {
         if (filePath.isNullOrEmpty())
             return
@@ -75,7 +82,7 @@ object ModLoader {
             val key = filePath.split('/').last()
 
             if (mods.containsKey(key)) {
-                log("Mod loading abort! Mod `$key` already loaded!")
+                warn("Mod loading abort! Mod `$key` already loaded!")
                 return
             }
 
@@ -99,7 +106,7 @@ object ModLoader {
     @JvmStatic
     fun loadAll(dirPath: String) = File("./$dirPath").listFiles()?.apply {
         if (size > 100) {
-            log("To many files in dir: $dirPath")
+            warn("To many files in dir: $dirPath")
             return@apply
         }
         forEach { load(it.path) }
@@ -127,4 +134,10 @@ object ModLoader {
 
     @JvmStatic
     fun sendAll() = Bukkit.getOnlinePlayers().forEach { manyToOne(it) }
+
+    @JvmStatic
+    fun isLoaded(name: String) = mods.containsKey(name)
+
+    @JvmStatic
+    fun onJoinMods(vararg mods: String?) = AutoSendRegistry.add(*mods)
 }

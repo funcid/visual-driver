@@ -4,6 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
+import me.func.mod.warn
 import net.minecraft.server.v1_12_R1.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
@@ -22,12 +23,28 @@ val WRITE_ITEM: MethodHandle = try {
         "writeItem",
         MethodType.methodType(PacketDataSerializer::class.java, net.minecraft.server.v1_12_R1.ItemStack::class.java)
     )
-} catch (_: Exception) {
+} catch (_: Throwable) {
     LOOKUP.findVirtual(
         PacketDataSerializer::class.java,
         "a",
         MethodType.methodType(PacketDataSerializer::class.java, net.minecraft.server.v1_12_R1.ItemStack::class.java)
     )
+}
+
+val CRAFT_ITEM_TO_NMS: MethodHandle by lazy {
+    try {
+        LOOKUP.findStatic(
+            CraftItemStack::class.java,
+            "asNMSCopy",
+            MethodType.methodType(net.minecraft.server.v1_12_R1.ItemStack::class.java, ItemStack::class.java)
+        )
+    } catch (_: Throwable) {
+        LOOKUP.findStatic(
+            ItemStack::class.java,
+            "asNMSCopy",
+            MethodType.methodType(net.minecraft.server.v1_12_R1.ItemStack::class.java, ItemStack::class.java)
+        )
+    }
 }
 
 class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSerializer(Unpooled.buffer())) {
@@ -48,42 +65,41 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
         }
     }
 
-    fun json(string: Any) = this.apply { string(GlobalSerializers.toJson(string)) }
+    fun json(string: Any) = apply { string(GlobalSerializers.toJson(string)) }
 
-    fun varInt(integer: Int) = this.apply { NetUtil.writeVarInt(integer, serializer) }
+    fun varInt(integer: Int) = apply { NetUtil.writeVarInt(integer, serializer) }
 
-    fun putString(string: String) = this.apply { NetUtil.writeUtf8(string, serializer) }
+    fun putString(string: String) = apply { NetUtil.writeUtf8(string, serializer) }
 
-    fun string(string: String) = this.apply { putString(string) }
+    fun string(string: String) = apply { putString(string) }
 
-    fun byteArray(vararg byte: Byte) = this.apply { serializer.writeBytes(byte) }
+    fun byteArray(vararg byte: Byte) = apply { serializer.writeBytes(byte) }
 
-    fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = this.apply { WRITE_ITEM.invoke(serializer, item) }
+    fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = apply { WRITE_ITEM.invoke(serializer, item) }
 
-    fun item(item: ItemStack) = this.apply { item(CraftItemStack.asNMSCopy(item)) }
+    fun item(item: ItemStack) = item(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
-    fun nbt(nbt: NBTTagCompound) = this.apply { writeNbtCompound(serializer, nbt) }
+    fun nbt(nbt: NBTTagCompound) = apply { writeNbtCompound(serializer, nbt) }
 
-    fun nbt(item: ItemStack) = this.apply { nbt(CraftItemStack.asNMSCopy(item)) }
+    fun nbt(item: ItemStack) = nbt(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
-    fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) {
-        this.apply { nbt(item.tag) }
-    }
+    fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) =
+        nbt(item.tag ?: NBTTagCompound().apply { warn("Tag is null!") })
 
-    fun integer(integer: Int) = this.apply { serializer.writeInt(integer) }
+    fun integer(integer: Int) = apply { serializer.writeInt(integer) }
 
     @JvmName("putLong")
-    fun long(long: Long) = this.apply { serializer.writeLong(long) }
+    fun long(long: Long) = apply { serializer.writeLong(long) }
 
-    fun short(short: Short) = this.apply { serializer.writeShort(short.toInt()) }
+    fun short(short: Short) = apply { serializer.writeShort(short.toInt()) }
 
-    fun byte(byte: Byte) = this.apply { serializer.writeByte(byte.toInt()) }
+    fun byte(byte: Byte) = apply { serializer.writeByte(byte.toInt()) }
 
     @JvmName("putDouble")
-    fun double(double: Double) = this.apply { serializer.writeDouble(double) }
+    fun double(double: Double) = apply { serializer.writeDouble(double) }
 
     @JvmName("putBoolean")
-    fun boolean(boolean: Boolean) = this.apply { serializer.writeBoolean(boolean) }
+    fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String?, player: Player?) {
         if (player == null)
