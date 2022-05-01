@@ -37,7 +37,7 @@ dependencies {
 
 <h3>Модули</h3>
 
-`STANDARD` - стандартный набор модов (by <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
+`STANDARD` - стандартный набор модов (by <a href="https://vk.com/kostyan_konovalov">@fiwka</a>, <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
 `DIALOG` - кит с квестовыми диалогами (by <a href="https://vk.com/sworroo">@sworroo</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/funcid">@func</a>)<br>
 `MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
