@@ -21,7 +21,7 @@ subprojects {
     apply(plugin = "maven-publish")
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.20-M1")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21")
     }
 
     java {
