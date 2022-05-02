@@ -55,5 +55,6 @@ arrayOf(
     "backport-artifact",
     "store",
     "health-bar",
-    "chat"
+    "chat",
+    "mod-bundles"
 ).forEach { include(":$it") }
