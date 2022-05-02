@@ -18,7 +18,7 @@ object ScreenAlert {
             (topmessage?.children?.get(0) as RectangleElement?)?.size = V3(UIEngine.overlayContext.size.x, 0.0)
         }
 
-        App::class.java.mod.registerChannel("func:top-alert") {
+        Standard::class.java.mod.registerChannel("func:top-alert") {
             val resolution = UIEngine.clientApi.resolution()
 
             if (topmessage == null) {

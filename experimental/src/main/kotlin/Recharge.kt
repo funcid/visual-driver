@@ -26,7 +26,7 @@ object Recharge {
             }
         }
 
-        App::class.java.mod.registerChannel("func:recharge") {
+        Experimental::class.java.mod.registerChannel("func:recharge") {
             if (cooldown == null) {
                 cooldown = UIEngine.overlayContext + rectangle {
                     offset.y -= 65

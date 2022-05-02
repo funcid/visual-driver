@@ -1,14 +1,13 @@
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 
-class App : KotlinMod() {
+class Experimental : KotlinMod() {
 
     override fun onEnable() {
         UIEngine.initialize(this)
 
         GlowPlaces
         Banners
-        Particles
         Recharge
         Disguise
     }

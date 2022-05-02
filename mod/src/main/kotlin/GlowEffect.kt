@@ -29,11 +29,11 @@ object GlowEffect {
     }
 
     init {
-        App::class.java.mod.registerChannel("func:glow-short") {
+        Standard::class.java.mod.registerChannel("func:glow-short") {
             show(readDouble(), readInt(), readInt(), readInt(), readDouble())
         }
 
-        App::class.java.mod.registerChannel("func:glow") {
+        Standard::class.java.mod.registerChannel("func:glow") {
             showAlways(readInt(), readInt(), readInt(), readDouble())
         }
 

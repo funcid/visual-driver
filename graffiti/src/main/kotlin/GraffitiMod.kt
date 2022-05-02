@@ -21,12 +21,12 @@ import java.util.*
 import kotlin.math.cos
 import kotlin.math.sin
 
-lateinit var app: App
+lateinit var graffitiMod: GraffitiMod
 const val PICTURE_SIZE = 1920
 const val OVAL_RADIUS = 90
 const val ICON_PACK_SIZE = 20.0
 
-class App : KotlinMod() {
+class GraffitiMod : KotlinMod() {
 
     val texture: ResourceLocation = ResourceLocation.of("cache/animation", "graffiti.png")
 
@@ -73,7 +73,7 @@ class App : KotlinMod() {
             align = CENTER
             color = WHITE
 
-            textureLocation = app.texture
+            textureLocation = graffitiMod.texture
             textureFrom =
                 V3(mark.graffiti.address.x.toDouble() / PICTURE_SIZE, mark.graffiti.address.y.toDouble() / PICTURE_SIZE)
             textureSize = V3(
@@ -193,7 +193,7 @@ class App : KotlinMod() {
         }
         packs.forEachIndexed { index, it ->
             gui + it.icon.apply {
-                val boost = if (index == app.userData.activePack) 2 else 0
+                val boost = if (index == graffitiMod.userData.activePack) 2 else 0
                 it.icon.size.x = ICON_PACK_SIZE + boost
                 it.icon.size.y = ICON_PACK_SIZE + boost
             }
@@ -201,7 +201,7 @@ class App : KotlinMod() {
     }
 
     override fun onEnable() {
-        app = this
+        graffitiMod = this
         UIEngine.initialize(this)
 
         registerHandler<HealthRender> { if (open) isCancelled = true }

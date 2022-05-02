@@ -18,7 +18,8 @@ configurations.all {
 
 tasks {
     bundle {
-        optimizationpasses(5)
+        optimizationpasses(9)
+        optimizations("!method/inlining/*")
     }
 }
 
@@ -26,7 +27,7 @@ jar.from configurations.runtimeClasspath.collect(project.&zipTree)
 
 bundler {
     name 'Animation API (Experimental)'
-    mainClass 'App'
+    mainClass 'Experimental'
     version '1.1'
     author 'func'
 }

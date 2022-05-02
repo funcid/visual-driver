@@ -18,33 +18,33 @@ data class LocalPack(
         val boxOpposite = 8
 
         offset.y += OVAL_RADIUS - 10
-        offset.x += index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
+        offset.x += index * boxSize + index * boxOpposite - graffitiMod.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
 
         size = V3(boxSize, boxSize)
         color = WHITE
 
         onClick {
-            app.gui.children.clear()
-            app.userData.activePack = index
-            app.loadPackIntoMenu()
+            graffitiMod.gui.children.clear()
+            graffitiMod.userData.activePack = index
+            graffitiMod.loadPackIntoMenu()
         }
     },
     val title: TextElement = text {
-        val pack = app.getPack(packUuid)
+        val pack = graffitiMod.getPack(packUuid)
         origin = CENTER
         align = CENTER
         color = WHITE
         offset.y -= 30
         shadow = true
         content = "${pack.title}\nby ${pack.creator}"
-    }, var graffiti: List<LocalGraffiti> = app.getPack(packUuid).graffiti.map { currentGraffiti ->
-        LocalGraffiti(app.getPack(packUuid), currentGraffiti, rectangle {
+    }, var graffiti: List<LocalGraffiti> = graffitiMod.getPack(packUuid).graffiti.map { currentGraffiti ->
+        LocalGraffiti(graffitiMod.getPack(packUuid), currentGraffiti, rectangle {
             origin = CENTER
             align = CENTER
             color = WHITE
             enabled = false
 
-            textureLocation = app.texture
+            textureLocation = graffitiMod.texture
             textureFrom = V3(currentGraffiti.address.x.toDouble() / PICTURE_SIZE, currentGraffiti.address.y.toDouble() / PICTURE_SIZE)
             size = V3(currentGraffiti.address.size.toDouble(), currentGraffiti.address.size.toDouble())
             textureSize =
@@ -80,14 +80,14 @@ data class LocalPack(
             }
             onClick {
                 // Выбор граффити
-                app.gui.close()
+                graffitiMod.gui.close()
 
                 val player = UIEngine.clientApi.minecraft().player
 
                 scale.x = 1.0
                 scale.y = 1.0
                 size = V3(75.0, 75.0)
-                app.activeGraffiti = LocalGraffitiPlaced(
+                graffitiMod.activeGraffiti = LocalGraffitiPlaced(
                     GraffitiPlaced(
                         packUuid,
                         "world",
@@ -103,8 +103,8 @@ data class LocalPack(
                 )
                 offset = V3(10.0, 10.0)
 
-                app.activeGraffiti!!.context3D.addChild(this@rectangle)
-                UIEngine.worldContexts.add(app.activeGraffiti!!.context3D)
+                graffitiMod.activeGraffiti!!.context3D.addChild(this@rectangle)
+                UIEngine.worldContexts.add(graffitiMod.activeGraffiti!!.context3D)
             }
         })
     }

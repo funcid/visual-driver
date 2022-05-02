@@ -9,7 +9,7 @@ import ru.cristalix.uiengine.UIEngine
 
 const val MARGIN = 4.0
 
-class App : KotlinMod() {
+class Store : KotlinMod() {
 
     lateinit var signageScreen: SignageScreen
 

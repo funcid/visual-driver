@@ -26,7 +26,7 @@ object Title {
     init {
         UIEngine.overlayContext + message
 
-        App::class.java.mod.registerChannel("func:title") {
+        Standard::class.java.mod.registerChannel("func:title") {
             element.content = NetUtil.readUtf8(this)
             message.enabled = true
             element.animate(0.3) {

@@ -17,7 +17,8 @@ configurations.all {
 
 tasks {
     bundle {
-        optimizationpasses(5)
+        optimizationpasses(9)
+        optimizations("!method/inlining/*")
     }
 }
 

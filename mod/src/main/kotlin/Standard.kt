@@ -3,7 +3,7 @@ import ru.cristalix.uiengine.UIEngine
 
 const val NAMESPACE = "cache/animation"
 
-class App : KotlinMod() {
+class Standard : KotlinMod() {
 
     override fun onEnable() {
         UIEngine.initialize(this)

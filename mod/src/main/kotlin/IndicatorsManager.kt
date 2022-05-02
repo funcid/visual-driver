@@ -33,7 +33,7 @@ object IndicatorsManager {
     }
 
     private fun changeIt(channel: String, value: Boolean) {
-        App::class.java.mod.registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
+        Standard::class.java.mod.registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
     }
 
 }

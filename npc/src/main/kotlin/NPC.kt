@@ -15,7 +15,7 @@ import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-class App : KotlinMod() {
+class NPC : KotlinMod() {
 
     override fun onEnable() {
         UIEngine.initialize(this)

@@ -28,7 +28,7 @@ object KillBoardManager {
                 board.enabled = true
         }
 
-        App::class.java.mod.registerChannel("func:notice") {
+        Standard::class.java.mod.registerChannel("func:notice") {
             val text = NetUtil.readUtf8(this)
             board.offset.y = readInt().toDouble()
             val notice = KillBoard(text)

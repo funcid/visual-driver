@@ -18,7 +18,8 @@ configurations.all {
 
 tasks {
     bundle {
-        optimizationpasses(5)
+        optimizationpasses(9)
+        optimizations("!method/inlining/*")
     }
 }
 
@@ -28,7 +29,7 @@ jar {
 
 bundler {
     name 'Store'
-    mainClass 'me.func.store.App'
+    mainClass 'me.func.store.Store'
     version '1.1'
     author 'func'
 }

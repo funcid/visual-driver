@@ -19,7 +19,7 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import kotlin.math.sign
 
-open class Dialog : KotlinMod() {
+open class DialogMod : KotlinMod() {
 
     lateinit var buttons: RectangleElement
     lateinit var buttonCursor: RectangleElement

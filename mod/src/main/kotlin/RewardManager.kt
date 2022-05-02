@@ -31,7 +31,7 @@ object RewardManager {
         val gui = ContextGui()
         gui + box
 
-        App::class.java.mod.registerChannel("func:weekly-reward") {
+        Standard::class.java.mod.registerChannel("func:weekly-reward") {
             currentDay = readInt()
 
             val topText = text {

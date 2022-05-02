@@ -11,13 +11,14 @@ dependencies {
 
 tasks {
     bundle {
-        optimizationpasses(5)
+        optimizationpasses(9)
+        optimizations("!method/inlining/*")
     }
 }
 
 bundler {
     name 'ChatMod'
-    mainClass 'App'
+    mainClass 'ChatMod'
     version '1.0'
     author 'Zabelov'
 }

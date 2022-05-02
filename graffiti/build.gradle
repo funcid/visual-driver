@@ -19,7 +19,8 @@ configurations.all {
 
 tasks {
     bundle {
-        optimizationpasses(5)
+        optimizationpasses(9)
+        optimizations("!method/inlining/*")
     }
 }
 
@@ -29,7 +30,7 @@ jar {
 
 bundler {
     name 'Graffiti'
-    mainClass 'App'
+    mainClass 'GraffitiMod'
     version '1.5'
     author 'func'
 }

@@ -18,7 +18,7 @@ object BigAlert {
     init {
         UIEngine.overlayContext.addChild(title)
 
-        App::class.java.mod.registerChannel("ilisov:bigtitle") {
+        Standard::class.java.mod.registerChannel("ilisov:bigtitle") {
             title.content = NetUtil.readUtf8(this)
             title.enabled = true
 

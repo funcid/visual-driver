@@ -61,14 +61,14 @@ object Anime {
                 "1.0",
                 toLoad.map { Paths.get(ModLoader.download(it.fromUrl)) }
             ).run {
-                Paths.get(MOD_LOCAL_DIR_NAME, "fat.jar")?.let { path ->
+                Paths.get(MOD_LOCAL_DIR_NAME, "fat.jar").let { path ->
                     loadFiles()
                     compress(path)
                     ModLoader.onJoining(path.name)
 
                     val size = path.fileSize() / 1024
-                    val storage = File(MOD_LOCAL_DIR_NAME).listFiles().sumOf { it.length() } / 1024
-                    +File(MOD_LOCAL_TEST_DIR_NAME).listFiles().sumOf { it.length() } / 1024 - size
+                    val storage = (File(MOD_LOCAL_DIR_NAME).listFiles()?.sumOf { it.length() } ?: 0) / 1024
+                    +(File(MOD_LOCAL_TEST_DIR_NAME).listFiles()?.sumOf { it.length() } ?: 0) / 1024 - size
 
                     log(
                         "Mod compression enabled! Mods allocation size: ${size}KB, directory size: ${storage}KB, saved ${

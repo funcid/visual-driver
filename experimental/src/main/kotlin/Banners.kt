@@ -51,7 +51,7 @@ object Banners {
             }
         }
 
-        App::class.java.mod.registerChannel("banner:new") {
+        Experimental::class.java.mod.registerChannel("banner:new") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
@@ -113,7 +113,7 @@ object Banners {
             }
         }
 
-        App::class.java.mod.registerChannel("banner:change-content") {
+        Experimental::class.java.mod.registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 val element = (pair.second.children[0] as RectangleElement)
@@ -122,7 +122,7 @@ object Banners {
             }
         }
 
-        App::class.java.mod.registerChannel("banner:size-text") {
+        Experimental::class.java.mod.registerChannel("banner:size-text") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 repeat(readInt()) {
@@ -143,7 +143,7 @@ object Banners {
             }
         }
 
-        App::class.java.mod.registerChannel("banner:remove") {
+        Experimental::class.java.mod.registerChannel("banner:remove") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 banners[uuid]?.let {

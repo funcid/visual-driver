@@ -26,11 +26,11 @@ object GlowEffect {
     }
 
     init {
-        app.registerHandler<WindowResize> { vignette.size = UIEngine.overlayContext.size }
+        graffitiMod.registerHandler<WindowResize> { vignette.size = UIEngine.overlayContext.size }
     }
 
     fun showAlways(red: Int, green: Int, blue: Int, power: Double) {
-        app.gui + vignette
+        graffitiMod.gui + vignette
 
         vignette.color.red = red
         vignette.color.blue = blue
@@ -39,7 +39,7 @@ object GlowEffect {
     }
 
     private fun show(duration: Double, red: Int, blue: Int, green: Int, power: Double) {
-        app.gui + vignette
+        graffitiMod.gui + vignette
 
         vignette.color.red = red
         vignette.color.blue = blue

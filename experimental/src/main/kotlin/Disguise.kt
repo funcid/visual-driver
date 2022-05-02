@@ -3,7 +3,6 @@ import dev.xdark.clientapi.entity.EntityPlayer
 import dev.xdark.clientapi.event.lifecycle.GameTickPre
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 
@@ -20,7 +19,7 @@ object Disguise {
     }
 
     init {
-        App::class.java.mod.run {
+        Experimental::class.java.mod.run {
             minecraft.player.run { players.put(name, this) }
 
             registerHandler<NameTemplateRender> {

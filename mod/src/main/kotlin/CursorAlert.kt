@@ -15,7 +15,7 @@ object CursorAlert {
     init {
         val timeLife = 3 * 1000
 
-        App::class.java.mod.registerChannel("func:cursor") {
+        Standard::class.java.mod.registerChannel("func:cursor") {
             val hint = rectangle {
                 offset = Relative.CENTER
                 align = Relative.CENTER
