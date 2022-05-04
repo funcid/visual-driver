@@ -1,6 +1,6 @@
 package me.func.protocol.dialog
 
-data class Screen(val text: List<String>) {
+class Screen(val text: List<String>) {
 
     constructor(vararg lines: String) : this(lines.toList())
 

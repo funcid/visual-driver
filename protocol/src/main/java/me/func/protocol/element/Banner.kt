@@ -25,7 +25,7 @@ class Banner(
 ) {
     constructor(init: Banner.() -> Unit) : this() { this.init() }
 
-    data class Builder(val banner: Banner = Banner()) {
+    class Builder(val banner: Banner = Banner()) {
 
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
         fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }

@@ -3,7 +3,7 @@ package me.func.protocol.personalization
 import me.func.protocol.Unique
 import java.util.UUID
 
-data class GraffitiInfo(
+class GraffitiInfo(
     override var uuid: UUID,
     var x: Int,
     var y: Int,

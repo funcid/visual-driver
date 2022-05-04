@@ -1,6 +1,6 @@
 package me.func.protocol.alert
 
-data class NotificationButton(
+class NotificationButton(
     var text: String? = null,
     val color: Int,
     val command: String? = null,

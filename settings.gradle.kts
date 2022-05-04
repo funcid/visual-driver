@@ -1,7 +1,5 @@
 @file:Suppress("UnstableApiUsage")
 
-rootProject.name = "animation-api"
-
 pluginManagement {
     repositories {
         maven {
@@ -15,11 +13,11 @@ pluginManagement {
         gradlePluginPortal()
     }
 
+    includeBuild("bundler")
+
     plugins {
         kotlin("jvm") version "1.6.21"
         kotlin("plugin.serialization") version "1.6.21"
-
-        id("dev.implario.bundler") version "9999-SNAPSHOT"
     }
 }
 
@@ -38,23 +36,16 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 }
 
+rootProject.name = "animation-api"
+
 arrayOf(
     "api",
     "mod",
     "protocol",
-    "experimental",
     "graffiti",
     "graffiti-protocol",
     "graffiti-service",
-    "npc",
-    "battlepass",
-    "dialog",
-    "lootbox",
     "protocol-serialization",
     "protocol-mod",
-    "backport-artifact",
-    "store",
-    "health-bar",
-    "chat",
-    "mod-bundles"
+    "backport-artifact"
 ).forEach { include(":$it") }

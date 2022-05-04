@@ -1,6 +1,6 @@
 package me.func.protocol.battlepass
 
-data class BattlePassUserData(
+class BattlePassUserData(
     var exp: Int,
     var advanced: Boolean
 )

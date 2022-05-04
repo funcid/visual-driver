@@ -2,7 +2,7 @@ package me.func.protocol
 
 import java.util.*
 
-data class GlowingPlace(
+class GlowingPlace(
     val uuid: UUID = UUID.randomUUID(),
     val red: Int,
     val blue: Int,

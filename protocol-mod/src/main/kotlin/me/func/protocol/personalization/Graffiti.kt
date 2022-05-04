@@ -3,7 +3,7 @@ package me.func.protocol.personalization
 import me.func.protocol.Unique
 import java.util.UUID
 
-data class Graffiti(
+class Graffiti(
     var address: GraffitiInfo,
     var author: String,
     var uses: Int = address.maxUses,

@@ -1,6 +1,6 @@
 package me.func.protocol.dialog
 
-data class Action(var type: String) {
+class Action(var type: String) {
 
     constructor(actions: Actions) : this(actions.name.lowercase())
 

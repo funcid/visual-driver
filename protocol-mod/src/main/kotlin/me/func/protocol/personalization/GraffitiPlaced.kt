@@ -2,7 +2,7 @@ package me.func.protocol.personalization
 
 import java.util.UUID
 
-data class GraffitiPlaced(
+class GraffitiPlaced(
     var owner: UUID,
     val world: String,
     var graffiti: Graffiti,

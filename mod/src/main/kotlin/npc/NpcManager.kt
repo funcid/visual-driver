@@ -1,0 +1,78 @@
+package npc
+
+import com.mojang.authlib.GameProfile
+import com.mojang.authlib.properties.Property
+import dev.xdark.clientapi.entity.AbstractClientPlayer
+import dev.xdark.clientapi.entity.PlayerModelPart
+import dev.xdark.clientapi.math.BlockPos
+import dev.xdark.clientapi.util.EnumFacing
+import me.func.protocol.npc.NpcData
+import ru.cristalix.clientapi.JavaMod
+import java.util.UUID
+
+object NpcManager {
+
+    private val storage = mutableMapOf<UUID, NpcEntity>()
+    private val wearing = arrayOf(
+        PlayerModelPart.CAPE,
+        PlayerModelPart.HAT,
+        PlayerModelPart.JACKET,
+        PlayerModelPart.LEFT_PANTS_LEG,
+        PlayerModelPart.LEFT_SLEEVE,
+        PlayerModelPart.RIGHT_PANTS_LEG,
+        PlayerModelPart.RIGHT_SLEEVE
+    )
+
+    fun spawn(data: NpcData): NpcEntity {
+        val spawned = JavaMod.clientApi.entityProvider().newEntity(data.type, JavaMod.clientApi.minecraft().world).apply {
+            entityId = data.id
+            setUniqueId(data.uuid)
+        } as AbstractClientPlayer
+
+        val info = JavaMod.clientApi.clientConnection().newPlayerInfo(
+            GameProfile(data.uuid, data.name).apply {
+                properties.put("skinURL", Property("skinURL", data.skinUrl))
+                properties.put("skinDigest", Property("skinDigest", data.skinDigest))
+            }.apply { spawned.gameProfile = this }
+        ).apply { responseTime = -2 }
+
+        info.skinType = if (data.slimArms) "SLIM" else "DEFAULT"
+
+        JavaMod.clientApi.clientConnection().addPlayerInfo(info)
+
+        spawned.apply {
+            wearing.forEach { setWearing(it) }
+            alwaysRenderNameTag = true
+            customNameTag = data.name
+
+            teleport(data.x, data.y, data.z)
+            rotationYawHead = (data.yaw / Math.PI * 180).toFloat()
+            setYaw((data.yaw / Math.PI * 180).toFloat())
+            setPitch(data.pitch)
+
+            if (data.sitting)
+                enableRidingAnimation()
+            if (data.sleeping)
+                enableSleepAnimation(BlockPos.of(data.x.toInt(), data.y.toInt(), data.z.toInt()), EnumFacing.DOWN)
+            isSneaking = data.sneaking
+
+            setNoGravity(true)
+        }
+        return NpcEntity(data.uuid, data, spawned).apply { storage[data.uuid] = this }
+    }
+
+    fun get(uuid: UUID) = storage[uuid]
+
+    fun show(uuid: UUID) = storage[uuid]?.let { JavaMod.clientApi.minecraft().world.spawnEntity(it.entity) }
+
+    fun hide(uuid: UUID) = storage[uuid]?.let { JavaMod.clientApi.minecraft().world.removeEntity(it.entity) }
+
+    fun each(function: (UUID, NpcEntity) -> Unit) {
+        storage.forEach { (uuid, data) -> function(uuid, data) }
+    }
+
+    fun kill(uuid: UUID) {
+        hide(uuid)
+        storage.remove(uuid)
+    }
+}

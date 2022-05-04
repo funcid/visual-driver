@@ -22,82 +22,11 @@ import ru.cristalix.core.formatting.Formatting
 
 enum class Kit(val fromUrl: String) : Listener {
 
-    STANDARD(MOD_STORAGE_URL + "standard-bundle.jar") {
+    STANDARD(MOD_STORAGE_URL + "mod-bundle.jar") {
         @EventHandler(priority = EventPriority.HIGHEST)
         fun PlayerJoinEvent.handle() {
             MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("standard-bundle.jar", player)
-            }
-        }
-    },
-    LOOTBOX(MOD_STORAGE_URL + "cristalix-lootbox.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("cristalix-lootbox.jar", player)
-            }
-        }
-
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerCommandPreprocessEvent.handle() {
-            if (!cancel && message == "lootboxsound")
-                player.playSound(player.location, Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1f, 2f)
-        }
-    },
-    DIALOG(MOD_STORAGE_URL + "cristalix-dialog.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("cristalix-dialog.jar", player)
-            }
-        }
-    },
-    EXPERIMENTAL(MOD_STORAGE_URL + "experimental-bundle.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("experimental-bundle.jar", player)
-                Banners.show(player, *Banners.banners.map { it.value }.toTypedArray())
-            }
-        }
-    },
-    MULTI_CHAT(MOD_STORAGE_URL + "multichat-bundle.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("multichat-bundle.jar", player)
-            }
-        }
-    },
-    NPC(MOD_STORAGE_URL + "npc-bundle.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("npc-bundle.jar", player)
-                npcs.forEach { (_, value) -> value.spawn(player) }
-            }
-        }
-
-        @EventHandler
-        fun PlayerUseUnknownEntityEvent.handle() {
-            npcs[entityId]?.click?.accept(this)
-        }
-    },
-    BATTLEPASS(MOD_STORAGE_URL + "battlepass-bundle.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("battlepass-bundle.jar", player)
-
-                BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) }
-            }
-        }
-    },
-    HEALTH_BAR(MOD_STORAGE_URL + "healthbar-bundle.jar") {
-        @EventHandler(priority = EventPriority.HIGHEST)
-        fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                ModLoader.send("healthbar-bundle.jar", player)
+                ModLoader.send("mod-bundle.jar", player)
             }
         }
     },

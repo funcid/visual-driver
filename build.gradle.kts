@@ -30,8 +30,24 @@ subprojects {
     }
 
     tasks {
-        withType<KotlinCompile> { kotlinOptions { jvmTarget = "1.8" } }
+        withType<Jar> { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
         withType<JavaCompile> { options.encoding = "UTF-8" }
+        withType<KotlinCompile> {
+            kotlinOptions {
+                jvmTarget = "1.8"
+                freeCompilerArgs = listOf(
+                    "-Xlambdas=indy",
+                    "-Xno-param-assertions",
+                    "-Xno-receiver-assertions",
+                    "-Xno-call-assertions",
+                    "-Xbackend-threads=0",
+                    "-Xuse-ir",
+                    "-Xassertions=always-disable",
+                    "-Xuse-fast-jar-file-system",
+                    "-Xsam-conversions=indy"
+                )
+            }
+        }
     }
 
     publishing {

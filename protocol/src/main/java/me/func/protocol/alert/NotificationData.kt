@@ -2,7 +2,7 @@ package me.func.protocol.alert
 
 import java.util.*
 
-data class NotificationData(
+class NotificationData(
     val source: UUID?,
     val type: String?,
     var content: String?,

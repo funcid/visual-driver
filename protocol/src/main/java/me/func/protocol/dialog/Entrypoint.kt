@@ -1,6 +1,6 @@
 package me.func.protocol.dialog
 
-data class Entrypoint(val id: String, val title: String, var screen: Screen) {
+class Entrypoint(val id: String, val title: String, var screen: Screen) {
 
     var subtitle: String? = null
 

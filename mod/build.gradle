@@ -1,5 +1,5 @@
 plugins {
-    id 'dev.implario.bundler'
+    id 'anime.mod-bundler'
 }
 
 dependencies {
@@ -11,25 +11,8 @@ dependencies {
     implementation project(':protocol')
 }
 
-configurations.all {
-    exclude group: "io.reactivex", module:"rxjava"
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-tasks {
-    bundle {
-        optimizationpasses(9)
-        optimizations("!method/inlining/*")
-    }
-}
-
-jar {
-    from configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-}
-
-bundler {
-    name 'Animation API'
-    mainClass 'Standard'
-    version '1.1'
-    author 'func'
+mod {
+    name = "Animation Api"
+    main = "Main"
+    author = "func"
 }

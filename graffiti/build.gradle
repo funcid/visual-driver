@@ -1,5 +1,5 @@
 plugins {
-    id 'dev.implario.bundler'
+    id 'anime.mod-bundler'
 }
 
 dependencies {
@@ -12,25 +12,8 @@ dependencies {
     implementation 'ru.cristalix:client-sdk:live-SNAPSHOT'
 }
 
-configurations.all {
-    exclude group: "io.reactivex", module:"rxjava"
-    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-}
-
-tasks {
-    bundle {
-        optimizationpasses(9)
-        optimizations("!method/inlining/*")
-    }
-}
-
-jar {
-    from configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
-}
-
-bundler {
-    name 'Graffiti'
-    mainClass 'GraffitiMod'
-    version '1.5'
-    author 'func'
+mod {
+    name = "Graffiti"
+    main = "GraffitiMod"
+    author = "func"
 }

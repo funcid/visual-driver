@@ -2,7 +2,7 @@ package me.func.protocol
 
 import java.util.*
 
-data class Marker(
+class Marker(
     val uuid: UUID = UUID.randomUUID(),
     var x: Double,
     var y: Double,

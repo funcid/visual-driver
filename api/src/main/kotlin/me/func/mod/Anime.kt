@@ -22,7 +22,6 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
-import ru.cristalix.modcompressor.ModCompressor
 import java.awt.Color
 import java.io.File
 import java.nio.file.Paths
@@ -42,49 +41,15 @@ object Anime {
     var graffitiClient: GraffitiClient? = null
 
     @JvmStatic
-    fun include(vararg kits: Kit) = include(true, *kits)
-
-    @JvmStatic
-    fun include(compress: Boolean = true, vararg kits: Kit) {
+    fun include(vararg kits: Kit) {
         if (kits.contains(Kit.DEBUG)) {
             warn("Running in debug mode!")
             ModLoader.loadAll(ModWatcher.testingPath)
         }
 
-        val toLoad = kits.filter { it != Kit.DEBUG }
-
-        if (toLoad.size > 1 && compress) {
-            ModCompressor(
-                "ru.cristalix.anime",
-                "func, delfikpro, sworroo, fiwka, reidj, kamilaova",
-                "Animation Api",
-                "1.0",
-                toLoad.map { Paths.get(ModLoader.download(it.fromUrl)) }
-            ).run {
-                Paths.get(MOD_LOCAL_DIR_NAME, "fat.jar").let { path ->
-                    loadFiles()
-                    compress(path)
-                    ModLoader.onJoining(path.name)
-
-                    val size = path.fileSize() / 1024
-                    val storage = (File(MOD_LOCAL_DIR_NAME).listFiles()?.sumOf { it.length() } ?: 0) / 1024
-                    +(File(MOD_LOCAL_TEST_DIR_NAME).listFiles()?.sumOf { it.length() } ?: 0) / 1024 - size
-
-                    log(
-                        "Mod compression enabled! Mods allocation size: ${size}KB, directory size: ${storage}KB, saved ${
-                            round(
-                                100 - size * 99.9 / storage.coerceAtLeast(1)
-                            )
-                        }%"
-                    )
-                }
-            }
-        } else {
-            if (toLoad.size > 1)
-                warn("Mod compression disabled, it will freeze player joining!")
-            toLoad.forEach { ModLoader.loadFromWeb(it.fromUrl, MOD_LOCAL_DIR_NAME) }
-        }
-        toLoad.forEach { it.init() }
+        kits.filter { it != Kit.DEBUG }
+            .onEach { ModLoader.loadFromWeb(it.fromUrl, MOD_LOCAL_DIR_NAME) }
+            .forEach { it.init() }
     }
 
     @JvmStatic

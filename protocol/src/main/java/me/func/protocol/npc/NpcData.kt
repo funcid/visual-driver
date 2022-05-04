@@ -2,7 +2,7 @@ package me.func.protocol.npc
 
 import java.util.*
 
-data class NpcData(
+class NpcData(
     var id: Int = (Math.random() * Int.MAX_VALUE).toInt(),
     val uuid: UUID = UUID.randomUUID(),
     var x: Double = 0.0,

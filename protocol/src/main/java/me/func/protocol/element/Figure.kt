@@ -2,7 +2,7 @@ package me.func.protocol.element
 
 import java.util.*
 
-data class Figure(
+class Figure(
     val uuid: UUID = UUID.randomUUID(),
     val type: FigureType,
     var x: Double,
