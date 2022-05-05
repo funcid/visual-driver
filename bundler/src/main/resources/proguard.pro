@@ -7,7 +7,6 @@
 -allowaccessmodification
 -optimizationpasses 10
 -overloadaggressively
--dontobfuscate
 
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
     <methods>;
@@ -20,8 +19,8 @@
     <methods>;
 }
 
--flattenpackagehierarchy
--repackageclasses
+-flattenpackagehierarchy _
+-repackageclasses _
 
 -keep, allowoptimization class MAINCLASS
 
