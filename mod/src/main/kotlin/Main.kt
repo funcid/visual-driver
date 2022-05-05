@@ -11,17 +11,15 @@ import standard.Standard
 import store.Store
 
 class Main : ModMain {
-    companion object {
-        val standard = Standard()
-        val experimental = Experimental()
-        val dialog = DialogMod()
-        val battlepass = BattlePass()
-        val lootbox = LootboxMod()
-        val npc = NPC()
-        val chat = ChatMod()
-        val healthbar = Healthbar()
-        val store = Store()
-    }
+    private val standard = Standard()
+    private val experimental = Experimental()
+    private val dialog = DialogMod()
+    private val battlepass = BattlePass()
+    private val lootbox = LootboxMod()
+    private val npc = NPC()
+    private val chat = ChatMod()
+    private val healthbar = Healthbar()
+    private val store = Store()
 
     override fun load(api: ClientApi) {
         standard.load(api)

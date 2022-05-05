@@ -2,7 +2,6 @@ package standard
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil.readUtf8
 import me.func.protocol.EndStatus
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -70,7 +69,7 @@ object Ending {
                 }
             }
         }
-        Standard::class.java.mod.registerChannel("crazy:ending") {
+        Standard.mod.registerChannel("crazy:ending") {
             val endStatus = EndStatus.values()[readInt()]
             key.content = readUtf8(this)
             value.content = readUtf8(this)

@@ -1,7 +1,6 @@
 package standard
 
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.BOTTOM_RIGHT
 import ru.cristalix.uiengine.utility.text
@@ -19,7 +18,7 @@ object RightBottom {
     init {
         UIEngine.overlayContext + right
 
-        Standard::class.java.mod.registerChannel("func:bottom") {
+        Standard.mod.registerChannel("func:bottom") {
             right.content = NetUtil.readUtf8(this)
         }
     }

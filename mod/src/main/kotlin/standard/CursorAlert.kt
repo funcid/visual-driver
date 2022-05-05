@@ -2,7 +2,6 @@ package standard
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
@@ -17,7 +16,7 @@ object CursorAlert {
     init {
         val timeLife = 3 * 1000
 
-        Standard::class.java.mod.registerChannel("func:cursor") {
+        Standard.mod.registerChannel("func:cursor") {
             val hint = rectangle {
                 offset = Relative.CENTER
                 align = Relative.CENTER
@@ -39,7 +38,7 @@ object CursorAlert {
             hints.add(Pair(System.currentTimeMillis(), hint))
         }
 
-        registerHandler<GameLoop> {
+        Standard.mod.registerHandler<GameLoop> {
             if (hints.isEmpty())
                 return@registerHandler
 

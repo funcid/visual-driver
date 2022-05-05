@@ -5,7 +5,6 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -33,7 +32,7 @@ object RewardManager {
         val gui = ContextGui()
         gui + box
 
-        Standard::class.java.mod.registerChannel("func:weekly-reward") {
+        Standard.mod.registerChannel("func:weekly-reward") {
             currentDay = readInt()
 
             val topText = text {
@@ -121,7 +120,7 @@ object RewardManager {
             gui.open()
         }
 
-        registerHandler<RenderTickPre> {
+        Standard.mod.registerHandler<RenderTickPre> {
             hint.offset.x = (Mouse.getX() / clientApi.resolution().scaleFactor).toDouble()
             hint.offset.y = ((Display.getHeight() - Mouse.getY()) / clientApi.resolution().scaleFactor).toDouble()
         }

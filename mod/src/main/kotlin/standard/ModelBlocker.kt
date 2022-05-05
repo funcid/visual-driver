@@ -2,7 +2,6 @@ package standard
 
 import dev.xdark.clientapi.event.render.BlockLayerRender
 import ru.cristalix.clientapi.JavaMod
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
@@ -12,6 +11,7 @@ import ru.cristalix.uiengine.utility.*
 object ModelBlocker {
     private var locker: TextElement? = null
 
+    context(JavaMod)
     private fun lazyAdd() {
         locker = text {
             color = WHITE
@@ -24,7 +24,7 @@ object ModelBlocker {
         locker!!.content = "Недоступно на\nданном режиме"
         UIEngine.overlayContext + locker!!
 
-        registerHandler<BlockLayerRender> {
+        Standard.mod.registerHandler<BlockLayerRender> {
             if (inModelMenu()) {
                 UIEngine.clientApi.minecraft().displayScreen(null)
                 locker!!.enabled = true
@@ -45,20 +45,23 @@ object ModelBlocker {
     }
 
     init {
-        Standard::class.java.mod.registerChannel("func:break-ui") {
-            if (locker == null)
-                lazyAdd()
+        Standard.mod.run{
+            registerChannel("func:break-ui") {
+                if (locker == null)
+                    lazyAdd()
+            }
         }
 
-        Standard::class.java.mod.registerChannel("func:return-ui") {
+        Standard.mod.registerChannel("func:return-ui") {
             locker = null
         }
     }
 
+    context(JavaMod)
     private fun inModelMenu(): Boolean {
         if (locker == null)
             return false
-        val minecraft = JavaMod.clientApi.minecraft()
+        val minecraft = clientApi.minecraft()
         val screen = minecraft.currentScreen()
         return !minecraft.inGameHasFocus() && screen != null && screen::class.java.simpleName == "aqW"
     }

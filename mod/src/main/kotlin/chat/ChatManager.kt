@@ -5,7 +5,6 @@ import dev.xdark.clientapi.gui.ChatOverlay
 import dev.xdark.clientapi.text.Text
 import dev.xdark.clientapi.text.TextJSON
 import io.netty.buffer.Unpooled
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -73,17 +72,17 @@ object ChatManager {
             UIEngine.overlayContext.addChild(button)
         }
 
-        ChatMod::class.java.mod.registerChannel("delete-chat") {
+        ChatMod.mod.registerChannel("delete-chat") {
             val index = readInt()
             chats[index]!!.button.enabled = false
             chats.remove(index)
         }
 
-        ChatMod::class.java.mod.registerChannel("zabelix:chat_message") {
+        ChatMod.mod.registerChannel("zabelix:chat_message") {
             handleMessage(readInt(), TextJSON.jsonToText(readUtf8()))
         }
 
-        ru.cristalix.clientapi.registerHandler<ChatReceive> {
+        ChatMod.mod.registerHandler<ChatReceive> {
             val raw = text.unformattedText
             if (currentChat != 1 && raw.startsWith("[VC]")) {
                 isCancelled = true

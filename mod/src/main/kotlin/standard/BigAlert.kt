@@ -1,7 +1,6 @@
 package standard
 
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.BOTTOM
 import ru.cristalix.uiengine.utility.text
@@ -20,7 +19,7 @@ object BigAlert {
     init {
         UIEngine.overlayContext.addChild(title)
 
-        Standard::class.java.mod.registerChannel("ilisov:bigtitle") {
+        Standard.mod.registerChannel("ilisov:bigtitle") {
             title.content = NetUtil.readUtf8(this)
             title.enabled = true
 

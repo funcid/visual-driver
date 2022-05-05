@@ -2,7 +2,6 @@ package experimental
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -28,14 +27,14 @@ object Recharge {
         var time = 0.0
         var currentTime = System.currentTimeMillis()
 
-        registerHandler<GameLoop> {
+        Experimental.mod.registerHandler<GameLoop> {
             if (System.currentTimeMillis() - currentTime > 1000) {
                 time--
                 currentTime = System.currentTimeMillis()
             }
         }
 
-        Experimental::class.java.mod.registerChannel("func:recharge") {
+        Experimental.mod.registerChannel("func:recharge") {
             if (cooldown == null) {
                 cooldown = UIEngine.overlayContext + rectangle {
                     offset.y -= 65

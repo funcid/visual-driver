@@ -3,7 +3,6 @@ package standard
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
@@ -34,7 +33,7 @@ object ItemTitle {
 
         UIEngine.overlayContext.addChild(title, subtitle)
 
-        Standard::class.java.mod.registerChannel("func:drop-item") {
+        Standard.mod.registerChannel("func:drop-item") {
             UIEngine.clientApi.overlayRenderer().displayItemActivation(ItemTools.read(this))
             title.content = NetUtil.readUtf8(this)
             subtitle.content = NetUtil.readUtf8(this)

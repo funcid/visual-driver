@@ -4,7 +4,6 @@ import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import org.lwjgl.opengl.GL11
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
@@ -31,15 +30,15 @@ object GlowEffect {
     }
 
     init {
-        Standard::class.java.mod.registerChannel("func:glow-short") {
+        Standard.mod.registerChannel("func:glow-short") {
             show(readDouble(), readInt(), readInt(), readInt(), readDouble())
         }
 
-        Standard::class.java.mod.registerChannel("func:glow") {
+        Standard.mod.registerChannel("func:glow") {
             showAlways(readInt(), readInt(), readInt(), readDouble())
         }
 
-        registerHandler<WindowResize> {
+        Standard.mod.registerHandler<WindowResize> {
             if (added)
                 vignette.size = UIEngine.overlayContext.size
         }

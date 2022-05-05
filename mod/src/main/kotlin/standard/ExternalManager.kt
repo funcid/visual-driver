@@ -3,7 +3,6 @@ package standard
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 
 object ExternalManager {
@@ -11,7 +10,7 @@ object ExternalManager {
     private val textures = mutableListOf<ResourceLocation>()
 
     init {
-        Standard::class.java.mod.registerChannel("func:load-paths") {
+        Standard.mod.registerChannel("func:load-paths") {
             val count = readInt()
             val paths = mutableListOf<String>()
 
@@ -22,11 +21,11 @@ object ExternalManager {
             loadPaths(*paths.toTypedArray())
         }
 
-        Standard::class.java.mod.registerChannel("func:load-path") {
+        Standard.mod.registerChannel("func:load-path") {
             loadPaths(NetUtil.readUtf8(this))
         }
 
-        Standard::class.java.mod.onDisable.add {
+        Standard.mod.onDisable.add {
             val renderEngine = UIEngine.clientApi.renderEngine()
             textures.forEach { renderEngine.deleteTexture(it) }
         }

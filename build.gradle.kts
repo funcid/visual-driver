@@ -44,7 +44,8 @@ subprojects {
                     "-Xuse-ir",
                     "-Xassertions=always-disable",
                     "-Xuse-fast-jar-file-system",
-                    "-Xsam-conversions=indy"
+                    "-Xsam-conversions=indy",
+                    "-Xcontext-receivers"
                 )
             }
         }

@@ -1,7 +1,6 @@
 package standard
 
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -28,7 +27,7 @@ object Title {
     init {
         UIEngine.overlayContext + message
 
-        Standard::class.java.mod.registerChannel("func:title") {
+        Standard.mod.registerChannel("func:title") {
             element.content = NetUtil.readUtf8(this)
             message.enabled = true
             element.animate(0.3) {

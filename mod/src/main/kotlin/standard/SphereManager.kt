@@ -4,7 +4,6 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.sphere
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.utility.V3
 import java.util.*
@@ -15,59 +14,63 @@ object SphereManager {
     private val lock = ClientApiAllowedLock()
 
     init {
-        Standard::class.java.mod.registerChannel("fiwka:sphere") {
-            when (readInt()) {
-                0 -> {
-                    drawSphere(
-                        UUID(readLong(), readLong()),
-                        readDouble(),
-                        readDouble(),
-                        readDouble(),
-                        Color(readInt(), readInt(), readInt(), readDouble()),
-                        readDouble()
-                    )
-                }
-                1 -> {
-                    drawSphere(
-                        UUID(readLong(), readLong()),
-                        readDouble(),
-                        readDouble(),
-                        readDouble(),
-                        Color(readInt(), readInt(), readInt(), readDouble()),
-                        readDouble(),
-                        readDouble(),
-                        readDouble()
-                    )
-                }
-                2 -> {
-                    teleportTo(
-                        UUID(readLong(), readLong()),
-                        readDouble(),
-                        readDouble(),
-                        readDouble(),
-                    )
-                }
-                3 -> {
-                    moveTo(
-                        UUID(readLong(), readLong()),
-                        readDouble(),
-                        readDouble(),
-                        readDouble(),
-                        readDouble(),
-                    )
-                }
-                4 -> {
-                    removeSphere(
-                        UUID(readLong(), readLong()),
-                    )
+        Standard.mod.run{
+            registerChannel("fiwka:sphere") {
+                when (readInt()) {
+                    0 -> {
+                        drawSphere(
+                            UUID(readLong(), readLong()),
+                            readDouble(),
+                            readDouble(),
+                            readDouble(),
+                            Color(readInt(), readInt(), readInt(), readDouble()),
+                            readDouble()
+                        )
+                    }
+                    1 -> {
+                        drawSphere(
+                            UUID(readLong(), readLong()),
+                            readDouble(),
+                            readDouble(),
+                            readDouble(),
+                            Color(readInt(), readInt(), readInt(), readDouble()),
+                            readDouble(),
+                            readDouble(),
+                            readDouble()
+                        )
+                    }
+                    2 -> {
+                        teleportTo(
+                            UUID(readLong(), readLong()),
+                            readDouble(),
+                            readDouble(),
+                            readDouble(),
+                        )
+                    }
+                    3 -> {
+                        moveTo(
+                            UUID(readLong(), readLong()),
+                            readDouble(),
+                            readDouble(),
+                            readDouble(),
+                            readDouble(),
+                        )
+                    }
+                    4 -> {
+                        removeSphere(
+                            UUID(readLong(), readLong()),
+                        )
+                    }
                 }
             }
         }
     }
 
+    context(ru.cristalix.clientapi.JavaMod)
     fun drawSphere(uuid: UUID, x: Double, y: Double, z: Double, color: Color, radius: Double) =
         drawSphere(uuid, x, y, z, color, radius, radius, radius)
 
+    context(ru.cristalix.clientapi.JavaMod)
     fun drawSphere(uuid: UUID, x: Double, y: Double, z: Double, color: Color, sX: Double, sY: Double, sZ: Double) {
         lock.lock()
 

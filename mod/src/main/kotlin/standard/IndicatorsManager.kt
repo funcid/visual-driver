@@ -4,7 +4,6 @@ import dev.xdark.clientapi.event.Cancellable
 import dev.xdark.clientapi.event.Event
 import dev.xdark.clientapi.event.render.*
 import me.func.protocol.Indicators
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 
 object IndicatorsManager {
@@ -30,12 +29,15 @@ object IndicatorsManager {
         register<NameTemplateRender>(Indicators.NAME_TEMPLATE)
     }
 
-    private inline fun <reified T> register(indicator: Indicators) where T : Event, T : Cancellable {
-        registerHandler<T> { if (states[indicator] == true) isCancelled = true }
+    private inline fun <reified T> register(indicator: Indicators)
+        where T : Event,
+              T : Cancellable
+    {
+        Standard.mod.registerHandler<T> { if (states[indicator] == true) isCancelled = true }
     }
 
     private fun changeIt(channel: String, value: Boolean) {
-        Standard::class.java.mod.registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
+        Standard.mod.registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
     }
 
 }

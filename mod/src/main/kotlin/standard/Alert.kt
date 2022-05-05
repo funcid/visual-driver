@@ -1,6 +1,5 @@
 package standard
 
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -53,7 +52,7 @@ object Alert {
     init {
         UIEngine.overlayContext + dayTitleBox
 
-        Standard::class.java.mod.registerChannel("func:alert") {
+        Standard.mod.registerChannel("func:alert") {
             dayTitle.content = readUtf8()
             lore.content = readUtf8()
 

@@ -5,7 +5,6 @@ import dev.xdark.clientapi.entity.EntityPlayer
 import dev.xdark.clientapi.event.lifecycle.GameTickPre
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.uiengine.UIEngine
 
 object Disguise {
@@ -21,7 +20,7 @@ object Disguise {
     }
 
     init {
-        Experimental::class.java.mod.run {
+        Experimental.mod.run {
             minecraft.player.run { players.put(name, this) }
 
             registerHandler<NameTemplateRender> {

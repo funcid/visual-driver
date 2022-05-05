@@ -2,7 +2,6 @@ package standard
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
@@ -22,7 +21,7 @@ object KillBoardManager {
     init {
         val minecraft = UIEngine.clientApi.minecraft()
 
-        registerHandler<GameLoop> {
+        Standard.mod.registerHandler<GameLoop> {
             val inGame = minecraft.inGameHasFocus() && board.offset.y <= 20
             if(board.enabled && !inGame)
                 board.enabled = false
@@ -30,7 +29,7 @@ object KillBoardManager {
                 board.enabled = true
         }
 
-        Standard::class.java.mod.registerChannel("func:notice") {
+        Standard.mod.registerChannel("func:notice") {
             val text = NetUtil.readUtf8(this)
             board.offset.y = readInt().toDouble()
             val notice = KillBoard(text)

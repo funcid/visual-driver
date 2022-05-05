@@ -2,6 +2,7 @@ package battlepass
 
 import ru.cristalix.clientapi.JavaMod
 
+context(JavaMod)
 class BattlePassGuiSize {
 
     var totalWidth = 550.0
@@ -26,7 +27,7 @@ class BattlePassGuiSize {
     }
 
     fun calculate(): BattlePassGuiSize {
-        val resolution = JavaMod.clientApi.resolution()
+        val resolution = clientApi.resolution()
         totalWidth = resolution.scaledWidth_double / 1.92
         totalHeight = resolution.scaledHeight_double / 2.23
 

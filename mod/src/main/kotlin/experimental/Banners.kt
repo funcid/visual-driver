@@ -7,7 +7,6 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
 import me.func.protocol.element.Banner
 import me.func.protocol.element.MotionType
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
@@ -58,7 +57,7 @@ object Banners {
             }
         }
 
-        Experimental::class.java.mod.registerChannel("banner:new") {
+        Experimental.mod.registerChannel("banner:new") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
@@ -120,7 +119,7 @@ object Banners {
             }
         }
 
-        Experimental::class.java.mod.registerChannel("banner:change-content") {
+        Experimental.mod.registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 val element = (pair.second.children[0] as RectangleElement)
@@ -129,7 +128,7 @@ object Banners {
             }
         }
 
-        Experimental::class.java.mod.registerChannel("banner:size-text") {
+        Experimental.mod.registerChannel("banner:size-text") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 repeat(readInt()) {
@@ -150,7 +149,7 @@ object Banners {
             }
         }
 
-        Experimental::class.java.mod.registerChannel("banner:remove") {
+        Experimental.mod.registerChannel("banner:remove") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 banners[uuid]?.let {
@@ -160,7 +159,7 @@ object Banners {
             }
         }
 
-        registerHandler<NameTemplateRender> {
+        Experimental.mod.registerHandler<NameTemplateRender> {
             if (entity !is Entity)
                 return@registerHandler
             val current = entity as Entity
@@ -177,7 +176,7 @@ object Banners {
             }
         }
 
-        registerHandler<RenderTickPre> {
+        Experimental.mod.registerHandler<RenderTickPre> {
             val player = UIEngine.clientApi.minecraft().player
             val timer = UIEngine.clientApi.minecraft().timer
             val yaw =

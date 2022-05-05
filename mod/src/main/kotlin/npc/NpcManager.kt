@@ -23,13 +23,14 @@ object NpcManager {
         PlayerModelPart.RIGHT_SLEEVE
     )
 
+    context(JavaMod)
     fun spawn(data: NpcData): NpcEntity {
-        val spawned = JavaMod.clientApi.entityProvider().newEntity(data.type, JavaMod.clientApi.minecraft().world).apply {
+        val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
             entityId = data.id
             setUniqueId(data.uuid)
         } as AbstractClientPlayer
 
-        val info = JavaMod.clientApi.clientConnection().newPlayerInfo(
+        val info = clientApi.clientConnection().newPlayerInfo(
             GameProfile(data.uuid, data.name).apply {
                 properties.put("skinURL", Property("skinURL", data.skinUrl))
                 properties.put("skinDigest", Property("skinDigest", data.skinDigest))
@@ -38,7 +39,7 @@ object NpcManager {
 
         info.skinType = if (data.slimArms) "SLIM" else "DEFAULT"
 
-        JavaMod.clientApi.clientConnection().addPlayerInfo(info)
+        clientApi.clientConnection().addPlayerInfo(info)
 
         spawned.apply {
             wearing.forEach { setWearing(it) }
@@ -63,14 +64,17 @@ object NpcManager {
 
     fun get(uuid: UUID) = storage[uuid]
 
-    fun show(uuid: UUID) = storage[uuid]?.let { JavaMod.clientApi.minecraft().world.spawnEntity(it.entity) }
+    context(JavaMod)
+    fun show(uuid: UUID) = storage[uuid]?.let { clientApi.minecraft().world.spawnEntity(it.entity) }
 
-    fun hide(uuid: UUID) = storage[uuid]?.let { JavaMod.clientApi.minecraft().world.removeEntity(it.entity) }
+    context(JavaMod)
+    fun hide(uuid: UUID) = storage[uuid]?.let { clientApi.minecraft().world.removeEntity(it.entity) }
 
     fun each(function: (UUID, NpcEntity) -> Unit) {
         storage.forEach { (uuid, data) -> function(uuid, data) }
     }
 
+    context(JavaMod)
     fun kill(uuid: UUID) {
         hide(uuid)
         storage.remove(uuid)

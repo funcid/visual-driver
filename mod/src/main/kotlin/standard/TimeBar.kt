@@ -2,7 +2,6 @@ package standard
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -42,7 +41,7 @@ object TimeBar {
         var time = 0
         var currentTime = System.currentTimeMillis()
 
-        registerHandler<GameLoop> {
+        Standard.mod.registerHandler<GameLoop> {
             if (System.currentTimeMillis() - currentTime > 1000) {
                 time--
                 currentTime = System.currentTimeMillis()
@@ -51,7 +50,7 @@ object TimeBar {
             }
         }
 
-        Standard::class.java.mod.registerChannel("func:bar") {
+        Standard.mod.registerChannel("func:bar") {
             val text = NetUtil.readUtf8(this) + " XX:XX ⏳"
             time = this.readInt()
 
@@ -101,7 +100,7 @@ object TimeBar {
             }
         }
 
-        Standard::class.java.mod.registerChannel("func:attention") {
+        Standard.mod.registerChannel("func:attention") {
             val secondsTotal = 3
 
             dropNumber(3.toString(), 5.0, Color(255, 255, 85))

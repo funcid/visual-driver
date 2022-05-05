@@ -7,8 +7,15 @@ const val NAMESPACE = "cache/animation"
 
 class Standard : KotlinMod() {
 
+    companion object {
+        lateinit var mod: Standard
+            private set
+    }
+
     override fun onEnable() {
         UIEngine.initialize(this)
+
+        mod = this
 
         IndicatorsManager
         MarkerManager

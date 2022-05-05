@@ -7,11 +7,17 @@
 -allowaccessmodification
 -optimizationpasses 10
 -overloadaggressively
--assumenosideeffects class kotlin.jvm.internal.Intrinsics
--assumenosideeffects class kotlin.jvm.internal.Reflection
+-dontobfuscate
+
+-assumenosideeffects class kotlin.jvm.internal.Intrinsics {
+    <methods>;
+}
+-assumenosideeffects class kotlin.jvm.internal.Reflection {
+    <methods>;
+}
 
 -assumenosideeffects public class java.lang.Thread {
-    public static void dumpStack();
+    <methods>;
 }
 
 -flattenpackagehierarchy

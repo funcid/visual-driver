@@ -142,7 +142,7 @@ class CrateScreen {
 
         color = WHITE
         textureLocation =
-            JavaMod.clientApi.resourceManager().getLocation("minecraft", "textures/entity/chest/normal.png")
+            clientApi.resourceManager().getLocation("minecraft", "textures/entity/chest/normal.png")
         textureSize = V3(64.0, 64.0)
 
         addChild(cube {
@@ -155,7 +155,7 @@ class CrateScreen {
             size = V3(2.0, 4.0, 1.0)
 
             textureLocation =
-                JavaMod.clientApi.resourceManager().getLocation("minecraft", "textures/entity/chest/normal.png")
+                clientApi.resourceManager().getLocation("minecraft", "textures/entity/chest/normal.png")
             textureSize = V3(64.0, 64.0)
 
         })
@@ -176,7 +176,7 @@ class CrateScreen {
         color = WHITE
         size = V3(14.0, 10.0, 14.0)
         textureLocation =
-            JavaMod.clientApi.resourceManager().getLocation("minecraft", "textures/entity/chest/normal.png")
+            clientApi.resourceManager().getLocation("minecraft", "textures/entity/chest/normal.png")
         textureSize = V3(64.0, 64.0)
         textureFrom = V2(0.0, 19.0)
         addChild(chestLid, rotationIntensity)
