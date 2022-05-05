@@ -7,79 +7,72 @@ import dev.xdark.clientapi.entity.EntityProvider
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.uiengine.UIEngine
-import java.util.*
+import java.util.UUID
+import ru.cristalix.clientapi.KotlinMod
 
-object CorpseManager {
-
-    private val corpses = mutableListOf<AbstractClientPlayer>()
+context(KotlinMod)
+class CorpseManager {
+    private val corpses: MutableList<AbstractClientPlayer> = arrayListOf()
 
     init {
-        Standard.mod.run{
-            registerChannel("func:corpse-clear") {
-                corpses.forEach { clientApi.minecraft().world.removeEntity(it) }
-                corpses.clear()
-            }
+        registerChannel("func:corpse-clear") {
+            corpses.forEach { clientApi.minecraft().world.removeEntity(it) }
+            corpses.clear()
         }
 
-        Standard.mod.run{
-            registerChannel("func:corpse") {
-                val name = NetUtil.readUtf8(this)
+        registerChannel("func:corpse") {
+            val name = NetUtil.readUtf8(this)
 
-                if (corpses.size > 36)
-                    corpses.clear()
+            if (corpses.size > 36)
+                corpses.clear()
 
-                val corpse = clientApi.entityProvider()
-                    .newEntity(EntityProvider.PLAYER, clientApi.minecraft().world) as AbstractClientPlayer
+            val corpse = clientApi.entityProvider()
+                .newEntity(EntityProvider.PLAYER, clientApi.minecraft().world) as AbstractClientPlayer
 
-                val uuid = UUID.randomUUID()
-                corpse.setUniqueId(uuid)
+            val uuid = UUID.randomUUID()
+            corpse.setUniqueId(uuid)
 
-                val profile = GameProfile(uuid, name)
-                profile.properties.put("skinURL", Property("skinURL", NetUtil.readUtf8(this)))
-                profile.properties.put("skinDigest", Property("skinDigest", NetUtil.readUtf8(this)))
-                corpse.gameProfile = profile
+            val profile = GameProfile(uuid, name)
+            profile.properties.put("skinURL", Property("skinURL", NetUtil.readUtf8(this)))
+            profile.properties.put("skinDigest", Property("skinDigest", NetUtil.readUtf8(this)))
+            corpse.gameProfile = profile
 
-                val info = clientApi.clientConnection().newPlayerInfo(profile)
-                info.responseTime = -2
-                info.skinType = "DEFAULT"
-                clientApi.clientConnection().addPlayerInfo(info)
+            val info = clientApi.clientConnection().newPlayerInfo(profile)
+            info.responseTime = -2
+            info.skinType = "DEFAULT"
+            clientApi.clientConnection().addPlayerInfo(info)
 
-                val x = readDouble()
-                var y = readDouble()
-                val z = readDouble()
-                var counter = 0
-                var id: Int
-                do {
-                    y -= 0.15
-                    counter++
-                    id = clientApi.minecraft().world.getBlockState(x, y, z).id
-                } while ((id == 0 || id == 171 || id == 96 || id == 167) && counter < 50)
+            val x = readDouble()
+            var y = readDouble()
+            val z = readDouble()
+            var counter = 0
+            var id: Int
+            do {
+                y -= 0.15
+                counter++
+                id = clientApi.minecraft().world.getBlockState(x, y, z).id
+            } while ((id == 0 || id == 171 || id == 96 || id == 167) && counter < 50)
 
-                corpse.enableSleepAnimation(
-                    BlockPos.of(x.toInt(), y.toInt(), z.toInt()), when (Math.random()) {
-                        in 0.0..0.2 -> EnumFacing.SOUTH
-                        in 0.2..0.4 -> EnumFacing.DOWN
-                        in 0.4..0.6 -> EnumFacing.EAST
-                        else -> EnumFacing.NORTH
-                    }
-                )
-                corpse.teleport(x, y + 0.2, z)
-                corpse.setNoGravity(false)
-
-                corpses.add(corpse)
-
-                readInt().apply {
-                    UIEngine.schedule(this) {
-                        corpses.remove(corpse)
-                        clientApi.minecraft().world.removeEntity(corpse)
-                    }
+            corpse.enableSleepAnimation(
+                BlockPos.of(x.toInt(), y.toInt(), z.toInt()), when (Math.random()) {
+                    in 0.0..0.2 -> EnumFacing.SOUTH
+                    in 0.2..0.4 -> EnumFacing.DOWN
+                    in 0.4..0.6 -> EnumFacing.EAST
+                    else -> EnumFacing.NORTH
                 }
+            )
+            corpse.teleport(x, y + 0.2, z)
+            corpse.setNoGravity(false)
 
-                clientApi.minecraft().world.spawnEntity(corpse)
+            corpses.add(corpse)
+
+            UIEngine.schedule(readInt()) {
+                corpses.remove(corpse)
+                clientApi.minecraft().world.removeEntity(corpse)
             }
+
+            clientApi.minecraft().world.spawnEntity(corpse)
         }
     }
-
 }

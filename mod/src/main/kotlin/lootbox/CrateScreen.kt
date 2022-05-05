@@ -8,15 +8,24 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.glu.GLU
-import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.BOTTOM
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.Rotation
+import ru.cristalix.uiengine.utility.V2
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.cube
+import ru.cristalix.uiengine.utility.item
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
 
 class CrateScreen {
-
     var opened = false
 
     val rotationIntensity = rectangle {

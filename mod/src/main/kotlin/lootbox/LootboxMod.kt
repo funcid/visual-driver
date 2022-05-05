@@ -1,5 +1,6 @@
 package lootbox
 
+import Mod
 import dev.xdark.clientapi.event.input.MousePress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.network.PluginMessage
@@ -9,17 +10,16 @@ import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 
-class LootboxMod : JavaMod() {
-
-    override fun onEnable() {
-        UIEngine.initialize(this)
-
+context(KotlinMod)
+class LootboxMod : Mod {
+    override fun load() {
         val crateScreen = CrateScreen()
         var ready = false
         var pressed = false
@@ -111,7 +111,8 @@ class LootboxMod : JavaMod() {
                     rotation.degrees = (Mouse.getY() / Display.getHeight().toDouble() - 0.5) * Math.PI / 2 * intensity
                 }
                 glowRect.animate(0.1) {
-                    glowRect.rotation.degrees = -(Mouse.getX() / Display.getWidth().toDouble() - 0.5) * Math.PI / 2 * intensity
+                    glowRect.rotation.degrees =
+                        -(Mouse.getX() / Display.getWidth().toDouble() - 0.5) * Math.PI / 2 * intensity
                 }
             }
         }

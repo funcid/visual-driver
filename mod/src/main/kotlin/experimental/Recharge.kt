@@ -2,7 +2,6 @@ package experimental
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -15,9 +14,10 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
+import ru.cristalix.clientapi.KotlinMod
 
-object Recharge {
-
+context(KotlinMod)
+class Recharge {
     private lateinit var line: RectangleElement
     private lateinit var content: TextElement
 
@@ -27,14 +27,14 @@ object Recharge {
         var time = 0.0
         var currentTime = System.currentTimeMillis()
 
-        Experimental.mod.registerHandler<GameLoop> {
+        registerHandler<GameLoop> {
             if (System.currentTimeMillis() - currentTime > 1000) {
                 time--
                 currentTime = System.currentTimeMillis()
             }
         }
 
-        Experimental.mod.registerChannel("func:recharge") {
+        registerChannel("func:recharge") {
             if (cooldown == null) {
                 cooldown = UIEngine.overlayContext + rectangle {
                     offset.y -= 65

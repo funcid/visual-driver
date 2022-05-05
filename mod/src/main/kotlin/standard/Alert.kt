@@ -5,12 +5,21 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.BOTTOM
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.TOP
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
+import ru.cristalix.clientapi.KotlinMod
 
-object Alert {
+private const val VECTOR = 65
 
-    private const val VECTOR = 65
-
+context(KotlinMod)
+class Alert {
     private lateinit var dayTitle: TextElement
     private lateinit var lore: TextElement
     private lateinit var loreBox: RectangleElement
@@ -52,7 +61,7 @@ object Alert {
     init {
         UIEngine.overlayContext + dayTitleBox
 
-        Standard.mod.registerChannel("func:alert") {
+        registerChannel("func:alert") {
             dayTitle.content = readUtf8()
             lore.content = readUtf8()
 

@@ -1,19 +1,18 @@
 package battlepass
 
+import Mod
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import java.util.*
+import java.util.UUID
 
-class BattlePass : KotlinMod() {
-
+context(KotlinMod)
+class BattlePass : Mod {
     private val map = mutableMapOf<UUID, BattlePassGui>()
 
-    override fun onEnable() {
-        UIEngine.initialize(this)
-
+    override fun load() {
         registerChannel("bp:send") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             val price = readInt()
@@ -30,7 +29,7 @@ class BattlePass : KotlinMod() {
                 repeat(readInt()) { items.add(ItemTools.read(this)) }
                 repeat(readInt()) { advancedItems.add(ItemTools.read(this)) }
 
-                BattlePage(it + 1, items, advancedItems, 0, requiredExp, readInt())
+                BattlePage(items, advancedItems, 0, requiredExp, readInt())
             }
 
             val quests = MutableList(readInt()) { NetUtil.readUtf8(this) }

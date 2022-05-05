@@ -1,21 +1,20 @@
 package store
 
+import Mod
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.uiengine.UIEngine
 import store.signage.SignageScreen
 import store.signage.button
 import store.util.item
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.uiengine.UIEngine
 
 const val MARGIN = 4.0
 
-class Store : KotlinMod() {
-
+context(KotlinMod)
+class Store : Mod {
     lateinit var signageScreen: SignageScreen
 
-    override fun onEnable() {
-        UIEngine.initialize(this)
-
+    override fun load() {
         // Создание магазина, в котором определённое количество кнопок.
         registerChannel("store:make") {
             signageScreen = SignageScreen(*MutableList(readInt()) {

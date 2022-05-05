@@ -1,9 +1,14 @@
 package store.signage
 
-import store.util.BUTTON_BLUE
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.BOTTOM
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.item
+import ru.cristalix.uiengine.utility.text
+import store.util.BUTTON_BLUE
 
 // Создание кнопок, которое бы стоило обобщить
 inline fun button(setup: SignageButton.() -> Unit) = SignageButton().also(setup)

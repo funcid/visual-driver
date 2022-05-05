@@ -8,18 +8,31 @@ import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.clientapi.writeUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
-import java.util.*
+import ru.cristalix.uiengine.utility.BOTTOM
+import ru.cristalix.uiengine.utility.BOTTOM_LEFT
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.LEFT
+import ru.cristalix.uiengine.utility.TOP
+import ru.cristalix.uiengine.utility.TOP_LEFT
+import ru.cristalix.uiengine.utility.TOP_RIGHT
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.item
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
+import java.util.UUID
 import kotlin.math.PI
 import kotlin.math.roundToInt
 
-context(JavaMod)
+context(KotlinMod)
 class BattlePassGui(
     var uuid: UUID,
     private val buyBlockText: String,
@@ -474,5 +487,4 @@ class BattlePassGui(
         if (sale == 0.0) return "§f§l$price кристалов"
         return "§c§l§m$price§f§l ${(price - price * sale / 100.0).roundToInt()} кристалов"
     }
-
 }

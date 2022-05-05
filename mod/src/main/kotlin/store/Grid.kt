@@ -1,9 +1,9 @@
 package store
 
-import store.signage.BUTTON_SIZE
 import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.utility.CENTER
+import store.signage.BUTTON_SIZE
 
 // Сеточка по которой, кнопки располагаются, в меню
 fun grid(vararg children: AbstractElement) = Grid().also { it.addChild(*children) }
@@ -15,8 +15,7 @@ class Grid(
     cellSizeY: Double = BUTTON_SIZE,
     borderWidth: Double = MARGIN,
     columns: Int = 3
-): RectangleElement() {
-
+) : RectangleElement() {
     var cellSizeX: Double = cellSizeX
         set(value) {
             field = value
@@ -66,9 +65,8 @@ class Grid(
 
         if (lastParent != null) {
             val o = -(lastParent!!.size.y - 40 - size.y) / 2.0
-            scrollPosition = if (o <= 0) 0.0 else scrollPosition.coerceIn(-o,o)
+            scrollPosition = if (o <= 0) 0.0 else scrollPosition.coerceIn(-o, o)
             offset.y = scrollPosition
         }
     }
-
 }

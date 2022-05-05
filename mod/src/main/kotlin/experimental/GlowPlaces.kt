@@ -6,18 +6,18 @@ import dev.xdark.clientapi.render.DefaultVertexFormats
 import dev.xdark.feder.NetUtil
 import me.func.protocol.GlowingPlace
 import org.lwjgl.opengl.GL11
-import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.uiengine.UIEngine
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
+import ru.cristalix.clientapi.KotlinMod
 
-object GlowPlaces {
-
+context(KotlinMod)
+class GlowPlaces {
     private val places = arrayListOf<GlowingPlace>()
 
     init {
-        Experimental.mod.registerChannel("func:place") {
+        registerChannel("func:place") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             places.add(
                 GlowingPlace(
@@ -34,18 +34,18 @@ object GlowPlaces {
             )
         }
 
-        Experimental.mod.registerChannel("func:place-clear") {
+        registerChannel("func:place-clear") {
             places.clear()
         }
 
-        Experimental.mod.registerChannel("func:place-kill") {
+        registerChannel("func:place-kill") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             places.filter { it.uuid == uuid }.forEach { places.remove(it) }
         }
 
         val mc = UIEngine.clientApi.minecraft()
 
-        Experimental.mod.registerHandler<RenderPass> {
+        registerHandler<RenderPass> {
             if (places.isEmpty())
                 return@registerHandler
 
@@ -65,7 +65,7 @@ object GlowPlaces {
             GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
 
             places.forEach { place ->
-                val tessellator = Experimental.mod.clientApi.tessellator()
+                val tessellator = clientApi.tessellator()
                 val bufferBuilder = tessellator.bufferBuilder
 
                 bufferBuilder.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR)
@@ -90,5 +90,4 @@ object GlowPlaces {
             GlStateManager.enableCull()
         }
     }
-
 }

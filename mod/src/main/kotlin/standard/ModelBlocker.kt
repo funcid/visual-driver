@@ -1,17 +1,20 @@
 package standard
 
 import dev.xdark.clientapi.event.render.BlockLayerRender
-import ru.cristalix.clientapi.JavaMod
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.text
 
-object ModelBlocker {
+context(KotlinMod)
+class ModelBlocker {
     private var locker: TextElement? = null
 
-    context(JavaMod)
     private fun lazyAdd() {
         locker = text {
             color = WHITE
@@ -24,7 +27,7 @@ object ModelBlocker {
         locker!!.content = "Недоступно на\nданном режиме"
         UIEngine.overlayContext + locker!!
 
-        Standard.mod.registerHandler<BlockLayerRender> {
+        registerHandler<BlockLayerRender> {
             if (inModelMenu()) {
                 UIEngine.clientApi.minecraft().displayScreen(null)
                 locker!!.enabled = true
@@ -45,22 +48,18 @@ object ModelBlocker {
     }
 
     init {
-        Standard.mod.run{
-            registerChannel("func:break-ui") {
-                if (locker == null)
-                    lazyAdd()
-            }
+        registerChannel("func:break-ui") {
+            if (locker == null) lazyAdd()
         }
 
-        Standard.mod.registerChannel("func:return-ui") {
+        registerChannel("func:return-ui") {
             locker = null
         }
     }
 
-    context(JavaMod)
+
     private fun inModelMenu(): Boolean {
-        if (locker == null)
-            return false
+        if (locker == null) return false
         val minecraft = clientApi.minecraft()
         val screen = minecraft.currentScreen()
         return !minecraft.inGameHasFocus() && screen != null && screen::class.java.simpleName == "aqW"

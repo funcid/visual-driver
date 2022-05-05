@@ -5,17 +5,23 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
 
-object RewardManager {
+import ru.cristalix.clientapi.KotlinMod
 
+context(KotlinMod)
+class RewardManager {
     lateinit var hintText: TextElement
     private var currentDay = 0
     private lateinit var hint: RectangleElement
@@ -32,7 +38,7 @@ object RewardManager {
         val gui = ContextGui()
         gui + box
 
-        Standard.mod.registerChannel("func:weekly-reward") {
+        registerChannel("func:weekly-reward") {
             currentDay = readInt()
 
             val topText = text {
@@ -120,7 +126,7 @@ object RewardManager {
             gui.open()
         }
 
-        Standard.mod.registerHandler<RenderTickPre> {
+        registerHandler<RenderTickPre> {
             hint.offset.x = (Mouse.getX() / clientApi.resolution().scaleFactor).toDouble()
             hint.offset.y = ((Display.getHeight() - Mouse.getY()) / clientApi.resolution().scaleFactor).toDouble()
         }

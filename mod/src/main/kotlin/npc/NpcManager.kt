@@ -7,10 +7,11 @@ import dev.xdark.clientapi.entity.PlayerModelPart
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import me.func.protocol.npc.NpcData
-import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.KotlinMod
 import java.util.UUID
 
-object NpcManager {
+context(KotlinMod)
+class NpcManager {
 
     private val storage = mutableMapOf<UUID, NpcEntity>()
     private val wearing = arrayOf(
@@ -23,7 +24,6 @@ object NpcManager {
         PlayerModelPart.RIGHT_SLEEVE
     )
 
-    context(JavaMod)
     fun spawn(data: NpcData): NpcEntity {
         val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
             entityId = data.id
@@ -64,17 +64,14 @@ object NpcManager {
 
     fun get(uuid: UUID) = storage[uuid]
 
-    context(JavaMod)
     fun show(uuid: UUID) = storage[uuid]?.let { clientApi.minecraft().world.spawnEntity(it.entity) }
 
-    context(JavaMod)
     fun hide(uuid: UUID) = storage[uuid]?.let { clientApi.minecraft().world.removeEntity(it.entity) }
 
     fun each(function: (UUID, NpcEntity) -> Unit) {
         storage.forEach { (uuid, data) -> function(uuid, data) }
     }
 
-    context(JavaMod)
     fun kill(uuid: UUID) {
         hide(uuid)
         storage.remove(uuid)

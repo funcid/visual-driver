@@ -1,5 +1,6 @@
 package npc
 
+import Mod
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.inventory.EntityEquipmentSlot
 import dev.xdark.clientapi.item.ItemTools
@@ -16,13 +17,11 @@ import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-class NPC : KotlinMod() {
-
-    override fun onEnable() {
-        UIEngine.initialize(this)
-
+context(KotlinMod)
+class NPC : Mod {
+    override fun load() {
         // Утилита для работы с NPC
-        NpcManager
+        val npcManager = NpcManager()
 
         // Чтение NPC
         registerChannel("npc:spawn") {
@@ -44,32 +43,32 @@ class NPC : KotlinMod() {
                 readBoolean(),
                 readBoolean()
             )
-            NpcManager.spawn(data)
-            NpcManager.show(data.uuid)
+            npcManager.spawn(data)
+            npcManager.show(data.uuid)
         }
 
         // Скрыть NPC
         registerChannel("npc:hide") {
-            NpcManager.hide(UUID.fromString(NetUtil.readUtf8(this)))
+            npcManager.hide(UUID.fromString(NetUtil.readUtf8(this)))
         }
 
         // Показать NPC
         registerChannel("npc:show") {
-            NpcManager.show(UUID.fromString(NetUtil.readUtf8(this)))
+            npcManager.show(UUID.fromString(NetUtil.readUtf8(this)))
         }
 
         // Удалить NPC
         registerChannel("npc:kill") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
-                NpcManager.hide(this)
-                NpcManager.kill(this)
+                npcManager.hide(this)
+                npcManager.kill(this)
             }
         }
 
         // Обновить метаданные NPC
         registerChannel("npc:update") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
-                NpcManager.get(this)?.let { entity ->
+                npcManager.get(this)?.let { entity ->
                     entity.entity?.let { npc ->
                         npc.customNameTag = NetUtil.readUtf8(this@registerChannel)
 
@@ -96,7 +95,7 @@ class NPC : KotlinMod() {
         // Ударить рукой
         registerChannel("npc:kick") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
-                NpcManager.get(this)?.let { entity ->
+                npcManager.get(this)?.let { entity ->
                     entity.entity?.swingArm(if (readBoolean()) EnumHand.MAIN_HAND else EnumHand.OFF_HAND)
                 }
             }
@@ -104,15 +103,15 @@ class NPC : KotlinMod() {
 
         // Удалить всех NPC
         registerChannel("npc:kill-all") {
-            NpcManager.each { uuid, _ ->
-                NpcManager.hide(uuid)
-                NpcManager.kill(uuid)
+            npcManager.each { uuid, _ ->
+                npcManager.hide(uuid)
+                npcManager.kill(uuid)
             }
         }
 
         // Изменение предмета в инвентаре
         registerChannel("npc:slot") {
-            NpcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
+            npcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
                 it.entity?.let { npc ->
                     readInt().let { slot ->
                         val item = ItemTools.read(this)
@@ -133,7 +132,7 @@ class NPC : KotlinMod() {
         registerHandler<GameLoop> {
             val player = clientApi.minecraft().player
 
-            NpcManager.each { _, data ->
+            npcManager.each { _, data ->
                 data.entity?.let { entity ->
                     if (data.data.behaviour == NpcBehaviour.NONE)
                         return@let

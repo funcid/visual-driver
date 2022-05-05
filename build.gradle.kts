@@ -45,7 +45,8 @@ subprojects {
                     "-Xassertions=always-disable",
                     "-Xuse-fast-jar-file-system",
                     "-Xsam-conversions=indy",
-                    "-Xcontext-receivers"
+                    "-Xcontext-receivers",
+                    "-Xskip-prerelease-check" // IDEA Bug fix
                 )
             }
         }

@@ -3,7 +3,6 @@ package battlepass
 import dev.xdark.clientapi.item.ItemStack
 
 class BattlePage(
-    val index: Int,
     val items: List<ItemStack?> = listOf(),
     val advancedItems: List<ItemStack?> = listOf(),
     var exp: Int,

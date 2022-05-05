@@ -4,15 +4,16 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.clientapi.KotlinMod
 
-object ExternalManager {
-
-    private val textures = mutableListOf<ResourceLocation>()
+context(KotlinMod)
+class ExternalManager {
+    private val textures = arrayListOf<ResourceLocation>()
 
     init {
-        Standard.mod.registerChannel("func:load-paths") {
+        registerChannel("func:load-paths") {
             val count = readInt()
-            val paths = mutableListOf<String>()
+            val paths = arrayListOf<String>()
 
             repeat(count) {
                 paths.add(NetUtil.readUtf8(this))
@@ -21,11 +22,11 @@ object ExternalManager {
             loadPaths(*paths.toTypedArray())
         }
 
-        Standard.mod.registerChannel("func:load-path") {
+        registerChannel("func:load-path") {
             loadPaths(NetUtil.readUtf8(this))
         }
 
-        Standard.mod.onDisable.add {
+        onDisable.add {
             val renderEngine = UIEngine.clientApi.renderEngine()
             textures.forEach { renderEngine.deleteTexture(it) }
         }
@@ -42,5 +43,4 @@ object ExternalManager {
             UIEngine.clientApi.clientConnection().sendPayload("func:loaded", Unpooled.buffer())
         }
     }
-
 }

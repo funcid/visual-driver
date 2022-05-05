@@ -1,13 +1,18 @@
 package store.confirm
 
-import store.util.BUTTON_BLUE
-import store.util.RED
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.BOTTOM_LEFT
+import ru.cristalix.uiengine.utility.BOTTOM_RIGHT
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.rectangle
+import store.util.BUTTON_BLUE
+import store.util.RED
 
 // Экран подтверждения покупки, я его не доделал :c
-class ConfirmScreen: RectangleElement() {
+class ConfirmScreen : RectangleElement() {
 
     val body = +rectangle {
         size.y = 94.5
@@ -15,7 +20,7 @@ class ConfirmScreen: RectangleElement() {
         origin = CENTER
         align = CENTER
         offset.y += 50
-        color = Color(0,0,0,0.86)
+        color = Color(0, 0, 0, 0.86)
         +rectangle {
             size.y = 7.0
             size.x = 81.5

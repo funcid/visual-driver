@@ -3,20 +3,29 @@ package standard
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.Relative
+import ru.cristalix.uiengine.utility.Rotation
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.rectangle
 import kotlin.collections.HashMap
+import kotlin.collections.MutableMap
+import kotlin.collections.forEach
+import kotlin.collections.set
 
-object MarkerManager {
+import ru.cristalix.clientapi.KotlinMod
+
+context(KotlinMod)
+class MarkerManager {
 
     private var holos: MutableMap<String, Context3D> = HashMap()
 
     init {
-        Standard.mod.registerChannel("func:marker-new") {
+        registerChannel("func:marker-new") {
             val uuid = NetUtil.readUtf8(this)
             val x = readDouble()
             val y = readDouble()
@@ -26,7 +35,7 @@ object MarkerManager {
             addHolo(uuid, x, y, z, scale, texture)
         }
 
-        Standard.mod.registerChannel("func:marker-move") {
+        registerChannel("func:marker-move") {
             val uuid = NetUtil.readUtf8(this)
             val x = readDouble()
             val y = readDouble()
@@ -42,7 +51,7 @@ object MarkerManager {
         }
 
 
-        Standard.mod.registerChannel("func:marker-kill") {
+        registerChannel("func:marker-kill") {
             val uuid = NetUtil.readUtf8(this)
             holos[uuid]?.let {
                 UIEngine.worldContexts.remove(it)
@@ -50,14 +59,14 @@ object MarkerManager {
             holos.remove(uuid)
         }
 
-        Standard.mod.registerChannel("func:clear") {
+        registerChannel("func:clear") {
             holos.forEach { UIEngine.worldContexts.remove(it.value) }
             holos.clear()
         }
 
-        Standard.mod.registerHandler<RenderTickPre> {
+        registerHandler<RenderTickPre> {
             val player = clientApi.minecraft().player
-            val timer =  clientApi.minecraft().timer
+            val timer = clientApi.minecraft().timer
             val yaw =
                 (player.rotationYaw - player.prevRotationYaw) * timer.renderPartialTicks + player.prevRotationYaw
             val pitch =

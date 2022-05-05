@@ -7,7 +7,7 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
 import me.func.protocol.element.Banner
 import me.func.protocol.element.MotionType
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
@@ -20,44 +20,16 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import java.util.UUID
 
-object Banners {
+context(KotlinMod)
+class Banners {
+    private val banners = hashMapOf<UUID, Pair<Banner, Context3D>>()
+    private val sizes = hashMapOf<Pair<UUID, Int>, Double>()
 
-    private val banners = mutableMapOf<UUID, Pair<Banner, Context3D>>()
-    private val sizes = mutableMapOf<Pair<UUID, Int>, Double>()
-
-    private fun toBlackText(string: String) = "¨222200" + string.replace(Regex("(§[0-9a-fA-F]|¨......)"), "¨222200")
+    private fun toBlackText(string: String) =
+        "¨222200" + string.replace(Regex("(§[0-9a-fA-F]|¨......)"), "¨222200")
 
     init {
-        fun text(text: String, banner: Banner, rectangle: RectangleElement) {
-            text.split("\n").forEachIndexed { index, line ->
-                val currentSize = sizes[banner.uuid to index] ?: 1.0
-                val v3 = V3(currentSize, currentSize, currentSize)
-
-                rectangle + ru.cristalix.uiengine.utility.text {
-                    align = TOP
-                    origin = TOP
-                    content = line
-                    size = V3(banner.weight.toDouble(), banner.height.toDouble())
-                    color = WHITE
-                    offset.z = -0.01
-                    offset.y = -(-3 - index * 12) * currentSize
-                    scale = v3
-                }
-                rectangle + ru.cristalix.uiengine.utility.text {
-                    align = TOP
-                    origin = TOP
-                    content = toBlackText(line)
-                    size = V3(banner.weight.toDouble(), banner.height.toDouble())
-                    color = Color(0, 0, 0, 0.82)
-                    offset.z = -0.005
-                    offset.y = -(-3 - index * 12 - 0.75) * currentSize
-                    offset.x += 0.75 * currentSize
-                    scale = v3
-                }
-            }
-        }
-
-        Experimental.mod.registerChannel("banner:new") {
+        registerChannel("banner:new") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
@@ -119,7 +91,7 @@ object Banners {
             }
         }
 
-        Experimental.mod.registerChannel("banner:change-content") {
+        registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 val element = (pair.second.children[0] as RectangleElement)
@@ -128,7 +100,7 @@ object Banners {
             }
         }
 
-        Experimental.mod.registerChannel("banner:size-text") {
+        registerChannel("banner:size-text") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 repeat(readInt()) {
@@ -149,7 +121,7 @@ object Banners {
             }
         }
 
-        Experimental.mod.registerChannel("banner:remove") {
+        registerChannel("banner:remove") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 banners[uuid]?.let {
@@ -159,7 +131,7 @@ object Banners {
             }
         }
 
-        Experimental.mod.registerHandler<NameTemplateRender> {
+        registerHandler<NameTemplateRender> {
             if (entity !is Entity)
                 return@registerHandler
             val current = entity as Entity
@@ -176,7 +148,7 @@ object Banners {
             }
         }
 
-        Experimental.mod.registerHandler<RenderTickPre> {
+        registerHandler<RenderTickPre> {
             val player = UIEngine.clientApi.minecraft().player
             val timer = UIEngine.clientApi.minecraft().timer
             val yaw =
@@ -187,6 +159,35 @@ object Banners {
             banners.filter { it.value.first.watchingOnPlayer }.forEach {
                 it.value.second.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
                 it.value.second.children[0].rotation = Rotation(-pitch * Math.PI / 180, 1.0, 0.0, 0.0)
+            }
+        }
+    }
+
+    fun text(text: String, banner: Banner, rectangle: RectangleElement) {
+        text.split("\n").forEachIndexed { index, line ->
+            val currentSize = sizes[banner.uuid to index] ?: 1.0
+            val v3 = V3(currentSize, currentSize, currentSize)
+
+            rectangle + ru.cristalix.uiengine.utility.text {
+                align = TOP
+                origin = TOP
+                content = line
+                size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                color = WHITE
+                offset.z = -0.01
+                offset.y = -(-3 - index * 12) * currentSize
+                scale = v3
+            }
+            rectangle + ru.cristalix.uiengine.utility.text {
+                align = TOP
+                origin = TOP
+                content = toBlackText(line)
+                size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                color = Color(0, 0, 0, 0.82)
+                offset.z = -0.005
+                offset.y = -(-3 - index * 12 - 0.75) * currentSize
+                offset.x += 0.75 * currentSize
+                scale = v3
             }
         }
     }

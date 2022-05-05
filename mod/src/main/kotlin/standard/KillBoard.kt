@@ -2,7 +2,12 @@ package standard
 
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.RIGHT
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
 
 class KillBoard(
     private val text: String, val box: RectangleElement = rectangle {

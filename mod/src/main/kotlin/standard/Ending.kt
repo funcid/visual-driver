@@ -1,4 +1,5 @@
 package standard
+
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil.readUtf8
 import me.func.protocol.EndStatus
@@ -8,10 +9,18 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.eventloop.thenAnimate
 import ru.cristalix.uiengine.eventloop.thenWait
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.LEFT
+import ru.cristalix.uiengine.utility.RIGHT
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
+import ru.cristalix.clientapi.KotlinMod
 
-object Ending {
-
+context(KotlinMod)
+class Ending {
     private lateinit var text: TextElement
     private lateinit var cup: RectangleElement
     private lateinit var information: RectangleElement
@@ -21,7 +30,7 @@ object Ending {
     private var filler: RectangleElement? = null
 
     init {
-        ExternalManager.loadPaths(
+        ExternalManager().loadPaths(
             "https://i.imgur.com/mF7DWoV.png",
             "https://i.imgur.com/vxyu2tZ.png",
             "https://i.imgur.com/zUxhQ7y.png"
@@ -69,7 +78,7 @@ object Ending {
                 }
             }
         }
-        Standard.mod.registerChannel("crazy:ending") {
+        registerChannel("crazy:ending") {
             val endStatus = EndStatus.values()[readInt()]
             key.content = readUtf8(this)
             value.content = readUtf8(this)

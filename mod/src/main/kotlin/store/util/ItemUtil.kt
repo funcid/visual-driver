@@ -7,10 +7,10 @@ import dev.xdark.clientapi.nbt.NBTTagCompound
 import dev.xdark.clientapi.nbt.NBTTagString
 
 // Функция, которая помогает создать предмет id=айди в майнкрафте, item("chest")
-inline fun item(id: String, builder: ItemStack.() -> Unit = {}): ItemStack =
+fun item(id: String, builder: ItemStack.() -> Unit = {}): ItemStack =
     ItemStack.of(Item.of("minecraft:$id"), 1, 0).also(builder)
 
-inline var ItemStack.nbt: Pair<String, Any>?
+var ItemStack.nbt: Pair<String, Any>?
     set(value) {
         val obj = value!!.second
         tagCompound = NBTTagCompound.of(

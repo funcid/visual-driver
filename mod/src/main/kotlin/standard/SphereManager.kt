@@ -1,66 +1,66 @@
 package standard
 
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.sphere
-import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.utility.V3
-import java.util.*
+import ru.cristalix.uiengine.utility.sphere
+import java.util.UUID
 
-object SphereManager {
+context(KotlinMod)
+class SphereManager {
 
     private val contents: MutableMap<UUID, Context3D> = hashMapOf()
     private val lock = ClientApiAllowedLock()
 
     init {
-        Standard.mod.run{
-            registerChannel("fiwka:sphere") {
-                when (readInt()) {
-                    0 -> {
-                        drawSphere(
-                            UUID(readLong(), readLong()),
-                            readDouble(),
-                            readDouble(),
-                            readDouble(),
-                            Color(readInt(), readInt(), readInt(), readDouble()),
-                            readDouble()
-                        )
-                    }
-                    1 -> {
-                        drawSphere(
-                            UUID(readLong(), readLong()),
-                            readDouble(),
-                            readDouble(),
-                            readDouble(),
-                            Color(readInt(), readInt(), readInt(), readDouble()),
-                            readDouble(),
-                            readDouble(),
-                            readDouble()
-                        )
-                    }
-                    2 -> {
-                        teleportTo(
-                            UUID(readLong(), readLong()),
-                            readDouble(),
-                            readDouble(),
-                            readDouble(),
-                        )
-                    }
-                    3 -> {
-                        moveTo(
-                            UUID(readLong(), readLong()),
-                            readDouble(),
-                            readDouble(),
-                            readDouble(),
-                            readDouble(),
-                        )
-                    }
-                    4 -> {
-                        removeSphere(
-                            UUID(readLong(), readLong()),
-                        )
-                    }
+        registerChannel("fiwka:sphere") {
+            when (readInt()) {
+                0 -> {
+                    drawSphere(
+                        UUID(readLong(), readLong()),
+                        readDouble(),
+                        readDouble(),
+                        readDouble(),
+                        Color(readInt(), readInt(), readInt(), readDouble()),
+                        readDouble()
+                    )
+                }
+                1 -> {
+                    drawSphere(
+                        UUID(readLong(), readLong()),
+                        readDouble(),
+                        readDouble(),
+                        readDouble(),
+                        Color(readInt(), readInt(), readInt(), readDouble()),
+                        readDouble(),
+                        readDouble(),
+                        readDouble()
+                    )
+                }
+                2 -> {
+                    teleportTo(
+                        UUID(readLong(), readLong()),
+                        readDouble(),
+                        readDouble(),
+                        readDouble(),
+                    )
+                }
+                3 -> {
+                    moveTo(
+                        UUID(readLong(), readLong()),
+                        readDouble(),
+                        readDouble(),
+                        readDouble(),
+                        readDouble(),
+                    )
+                }
+                4 -> {
+                    removeSphere(
+                        UUID(readLong(), readLong()),
+                    )
                 }
             }
         }

@@ -4,8 +4,10 @@ import dev.xdark.feder.NetUtil
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.BOTTOM
 import ru.cristalix.uiengine.utility.text
+import ru.cristalix.clientapi.KotlinMod
 
-object BigAlert {
+context(KotlinMod)
+class BigAlert {
     private val title = text {
         origin = BOTTOM
         align = BOTTOM
@@ -19,7 +21,7 @@ object BigAlert {
     init {
         UIEngine.overlayContext.addChild(title)
 
-        Standard.mod.registerChannel("ilisov:bigtitle") {
+        registerChannel("ilisov:bigtitle") {
             title.content = NetUtil.readUtf8(this)
             title.enabled = true
 

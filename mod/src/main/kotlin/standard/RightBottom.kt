@@ -5,8 +5,10 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.BOTTOM_RIGHT
 import ru.cristalix.uiengine.utility.text
 
-object RightBottom {
+import ru.cristalix.clientapi.KotlinMod
 
+context(KotlinMod)
+class RightBottom {
     private val right = text {
         origin = BOTTOM_RIGHT
         align = BOTTOM_RIGHT
@@ -18,9 +20,8 @@ object RightBottom {
     init {
         UIEngine.overlayContext + right
 
-        Standard.mod.registerChannel("func:bottom") {
+        registerChannel("func:bottom") {
             right.content = NetUtil.readUtf8(this)
         }
     }
-
 }

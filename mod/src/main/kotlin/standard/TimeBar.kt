@@ -2,14 +2,27 @@ package standard
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.LEFT
+import ru.cristalix.uiengine.utility.Property
+import ru.cristalix.uiengine.utility.Rotation
+import ru.cristalix.uiengine.utility.TOP
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.get
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.set
+import ru.cristalix.uiengine.utility.text
 
-object TimeBar {
+context(KotlinMod)
+class TimeBar {
 
     private lateinit var line: RectangleElement
     private lateinit var content: TextElement
@@ -41,7 +54,7 @@ object TimeBar {
         var time = 0
         var currentTime = System.currentTimeMillis()
 
-        Standard.mod.registerHandler<GameLoop> {
+        registerHandler<GameLoop> {
             if (System.currentTimeMillis() - currentTime > 1000) {
                 time--
                 currentTime = System.currentTimeMillis()
@@ -50,7 +63,7 @@ object TimeBar {
             }
         }
 
-        Standard.mod.registerChannel("func:bar") {
+        registerChannel("func:bar") {
             val text = NetUtil.readUtf8(this) + " XX:XX ⏳"
             time = this.readInt()
 
@@ -100,7 +113,7 @@ object TimeBar {
             }
         }
 
-        Standard.mod.registerChannel("func:attention") {
+        registerChannel("func:attention") {
             val secondsTotal = 3
 
             dropNumber(3.toString(), 5.0, Color(255, 255, 85))

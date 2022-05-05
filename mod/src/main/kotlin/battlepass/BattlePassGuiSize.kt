@@ -1,10 +1,9 @@
 package battlepass
 
-import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.KotlinMod
 
-context(JavaMod)
+context(KotlinMod)
 class BattlePassGuiSize {
-
     var totalWidth = 550.0
     var totalHeight = 230.0
 

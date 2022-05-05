@@ -6,8 +6,10 @@ import dev.xdark.clientapi.event.lifecycle.GameTickPre
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.feder.NetUtil
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.clientapi.KotlinMod
 
-object Disguise {
+context(KotlinMod)
+class Disguise {
     private val minecraft = UIEngine.clientApi.minecraft()
 
     private val entityProvider = UIEngine.clientApi.entityProvider()
@@ -20,33 +22,31 @@ object Disguise {
     }
 
     init {
-        Experimental.mod.run {
-            minecraft.player.run { players.put(name, this) }
+        minecraft.player.run { players.put(name, this) }
 
-            registerHandler<NameTemplateRender> {
-                if (entity is EntityPlayer) players[(entity as EntityPlayer).name] = entity as EntityPlayer
-            }
+        registerHandler<NameTemplateRender> {
+            if (entity is EntityPlayer) players[(entity as EntityPlayer).name] = entity as EntityPlayer
+        }
 
-            registerHandler<GameTickPre> { disguise() }
+        registerHandler<GameTickPre> { disguise() }
 
-            registerChannel("anime:disguise") {
-                try {
-                    val world = minecraft.world
+        registerChannel("anime:disguise") {
+            try {
+                val world = minecraft.world
 
-                    val playerName = NetUtil.readUtf8(this) // Player Name
-                    val player = players[playerName] ?: return@registerChannel
+                val playerName = NetUtil.readUtf8(this) // Player Name
+                val player = players[playerName] ?: return@registerChannel
 
-                    if (readBoolean()) { // Reset
-                        player.renderingEntity = player
-                        disguised.remove(player.name)
-                    } else {
-                        val entityType = readShort() // Entity Type
+                if (readBoolean()) { // Reset
+                    player.renderingEntity = player
+                    disguised.remove(player.name)
+                } else {
+                    val entityType = readShort() // Entity Type
 
-                        disguised[player.name] = entityProvider.newEntity(entityType.toInt(), world)
-                        disguise()
-                    }
-                } catch (_: Exception) {
+                    disguised[player.name] = entityProvider.newEntity(entityType.toInt(), world)
+                    disguise()
                 }
+            } catch (_: Exception) {
             }
         }
     }
