@@ -10,7 +10,6 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            group = project.group
             artifactId = "animation-api-protocol-serialization"
             version = project.version.toString()
 
