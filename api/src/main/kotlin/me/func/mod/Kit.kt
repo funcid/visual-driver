@@ -25,13 +25,14 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import ru.cristalix.core.formatting.Formatting
+import java.util.EnumSet
 
 val STANDARD_MOD_URL = MOD_STORAGE_URL + "mod-bundle.jar"
 val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
 
 @PublishedApi
 internal object StandardMods : Listener {
-    val mods: MutableList<Mod> = arrayListOf()
+    val mods: EnumSet<Mod> = EnumSet.noneOf(Mod::class.java)
 
     init {
         ModLoader.loadFromWeb(STANDARD_MOD_URL, MOD_LOCAL_DIR_NAME)
