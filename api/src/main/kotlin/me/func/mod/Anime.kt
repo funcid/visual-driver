@@ -9,7 +9,6 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
-import me.func.mod.util.log
 import me.func.mod.util.dir
 import me.func.mod.util.fileLastName
 import me.func.mod.util.warn
@@ -23,13 +22,8 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.awt.Color
-import java.io.File
-import java.nio.file.Paths
 import java.util.*
 import java.util.function.BiConsumer
-import kotlin.io.path.fileSize
-import kotlin.io.path.name
-import kotlin.math.round
 
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
@@ -40,6 +34,10 @@ object Anime {
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
     var graffitiClient: GraffitiClient? = null
 
+    init {
+        Bukkit.getPluginManager().registerEvents(StandardMods, provided)
+    }
+
     @JvmStatic
     fun include(vararg kits: Kit) {
         if (kits.contains(Kit.DEBUG)) {
@@ -47,27 +45,23 @@ object Anime {
             ModLoader.loadAll(ModWatcher.testingPath)
         }
 
-        kits.filter { it != Kit.DEBUG }
-            .onEach {
-                it.fromUrl?.let { url -> ModLoader.loadFromWeb(url, MOD_LOCAL_DIR_NAME) }
-                it.init()
-            }
-    }
-
-    @JvmStatic
-    fun sendEmptyBuffer(channel: String, player: Player) =
-        ModTransfer().send(channel, player)
-
-    @JvmStatic
-    fun openLootBox(player: Player, vararg items: LootDrop) {
-        val data = ModTransfer().integer(items.size)
-        for (item in items) {
-            data.item(item.itemStack)
-                .string(item.title)
-                .string(item.rare.name)
+        kits.filter { it != Kit.DEBUG }.forEach {
+            it.fromUrl?.let { url -> ModLoader.loadFromWeb(url) }
+            it.init()
         }
-        data.send("lootbox", player)
     }
+
+    @JvmStatic
+    fun sendEmptyBuffer(channel: String, player: Player) = ModTransfer().send(channel, player)
+
+    @JvmStatic
+    fun openLootBox(player: Player, vararg items: LootDrop) = ModTransfer().integer(items.size).apply {
+        items.forEach {
+            item(it.itemStack)
+                .string(it.title)
+                .string(it.rare.name)
+        }
+    }.send("lootbox", player)
 
     @JvmStatic
     fun dialog(player: Player, dialog: Dialog, openEntrypoint: String) {
@@ -76,29 +70,23 @@ object Anime {
     }
 
     @JvmStatic
-    fun sendDialog(player: Player, dialog: Dialog) {
-        ModTransfer()
-            .string("load")
-            .json(dialog)
-            .send("rise:dialog-screen", player)
-    }
+    fun sendDialog(player: Player, dialog: Dialog) = ModTransfer()
+        .string("load")
+        .json(dialog)
+        .send("rise:dialog-screen", player)
 
     @JvmStatic
-    fun openDialog(player: Player, dialogId: String) {
-        ModTransfer()
-            .string("open")
-            .string(dialogId)
-            .send("rise:dialog-screen", player)
-    }
+    fun openDialog(player: Player, dialogId: String) = ModTransfer()
+        .string("open")
+        .string(dialogId)
+        .send("rise:dialog-screen", player)
 
     @JvmStatic
-    fun alert(player: Player, title: String, description: String, seconds: Double) {
-        ModTransfer()
-            .string(title)
-            .string(description)
-            .double(seconds)
-            .send("func:alert", player)
-    }
+    fun alert(player: Player, title: String, description: String, seconds: Double) = ModTransfer()
+        .string(title)
+        .string(description)
+        .double(seconds)
+        .send("func:alert", player)
 
     @JvmStatic
     fun alert(player: Player, title: String, description: String) {

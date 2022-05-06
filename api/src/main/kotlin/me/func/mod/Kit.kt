@@ -9,8 +9,10 @@ import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
+import me.func.mod.util.fileLastName
 import me.func.protocol.Mod
 import net.minecraft.server.v1_12_R1.MinecraftServer
+import net.minecraft.server.v1_12_R1.SoundEffects.id
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Sound
@@ -27,7 +29,7 @@ import org.bukkit.event.player.PlayerQuitEvent
 import ru.cristalix.core.formatting.Formatting
 import java.util.EnumSet
 
-val STANDARD_MOD_URL = MOD_STORAGE_URL + "mod-bundle.jar"
+val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-mod-bundle.jar"
 val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
 
 @PublishedApi
@@ -35,13 +37,13 @@ internal object StandardMods : Listener {
     val mods: EnumSet<Mod> = EnumSet.noneOf(Mod::class.java)
 
     init {
-        ModLoader.loadFromWeb(STANDARD_MOD_URL, MOD_LOCAL_DIR_NAME)
+        ModLoader.loadFromWeb(STANDARD_MOD_URL)
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     fun PlayerJoinEvent.handle() {
         if (mods.isNotEmpty()) {
-            ModLoader.send("mod-bundle.jar", player)
+            ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
 
             ModTransfer()
                 .integer(mods.size)
@@ -83,6 +85,16 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
         fun PlayerUseUnknownEntityEvent.handle() {
             npcs[entityId]?.click?.accept(this)
         }
+
+        @EventHandler
+        fun PlayerChangedWorldEvent.handle() {
+            // Если игрок сменил мир, отправить ему NPC в его мире
+            MinecraftServer.SERVER.postToMainThread {
+                npcs.forEach { (_, npc) -> npc.hide(player) }
+                npcs.filter { it.value.worldUuid == null || it.value.worldUuid == player.world.uid }
+                    .forEach { (_, npc) -> npc.spawn(player) }
+            }
+        }
     },
     BATTLEPASS({ StandardMods.mods.add(Mod.BATTLEPASS) }) {
         @EventHandler(priority = EventPriority.LOW)
@@ -119,7 +131,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
                 Anime.loadTexture(player, "https://storage.c7x.ru/func/animation-api/graffiti.png")
 
                 // Отправить игроку мод
-                ModLoader.send("graffiti-bundle.jar", player)
+                ModLoader.send(GRAFFITI_MOD_URL.fileLastName(), player)
 
                 // Отправка всех действующих граффити игроку в его мире
                 GraffitiManager.sendGraffitiBulk(player)

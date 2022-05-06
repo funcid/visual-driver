@@ -5,14 +5,17 @@ import me.func.mod.conversation.ModTransfer
 import me.func.protocol.npc.NpcData
 import net.minecraft.server.v1_12_R1.ItemStack
 import org.bukkit.Bukkit
+import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.inventory.EquipmentSlot
 import org.bukkit.inventory.EquipmentSlot.*
+import java.util.*
 import java.util.function.Consumer
 
 data class NpcSmart(
     var data: NpcData,
     var click: Consumer<PlayerUseUnknownEntityEvent>? = null,
+    var worldUuid: UUID? = null,
     private var leftArm: ItemStack? = null,
     private var rightArm: ItemStack? = null,
     private var head: ItemStack? = null,
@@ -31,6 +34,10 @@ data class NpcSmart(
             FEET -> feet = itemStack
         }
     }
+
+    fun setWorld(world: World) = apply { worldUuid = world.uid }
+
+    fun setWorld(world: UUID) = apply { worldUuid = world }
 
     fun slot(slot: EquipmentSlot, itemStack: ItemStack): NpcSmart {
         setSlot(slot, itemStack)

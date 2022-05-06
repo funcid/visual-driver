@@ -18,7 +18,7 @@ class NpcData(
     var slimArms: Boolean = false,
     var sneaking: Boolean = false,
     var sleeping: Boolean = false,
-    var sitting: Boolean = false
+    var sitting: Boolean = false,
 ) {
     constructor(init: NpcData.() -> Unit) : this() { this.init() }
 }
