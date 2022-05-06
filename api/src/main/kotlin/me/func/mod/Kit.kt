@@ -178,6 +178,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
         }
     },
     DEBUG,
+    STORE({ StandardMods.mods.add(Mod.STORE) }),
     ;
 
     constructor(setup: () -> Unit) : this(null, setup)
