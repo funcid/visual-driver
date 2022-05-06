@@ -33,8 +33,6 @@ val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
 internal object StandardMods : Listener {
     val mods: MutableList<Mod> = arrayListOf()
 
-    private val modSent: MutableList<Player> = arrayListOf()
-
     init {
         ModLoader.loadFromWeb(STANDARD_MOD_URL, MOD_LOCAL_DIR_NAME)
     }
@@ -42,9 +40,7 @@ internal object StandardMods : Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     fun PlayerJoinEvent.handle() {
         if (mods.isNotEmpty()) {
-            if (!modSent.contains(player)) {
-                ModLoader.send("mod-bundle.jar", player)
-            }
+            ModLoader.send("mod-bundle.jar", player)
 
             ModTransfer()
                 .integer(mods.size)
@@ -52,11 +48,6 @@ internal object StandardMods : Listener {
                     mods.forEach { integer(it.ordinal) }
                 }.send("anime:loadmod", player)
         }
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    fun PlayerQuitEvent.handle() {
-        modSent.remove(player)
     }
 }
 
