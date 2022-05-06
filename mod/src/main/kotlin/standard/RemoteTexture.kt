@@ -38,6 +38,8 @@ fun loadTextures(urlString: String, vararg info: RemoteTexture): CompletableFutu
                 val renderEngine = api.renderEngine()
                 mc.execute {
                     renderEngine.loadTexture(photo.location, renderEngine.newImageTexture(image, false, false))
+
+                    return@execute
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -45,6 +47,5 @@ fun loadTextures(urlString: String, vararg info: RemoteTexture): CompletableFutu
             }
         }
     }
-
 fun load(path: String, hash: String): RemoteTexture =
     RemoteTexture(ResourceLocation.of(NAMESPACE, path), hash)

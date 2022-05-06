@@ -1,6 +1,5 @@
 package chat
 
-import Mod
 import dev.xdark.clientapi.event.chat.ChatReceive
 import dev.xdark.clientapi.gui.ChatOverlay
 import dev.xdark.clientapi.text.Text
@@ -20,8 +19,23 @@ import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
 context(KotlinMod)
-class ChatMod : Mod {
-    override fun load() {
+class ChatMod {
+    private var currentChat = 1
+
+    private val chats: MutableMap<Int, Chat> = LinkedHashMap(4)
+
+    init {
+        // Общий межсерверный чат
+        chats[1] = createChat("О")
+        // Системный чат
+        chats[2] = createChat("С")
+        // Боевой чат
+        chats[3] = createChat("Б")
+        // Групповой чат
+        chats[4] = createChat("Г")
+        // Торговый чат
+        chats[5] = createChat("Т")
+
         val activeColor = Color(42, 102, 189, 1.0)
         val nonActiveColor = Color(alpha = 0.68)
 
@@ -82,21 +96,6 @@ class ChatMod : Mod {
         }
     }
 
-    private val chats = mutableMapOf(
-        // Общий межсерверный чат
-        1 to createChat("О"),
-        // Системный чат
-        2 to createChat("С"),
-        // Боевой чат
-        3 to createChat("Б"),
-        // Групповой чат
-        4 to createChat("Г"),
-        // Торговый чат
-        5 to createChat("Т")
-    )
-
-    private var currentChat = 1
-
     private fun handleMessage(chatId: Int, message: Text) {
         chats[chatId]?.apply {
             if (currentChat != chatId) {
@@ -124,9 +123,7 @@ class ChatMod : Mod {
     private fun createChat(name: String): Chat =
         Chat(
             name,
-            ChatOverlay.Builder.builder()
-                .minecraft(UIEngine.clientApi.minecraft())
-                .build(),
+            ChatOverlay.Builder.builder().minecraft(UIEngine.clientApi.minecraft()).build(),
             rectangle {
                 align = BOTTOM_LEFT
                 origin = BOTTOM_LEFT

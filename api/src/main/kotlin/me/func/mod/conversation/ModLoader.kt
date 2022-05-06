@@ -18,7 +18,12 @@ import ru.cristalix.core.util.UtilNetty
 import java.io.File
 import java.io.FileInputStream
 import java.net.URL
-import java.nio.file.*
+import java.nio.file.FileVisitResult
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.SimpleFileVisitor
+import java.nio.file.StandardCopyOption
 import java.nio.file.attribute.BasicFileAttributes
 import kotlin.io.path.absolutePathString
 
@@ -127,8 +132,11 @@ object ModLoader {
 
     @JvmStatic
     fun manyToOne(player: Player) =
-        mods.keys.filter { mod -> Kit.values().none { it.fromUrl.split('/').last() == mod } }
-            .forEach { send(it, player) }
+        mods.keys.filter { mod ->
+            Kit.values()
+                .filter { it.fromUrl != null }
+                .none { it.fromUrl!!.split('/').last() == mod }
+        }.forEach { send(it, player) }
 
     @JvmStatic
     fun oneToMany(modName: String) = Bukkit.getOnlinePlayers().forEach { send(modName, it) }

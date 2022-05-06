@@ -1,14 +1,13 @@
 package standard
 
-import Mod
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 
 const val NAMESPACE = "cache/animation"
 
 context(KotlinMod)
-class Standard : Mod {
-    override fun load() {
+class Standard {
+    init {
         IndicatorsManager()
         MarkerManager()
         ExternalManager()

@@ -14,6 +14,7 @@ import dev.xdark.clientapi.event.render.PlayerListRender
 import dev.xdark.clientapi.event.render.PotionsRender
 import dev.xdark.clientapi.event.render.VehicleHealthRender
 import me.func.protocol.Indicators
+import kotlin.reflect.KClass
 
 import ru.cristalix.clientapi.KotlinMod
 
@@ -28,23 +29,25 @@ class IndicatorsManager {
         changeIt("func:hide-it", true)
         changeIt("func:show-it", false)
 
-        register<HealthRender>(Indicators.HEALTH)
-        register<ExpBarRender>(Indicators.EXP)
-        register<HungerRender>(Indicators.HUNGER)
-        register<ArmorRender>(Indicators.ARMOR)
-        register<VehicleHealthRender>(Indicators.VEHICLE)
-        register<PlayerListRender>(Indicators.TAB)
-        register<HotbarRender>(Indicators.HOT_BAR)
-        register<AirBarRender>(Indicators.AIR_BAR)
-        register<PotionsRender>(Indicators.POTIONS)
-        register<HandRender>(Indicators.HAND)
-        register<NameTemplateRender>(Indicators.NAME_TEMPLATE)
+        register(HealthRender::class.java, Indicators.HEALTH)
+        register(ExpBarRender::class.java, Indicators.EXP)
+        register(HungerRender::class.java, Indicators.HUNGER)
+        register(ArmorRender::class.java, Indicators.ARMOR)
+        register(VehicleHealthRender::class.java, Indicators.VEHICLE)
+        register(PlayerListRender::class.java, Indicators.TAB)
+        register(HotbarRender::class.java, Indicators.HOT_BAR)
+        register(AirBarRender::class.java, Indicators.AIR_BAR)
+        register(PotionsRender::class.java, Indicators.POTIONS)
+        register(HandRender::class.java, Indicators.HAND)
+        register(NameTemplateRender::class.java, Indicators.NAME_TEMPLATE)
     }
 
-    private inline fun <reified T> register(indicator: Indicators)
+    private fun <T> register(clazz: Class<T>, indicator: Indicators)
         where T : Event,
               T : Cancellable {
-        registerHandler<T> { if (states[indicator] == true) isCancelled = true }
+        Event.bus(clazz).register(listener, {
+            if (states[indicator] == true) it.isCancelled = true
+        }, 1)
     }
 
     private fun changeIt(channel: String, value: Boolean) {

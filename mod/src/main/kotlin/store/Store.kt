@@ -1,6 +1,5 @@
 package store
 
-import Mod
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
@@ -11,10 +10,10 @@ import store.util.item
 const val MARGIN = 4.0
 
 context(KotlinMod)
-class Store : Mod {
+class Store {
     lateinit var signageScreen: SignageScreen
 
-    override fun load() {
+    init {
         // Создание магазина, в котором определённое количество кнопок.
         registerChannel("store:make") {
             signageScreen = SignageScreen(*MutableList(readInt()) {

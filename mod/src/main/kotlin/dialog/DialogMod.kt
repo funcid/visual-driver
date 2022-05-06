@@ -1,6 +1,5 @@
 package dialog
 
-import Mod
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -34,7 +33,7 @@ import ru.cristalix.uiengine.utility.text
 import kotlin.math.sign
 
 context(KotlinMod)
-class DialogMod : Mod {
+class DialogMod {
     lateinit var buttons: RectangleElement
     lateinit var buttonCursor: RectangleElement
     lateinit var buttonsBG: RectangleElement
@@ -64,7 +63,7 @@ class DialogMod : Mod {
     private val buttonHotkeyNames: Array<Char> = arrayOf('G', 'Y', 'Z', 'X')
     private val buttonHotkeys: Array<Int> = arrayOf(Keyboard.KEY_G, Keyboard.KEY_Y, Keyboard.KEY_Z, Keyboard.KEY_X)
 
-    override fun load() {
+    init {
         buttons = rectangle { }
         buttonCursor = rectangle {
             offset = V3(x = 1.0)

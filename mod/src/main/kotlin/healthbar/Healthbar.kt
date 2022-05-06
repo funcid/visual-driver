@@ -1,6 +1,5 @@
 package healthbar
 
-import Mod
 import dev.xdark.clientapi.entity.EntityLivingBase
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.RenderTickPre
@@ -22,8 +21,8 @@ import ru.cristalix.uiengine.utility.rotationMatrix
  * @author Рейдж
  */
 context(KotlinMod)
-class Healthbar : Mod {
-    override fun load() {
+class Healthbar {
+    init {
         val context = Context3D(V3())
         val bar = rectangle {
             origin = Relative.LEFT

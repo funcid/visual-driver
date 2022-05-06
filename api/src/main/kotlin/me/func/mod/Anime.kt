@@ -48,8 +48,10 @@ object Anime {
         }
 
         kits.filter { it != Kit.DEBUG }
-            .onEach { ModLoader.loadFromWeb(it.fromUrl, MOD_LOCAL_DIR_NAME) }
-            .forEach { it.init() }
+            .onEach {
+                it.fromUrl?.let { url -> ModLoader.loadFromWeb(url, MOD_LOCAL_DIR_NAME) }
+                it.init()
+            }
     }
 
     @JvmStatic

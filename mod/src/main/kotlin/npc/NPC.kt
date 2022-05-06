@@ -1,6 +1,5 @@
 package npc
 
-import Mod
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.inventory.EntityEquipmentSlot
 import dev.xdark.clientapi.item.ItemTools
@@ -18,8 +17,8 @@ import kotlin.math.atan2
 import kotlin.math.sqrt
 
 context(KotlinMod)
-class NPC : Mod {
-    override fun load() {
+class NPC {
+    init {
         // Утилита для работы с NPC
         val npcManager = NpcManager()
 

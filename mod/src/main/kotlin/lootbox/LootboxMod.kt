@@ -1,6 +1,5 @@
 package lootbox
 
-import Mod
 import dev.xdark.clientapi.event.input.MousePress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.network.PluginMessage
@@ -18,8 +17,8 @@ import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 
 context(KotlinMod)
-class LootboxMod : Mod {
-    override fun load() {
+class LootboxMod {
+    init {
         val crateScreen = CrateScreen()
         var ready = false
         var pressed = false
