@@ -23,8 +23,6 @@
 
 -keep, allowoptimization class MAINCLASS
 
--keep, allowobfuscation class ru.cristalix.uiengine.UIEngine
-
 -keepclassmembers, allowoptimization class ** {
     public void load(dev.xdark.clientapi.ClientApi);
     public void unload();

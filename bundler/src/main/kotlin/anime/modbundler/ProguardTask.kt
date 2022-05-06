@@ -18,7 +18,6 @@ import org.gradle.kotlin.dsl.property
 import proguard.gradle.ProGuardTask
 import java.nio.file.Files
 
-@CacheableTask
 open class ProguardTask : ProGuardTask() {
     @get:[InputFile Classpath]
     val input: RegularFileProperty = project.objects.fileProperty()
