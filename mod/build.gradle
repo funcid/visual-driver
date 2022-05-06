@@ -11,6 +11,12 @@ dependencies {
     implementation project(':protocol')
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs = freeCompilerArgs + ["-Xcontext-receivers"]
+    }
+}
+
 mod {
     name = "Animation Api"
     main = "Main"
