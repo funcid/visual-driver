@@ -22,6 +22,7 @@
 -repackageclasses _
 
 -keep, allowoptimization class MAINCLASS
+-keep, allowoptimization class MAINCLASS$**
 
 -keepclassmembers, allowoptimization class ** {
     public void load(dev.xdark.clientapi.ClientApi);
