@@ -2,7 +2,6 @@ package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.Anime.graffitiClient
-import me.func.mod.Anime.provided
 import me.func.mod.Npc.npcs
 import me.func.mod.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
@@ -14,7 +13,6 @@ import me.func.mod.util.fileLastName
 import me.func.mod.util.listener
 import me.func.protocol.Mod
 import net.minecraft.server.v1_12_R1.MinecraftServer
-import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 import org.bukkit.event.EventHandler
@@ -76,7 +74,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     NPC({ StandardMods.mods.add(Mod.NPC) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            after { npcs.forEach { (_, value) -> value.spawn(player) } }
+            after(3) { npcs.forEach { (_, value) -> value.spawn(player) } }
         }
 
         @EventHandler
@@ -87,8 +85,8 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
         @EventHandler
         fun PlayerChangedWorldEvent.handle() {
             // Если игрок сменил мир, отправить ему NPC в его мире
-            after {
-                npcs.forEach { (_, npc) -> npc.hide(player) }
+            npcs.forEach { (_, npc) -> npc.hide(player) }
+            after(5) {
                 npcs.filter { it.value.worldUuid == null || it.value.worldUuid == player.world.uid }
                     .forEach { (_, npc) -> npc.spawn(player) }
             }

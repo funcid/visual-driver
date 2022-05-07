@@ -1,7 +1,7 @@
 import battlepass.BattlePass
 import chat.ChatMod
 import dev.xdark.clientapi.event.chat.ChatSend
-import dev.xdark.clientapi.text.Text
+import dev.xdark.clientapi.event.network.PluginMessage
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
@@ -14,8 +14,6 @@ import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import standard.Standard
 import store.Store
-import sun.security.jgss.GSSToken.readInt
-import java.awt.SystemColor.text
 
 class Main : KotlinMod() {
     override fun onEnable() {
@@ -37,27 +35,30 @@ class Main : KotlinMod() {
             }
         }
 
+        val apiPrefix = "§a§lAPI §7"
+
+        fun message(message: String) = clientApi.chat().printChatMessage(apiPrefix + message)
 
         registerChannel("anime:debug") {
             val fields = readInt()
-
-            fun exists(int: Int, text: String) {
-                if (fields > int) clientApi.chat().printChatMessage("§7" + text + ": §b" + NetUtil.readUtf8(this))
-            }
-
-            clientApi.chat().printChatMessage("§bi §fAnimation-API успешно работает! §n§bhttps://github.com/cristalix-arcades/animation-api-docs")
-            exists(0, "API Version")
-            exists(1, "Standards Mods")
-            exists(2, "Custom Mods")
-            exists(3, "Storage Mods")
-            exists(4, "Allocated Mods")
+            repeat(6) { if (fields > it) message(NetUtil.readUtf8(this).replace(": ", ": §b")) }
         }
+
+        var debugChannels = false
 
         registerHandler<ChatSend> {
             if (message.startsWith("/func:debug")) {
                 clientApi.clientConnection().sendPayload("anime:debug", Unpooled.EMPTY_BUFFER)
                 isCancelled = true
+            } else if (message.startsWith("/func:channels")) {
+                debugChannels = !debugChannels
+                message("Статус отладки каналов: $debugChannels")
+                isCancelled = true
             }
+        }
+
+        registerHandler<PluginMessage> {
+            if (debugChannels) message("Канал: §b$channel§7, размер сообщения §b${data.readableBytes()} §7байт.")
         }
     }
 }
