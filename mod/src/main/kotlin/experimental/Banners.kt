@@ -33,23 +33,24 @@ class Banners {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
-                    uuid,
-                    MotionType.values()[readInt()],
-                    readBoolean(),
-                    mutableMapOf(
-                        "yaw" to readDouble(),
-                        "pitch" to readDouble(),
-                    ), NetUtil.readUtf8(this@registerChannel),
-                    readDouble(),
-                    readDouble(),
-                    readDouble(),
-                    readInt(),
-                    readInt(),
-                    NetUtil.readUtf8(this@registerChannel),
-                    readInt(),
-                    readInt(),
-                    readInt(),
-                    readDouble()
+                    uuid = uuid,
+                    motionType = MotionType.values()[readInt()],
+                    watchingOnPlayer = readBoolean(),
+                    motionSettings = hashMapOf<String, Any>().also { // НЕ ПИХАТЬ ДОБАВЛЕНИЕ СРАЗУ В ( сюда )
+                        it["yaw"] = readDouble()
+                        it["pitch"] = readDouble()
+                    },
+                    content = NetUtil.readUtf8(this@registerChannel),
+                    x = readDouble(),
+                    y = readDouble(),
+                    z = readDouble(),
+                    height = readInt(),
+                    weight = readInt(),
+                    texture = NetUtil.readUtf8(this@registerChannel),
+                    red = readInt(),
+                    green = readInt(),
+                    blue = readInt(),
+                    opacity = readDouble()
                 )
 
                 if (banner.motionType == MotionType.STEP_BY_TARGET) {
@@ -94,11 +95,11 @@ class Banners {
         registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
-            	if (pair.second.children.isNotEmpty()) {
-            	    val element = (pair.second.children[0] as RectangleElement)
-            	    element.children.clear()
-            	    text(NetUtil.readUtf8(this), pair.first, element)	
-            	}
+                if (pair.second.children.isNotEmpty()) {
+                    val element = (pair.second.children[0] as RectangleElement)
+                    element.children.clear()
+                    text(NetUtil.readUtf8(this), pair.first, element)
+                }
             }
         }
 
