@@ -94,9 +94,11 @@ class Banners {
         registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
-                val element = (pair.second.children[0] as RectangleElement)
-                element.children.clear()
-                text(NetUtil.readUtf8(this), pair.first, element)
+            	if (pair.second.children.isNotEmpty()) {
+            	    val element = (pair.second.children[0] as RectangleElement)
+            	    element.children.clear()
+            	    text(NetUtil.readUtf8(this), pair.first, element)	
+            	}
             }
         }
 
