@@ -3,6 +3,7 @@ package standard
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -20,6 +21,7 @@ import ru.cristalix.uiengine.utility.get
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.set
 import ru.cristalix.uiengine.utility.text
+import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class TimeBar {
@@ -70,7 +72,7 @@ class TimeBar {
             line.color = Color(readInt(), readInt(), readInt(), 1.0)
 
             if (time == 0) {
-                line.size.x = 0.0
+                line.animate(1.0) { size.x = 180.0 }
                 cooldown.enabled = false
                 return@registerChannel
             }
