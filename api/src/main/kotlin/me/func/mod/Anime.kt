@@ -4,6 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import me.func.mod.conversation.AutoSendRegistry
+import me.func.mod.conversation.Debug
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
@@ -40,25 +41,7 @@ object Anime {
     init {
         log("Enabling animation-api, version: $VERSION")
         listener(StandardMods, Glow, AutoSendRegistry)
-
-        // Канал для отправки клиенту информации для отладки
-        var lastUseDebugCommand = 0L
-        createReader("anime:debug") { player, _ ->
-            val now = System.currentTimeMillis()
-            if (now - lastUseDebugCommand < 5000)
-                return@createReader
-            lastUseDebugCommand = now
-
-            val listMod = listFiles(MOD_LOCAL_DIR_NAME)?.apply { listFiles(MOD_LOCAL_TEST_DIR_NAME)?.let { addAll(it) } }
-
-            ModTransfer(5) // Сколько строк отладки выводить
-                .string(VERSION)
-                .string(StandardMods.mods.joinToString(", ") { it.name })
-                .string(ModLoader.mods.keys.filter { it != STANDARD_MOD_URL.fileLastName() }.joinToString(", ") { it })
-                .string("${(listMod?.sumOf { it.length() } ?: 0) / 1024}KB")
-                .string("${(listMod?.filter { ModLoader.mods.containsKey(it.name.fileLastName()) }?.sumOf { it.length() } ?: 0) / 1024}KB")
-                .send("anime:debug", player)
-        }
+        Debug // Инициализации команды и обработчика сообщений
     }
 
     @JvmStatic

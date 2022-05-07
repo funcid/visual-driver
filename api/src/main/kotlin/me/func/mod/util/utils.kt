@@ -6,10 +6,20 @@ import net.minecraft.server.v1_12_R1.NBTTagCompound
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
+import org.bukkit.command.ConsoleCommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitTask
+
+fun consoleCommand(name: String, consumer: () -> Unit) =
+    Bukkit.getCommandMap().register("anime", object : Command(name) {
+        override fun execute(sender: CommandSender, var2: String, agrs: Array<out String>): Boolean {
+            if (sender is ConsoleCommandSender)
+                consumer.invoke()
+            return true
+        }
+    })
 
 fun command(name: String, consumer: (Player, Array<out String>) -> Unit) =
     Bukkit.getCommandMap().register("anime", object : Command(name) {
