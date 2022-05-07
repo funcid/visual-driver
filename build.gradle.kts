@@ -30,7 +30,9 @@ subprojects {
     }
 
     tasks {
-        withType<Jar> { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
+        withType<Jar> {
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        }
         withType<JavaCompile> { options.encoding = "UTF-8" }
         withType<KotlinCompile> {
             kotlinOptions {

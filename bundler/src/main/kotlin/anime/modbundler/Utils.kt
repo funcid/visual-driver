@@ -1,9 +1,6 @@
-package anime
+package anime.modbundler
 
 import java.io.File
-import java.net.URI
-import java.nio.file.FileSystem
-import java.nio.file.FileSystems
 import java.nio.file.Files
 import kotlin.random.Random
 import kotlin.reflect.KClass

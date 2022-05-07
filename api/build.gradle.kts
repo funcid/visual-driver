@@ -9,6 +9,21 @@ dependencies {
     api(project(":protocol-serialization"))
 }
 
+val bundle: Provider<Directory> = project(":mod").layout.buildDirectory.dir("bundle")
+
+tasks {
+    jar {
+        inputs.dir(bundle)
+        dependsOn(":mod:proguardJar")
+    }
+}
+
+sourceSets {
+    main {
+        resources.srcDir(bundle)
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {

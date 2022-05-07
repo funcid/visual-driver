@@ -1,6 +1,5 @@
 package anime.modbundler
 
-import anime.GradlePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.file.DuplicatesStrategy
@@ -29,19 +28,22 @@ class ModBundlerPlugin : Plugin<Project> {
             resources.srcDir(generateModPropertiesTask)
         }
 
-        tasks.register<ProguardTask>("proguardJar") {
-            input.set(tasks.getByName<Jar>("jar").archiveFile)
-            outputFile.set(project.layout.buildDirectory.file("libs/${project.name}-bundle.jar"))
-            mainClass.set(ext.main)
-        }.let { tasks.getByName("build").dependsOn(it) }
-
         tasks.getByName<Jar>("jar") {
             doFirst {
                 from(configurations.getByName("runtimeClasspath")
                     .map { if (it.isDirectory) it else zipTree(it) })
+
+                duplicatesStrategy = DuplicatesStrategy.INCLUDE
+                include("**/*.class", "*.class", "mod.properties")
             }
-            duplicatesStrategy = DuplicatesStrategy.INCLUDE
-            include("**/*.class", "*.class", "mod.properties")
         }
+
+        tasks.register<ProguardTask>("proguardJar") {
+            input.set(tasks.getByName<Jar>("jar").archiveFile)
+            outputFile.set(
+                project.layout.buildDirectory.file("bundle/${ext.jarFileName ?: "${project.name}-bundle.jar"}")
+            )
+            mainClass.set(ext.main)
+        }.let { tasks.getByName("jar").finalizedBy(it) }
     }
 }
