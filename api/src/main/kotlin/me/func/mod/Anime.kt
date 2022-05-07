@@ -3,6 +3,7 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.mod.conversation.AutoSendRegistry
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.DailyReward
@@ -38,7 +39,7 @@ object Anime {
 
     init {
         log("Enabling animation-api, version: $VERSION")
-        Bukkit.getPluginManager().registerEvents(StandardMods, provided)
+        listener(StandardMods, Glow, AutoSendRegistry)
 
         // Канал для отправки клиенту информации для отладки
         var lastUseDebugCommand = 0L

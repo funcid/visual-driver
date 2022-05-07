@@ -5,10 +5,7 @@ import me.func.mod.Anime.reload
 import me.func.mod.MOD_LOCAL_TEST_DIR_NAME
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.util.dir
-import me.func.mod.util.fileLastName
-import me.func.mod.util.log
-import me.func.mod.util.warn
+import me.func.mod.util.*
 import org.bukkit.Bukkit
 import ru.cristalix.core.formatting.Formatting
 import java.nio.file.*
@@ -60,8 +57,6 @@ internal object ModWatcher {
         if (cooldown.contains(modName))
             return
 
-        fun wait(ticks: Long, doing: () -> Any) = Bukkit.getScheduler().runTaskLater(Anime.provided, { doing.invoke() }, ticks)
-
         if (tries < 0) {
             warn("Mod debug update failure! 10 tries has left.")
             return
@@ -76,11 +71,11 @@ internal object ModWatcher {
                     reload(props)
 
                     cooldown.add(modName)
-                    wait(100) { cooldown.remove(modName) }
+                    after(100) { cooldown.remove(modName) }
                 }
             }
         } catch (_: Throwable) {
-            wait(5) { tryLoadUpdateMod(modName, resolved, tries - 1) }
+            after(5) { tryLoadUpdateMod(modName, resolved, tries - 1) }
         }
     }
 

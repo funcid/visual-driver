@@ -1,6 +1,7 @@
 package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.util.listener
 import me.func.protocol.GlowColor
 import me.func.protocol.GlowingPlace
 import org.bukkit.Bukkit
@@ -16,10 +17,6 @@ object Glow : Listener {
 
     val glowingPlaces = mutableMapOf<UUID, GlowingPlace>()
     private val playerAccepter = mutableMapOf<UUID, Consumer<Player>>()
-
-    init {
-        Bukkit.getPluginManager().registerEvents(this, Anime.provided)
-    }
 
     @JvmStatic
     fun toRGB(alertColor: GlowColor): Int {

@@ -9,11 +9,12 @@ import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
+import me.func.mod.util.after
 import me.func.mod.util.fileLastName
+import me.func.mod.util.listener
 import me.func.protocol.Mod
 import net.minecraft.server.v1_12_R1.MinecraftServer
 import org.bukkit.Bukkit
-import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 import org.bukkit.event.EventHandler
@@ -21,7 +22,6 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
-import java.nio.file.Paths
 import java.util.*
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.toPath
@@ -69,18 +69,14 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     EXPERIMENTAL({ StandardMods.mods.add(Mod.EXPERIMENTAL) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                Banners.show(player, *Banners.banners.map { it.value }.toTypedArray())
-            }
+            after { Banners.show(player, *Banners.banners.map { it.value }.toTypedArray()) }
         }
     },
     MULTI_CHAT({ StandardMods.mods.add(Mod.CHAT) }),
     NPC({ StandardMods.mods.add(Mod.NPC) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                npcs.forEach { (_, value) -> value.spawn(player) }
-            }
+            after { npcs.forEach { (_, value) -> value.spawn(player) } }
         }
 
         @EventHandler
@@ -91,7 +87,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
         @EventHandler
         fun PlayerChangedWorldEvent.handle() {
             // Если игрок сменил мир, отправить ему NPC в его мире
-            MinecraftServer.SERVER.postToMainThread {
+            after {
                 npcs.forEach { (_, npc) -> npc.hide(player) }
                 npcs.filter { it.value.worldUuid == null || it.value.worldUuid == player.world.uid }
                     .forEach { (_, npc) -> npc.spawn(player) }
@@ -101,9 +97,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     BATTLEPASS({ StandardMods.mods.add(Mod.BATTLEPASS) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            MinecraftServer.SERVER.postToMainThread {
-                BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) }
-            }
+            after { BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) } }
         }
     },
     HEALTH_BAR({ StandardMods.mods.add(Mod.HEALTHBAR) }),
@@ -128,7 +122,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
             // Загрузка нового клиента
             graffitiClient = graffitiClient ?: CoreGraffitiClient()
 
-            Bukkit.getScheduler().runTaskLater(provided, {
+            after(5) {
                 // Отправить картинку с граффити
                 Anime.loadTexture(player, "https://storage.c7x.ru/func/animation-api/graffiti.png")
 
@@ -183,7 +177,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
                     // Если же данные не загрузились
                     player.sendMessage(Formatting.error("Сервер не получил данных от сервиса граффити."))
                 }
-            }, 5)
+            }
         }
 
         @EventHandler
@@ -200,6 +194,6 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
 
     fun init() {
         setup()
-        getPluginManager().registerEvents(this, provided)
+        listener(this)
     }
 }
