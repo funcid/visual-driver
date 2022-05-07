@@ -54,8 +54,8 @@ object Anime {
                 .string(VERSION)
                 .string(StandardMods.mods.joinToString(", ") { it.name })
                 .string(ModLoader.mods.keys.filter { it != STANDARD_MOD_URL.fileLastName() }.joinToString(", ") { it })
-                .string("${(listMod?.sumOf { it.length() } ?: 0) / 1024} KB")
-                .string("${(listMod?.filter { ModLoader.mods.containsKey(it.name.fileLastName()) }?.sumOf { it.length() } ?: 0) / 1024} KB")
+                .string("${(listMod?.sumOf { it.length() } ?: 0) / 1024}KB")
+                .string("${(listMod?.filter { ModLoader.mods.containsKey(it.name.fileLastName()) }?.sumOf { it.length() } ?: 0) / 1024}KB")
                 .send("anime:debug", player)
         }
     }

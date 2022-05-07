@@ -21,7 +21,10 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
+import java.nio.file.Paths
 import java.util.*
+import kotlin.io.path.absolutePathString
+import kotlin.io.path.toPath
 
 val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-mod-bundle.jar"
 val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
@@ -31,7 +34,10 @@ internal object StandardMods : Listener {
     val mods: EnumSet<Mod> = EnumSet.noneOf(Mod::class.java)
 
     init {
-        ModLoader.loadFromWeb(STANDARD_MOD_URL)
+        // Если не получилось скачать мод с сервера, загрузить его из ресурсов
+        ModLoader.load(ModLoader.download(STANDARD_MOD_URL).ifEmpty {
+            javaClass.getResource("/${STANDARD_MOD_URL.fileLastName()}")!!.toURI().toPath().absolutePathString()
+        })
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -41,8 +47,8 @@ internal object StandardMods : Listener {
                 ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
 
                 MinecraftServer.SERVER.postToNextTick {
-                    ModTransfer(mods.size).apply { 
-                        mods.forEach { integer(it.ordinal) } 
+                    ModTransfer(mods.size).apply {
+                        mods.forEach { integer(it.ordinal) }
                     }.send("anime:loadmod", player)
                 }
             }
