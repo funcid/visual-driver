@@ -16,12 +16,20 @@ object Banners {
 
     val banners = mutableMapOf<UUID, Banner>()
 
+    @JvmSynthetic
     fun new(data: Banner.() -> Unit) = new(Banner().apply(data))
+
+    /**
+     * Java compatibility
+     * @see Banners.add
+     */
+    @JvmStatic
+    fun add(banner: Banner): Banner = new(banner)
 
     @JvmStatic
     fun new(banner: Banner): Banner {
         if (banners.size > 500) {
-            warn("Banners map size > 500! Stop add banners!")
+            warn("[CRITICAL] Banners map size > 500! Stop add banners!")
             return banner
         }
         banners[banner.uuid] = banner

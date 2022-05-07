@@ -25,8 +25,9 @@ class Banner(
 ) {
     constructor(init: Banner.() -> Unit) : this() { this.init() }
 
-    class Builder(val banner: Banner = Banner()) {
+    fun builder() = Builder()
 
+    class Builder(val banner: Banner = Banner()) {
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
         fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }
         fun content(vararg content: String) = apply { banner.content = content.joinToString("\n") }

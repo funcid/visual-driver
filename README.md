@@ -10,83 +10,96 @@
 2. Для упращения работы с модами, вынесенные утилиты вам помогут не писать лишний код
 3. Автоматическое обновление базового пакета модов (стандартный пакет, квесты, лутбокс и прочее)
 4. Единый стиль и оформление режимов
-<br>
+   <br>
 
 <h2>Как подключить? Какие модули есть?</h2>
 
-<h3>Get Started `with .gradle`</h3>
+<h3>Get Started with `gradle`</h3>
 
-```
+```groovy
 repositories {
-  mavenLocal()
-  mavenCentral()
-  maven {
-    url 'https://repo.c7x.ru/repository/maven-public/'
-    credentials {
-      username System.getenv("CRI_REPO_LOGIN")
-      password System.getenv("CRI_REPO_PASSWORD")
+    mavenCentral()
+    maven {
+        url 'https://repo.c7x.ru/repository/maven-public/'
+        credentials {
+            username System.getenv("CRI_REPO_LOGIN")
+            password System.getenv("CRI_REPO_PASSWORD")
+        }
     }
-  }
 }
 
 dependencies {
-  implementation 'me.func:animation-api:live-SNAPSHOT'
-  implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+    implementation 'me.func:animation-api:live-SNAPSHOT'
 }
 ```
 
 <h3>Модули</h3>
 
-`STANDARD` - стандартный набор модов (by <a href="https://vk.com/kostyan_konovalov">@fiwka</a>, <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
-`DIALOG` - кит с квестовыми диалогами (by <a href="https://vk.com/sworroo">@sworroo</a>, <a href="https://vk.com/funcid">@func</a>)<br>
-`LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>, <a href="https://vk.com/funcid">@func</a>)<br>
+`STANDARD` - стандартный набор модов (by <a href="https://vk.com/kostyan_konovalov">@fiwka</a>
+, <a href="https://vk.com/funcid">@func</a>, <a href="https://vk.com/delfikpro">@delfikpro</a>
+, <a href="https://vk.com/sworroo">@sworroo</a>)<br>
+`DIALOG` - кит с квестовыми диалогами (by <a href="https://vk.com/sworroo">@sworroo</a>
+, <a href="https://vk.com/funcid">@func</a>)<br>
+`LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>
+, <a href="https://vk.com/funcid">@func</a>)<br>
 `MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
 `GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@func</a>)<br>
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@func</a>)<br>
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@func</a>)<br>
-`BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>, <a href="https://vk.com/funcid">@func</a>)<br>
+`BATTLEPASS` - модуль для работы с BattlePass (by <a href="https://vk.com/akamex">@akamex</a>
+, <a href="https://vk.com/funcid">@func</a>)<br>
 `HEALTH_BAR` - модуль добавляющий полоску здоровья (by <a href="https://vk.com/delfikpro">@delfikpro</a>)<br>
-`DEBUG` - модуль для удобной разработки модов (by <a href="https://vk.com/func">@func</a>, <a href="https://vk.com/kostyan_konovalov">@fiwka</a>)<br>
+`DEBUG` - модуль для удобной разработки модов (by <a href="https://vk.com/func">@func</a>
+, <a href="https://vk.com/kostyan_konovalov">@fiwka</a>)<br>
 
 <h3>Подключение модулей</h3>
 
-При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
+При старте плагина напишите `Anime.include(Kit.STANDARD)`, так вы подключите стандартный набор модов, если вам нужны
+другие модули, например Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD (другие будут добавлены позже), то укажите их через
+запятую: `Anime.include(Kit.LOOTBOX, Kit.DIALOG, Kit.STANDARD)`
 <br>
-Моды берутся по вшитой ссылке на `cristalix storage`, если вы хотите заменить ссылку на наборы модов, используйте `env MOD_STORAGE_URL`, ссылка должна оканчиваться на `/`, не рекомендуется.
+Моды берутся по вшитой ссылке на `cristalix storage`, если вы хотите заменить ссылку на наборы модов,
+используйте `env MOD_STORAGE_URL`, ссылка должна оканчиваться на `/`, не рекомендуется.
 
 <h2>Скачивание, загрузка и отправка ваших модов - утилита ModLoader</h2>
 
 <h3>Быстрый старт без подробностей<h3>
 
 ![image](https://user-images.githubusercontent.com/42806772/166143350-fc66de27-e38b-4866-b764-2a73032c62bf.png)
-  
+
 ```kotlin
   // Вариант 1
-  ModLoader.loadFromWeb("https://storage.c7x.ru/func/cristalix-dialogs.jar") // Загрузка мода в стандартную папку MOD_LOCAL_DIR_NAME
-  ModLoader.onJoining("cristalix-dialogs") // Загрузка мода в плагин, отправка игрокам мода при входе
-  
-  // Вариант 2
-  ModLoader.onJoining("mod-bundle", "cristalix-dialogs") // Пойдет искать загруженные моды, если кто-то не загружен, загрузит его из стандартной папки "anime", затем моды будут отправлены игрокам при входах на сервер
-  
-  // Вариант 3
-  ModLoader.load("mods/mod-bundle.jar") // Загрузит мод по пути
-  ModLoader.send("mod-bundle.jar", player) // Отправит мод игроку
-  
-  // Вариант 4
-  ModLoader.loadAll("mods") // Загрузит все моды из папки mods
-  ModLoader.send("mod-bundle.jar", player) // Отправит мод игроку
+ModLoader.loadFromWeb("https://storage.c7x.ru/func/cristalix-dialogs.jar") // Загрузка мода в стандартную папку MOD_LOCAL_DIR_NAME
+ModLoader.onJoining("cristalix-dialogs") // Загрузка мода в плагин, отправка игрокам мода при входе
+
+// Вариант 2
+ModLoader.onJoining(
+    "mod-bundle",
+    "cristalix-dialogs"
+) // Пойдет искать загруженные моды, если кто-то не загружен, загрузит его из стандартной папки "anime", затем моды будут отправлены игрокам при входах на сервер
+
+// Вариант 3
+ModLoader.load("mods/mod-bundle.jar") // Загрузит мод по пути
+ModLoader.send("mod-bundle.jar", player) // Отправит мод игроку
+
+// Вариант 4
+ModLoader.loadAll("mods") // Загрузит все моды из папки mods
+ModLoader.send("mod-bundle.jar", player) // Отправит мод игроку
 ```
-  
+
 <h3>Скачивание модов (интернет -> машина)</h3>
 
-`download(fileUrl: String, saveDir: String)` скачивание файла по ссылке, в указанную папку (если файл уже скачан - он перезапишется), пример `download("http://cristalix.ru/cristalix-standard-mod.jar", "mods")`
+`download(fileUrl: String, saveDir: String)` скачивание файла по ссылке, в указанную папку (если файл уже скачан - он
+перезапишется), пример `download("http://cristalix.ru/cristalix-standard-mod.jar", "mods")`
 
 <h3>Загрузка модов в плагин (машина -> оперативная память)</h3>
 
-`loadFromWeb(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME)` загрузка файла в стандартную папку `anime` по адресу, затем прогрузка мода на уровнь плагина<br>
+`loadFromWeb(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME)` загрузка файла в стандартную папку `anime` по
+адресу, затем прогрузка мода на уровнь плагина<br>
 `loadManyFromWeb(vararg fileUrls: String)` то же самое, но можно указывать адреса через запятую<br>
 
-`load(filePath: String)` прогрузка мода указав путь к файлу (не web), мод сохраняется по ключу имени файла, например `mod-bundle.jar`<br>
+`load(filePath: String)` прогрузка мода указав путь к файлу (не web), мод сохраняется по ключу имени файла,
+например `mod-bundle.jar`<br>
 `loadAll(dirPath: String)` загрузить все моды из папки по путю к папке<br>
 
 <h3>Отправка мода игроку (оперативная память -> клиент игрока)</h3>
@@ -99,39 +112,44 @@ dependencies {
 <h2>Отправка данных на моды - конструктор ModTransfer</h2>
 
 ![image](https://user-images.githubusercontent.com/42806772/166143593-594bba87-0879-4843-b439-b0ec286c94c6.png)
-  
+
 ```kotlin
 // Пример 1 (Умный конструктор)
 ModTransfer("Осталось %n% жизней!", 76666).send("func:health", player)
-  
+
 // Пример 2 (Билдер)
 ModTransfer()
-  .item(ItemStack(AIR)) // Предмет, можно NMS, Bukkit
-  .nbt(NBTTagCompound()) // Любой тег
-  .string("Привет") // Строка
-  .json(object) // Любой объект, будет превращен в JSON строку
-  .byteBuffer("heyy".bytes()) // Массив byte
-  .double(43.5) // Прочие числа
-  .varInt(4) 
-  .putDouble(5.6) // Методы c "put" для Java
-  .send("func:lol", player)
+    .item(ItemStack(AIR)) // Предмет, можно NMS, Bukkit
+    .nbt(NBTTagCompound()) // Любой тег
+    .string("Привет") // Строка
+    .json(object) // Любой объект, будет превращен в JSON строку
+    .byteBuffer("heyy".bytes()) // Массив byte
+    .double(43.5) // Прочие числа
+    .varInt(4)
+    .putDouble(5.6) // Методы c "put" для Java
+    .send("func:lol", player)
 
 // Привет 3 (Переиспользование буффера) 
 val data = ModTransfer().integer(items.size)
-  .item(item.itemStack)
-  .string(item.title)
-  .string(item.rare.name)
+    .item(item.itemStack)
+    .string(item.title)
+    .string(item.rare.name)
 
 players.forEach { player -> data.send("lootbox", player) }  
 ```
-  
-<h3>Режим DEBUG (Для удобной разработки)</h3> 
+
+<h3>Режим DEBUG (Для удобной разработки)</h3>
 
 Простым языком: вы кидаете мод в папку, API это видит и перезагружает мод у игроков.
-  
-Данный режим позволяет мнгновенно обновлять мод на клиенте игрока, что очень удобно для быстрого тестировая. Обычные этапы разработки: написание кода -> компиляция -> заливка мода в папку сервера -> перезагрузка сервера -> вход на сервер -> загрузка мода, всего 6 этопов. С данным режимом: написание кода -> компиляция -> заливка мода в папку сервера -> смотрим, всего 4 этапа. Так же можно автоматически загруждать мод в папку прямо из среды разработки, но это уже задача вашей среды.
-Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods` является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
-  
+
+Данный режим позволяет мнгновенно обновлять мод на клиенте игрока, что очень удобно для быстрого тестировая. Обычные
+этапы разработки: написание кода -> компиляция -> заливка мода в папку сервера -> перезагрузка сервера -> вход на сервер
+-> загрузка мода, всего 6 этопов. С данным режимом: написание кода -> компиляция -> заливка мода в папку сервера ->
+смотрим, всего 4 этапа. Так же можно автоматически загруждать мод в папку прямо из среды разработки, но это уже задача
+вашей среды.
+Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods`
+является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
+
 <h3>Батлпасс</h3>
 
 <img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
@@ -140,71 +158,78 @@ players.forEach { player -> data.send("lootbox", player) }
 Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи.<br>
 
 ```kotlin
-    val battlePass = BattlePass.new(399) {
-        pages = mutableListOf(
-            BattlePassPageAdvanced( // Первая страница баттлпасса
-                300, // Опыт для прохождения уровня
-                10, // Цена скипа уровня
-                listOf( // Список обычных предметов
-                    NameTag.TAG1.getIcon(),
-                    ArrowParticle.SLIME.getIcon(),
-                    ArrowParticle.WATER_DROP.getIcon(),
-                    StepParticle.SLIME.getIcon(),
-                    Mask.HOUSTON.getIcon(),
-                    KillMessage.GLOBAL.getIcon(),
-                    MoneyKit.SMALL.getIcon(),
-                    ArrowParticle.FALLING_DUST.getIcon(),
-                    ArrowParticle.SPELL_INSTANT.getIcon(),
-                    Mask.JASON.getIcon(),
-                ),
-                listOf( // Список премиум предметов
-                    NameTag.TAG3.getIcon(),
-                    Mask.TRADEGY.getIcon(),
-                    Mask.HORROR.getIcon(),
-                    MoneyKit.SMALL.getIcon(),
-                    NameTag.TAG28.getIcon(),
-                    Mask.COMEDY_MASK.getIcon(),
-                    KillMessage.END.getIcon(),
-                    ArrowParticle.REDSTONE.getIcon(),
-                    StepParticle.REDSTONE.getIcon(),
-                    Corpse.G1.getIcon(),
-                ),
-            ), BattlePassPageAdvanced( // Вторая страница баттлпасса
-                600,
-                20,
-                listOf(
-                    KillMessage.DEAD.getIcon(),
-                    MoneyKit.SMALL.getIcon(),
-                    Mask.SCREAM.getIcon(),
-                    NameTag.TAG10.getIcon(),
-                    StepParticle.REDSTONE.getIcon(),
-                    KillMessage.ROOM.getIcon(),
-                    Mask.DALLAS.getIcon(),
-                    NameTag.TAG16.getIcon(),
-                    Mask.CREWMATE_LIME.getIcon(),
-                    MoneyKit.NORMAL.getIcon()
-                ),
-                listOf(
-                    MoneyKit.SMALL.getIcon(),
-                    KillMessage.SLEEP.getIcon(),
-                    Mask.CREWMATE_WHITE.getIcon(),
-                    NameTag.TAG17.getIcon(),
-                    Mask.JASON.getIcon(),
-                    ArrowParticle.VILLAGER_ANGRY.getIcon(),
-                    NameTag.TAG20.getIcon(),
-                    MoneyKit.NORMAL.getIcon(),
-                    Mask.CREWMATE_PURPLE.getIcon(),
-                    StepParticle.VILLAGER_ANGRY.getIcon()
-                ),
-            )
+val battlePass = BattlePass.new(399) {
+    pages = arrayListOf(
+        BattlePassPageAdvanced(
+            // Первая страница баттлпасса
+            300, // Опыт для прохождения уровня
+            10, // Цена скипа уровня
+            listOf(
+                // Список обычных предметов
+                NameTag.TAG1.getIcon(),
+                ArrowParticle.SLIME.getIcon(),
+                ArrowParticle.WATER_DROP.getIcon(),
+                StepParticle.SLIME.getIcon(),
+                Mask.HOUSTON.getIcon(),
+                KillMessage.GLOBAL.getIcon(),
+                MoneyKit.SMALL.getIcon(),
+                ArrowParticle.FALLING_DUST.getIcon(),
+                ArrowParticle.SPELL_INSTANT.getIcon(),
+                Mask.JASON.getIcon(),
+            ),
+            listOf(
+                // Список премиум предметов
+                NameTag.TAG3.getIcon(),
+                Mask.TRADEGY.getIcon(),
+                Mask.HORROR.getIcon(),
+                MoneyKit.SMALL.getIcon(),
+                NameTag.TAG28.getIcon(),
+                Mask.COMEDY_MASK.getIcon(),
+                KillMessage.END.getIcon(),
+                ArrowParticle.REDSTONE.getIcon(),
+                StepParticle.REDSTONE.getIcon(),
+                Corpse.G1.getIcon(),
+            ),
+        ),
+        BattlePassPageAdvanced(
+            // Вторая страница баттлпасса
+            600,
+            20,
+            listOf(
+                KillMessage.DEAD.getIcon(),
+                MoneyKit.SMALL.getIcon(),
+                Mask.SCREAM.getIcon(),
+                NameTag.TAG10.getIcon(),
+                StepParticle.REDSTONE.getIcon(),
+                KillMessage.ROOM.getIcon(),
+                Mask.DALLAS.getIcon(),
+                NameTag.TAG16.getIcon(),
+                Mask.CREWMATE_LIME.getIcon(),
+                MoneyKit.NORMAL.getIcon()
+            ),
+            listOf(
+                MoneyKit.SMALL.getIcon(),
+                KillMessage.SLEEP.getIcon(),
+                Mask.CREWMATE_WHITE.getIcon(),
+                NameTag.TAG17.getIcon(),
+                Mask.JASON.getIcon(),
+                ArrowParticle.VILLAGER_ANGRY.getIcon(),
+                NameTag.TAG20.getIcon(),
+                MoneyKit.NORMAL.getIcon(),
+                Mask.CREWMATE_PURPLE.getIcon(),
+                StepParticle.VILLAGER_ANGRY.getIcon()
+            ),
         )
-        sale(50.0) // Скидка 50%
-        facade.tags.add("Выполняйте квесты - получайте призы!")
-        facade.tags.add("BattlePass завершится в 01.04.2022")
-    }
-    BattlePass.send(player, battlePass)
-    BattlePass.show(player, battlePass, BattlePassUserData(100, false))
+    )
+    sale(50.0) // Скидка 50%
+    facade.tags.add("Выполняйте квесты - получайте призы!")
+    facade.tags.add("BattlePass завершится в 01.04.2022")
+}
+
+BattlePass.send(player, battlePass)
+BattlePass.show(player, battlePass, BattlePassUserData(100, false))
 ```
+
 Редкость предмета берется из `NBTTag` предмета `rare` (DropRare), а статус собранности награды `taken` (Boolean).<br>
 Можно указывать награду на каждый уровень, требуемый опыт.<br>
 
@@ -214,69 +239,75 @@ players.forEach { player -> data.send("lootbox", player) }
 
 Что представляет из себя баннер?<br>
 Это голограмма, рисунок в мире, маркер и прочее что является прямоугольником в мире.<br>
+
 ```kotlin
-    val uuid: UUID = UUID.randomUUID(), // уникальный номер
-    var motionType: MotionType = MotionType.CONSTANT, // тип движения
-    var watchingOnPlayer: Boolean = false, // смотрит ли баннер вечно на игрока
-    var motionSettings: MutableMap<String, Any> = mutableMapOf(
+Banners.new {
+    motionType = MotionType.CONSTANT // тип движения
+    watchingOnPlayer = false // смотрит ли баннер вечно на игрока
+    motionSettings = hashMapOf(
         "yaw" to 0.0,
         "pitch" to 0.0
-    ), // магия
-    var content: String = "", // текст на прямоугольнике
-    var x: Double = 0.0, // координата x
-    var y: Double = 0.0, // координата y
-    var z: Double = 0.0, // координата z
-    var height: Int = 100, // высота
-    var weight: Int = 100, // ширина
-    var texture: String = "", // текстура, например minecraft:apple (не забывайте что текстуру можно загружать через мод по web-ссылке)
-    var red: Int = 0, // красный цвет прямоугольника
-    var green: Int = 0, // зеленый цвет прямоугольника
-    var blue: Int = 0, // синий цвет прямоугольника
-    var opacity: Double = 0.62 // степерь прозрачности, от 0.0 до 1.0
+    ) // магия
+    content = "" // текст на прямоугольнике
+    x = 0.0 // координата x
+    y = 0.0 // координата y
+    z = 0.0 // координата z
+    height = 100 // высота
+    weight = 100 // ширина
+    texture =
+        "" // текстура, например minecraft:apple (не забывайте что текстуру можно загружать через мод по web-ссылке)
+    red = 0 // красный цвет прямоугольника
+    green = 0 // зеленый цвет прямоугольника
+    blue = 0 // синий цвет прямоугольника
+    opacity = 0.62 // степерь прозрачности, от 0.0 до 1.0
+}
 ```
+
 Что за типы движения?<br>
 `STEP_BY_TARGET` - баннер следует за сущностью
-`PERIODIC` - баннер двигается по периодичной траектории 
+`PERIODIC` - баннер двигается по периодичной траектории
 `CONSTANT` - баннер не двигается
 
 <img src="https://user-images.githubusercontent.com/42806772/148837007-d52b93ca-1a52-4507-9c9b-648a05d3ec6d.png" width="250">
 
 Как создать Banner?<br>
+
 ```kotlin
 // Kotlin пример
 Banners.new { // Баннер добавится в список баннеров и когда игроки будут заходить, они его увидят
-  // Элементарная заменя характеристик (указана лишь часть)
-  x = 1.0
-  y = 100.0
-  z = 1111000.0
-  texture = "minecraft:apple"
-  red = 255
-  opacity = 1.0
-  content = "Этот текст -\nмногострочный"
-  height = 120
-  weight = 200
+    // Элементарная заменя характеристик (указана лишь часть)
+    x = 1.0
+    y = 100.0
+    z = 1111000.0
+    texture = "minecraft:apple"
+    red = 255
+    opacity = 1.0
+    content = "Этот текст -\nмногострочный"
+    height = 120
+    weight = 200
 
-  // Продвинутые методы для замены свойств
-  location(player.location) // Указание места баннера через локацию
-  eyeLocation(player.bedSpawnLocation) // Указание поворота через точку, на которую нужно смотреть
-  target(player, 0.0, 0.0, 2.1) // Теперь баннер следует за игроком, баннер выше игрока на 2.1 блока
-  shineBlocks(false) // Чтобы баннер не просвечивался через стены
+    // Продвинутые методы для замены свойств
+    location(player.location) // Указание места баннера через локацию
+    eyeLocation(player.bedSpawnLocation) // Указание поворота через точку, на которую нужно смотреть
+    target(player, 0.0, 0.0, 2.1) // Теперь баннер следует за игроком, баннер выше игрока на 2.1 блока
+    shineBlocks(false) // Чтобы баннер не просвечивался через стены
 }
 ```
+
 ```java
 // Java пример
-Banner banner = new Banner.Builder() // Создание баннера
-  .x(location.x) 
-  .y(location.y + 50)
-  .z(location.z)
-  .opacity(0.0) // Прозрачность, от 0.0 до 1.0
-  .height(50) // Высота
-  .weight(50) // Ширина
-  .content("§aЯ голограмма", "§eОчень красивая", "§cИ приятная глазу") // Многострочный текст
-  .watchingOnPlayer(true) // Указание, чтобы баннер всегда смотрел на игрока
-  .build();
-  
-Banners.new(banner); // Добавление в список баннеров, которые будут показаны игроку при входе на сервер
+Banner banner = Banner.builder() // Создание баннера
+    .x(location.x)
+    .y(location.y+50)
+    .z(location.z)
+    .opacity(0.0) // Прозрачность, от 0.0 до 1.0
+    .height(50) // Высота
+    .weight(50) // Ширина
+    .content("§aЯ голограмма","§eОчень красивая","§cИ приятная глазу") // Многострочный текст
+    .watchingOnPlayer(true) // Указание, чтобы баннер всегда смотрел на игрока
+    .build();
+
+    Banners.add(banner); // Добавление в список баннеров, которые будут показаны игроку при входе на сервер
 ```
 
 Методы утилиты `Banners`:<br>
@@ -284,12 +315,14 @@ Banners.new(banner); // Добавление в список баннеров, �
 `Banners.new(banner: Banner): Banner` java версия конструктора для баннера (пример выше)<br>
 `Banners.content(player: Player, uuid: UUID, content: String)` отправка нового текста игроку на баннер<br>
 `Banners.content(player: Player, banner: Banner, content: String)` тоже самое, но через объект баннера<br>
-`Banners.show(player: Player, vararg uuid: UUID)` показать игроку все указанные баннеры по uuid (баннеры уже есть в списке глобальных)<br>
-`Banners.show(player: Player, vararg banner: Banner)` показать игроку все баннеры (они могут не быть в списке баннеров и созданы через конструктор `Banner`)<br>
+`Banners.show(player: Player, vararg uuid: UUID)` показать игроку все указанные баннеры по uuid (баннеры уже есть в
+списке глобальных)<br>
+`Banners.show(player: Player, vararg banner: Banner)` показать игроку все баннеры (они могут не быть в списке баннеров и
+созданы через конструктор `Banner`)<br>
 `Banners.remove(uuid: UUID)` удалить баннер из списка (не удаляет баннер игрокам)<br>
 `Banners.hide(player: Player, vararg uuid: UUID)` удалить игроку все указанные баннер(ы)<br>
 `Banners.hide(player: Player, vararg banner: Banner)` тоже самое, но через объекты класса Banner<br>
- 
+
 <h3>Индикаторы STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144913370-bb9ecbad-a5be-40c0-95b2-158b0bcdc0ad.png" width="500">
@@ -308,20 +341,24 @@ Banners.new(banner); // Добавление в список баннеров, �
 `NAME_TEMPLATE` ники игроков<br>
 
 Методы взаимодействия с клиентом:<br>
-`Anime.hideIndicator(player: Player, vararg indicator: Indicators)` скрывает игроку указанные через запятую индикаторы<br>
-`Anime.showIndicator(player: Player, vararg indicator: Indicators)` показывает игроку указанные через запятую индикаторы<br>
+`Anime.hideIndicator(player: Player, vararg indicator: Indicators)` скрывает игроку указанные через запятую
+индикаторы<br>
+`Anime.showIndicator(player: Player, vararg indicator: Indicators)` показывает игроку указанные через запятую
+индикаторы<br>
 
 <h3>Сферы STANDARD</h3>
 
 <img alt="Сфера" src="https://i.imgur.com/z3eNuZZ.png" width="500"/>
 
 Методы взаимодействия с клиентом:<br>
-`Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, radius: Double)` создать сферу по указанным координатам с указанным радиусом<br>
-`Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, sX: Double, sY: Double, sZ: Double)` создать сферу по указанным координатам с указанными размерами<br>
+`Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, radius: Double)` создать сферу по указанным
+координатам с указанным радиусом<br>
+`Anime.sphere(to: Player, uuid: UUID, location: Location, color: Color, sX: Double, sY: Double, sZ: Double)` создать
+сферу по указанным координатам с указанными размерами<br>
 `Anime.teleportSphereTo(to: Player, uuid: UUID, location: Location)` телепортировать сферу<br>
 `Anime.removeSphere(to: Player, uuid: UUID)` удалить сферу<br>
-`Anime.moveSphereTo(to: Player, uuid: UUID, location: Location, time: Double)` плавно переместить сферу по указанным координатам за указанное количество секунд<br>
-
+`Anime.moveSphereTo(to: Player, uuid: UUID, location: Location, time: Double)` плавно переместить сферу по указанным
+координатам за указанное количество секунд<br>
 
 <h3>Мультичат MULTICHAT</h3>
 
@@ -330,11 +367,11 @@ Banners.new(banner); // Добавление в список баннеров, �
 Чаты по умолчанию: <br>
 
 ```
-  SERVER
-  SYSTEM
-  ATTACK
-  PARTY
-  TRADE
+SERVER
+SYSTEM
+ATTACK
+PARTY
+TRADE
 ```
 
 Методы взаимодействия с клиентом:<br>
@@ -346,15 +383,19 @@ Banners.new(banner); // Добавление в список баннеров, �
 <img src="https://user-images.githubusercontent.com/42806772/144913800-298a8e7b-22bf-4000-a03f-f32891459b63.png" width="500">
 
 Цвета:
-1. Цвета состоят из трез целых чисел и одного дробного, красный [0 .. 255], синий [0 .. 255], зеленый [0 .. 255], прозрачность [0 .. 1.0]
+
+1. Цвета состоят из трез целых чисел и одного дробного, красный [0 .. 255], синий [0 .. 255], зеленый [0 .. 255],
+   прозрачность [0 .. 1.0]
 2. Вы можете еспользовать `enum GlowColor` с готовыми частыми цветами
 
 Методы взаимодействия с клиентом:<br>
 `Glow.set(player: Player, red: Int, blue: Int, green: Int, alpha: Double)` ставит игроку свечение <br>
 `Glow.set(player: Player, color: GlowColor)` то же самое, но через GlowColor<br><br>
-`Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int, alpha: Double)` плавное появление и скрытие свечения с указанием длительности этой анимации<br>
+`Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int, alpha: Double)` плавное появление и
+скрытие свечения с указанием длительности этой анимации<br>
 `Glow.animate(player: Player, seconds: Double, color: GlowColor, alpha: Double)` то же самое, но через GlowColor<br>
-`Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int)` то же самое, но без указания прозрачности (без прозрачности)<br>
+`Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int)` то же самое, но без указания
+прозрачности (без прозрачности)<br>
 `Glow.animate(player: Player, seconds: Double, color: GlowColor)` то же самое, но через GlowColor<br>
 
 <h3>Подсвечивание границ места в мире EXPERIMENTAL</h3>
@@ -375,8 +416,10 @@ Banners.new(banner); // Добавление в список баннеров, �
 `Glow.showAllPlaces(player: Player)` показать игроку все глобальные места<br>
 
 Очистка мест:<br>
-`Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из списка глобальных<br>
-`Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального списка<br>
+`Glow.removePlace(place: GlowingPlace, vararg players: Player)` удаление места для указанных игроков и удаление из
+списка глобальных<br>
+`Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального
+списка<br>
 
 <h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
 
@@ -385,23 +428,28 @@ Banners.new(banner); // Добавление в список баннеров, �
 Методы:<br>
 
 `Anime.reload(player: Player, seconds: Int, text: String)` простая перезарядка, с розовым цветом<br>
-`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor, alpha: Double)` с использованием GlowColor<br>
-`Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int, alpha: Double)` с любым цветом в RGB<br>
+`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor, alpha: Double)` с использованием
+GlowColor<br>
+`Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int, alpha: Double)` с любым
+цветом в RGB<br>
 
 <h3>Информация справа снизу (модуль STANDARD)</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/148701775-bd2afe54-b659-492a-b779-061269924130.png" width="500">
 
 Методы:<br>
-`Anime.bottomRightMessage(player: Player, text: String)` поставить справа снизу информацию игроку (строка делится по `\n`)<br>
-`Anime.bottomRightMessage(player: Player, vararg text: String)` тоже самое, но удобнее, так как можно указать строки через запятую<br>
+`Anime.bottomRightMessage(player: Player, text: String)` поставить справа снизу информацию игроку (строка делится
+по `\n`)<br>
+`Anime.bottomRightMessage(player: Player, vararg text: String)` тоже самое, но удобнее, так как можно указать строки
+через запятую<br>
 
 <h3>Искуственные игроки NPC</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/147400304-4ffc0399-8fa2-4ef1-8346-ac0ad7e18ab8.gif" width="500">
 
 Методы:<br>
-`Npc.npc(init: NpcData.() -> Unit): NpcSmart` kotlin вариант конструктора для создания NPC (только через него можно сделать глобальных NPC, которых плагин отправляет игроку при заходе на сервер)<br>
+`Npc.npc(init: NpcData.() -> Unit): NpcSmart` kotlin вариант конструктора для создания NPC (только через него можно
+сделать глобальных NPC, которых плагин отправляет игроку при заходе на сервер)<br>
 `Npc.npc(data: NpcData): NpcSmart` java версия (делает тоже самое)<br>
 `Npc.spawn(entityId: Int)` показать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.kill(entityId: Int)` спрятать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
@@ -411,43 +459,47 @@ Banners.new(banner); // Добавление в список баннеров, �
 NpcSmart:<br>
 
 ```kotlin
-    var data: NpcData, // данные на клиенте
-    var click: Consumer<PlayerUseUnknownEntityEvent>? = null, // обработчик нажатия на NPC
-    private var leftArm: ItemStack? = null, // предмет в левой руке
-    private var rightArm: ItemStack? = null, // предмет в правой руке
-    private var head: ItemStack? = null, // предмет на голове
-    private var chest: ItemStack? = null, // предмет на груди
-    private var legs: ItemStack? = null, // предмет на ножках
-    private var feet: ItemStack? = null, // предмет на стопах
+var data: NpcData, // данные на клиенте
+var click: Consumer<PlayerUseUnknownEntityEvent>? = null, // обработчик нажатия на NPC
+private var leftArm: ItemStack? = null, // предмет в левой руке
+private var rightArm: ItemStack? = null, // предмет в правой руке
+private var head: ItemStack? = null, // предмет на голове
+private var chest: ItemStack? = null, // предмет на груди
+private var legs: ItemStack? = null, // предмет на ножках
+private var feet: ItemStack? = null, // предмет на стопах
 ```
 
 `NpcSmart.slot(slot: EquipmentSlot, itemStack: ItemStack): NpcSmart` метод обновляющий слот NPC для всех игроков<br>
-`NpcSmart.slot(slot: EquipmentSlot, itemStack: ItemStack, player: Player): NpcSmart` метод обновляющий слот NPC для конкретного игрока<br>
+`NpcSmart.slot(slot: EquipmentSlot, itemStack: ItemStack, player: Player): NpcSmart` метод обновляющий слот NPC для
+конкретного игрока<br>
 `NpcSmart.kill(): NpcSmart` скрыть всем игрокам этого NPC<br>
 `NpcSmart.show(player: Player): NpcSmart` показать игроку этого NPC<br>
 `NpcSmart.hide(player: Player): NpcSmart` скрыть игроку этого NPC<br>
-`NpcSmart.update(player: Player): NpcSmart` обновить игроку данные NPC (имя, координаты, поворот головы, положение тела - сидеть, спать, шифтить)<br> 
-`NpcSmart.swingArm(mainHand: Boolean, player: Player): NpcSmart` пошевелить рукой, указав главная ли рука и игрока-получателя<br> 
-`NpcSmart.spawn(player: Player): NpcSmart` создать игроку NPC <--- Только тут игроку создается с нуля NPC<br>
-NpcData:<br>
+`NpcSmart.update(player: Player): NpcSmart` обновить игроку данные NPC (имя, координаты, поворот головы, положение тела
+
+- сидеть, спать, шифтить)<br>
+  `NpcSmart.swingArm(mainHand: Boolean, player: Player): NpcSmart` пошевелить рукой, указав главная ли рука и
+  игрока-получателя<br>
+  `NpcSmart.spawn(player: Player): NpcSmart` создать игроку NPC <--- Только тут игроку создается с нуля NPC<br>
+  NpcData:<br>
 
 ```kotlin
-    var id: Int = (Math.random() * Int.MAX_VALUE).toInt(), // entityId NPC
-    val uuid: UUID = UUID.randomUUID(), // UUID
-    var x: Double = 0.0, 
-    var y: Double = 0.0,
-    var z: Double = 0.0,
-    var type: Int = 1000, // тип сущности 1000 - ИГРОК
-    var name: String? = null, // имя
-    var behaviour: NpcBehaviour = NpcBehaviour.NONE, // модель поведения NPC
-    var pitch: Float = 0f,
-    var yaw: Float = 0f,
-    var skinUrl: String? = null, // ссылка на скин 
-    var skinDigest: String? = null, 
-    var slimArms: Boolean = false, // тонкие руки
-    var sneaking: Boolean = false, // шифтит
-    var sleeping: Boolean = false, // спит
-    val sitting: Boolean = false // сидит
+var id: Int = (Math.random() * Int.MAX_VALUE).toInt(), // entityId NPC
+val uuid: UUID = UUID.randomUUID(), // UUID
+var x: Double = 0.0,
+var y: Double = 0.0,
+var z: Double = 0.0,
+var type: Int = 1000, // тип сущности 1000 - ИГРОК
+var name: String? = null, // имя
+var behaviour: NpcBehaviour = NpcBehaviour.NONE, // модель поведения NPC
+var pitch: Float = 0f,
+var yaw: Float = 0f,
+var skinUrl: String? = null, // ссылка на скин 
+var skinDigest: String? = null,
+var slimArms: Boolean = false, // тонкие руки
+var sneaking: Boolean = false, // шифтит
+var sleeping: Boolean = false, // спит
+val sitting: Boolean = false // сидит
 ```
 
 `NpcData.onClick(init: Consumer<PlayerUseUnknownEntityEvent>)` при клике на NPC обработать событие<br>
@@ -461,15 +513,15 @@ NpcData:<br>
 Пример на Kotlin:<br>
 
 ```kotlin
-  npc {
+npc {
     x = 1337.0
     y = 225.5
     z = -102.3
     behaviour = NpcBehaviour.STARE_AND_LOOK_AROUND
     onClick {
-      it.player.sendMessage("Хай")
+        it.player.sendMessage("Хай")
     }
-  }.slot(EquipmentSlot.HAND, CraftItemStack.asNMSCopy(ItemStack(Material.DIAMOND_BLOCK))).spawn()
+}.slot(EquipmentSlot.HAND, CraftItemStack.asNMSCopy(ItemStack(Material.DIAMOND_BLOCK))).spawn()
 ```
 
 <h3>Диалоги DIALOGS</h3>
@@ -479,25 +531,33 @@ NpcData:<br>
 Методы взаимодействия с клинтом:<br>
 `Anime.sendDialog(player: Player, dialog: Dialog)` отправляет игру ветку диалогов<br>
 `Anime.openDialog(player: Player, dialogId: String)` показывает игроку диалог по ID ветки<br>
-`Anime.dialog(player: Player, dialog: Dialog, openEntrypoint: String)` отправляет и показывает игроку диалог по ID ветки<br>
+`Anime.dialog(player: Player, dialog: Dialog, openEntrypoint: String)` отправляет и показывает игроку диалог по ID
+ветки<br>
 
 Структура диалога:
-`Dialog` состоит из набора точек входа `Entrypoint`, в одном хранятся `Screen`, это конкоетно что видит игрок - набор строк и кнопок `Button` с действиями `Action`, например открытия нового окна. Набор Action вы можете увидить в `enum Actions`
+`Dialog` состоит из набора точек входа `Entrypoint`, в одном хранятся `Screen`, это конкоетно что видит игрок - набор
+строк и кнопок `Button` с действиями `Action`, например открытия нового окна. Набор Action вы можете увидить
+в `enum Actions`
 
 Пример кода:<br>
-```kotlin
+
+```java
 new Dialog(new Entrypoint(
-  "id", 
-  "название", 
-  new Screen("Первая видимая строка", "Вторая видимая строка").buttons(
-    new Button("Имя кнопки").actions(
-      new Action(Actions.COMMAND).command("/next"),
-      new Action(Actions.CLOSE)
-    ), new Button("Войти в очередь").actions(
-      Action("/hub"),
-      new Action(Actions.CLOSE)
+    "id",
+    "название",
+    new Screen(
+        "Первая видимая строка",
+        "Вторая видимая строка"
+    ).buttons(
+        new Button("Имя кнопки").actions(
+            new Action (Actions.COMMAND).command("/next"),
+            new Action (Actions.CLOSE)
+        ),
+        new Button ("Войти в очередь").actions(
+            Action("/hub"),
+            new Action (Actions.CLOSE)
+        )
     )
-  )
 ))
 ```
 
@@ -506,26 +566,31 @@ new Dialog(new Entrypoint(
 <img src="https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png" width="500">
 
 Метод показа окна награды:<br>
-`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с указанием текущего дня [0..6], а также с указанием наград за каждый день в объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
+`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с
+указанием текущего дня [0..6], а также с указанием наград за каждый день в
+объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
 
 <h3>Уведомления (зависит от предустановленного всеми cristalix-socials)</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/155223931-23d3cafe-1028-435f-aa97-6702226ec3d9.png" width="500">
 
-Уведомления возникают у игрока справа сверху, можно отправлять несколько, уведомление содержит UUID отправителя, в нем может быть максимум 2 кнопки. Данная возможность не зависит от модулей `animation-api`, мод предустановлен через `bungeecord` всем игрокам (Исходники мода `cristalix-socials` не будут добавлены в данный репозиторий).
+Уведомления возникают у игрока справа сверху, можно отправлять несколько, уведомление содержит UUID отправителя, в нем
+может быть максимум 2 кнопки. Данная возможность не зависит от модулей `animation-api`, мод предустановлен
+через `bungeecord` всем игрокам (Исходники мода `cristalix-socials` не будут добавлены в данный репозиторий).
 <br>
 Для начала рассмотрим создание кнопок уведомлений:<br>
 <br>
 
 ```kotlin
 Alert.button( // метод возвращает кнопку
-  "Принять", // сообщение на кнопке
-  "/ok", // команда при нажатии
-  GlowColor.GOLD, // цвет кнопки
-  false, // после нажатия удалится ли эта кнопка
-  true // после нажатия скрыть все уведомление
+    "Принять", // сообщение на кнопке
+    "/ok", // команда при нажатии
+    GlowColor.GOLD, // цвет кнопки
+    false, // после нажатия удалится ли эта кнопка
+    true // после нажатия скрыть все уведомление
 )
 ```
+
 <br>
 Всего есть два подхода к отправке уведомлений игроку:<br>
 1. Генерация уведомления прямо на месте отправки<br>
@@ -535,13 +600,13 @@ Alert.button( // метод возвращает кнопку
 
 ```kotlin
 Alert.send(
-        player: Player, // кому отослать
-        text: String, // сообщение
-        millis: Long, // милисекунд до скрытия уведомления (1000 = 1 секунда)
-        frontColor: GlowColor, // внешний цвет
-        backGroundColor: GlowColor, // цвет фона
-        chatMessage: String, // сообщение в чате
-        vararg buttons: NotificationButton // кнопки (максимум две)
+    player = player, // кому отослать
+    text = string, // сообщение
+    millis = long, // милисекунд до скрытия уведомления (1000 = 1 секунда)
+    frontColor = glowColor, // внешний цвет
+    backGroundColor = glowColor, // цвет фона
+    chatMessage = string, // сообщение в чате
+    buttons: notificationButton... // кнопки (максимум две) (vararg)
 )
 ```
 
@@ -551,18 +616,26 @@ Alert.send(
 
 ```kotlin
 Alert.put(
-  "hello", // ключ
-  NotificationData( // содержимое
-    null, "notify", "Привет %nick%,\nкак дела?",
-    toRGB(GlowColor.GREEN), toRGB(GlowColor.GREEN), 3000, listOf(
-      button("Принять", "/ok", GlowColor.GOLD) // создание кнопки
-    ), "Вам уведомление!"
-  )
+    "hello", // ключ
+    NotificationData( // содержимое
+        null, 
+        "notify",
+        "Привет %nick%,\nкак дела?",
+        toRGB(GlowColor.GREEN), 
+        toRGB(GlowColor.GREEN), 
+        3000, 
+        listOf(
+            button("Принять", "/ok", GlowColor.GOLD) // создание кнопки
+        ), 
+        "Вам уведомление!"
+    )
 )
 ```
+
 2. Получение шаблона, замена текста, отправка:<br>
+
 ```kotlin
-Aler.find("hello") // найти шаблон по ключу
+Alert.find("hello") // найти шаблон по ключу
     .replace("%nick", player.name) // заменить placeholder
     .replace("как дела?", "как спалось?")
     .send(player) // отправить игроку
@@ -573,21 +646,24 @@ Aler.find("hello") // найти шаблон по ключу
 <img src="https://user-images.githubusercontent.com/42806772/144919787-00cdac9a-a01c-4c48-97af-62c2f8e5f8b5.png" width="500">
 
 Метод показа дропа с лутбокса:<br>
-`Anime.openLootBox(player: Player, vararg items: LootDrop)` открыть игроку лутбокс с указанием всего что выпало в виде объектов `LootDrop(сам предмет, название предмета, <НЕ ОБЯЗАТЕЛЬНО ПО УМАЛЧАНИЮ COMMON> редкость)`
+`Anime.openLootBox(player: Player, vararg items: LootDrop)` открыть игроку лутбокс с указанием всего что выпало в виде
+объектов `LootDrop(сам предмет, название предмета, <НЕ ОБЯЗАТЕЛЬНО ПО УМАЛЧАНИЮ COMMON> редкость)`
 
 Редкости предметов:
+
 ```kotlin
 enum class DropRare(val title: String, val color: String) {
     COMMON("Обычный", "§a"),
     RARE("Редкий", "§9"),
     EPIC("Эпический", "§5"),
-    LEGENDARY("Легендарный", "§6"),;
-    
+    LEGENDARY("Легендарный", "§6"), ;
+
     fun getColored(): String {
         return "$color$title" // метод для получения окрашенного имени редкости
     }
 }
 ```
+
 <h3>Сообщения об окончании игры</h3>
 
 <img src="https://user-images.githubusercontent.com/63064550/150874231-4958a0af-8652-4475-a014-f73d23504b30.png" width="500">
@@ -598,11 +674,14 @@ enum class DropRare(val title: String, val color: String) {
 `DRAW` экран ничьей, <br>
 
 Методы вызова экрана окончания игры:<br>
-`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку, с информацией. `key` - сообщения слева, `value` - сообщения справа. Используйте `\n \n` - для переноса строки.<br>
-`Anime.showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>)` показывает экран окончания игроку. `key` - список строк слева, `value` - список строк справа.
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: String, value: String)` показывает экран окончания игроку,
+с информацией. `key` - сообщения слева, `value` - сообщения справа. Используйте `\n \n` - для переноса строки.<br>
+`Anime.showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>)` показывает экран
+окончания игроку. `key` - список строк слева, `value` - список строк справа.
 
 Пример использования:<br>
-```
+
+```kotlin
 Anime.showEnding(
   player, 
   EndStatus.WIN, 
@@ -618,21 +697,26 @@ Anime.showEnding(
 <img src="https://user-images.githubusercontent.com/42806772/144920685-cf487bdc-ff08-4c19-9429-d54050d1bc32.png" width="500">
 
 !!! ВАЖНО !!!<br>
-Это частный случай Banners, класс помечен `@Deprecated`, новый инструмент способен делать намного больше, рекомендуем испольовать его<br>
+Это частный случай Banners, класс помечен `@Deprecated`, новый инструмент способен делать намного больше, рекомендуем
+испольовать его<br>
 
-Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSign`: 
+Что такое маркер? Это случайный UUID генерируемый в конструкторе, координаты в текущем мире игрока x, y, z, размер
+текстуры и путь к текстуре на клиенте (обычно через resource-pack, но можно загрузить игроку текстуру через метод в
+разделе "Прочее"). Для упращения работы с текстурами, вынесено несколько базовых в `enum MarkerSign`:
+
 ```kotlin
-    FINE("textures/others/znak_v_3.png"),
-    ERROR("textures/others/znak_v_2.png"),
-    WARNING("textures/others/znak_v_1.png"),
-    QUESTION_FINE("textures/others/z1.png"),
-    QUESTION_ERROR("textures/others/z2.png"),
-    QUESTION_WARNING("textures/others/z1.png"),
-    ARROW_DOWN("mcpatcher/cit/others/badges/arrow_down.png"),
-    ARROW_UP("mcpatcher/cit/others/badges/arrow_up.png"),
-    ARROW_RIGHT("mcpatcher/cit/others/badges/arrow_right.png"),
-    ARROW_LEFT("mcpatcher/cit/others/badges/arrow_left.png"),
+FINE("textures/others/znak_v_3.png")
+ERROR("textures/others/znak_v_2.png")
+WARNING("textures/others/znak_v_1.png")
+QUESTION_FINE("textures/others/z1.png")
+QUESTION_ERROR("textures/others/z2.png")
+QUESTION_WARNING("textures/others/z1.png")
+ARROW_DOWN("mcpatcher/cit/others/badges/arrow_down.png")
+ARROW_UP("mcpatcher/cit/others/badges/arrow_up.png")
+ARROW_RIGHT("mcpatcher/cit/others/badges/arrow_right.png")
+ARROW_LEFT("mcpatcher/cit/others/badges/arrow_left.png")
 ```
+
 Пример маркера: `new Marker(225, 1, 5, 10, MarkerSign.ERROR)`
 
 Методы взаимодействия с клинтом:<br>
@@ -644,8 +728,10 @@ Anime.showEnding(
 `Anime.removeMarker(player: Player, uuid: UUID)` удалить игроку маркер по UUID маркера<br>
 <br>
 `Anime.moveMarker(player: Player, marker: Marker)` обновить нахождение маркера у игрока<br>
-`Anime.moveMarker(player: Player, marker: Marker, seconds: Double)` обновить нахождение маркера у игрока анимированно за указанное время<br>
-`Anime.moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double)` обновить нахождение маркера у игрока анимированно за указанное время имея только UUID маркера<br>
+`Anime.moveMarker(player: Player, marker: Marker, seconds: Double)` обновить нахождение маркера у игрока анимированно за
+указанное время<br>
+`Anime.moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double)` обновить
+нахождение маркера у игрока анимированно за указанное время имея только UUID маркера<br>
 
 <h3>Всплывающие сообщения STANDARD</h3>
 
@@ -656,13 +742,17 @@ Anime.showEnding(
 <img src="https://user-images.githubusercontent.com/42806772/144923731-bb1d8a58-eb6d-4bd8-97e1-038cf3b5cda4.png" width="500">
 
 `Anime.title(player: Player, text: String)` многострочный title, поддерживает все цвета, а так же `\n`<br>
-`Anime.title(player: Player, vararg text: String)` то же самое, но строчк можно указывать через запятую или можно передавать массив<br>
+`Anime.title(player: Player, vararg text: String)` то же самое, но строчк можно указывать через запятую или можно
+передавать массив<br>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923540-7f2822be-efc1-4f1e-9e34-b4f3e1e704b4.png" width="500">
 
-`Anime.alert(player: Player, title: String, description: String, seconds: Double)` отправить сообщение с комментарием с указанием времени<br>
-`Anime.alert(player: Player, title: String, description: String)` отправить сообщение с комментарием (на 7.3 секунды)<br>
-`Anime.alert(player: Player, description: String, seconds: Double)` отправить отписание с сообщением "Внимание" с указанием вреени<br>
+`Anime.alert(player: Player, title: String, description: String, seconds: Double)` отправить сообщение с комментарием с
+указанием времени<br>
+`Anime.alert(player: Player, title: String, description: String)` отправить сообщение с комментарием (на 7.3
+секунды)<br>
+`Anime.alert(player: Player, description: String, seconds: Double)` отправить отписание с сообщением "Внимание" с
+указанием вреени<br>
 `Anime.alert(player: Player, description: String)` комментарий с сообщением "Внимание" на 7.3 секунды<br>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923936-a99a7103-7ac3-4dcd-b78a-462358382c20.png" width="500">
@@ -671,7 +761,8 @@ Anime.showEnding(
 
 <img src="https://user-images.githubusercontent.com/42806772/144924621-7f1d87ae-f0df-4943-af8f-18324cb99124.gif" width="500">
 
-`Anime.itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double)` отправить на экран предмет с указанием продолжительности в секундах (можно указать сообщения сверху и снизу)<br>
+`Anime.itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double)` отправить на
+экран предмет с указанием продолжительности в секундах (можно указать сообщения сверху и снизу)<br>
 
 <img src="https://user-images.githubusercontent.com/42806772/144925126-c524e4e4-2cc5-45d1-8647-e5cf98301152.gif" width="500">
 
@@ -686,11 +777,13 @@ Anime.showEnding(
 <img src="https://user-images.githubusercontent.com/42806772/144923255-bb93a4eb-0ba8-4e1e-bf78-0c96332afcac.png" width="500">
 
 `Anime.killboardMessage(player: Player, text: String)` отправить в правую верхнюю часть экрана сообщение<br>
-`Anime.killboardMessage(player: Player, text: String, topMargin: Int)` отправить в правую верхнюю часть экрана сообщение с указанием отсупа сверху<br>
+`Anime.killboardMessage(player: Player, text: String, topMargin: Int)` отправить в правую верхнюю часть экрана сообщение
+с указанием отсупа сверху<br>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923338-130365f6-bea4-4d4d-a9d1-8ec8d90dd7ad.png" width="500">
 
-`Anime.timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int)` начать игроку отчсет сверху с сообщением, длительностью, цветом полоски<br>
+`Anime.timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int)` начать игроку отчсет сверху
+с сообщением, длительностью, цветом полоски<br>
 `Anime.timer(player: Player, text: String, duration: Int)` начать отсчет сверху с сообщением и продолжительностью<br>
 `Anime.timer(player: Player, duration: Int)` начать отсчет с сообщением по умолчанию<br>
 
@@ -698,8 +791,11 @@ Anime.showEnding(
 
 <img src="https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png" width="500">
 
-`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` создать труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно) (secondsAlive - количество секунд через которое исчезнет труп)<br>
-`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` то же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
+`Anime.corpse(to: Player, name: String?, uuid: UUID, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` создать
+труп по UUID трупа игрока с Cristalix и координат локации (имя трупу указывать необязательно) (secondsAlive - количество
+секунд через которое исчезнет труп)<br>
+`Anime.corpse(to: Player, name: String?, skinUrl: String, x: Double, y: Double, z: Double, secondsAlive: Int = 60)` то
+же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
 `Anime.clearAllCorpses(player: Player)` очистить игроку все трупы
 <br><br>
 <b>Отправить пустой Buffer игроку в канал</b>:<br>
@@ -714,7 +810,8 @@ Anime.showEnding(
 <b>Загрузка фотографий</b>:
 
 `Anime.loadTexture(player: Player, url: String)` загрузить игроку фотографию по ссылке в папку `cache/animation/`<br>
-`Anime.loadTextures(player: Player, vararg url: String)` загрузить игроку фотографии по ссылкам в папку `cache/animation/`<br>
+`Anime.loadTextures(player: Player, vararg url: String)` загрузить игроку фотографии по ссылкам в
+папку `cache/animation/`<br>
 Когда игрок скачает фотографию/и от отправит серверу пустой буффер в канал `func:loaded` <br>
 Пример получения фото на моде: `ResourceLocation.of("cache/animation", "файл.png")`
 
