@@ -23,9 +23,12 @@ class Banner(
     var blue: Int = 0,
     var opacity: Double = 0.62
 ) {
-    constructor(init: Banner.() -> Unit) : this() { this.init() }
+    companion object S {
+        @JvmStatic
+        fun builder() = Builder()
+    }
 
-    fun builder() = Builder()
+    constructor(init: Banner.() -> Unit) : this() { this.init() }
 
     class Builder(val banner: Banner = Banner()) {
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }

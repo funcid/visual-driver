@@ -296,7 +296,7 @@ Banners.new { // Баннер добавится в список баннеро�
 
 ```java
 // Java пример
-Banner banner = Banner.builder() // Создание баннера
+Banner banner = Banner.S.builder() // Создание баннера
     .x(location.x)
     .y(location.y+50)
     .z(location.z)
