@@ -1,5 +1,9 @@
 package me.func.mod.util
 
-fun warn(message: String) = println("[ANIME] §e$message")
+const val ANSI_RESET = "\u001B[0m"
+const val ANSI_GREEN = "\u001B[32m"
+const val ANSI_YELLOW = "\u001B[33m"
 
-fun log(message: String) = println("[ANIME] $message")
+fun warn(message: String) = println("$ANSI_YELLOW[ANIME] $message$ANSI_RESET")
+
+fun log(message: String) = println("$ANSI_GREEN[ANIME] $message$ANSI_RESET")
