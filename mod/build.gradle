@@ -21,4 +21,5 @@ mod {
     name = "Animation Api"
     main = "Main"
     author = "func"
+    jarFileName = "standard-mod-bundle.jar"
 }
