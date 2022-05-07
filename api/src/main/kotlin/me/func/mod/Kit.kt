@@ -12,22 +12,16 @@ import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.util.fileLastName
 import me.func.protocol.Mod
 import net.minecraft.server.v1_12_R1.MinecraftServer
-import net.minecraft.server.v1_12_R1.SoundEffects.id
 import org.bukkit.Bukkit
 import org.bukkit.Bukkit.getPluginManager
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent
-import org.bukkit.event.player.PlayerChangedWorldEvent
-import org.bukkit.event.player.PlayerCommandPreprocessEvent
-import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
-import java.util.EnumSet
+import java.util.*
 
 val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-mod-bundle.jar"
 val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
@@ -43,13 +37,11 @@ internal object StandardMods : Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     fun PlayerJoinEvent.handle() {
         if (mods.isNotEmpty()) {
-            ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
-
-            ModTransfer()
-                .integer(mods.size)
-                .apply {
-                    mods.forEach { integer(it.ordinal) }
-                }.send("anime:loadmod", player)
+            MinecraftServer.SERVER.postToNextTick {
+                ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
+                ModTransfer(mods.size).apply { mods.forEach { integer(it.ordinal) } }
+                    .send("anime:loadmod", player)
+            }
         }
     }
 }
