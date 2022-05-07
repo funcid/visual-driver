@@ -14,13 +14,13 @@ var ItemStack.nbt: Pair<String, Any>?
     set(value) {
         val obj = value!!.second
         tagCompound = NBTTagCompound.of(
-            mapOf(
-                value.first to when (obj) {
+            hashMapOf<String?, NBTBase?>().also {
+                it[value.first] = when (obj) {
                     is String -> NBTTagString.of(obj)
                     is Map<*, *> -> NBTTagCompound.of(obj as MutableMap<String, NBTBase>?)
                     else -> null
                 }
-            )
+            }
         )
     }
     get() = null
