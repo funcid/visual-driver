@@ -9,19 +9,19 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
-import me.func.mod.util.dir
-import me.func.mod.util.fileLastName
-import me.func.mod.util.warn
+import me.func.mod.util.*
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.WorldCreator.name
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.awt.Color
+import java.io.File
 import java.util.*
 import java.util.function.BiConsumer
 
@@ -29,13 +29,35 @@ val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.r
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
+const val VERSION = "07.05.2022"
+
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
     var graffitiClient: GraffitiClient? = null
 
     init {
+        log("Enabling animation-api, version: $VERSION")
         Bukkit.getPluginManager().registerEvents(StandardMods, provided)
+
+        // Канал для отправки клиенту информации для отладки
+        var lastUseDebugCommand = 0L
+        createReader("anime:debug") { player, _ ->
+            val now = System.currentTimeMillis()
+            if (now - lastUseDebugCommand < 5000)
+                return@createReader
+            lastUseDebugCommand = now
+
+            val listMod = listFiles(MOD_LOCAL_DIR_NAME)?.apply { listFiles(MOD_LOCAL_TEST_DIR_NAME)?.let { addAll(it) } }
+
+            ModTransfer(5) // Сколько строк отладки выводить
+                .string(VERSION)
+                .string(StandardMods.mods.joinToString(", ") { it.name })
+                .string(ModLoader.mods.keys.filter { it != STANDARD_MOD_URL.fileLastName() }.joinToString(", ") { it })
+                .string("${(listMod?.sumOf { it.length() } ?: 0) / 1024} KB")
+                .string("${(listMod?.filter { ModLoader.mods.containsKey(it.name.fileLastName()) }?.sumOf { it.length() } ?: 0) / 1024} KB")
+                .send("anime:debug", player)
+        }
     }
 
     @JvmStatic

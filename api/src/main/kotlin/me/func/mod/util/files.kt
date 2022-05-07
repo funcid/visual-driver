@@ -1,5 +1,7 @@
 package me.func.mod.util
 
+import me.func.mod.MOD_LOCAL_DIR_NAME
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -13,3 +15,5 @@ fun dir(directory: String) = Paths.get(directory).apply {
 fun String.fileLastName() = split("/").last()
 
 fun Path.fileLastName() = absolutePathString().fileLastName()
+
+fun listFiles(path: String) = File(path).listFiles()?.toMutableList()
