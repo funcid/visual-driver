@@ -39,8 +39,12 @@ internal object StandardMods : Listener {
         if (mods.isNotEmpty()) {
             MinecraftServer.SERVER.postToNextTick {
                 ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
-                ModTransfer(mods.size).apply { mods.forEach { integer(it.ordinal) } }
-                    .send("anime:loadmod", player)
+
+                MinecraftServer.SERVER.postToNextTick {
+                    ModTransfer(mods.size).apply { 
+                        mods.forEach { integer(it.ordinal) } 
+                    }.send("anime:loadmod", player)
+                }
             }
         }
     }
