@@ -7,6 +7,7 @@
 -allowaccessmodification
 -optimizationpasses 10
 -overloadaggressively
+-dontobfuscate
 
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
     <methods>;
