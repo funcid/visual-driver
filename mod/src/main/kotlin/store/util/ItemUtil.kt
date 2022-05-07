@@ -14,6 +14,7 @@ var ItemStack.nbt: Pair<String, Any>?
     set(value) {
         val obj = value!!.second
         tagCompound = NBTTagCompound.of(
+            // не совать ключ-значение в ( сюда )
             hashMapOf<String?, NBTBase?>().also {
                 it[value.first] = when (obj) {
                     is String -> NBTTagString.of(obj)
