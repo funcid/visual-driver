@@ -1,3 +1,5 @@
+@file:JvmName("Utils")
+
 package me.func.mod.util
 
 import me.func.mod.Anime
@@ -12,7 +14,13 @@ import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitTask
 
-fun consoleCommand(name: String, consumer: () -> Unit) =
+@JvmSynthetic
+inline fun unit(block: () -> Unit): Unit = block()
+
+@JvmSynthetic
+inline fun <T> T.unit(block: T.() -> Unit): Unit = block()
+
+fun consoleCommand(name: String, consumer: () -> Unit) {
     Bukkit.getCommandMap().register("anime", object : Command(name) {
         override fun execute(sender: CommandSender, var2: String, agrs: Array<out String>): Boolean {
             if (sender is ConsoleCommandSender)
@@ -20,8 +28,9 @@ fun consoleCommand(name: String, consumer: () -> Unit) =
             return true
         }
     })
+}
 
-fun command(name: String, consumer: (Player, Array<out String>) -> Unit) =
+fun command(name: String, consumer: (Player, Array<out String>) -> Unit) {
     Bukkit.getCommandMap().register("anime", object : Command(name) {
         override fun execute(sender: CommandSender, var2: String, agrs: Array<out String>): Boolean {
             if (sender is Player)
@@ -29,16 +38,24 @@ fun command(name: String, consumer: (Player, Array<out String>) -> Unit) =
             return true
         }
     })
+}
 
 @JvmOverloads
 fun after(ticks: Long = 1, runnable: () -> Unit): BukkitTask =
-    Bukkit.getScheduler().runTaskLater(Anime.provided, { runnable.invoke() }, ticks)
+    Bukkit.getScheduler().runTaskLater(Anime.provided, runnable, ticks)
 
 fun listener(vararg listener: Listener) =
-    listener.onEach { Bukkit.getPluginManager().registerEvents(it, Anime.provided) }
+    listener.forEach { Bukkit.getPluginManager().registerEvents(it, Anime.provided) }
 
-fun ItemStack.nbt(key: String, value: String) =
+/**
+ * Копирует итемстак, добавляя в него новый нбт
+ * @param key ключ нбт тега
+ * @param value значение нбт тега
+ * @return Новый Bukkit итемстак, в котором есть нбт тег из аргументов метода
+ */
+@JvmName("addNbtToItemStack")
+fun ItemStack.nbt(key: String, value: String): ItemStack =
     (CRAFT_ITEM_TO_NMS.invoke(this) as net.minecraft.server.v1_12_R1.ItemStack).apply {
         if (tag == null) tag = NBTTagCompound()
         tag.setString(key, value)
-    }
+    }.asBukkitMirror()
