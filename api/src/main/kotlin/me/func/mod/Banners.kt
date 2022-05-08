@@ -14,7 +14,7 @@ import kotlin.math.sqrt
 
 object Banners {
 
-    val banners = mutableMapOf<UUID, Banner>()
+    var banners = mutableMapOf<UUID, Banner>()
 
     @JvmSynthetic
     fun new(data: Banner.() -> Unit) = new(Banner().apply(data))
@@ -28,8 +28,10 @@ object Banners {
 
     @JvmStatic
     fun new(banner: Banner): Banner {
-        if (banners.size > 500) {
-            warn("[CRITICAL] Banners map size > 500! Stop add banners!")
+        if (banners.size > 300) {
+            val unique = banners.values.distinctBy { it.x }.distinctBy { it.y }.distinctBy { it.z }
+            warn("Fatal error: banners map size>300! Found and cleared ${banners.size - unique.size} unused banners!")
+            banners = unique.associateBy { banner.uuid }.toMutableMap()
             return banner
         }
         banners[banner.uuid] = banner
@@ -37,8 +39,14 @@ object Banners {
     }
 
     @JvmStatic
-    fun content(player: Player, uuid: UUID, content: String) =
+    fun content(player: Player, uuid: UUID, content: String) {
+        if (banners.containsKey(uuid)) {
+            if (banners[uuid]?.content == content)
+                return
+            banners[uuid]?.content = content
+        }
         ModTransfer(uuid.toString(), content).send("banner:change-content", player)
+    }
 
     @JvmStatic
     fun content(player: Player, banner: Banner, content: String) = content(player, banner.uuid, content)
