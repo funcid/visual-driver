@@ -15,11 +15,13 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.registerHandler
+import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class Recharge {
-    private lateinit var line: RectangleElement
-    private lateinit var content: TextElement
+    private lateinit var rechargeLine: RectangleElement
+    private lateinit var rechargeContent: TextElement
 
     private var cooldown: RectangleElement? = null
 
@@ -42,13 +44,13 @@ class Recharge {
                     align = BOTTOM
                     size = V3(180.0, 5.0, 0.0)
                     color = Color(0, 0, 0, 0.62)
-                    line = +rectangle {
+                    rechargeLine = +rectangle {
                         origin = LEFT
                         align = LEFT
                         size = V3(180.0, 5.0, 0.0)
                         color = Color(42, 102, 189, 0.62)
                     }
-                    content = +text {
+                    rechargeContent = +text {
                         origin = TOP
                         align = TOP
                         color = WHITE
@@ -59,24 +61,24 @@ class Recharge {
                     enabled = false
                 }
             }
-            time = this.readDouble()
+            time = readDouble()
             val text = NetUtil.readUtf8(this)
-            line.color = Color(readInt(), readInt(), readInt(), 1.0)
+            rechargeLine.color = Color(readInt(), readInt(), readInt(), 1.0)
 
             if (time == 0.0) {
-                line.size.x = 0.0
+                rechargeLine.size.x = 0.0
                 cooldown?.enabled = false
                 return@registerChannel
             }
 
             cooldown?.enabled = true
-            content.content = text
-            line.animate(time - 0.1) {
+            rechargeContent.content = text
+            rechargeLine.animate(time - 0.1) {
                 size.x = 0.0
             }
             UIEngine.schedule(time) {
                 cooldown?.enabled = false
-                line.size.x = 180.0
+                rechargeLine.size.x = 180.0
             }
         }
     }

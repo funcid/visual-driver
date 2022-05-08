@@ -1,6 +1,7 @@
 package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.util.warn
 import me.func.protocol.GlowColor
 import me.func.protocol.GlowingPlace
 import org.bukkit.entity.Player
@@ -103,8 +104,10 @@ object Glow : Listener {
 
     @JvmStatic
     fun addPlace(place: GlowingPlace): GlowingPlace {
-        if (glowingPlaces.size > 300)
-            throw RuntimeException("Glow places map size > 300! Stop add glowing places!")
+        if (glowingPlaces.size > 300) {
+            warn("Glow places map size > 300! Stop add glowing places!")
+            return place
+        }
         glowingPlaces[place.uuid] = place
         return place
     }
@@ -167,5 +170,4 @@ object Glow : Listener {
         glowingPlaces.clear()
         playerAccepter.clear()
     }
-
 }

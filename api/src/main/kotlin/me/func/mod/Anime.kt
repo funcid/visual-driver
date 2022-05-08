@@ -120,39 +120,22 @@ object Anime {
     }
 
     @JvmStatic
-    fun title(player: Player, vararg text: String) {
-        title(player, text.joinToString { "\n" })
-    }
+    fun title(player: Player, vararg text: String) = title(player, text.joinToString { "\n" })
 
     @JvmStatic
-    fun timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int) {
-        ModTransfer()
-            .string(text)
-            .integer(duration)
-            .integer(red)
-            .integer(blue)
-            .integer(green)
-            .send("func:bar", player)
-    }
+    fun timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int) = ModTransfer()
+        .string(text)
+        .integer(duration)
+        .integer(red)
+        .integer(blue)
+        .integer(green)
+        .send("func:bar", player)
 
     @JvmStatic
-    fun timer(player: Player, text: String, duration: Int) {
-        ModTransfer()
-            .string(text)
-            .integer(duration)
-            .integer(42)
-            .integer(102)
-            .integer(189)
-            .send("func:bar", player)
-    }
+    fun timer(player: Player, text: String, duration: Int) = timer(player, text, duration, 42, 102, 189)
 
     @JvmStatic
-    fun timer(player: Player, duration: Int) {
-        ModTransfer()
-            .string("До конца осталось")
-            .integer(duration)
-            .send("func:bar", player)
-    }
+    fun timer(player: Player, duration: Int) = timer(player, "До конца осталось", duration)
 
     @JvmStatic
     fun bottomRightMessage(player: Player, text: String) {
@@ -251,14 +234,13 @@ object Anime {
     }
 
     @JvmStatic
-    fun moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double) =
-        ModTransfer()
-            .string(uuid.toString())
-            .double(toX)
-            .double(toY)
-            .double(toZ)
-            .double(seconds)
-            .send("func:marker-move", player)
+    fun moveMarker(player: Player, uuid: UUID, toX: Double, toY: Double, toZ: Double, seconds: Double) = ModTransfer()
+        .string(uuid.toString())
+        .double(toX)
+        .double(toY)
+        .double(toZ)
+        .double(seconds)
+        .send("func:marker-move", player)
 
     @JvmStatic
     fun moveMarker(player: Player, marker: Marker, seconds: Double) =
@@ -342,20 +324,19 @@ object Anime {
             .send("func:corpse", to)
 
     @JvmStatic
-    fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, diameter: Double) =
-        ModTransfer()
-            .integer(0)
-            .long(uuid.mostSignificantBits)
-            .long(uuid.leastSignificantBits)
-            .double(x)
-            .double(y)
-            .double(z)
-            .integer(color.red)
-            .integer(color.green)
-            .integer(color.blue)
-            .double(color.alpha / 255.0)
-            .double(diameter)
-            .send("fiwka:sphere", to)
+    fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, diameter: Double) = ModTransfer()
+        .integer(0)
+        .long(uuid.mostSignificantBits)
+        .long(uuid.leastSignificantBits)
+        .double(x)
+        .double(y)
+        .double(z)
+        .integer(color.red)
+        .integer(color.green)
+        .integer(color.blue)
+        .double(color.alpha / 255.0)
+        .double(diameter)
+        .send("fiwka:sphere", to)
 
     @JvmStatic
     fun sphere(
@@ -368,22 +349,21 @@ object Anime {
         sX: Double,
         sY: Double,
         sZ: Double
-    ) =
-        ModTransfer()
-            .integer(1)
-            .long(uuid.mostSignificantBits)
-            .long(uuid.leastSignificantBits)
-            .double(x)
-            .double(y)
-            .double(z)
-            .integer(color.red)
-            .integer(color.green)
-            .integer(color.blue)
-            .double(color.alpha / 255.0)
-            .double(sX)
-            .double(sY)
-            .double(sZ)
-            .send("fiwka:sphere", to)
+    ) = ModTransfer()
+        .integer(1)
+        .long(uuid.mostSignificantBits)
+        .long(uuid.leastSignificantBits)
+        .double(x)
+        .double(y)
+        .double(z)
+        .integer(color.red)
+        .integer(color.green)
+        .integer(color.blue)
+        .double(color.alpha / 255.0)
+        .double(sX)
+        .double(sY)
+        .double(sZ)
+        .send("fiwka:sphere", to)
 
     @JvmStatic
     fun teleportSphereTo(to: Player, uuid: UUID, x: Double, y: Double, z: Double) =
@@ -478,15 +458,13 @@ object Anime {
     }
 
     @JvmStatic
-    fun reload(player: Player, seconds: Double, text: String, red: Int, green: Int, blue: Int) {
-        ModTransfer()
-            .double(seconds)
-            .string(text)
-            .integer(red)
-            .integer(green)
-            .integer(blue)
-            .send("func:recharge", player)
-    }
+    fun reload(player: Player, seconds: Double, text: String, red: Int, green: Int, blue: Int) = ModTransfer()
+        .double(seconds)
+        .string(text)
+        .integer(red)
+        .integer(green)
+        .integer(blue)
+        .send("func:recharge", player)
 
     @JvmStatic
     fun reload(player: Player, seconds: Double, text: String, glowColor: GlowColor) =
