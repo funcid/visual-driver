@@ -1,10 +1,8 @@
 package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.util.listener
 import me.func.protocol.GlowColor
 import me.func.protocol.GlowingPlace
-import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener

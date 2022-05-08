@@ -1,9 +1,9 @@
 package me.func.mod.graffiti
 
-import me.func.protocol.personalization.FeatureUserData
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
+import me.func.protocol.personalization.FeatureUserData
 import me.func.protocol.personalization.packet.StickersAvailablePackage
 import ru.cristalix.core.network.Capability
 import ru.cristalix.core.network.ISocketClient

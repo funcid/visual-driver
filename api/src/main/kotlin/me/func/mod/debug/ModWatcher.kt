@@ -1,7 +1,5 @@
 package me.func.mod.debug
 
-import me.func.mod.Anime
-import me.func.mod.Anime.reload
 import me.func.mod.MOD_LOCAL_TEST_DIR_NAME
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
@@ -12,6 +10,7 @@ import java.nio.file.*
 import java.nio.file.StandardWatchEventKinds.*
 import java.util.*
 import java.util.jar.JarFile
+import kotlin.concurrent.thread
 import kotlin.io.path.absolutePathString
 
 internal object ModWatcher {
@@ -23,7 +22,7 @@ internal object ModWatcher {
         val watchService = FileSystems.getDefault().newWatchService()
         testingPath.register(watchService, ENTRY_CREATE, ENTRY_MODIFY, ENTRY_DELETE)
 
-        Thread {
+        thread {
             while (true) {
                 val key: WatchKey = try {
                     watchService.take()
@@ -50,7 +49,7 @@ internal object ModWatcher {
                 }
                 key.reset()
             }
-        }.start()
+        }
     }
 
     private fun tryLoadUpdateMod(modName: String, resolved: Path, tries: Int = 10) {

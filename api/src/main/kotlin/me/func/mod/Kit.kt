@@ -12,7 +12,6 @@ import me.func.mod.util.after
 import me.func.mod.util.fileLastName
 import me.func.mod.util.listener
 import me.func.protocol.Mod
-import net.minecraft.server.v1_12_R1.MinecraftServer
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
 import org.bukkit.event.EventHandler
@@ -41,10 +40,10 @@ internal object StandardMods : Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     fun PlayerJoinEvent.handle() {
         if (mods.isNotEmpty()) {
-            MinecraftServer.SERVER.postToNextTick {
+            after {
                 ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
 
-                MinecraftServer.SERVER.postToNextTick {
+                after {
                     ModTransfer(mods.size).apply {
                         mods.forEach { integer(it.ordinal) }
                     }.send("anime:loadmod", player)
@@ -181,7 +180,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
         @EventHandler
         fun PlayerChangedWorldEvent.handle() {
             // Если игрок был телепортирован, отправить ему граффити в его мире
-            MinecraftServer.SERVER.postToMainThread { GraffitiManager.sendGraffitiBulk(player) }
+            after { GraffitiManager.sendGraffitiBulk(player) }
         }
     },
     DEBUG,

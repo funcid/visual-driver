@@ -1,20 +1,11 @@
 package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
-import me.func.mod.Npc.npcs
-import me.func.mod.Npc.onClick
-import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.NpcSmart
 import me.func.protocol.npc.NpcData
-import net.minecraft.server.v1_12_R1.ItemStack
-import net.minecraft.server.v1_12_R1.PacketPlayOutEntityTeleport
-import net.minecraft.server.v1_12_R1.SoundEffects.id
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import org.bukkit.event.player.PlayerTeleportEvent
-import org.bukkit.inventory.EquipmentSlot
-import java.util.*
 import java.util.function.Consumer
 
 object Npc {
