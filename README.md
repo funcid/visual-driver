@@ -152,6 +152,7 @@ players.forEach { player -> data.send("lootbox", player) }
 
 <h3>Меню выбора</h3>
 
+<img src="https://user-images.githubusercontent.com/42806772/167634413-839af5f3-bf3a-469b-ae33-8a50a4785b6f.png" width="500">
 
 Пример для языка kotlin
 ```kotlin
