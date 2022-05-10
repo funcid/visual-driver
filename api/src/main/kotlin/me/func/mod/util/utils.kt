@@ -47,6 +47,9 @@ fun after(ticks: Long = 1, runnable: () -> Unit): BukkitTask =
 fun listener(vararg listener: Listener) =
     listener.forEach { Bukkit.getPluginManager().registerEvents(it, Anime.provided) }
 
+fun itemToTexture(item: ItemStack) =
+    "minecraft:textures/items/${(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack).name}.png"
+
 /**
  * Копирует итемстак, добавляя в него новый нбт
  * @param key ключ нбт тега

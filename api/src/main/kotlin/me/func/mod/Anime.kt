@@ -1,3 +1,4 @@
+@file:JvmName("Anime")
 package me.func.mod
 
 import dev.xdark.feder.NetUtil
