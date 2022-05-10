@@ -150,6 +150,64 @@ players.forEach { player -> data.send("lootbox", player) }
 Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods`
 является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
 
+<h3>Меню выбора</h3>
+
+
+Пример для языка kotlin
+```kotlin
+val menu = selection {
+    title = "Прокачки" // Название слева сверху
+    money = "Ваш баланс 999" // Баланс справа сверху, если не указать - монетка не покажется
+    hint = "Взять" // При наведении на предмет, будет отображаться этот текст
+    rows = 3 // Количество строчек
+    columns = 4 // Количество колонок
+    buttons( // Указание кнопок, если кнопок будет больше чем вмещается, меню станет многостраничным
+        button {
+            texture = "minecraft:textures/items/apple.png" // Текстура namespace:path
+            price = 88 // Цена предмета, если не указать - монета не покажется
+            title = "Куриные\nкрылья" // Название предмета (есть поддержка \n)
+            description = "+10 силы" // Комментарий предмета (есть поддержка \n)
+            onClick { player, index, button -> // Обработка нажатия по кнопке
+                player.sendMessage("Button id: $index, button $button")
+            }
+        },
+        button {
+            texture = "minecraft:textures/items/potato.png"
+            price = 99
+            title = "Картошка"
+            description = "+гниль"
+        }
+    )
+}
+
+menu.open(player) // Открываем меню игроку, можно сохранять меню в переменную и показывать много раз
+```
+Пример для языка java
+```java
+Selection menu = new Selection(
+        "Прокачки",
+        "Баланс 999",
+        "Купить",
+        4, // Количество строчек
+        3, // Количество колонок
+        new Button(
+            "minecraft:textures/items/apple.png",
+            999,
+            "Название",
+            "описание"
+        ).onClick((player, index, button) -> {
+            player.sendMessage("Button id: $index, button $button");
+        }), new Button(
+            "minecraft:textures/items/apple.png",
+            999,
+            "Название",
+            "описание"
+        )
+);
+
+menu.open(player);
+```
+
 <h3>Батлпасс</h3>
 
 <img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
