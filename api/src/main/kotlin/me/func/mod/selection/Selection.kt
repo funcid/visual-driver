@@ -30,8 +30,11 @@ class Selection(
             .integer(storage?.size ?: 0)
             .apply {
                 storage?.forEach {
-                    string(it.texture)
-                        .long(it.price)
+                    val isItem = it.item != null
+                    boolean(isItem).apply {
+                        if (isItem) item(it.item!!)
+                        else string(it.texture)
+                    }.long(it.price)
                         .string(it.title)
                         .string(it.description)
                 }
