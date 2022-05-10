@@ -154,6 +154,19 @@ players.forEach { player -> data.send("lootbox", player) }
 
 <img src="https://user-images.githubusercontent.com/42806772/167634413-839af5f3-bf3a-469b-ae33-8a50a4785b6f.png" width="500">
 
+1. Чтобы загрузить свою текстуру, используйте `Anime#loadTextures` или `Anime#loadTexture`.
+2. Если вы хотетите сменить валюту, то нужно изменить поле `vault` в `Selection` на имя фотографии, список:
+boost (![boost](https://user-images.githubusercontent.com/42806772/167699489-f3b01e86-96fa-40c0-b7f8-d93044f21323.png)),
+coin (![coin](https://user-images.githubusercontent.com/42806772/167699600-2d856415-12c4-4107-92da-1ca6de662394.png)),
+dollar (![dollar](https://user-images.githubusercontent.com/42806772/167699644-00d5a442-0b1b-40a5-91bd-a90a9685207d.png)),
+donate (![donate](https://user-images.githubusercontent.com/42806772/167699683-6ea27f1a-6397-4f7b-b8fe-e335b7121854.png)),
+exp (![exp](https://user-images.githubusercontent.com/42806772/167699755-55bc43fa-7716-4f50-90ed-e60ee1daaf04.png)),
+heart (![heart](https://user-images.githubusercontent.com/42806772/167699766-02518b7e-43d9-4835-a49c-41db5b798ce6.png)),
+mining (![mining](https://user-images.githubusercontent.com/42806772/167699785-0804e0c7-d77e-4314-8a6c-7aa1d15385dd.png)),
+ruby (![ruby](https://user-images.githubusercontent.com/42806772/167699803-ab4b1004-33c8-42e5-9c29-44fe5525abf7.png)),
+time (![time](https://user-images.githubusercontent.com/42806772/167699820-898924d5-d5d3-404d-a202-f4c79ab07c8a.png)),
+tree (![tree](https://user-images.githubusercontent.com/42806772/167699889-4b907b04-15ef-49ec-bb00-f8f46623cf64.png))
+   
 Пример для языка kotlin
 ```kotlin
 val menu = selection {
@@ -173,7 +186,7 @@ val menu = selection {
             }
         },
         button {
-            texture = "minecraft:textures/items/potato.png"
+            item = ItemStack(Material.HEAD) // Добавление иконки кнопки по предмету
             price = 99
             title = "Картошка"
             description = "+гниль"
@@ -199,11 +212,11 @@ Selection menu = new Selection(
         ).onClick((player, index, button) -> {
             player.sendMessage("Button id: $index, button $button");
         }), new Button(
-            "minecraft:textures/items/apple.png",
+            "",
             999,
             "Название",
             "описание"
-        )
+        ).item(new ItemStack(Material.HEAD)) // Иконка по предмету
 );
 
 menu.open(player);
