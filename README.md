@@ -173,7 +173,7 @@ val menu = selection {
             }
         },
         button {
-            texture = "minecraft:textures/items/potato.png"
+            item = ItemStack(Material.HEAD) // Добавление иконки кнопки по предмету
             price = 99
             title = "Картошка"
             description = "+гниль"
@@ -199,11 +199,11 @@ Selection menu = new Selection(
         ).onClick((player, index, button) -> {
             player.sendMessage("Button id: $index, button $button");
         }), new Button(
-            "minecraft:textures/items/apple.png",
+            "",
             999,
             "Название",
             "описание"
-        )
+        ).item(new ItemStack(Material.HEAD)) // Иконка по предмету
 );
 
 menu.open(player);
