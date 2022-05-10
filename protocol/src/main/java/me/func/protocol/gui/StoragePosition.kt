@@ -1,8 +1,6 @@
 package me.func.protocol.gui
 
 import java.util.*
-import kotlin.math.floor
-import kotlin.math.round
 
 class Storage(
     var uuid: UUID,
@@ -12,16 +10,11 @@ class Storage(
     var rows: Int,
     var columns: Int,
     var storage: List<StoragePosition> = listOf(),
-    var page: Int = 0
-) {
-    fun getPageSize() = rows * columns
-
-    fun getElementsOnPage(pageIndex: Int) = storage.drop(getPageSize() * pageIndex).take(getPageSize())
-}
+)
 
 open class StoragePosition(
     var texture: String,
-    var price: Int,
+    var price: Long,
     var title: String,
     var description: String
 )

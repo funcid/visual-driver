@@ -31,7 +31,7 @@ class Selection(
             .apply {
                 storage?.forEach {
                     string(it.texture)
-                        .integer(it.price)
+                        .long(it.price)
                         .string(it.title)
                         .string(it.description)
                 }

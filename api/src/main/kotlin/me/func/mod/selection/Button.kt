@@ -9,11 +9,11 @@ fun interface ButtonClickHandler {
     fun handle(player: Player, index: Int, button: Button)
 }
 
-class Button(texture: String = "", price: Int = -1, title: String = "", description: String = "") : StoragePosition(
+class Button(texture: String = "", price: Long = -1, title: String = "", description: String = "") : StoragePosition(
     texture, price, title, description
 ) {
 
-    constructor(item: ItemStack, price: Int, title: String, description: String) :
+    constructor(item: ItemStack, price: Long, title: String, description: String) :
             this(itemToTexture(item), price, title, description)
 
     var onClick: ButtonClickHandler? = null

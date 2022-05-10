@@ -3,7 +3,6 @@ package experimental
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
-import me.func.protocol.gui.Storage
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -11,12 +10,21 @@ import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
+import java.util.*
 
-class StorageMenu(private val storage: Storage) : ContextGui() {
-
+class StorageMenu(
+    var uuid: UUID,
+    var title: String,
+    var money: String,
+    var hint: String,
+    var rows: Int,
+    var columns: Int,
+    var storage: MutableList<StorageNode>,
+) : ContextGui() {
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
 
+    private var page = 0
     private val coinLocation: ResourceLocation = loadTextureFromJar(clientApi, "icons", "coin", "coin.png")
     private val width = 460.0
     private val height = 230.0
@@ -25,7 +33,7 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
     private val itemPadding = 4.0
     private val flexSpace = 3.5
     private val menuTitle = text {
-        content = storage.title
+        content = title
         shadow = true
         color = WHITE
         origin = TOP_LEFT
@@ -44,8 +52,8 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
         size = V3(width, height)
 
         +menuTitle
-        if (storage.money.isNotEmpty()) {
-            +textWithMoney(storage.money).apply {
+        if (money.isNotEmpty()) {
+            +textWithMoney(money).apply {
                 origin = TOP_RIGHT
                 align = TOP_RIGHT
                 title.shadow = true
@@ -85,10 +93,7 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
 
     private fun redrawGrid() {
-        val elements = storage.getElementsOnPage(storage.page)
-        val rows = storage.rows
-        val columns = storage.columns
-
+        val elements = getElementsOnPage(page)
         grid.children.clear()
 
         elements.forEachIndexed { index, element ->
@@ -98,20 +103,12 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
                 carveSize = 2.0
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
                 color = Color(21, 53, 98, 0.62)
-                val icon = +rectangle {
+                val image = element.withPadding(fieldHeight - itemPadding * 2).apply {
                     origin = LEFT
                     align = LEFT
-                    size = V3(
-                        fieldHeight - itemPadding * 2,
-                        fieldHeight - itemPadding * 2,
-                        fieldHeight - itemPadding * 2
-                    )
                     offset.x += itemPadding / 2 + 2
-                    color = WHITE
-                    val parts = element.texture.split(":")
-                    textureLocation = ResourceLocation.of(parts.first(), parts.last())
                 }
-                val xOffset = icon.size.x + itemPadding * 2
+                val xOffset = image.size.x + itemPadding * 2
                 +flex {
                     origin = TOP_LEFT
                     align = TOP_LEFT
@@ -128,7 +125,7 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
                     }
                     +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        lineHeight = icon.size.y - itemPadding * 2 - 10.0
+                        lineHeight = image.size.y - itemPadding * 2 - 10.0
                         content = element.description
                         shadow = true
                     }
@@ -151,11 +148,13 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
                         align = CENTER
                         color = WHITE
                         color.alpha = 0.0
-                        content = storage.hint
+                        content = hint
                         scale = V3(1.0, 1.0, 1.0)
                     }
                 }
                 onHover {
+                    if (element is StorageItemStack)
+                        image.enabled = !hovered
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hovered) 0.95 else 0.0
                         hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
@@ -164,17 +163,20 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
                 onClick {
                     if (Mouse.isButtonDown(0)) {
                         clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
-                            NetUtil.writeUtf8(this, storage.uuid.toString())
+                            NetUtil.writeUtf8(this, uuid.toString())
                             writeInt(index)
                         })
                     }
                 }
             }
         }
-        arrowRight.enabled =
-            storage.page < storage.storage.size / storage.getPageSize() - (if (storage.storage.size % storage.getPageSize() == 0) 1 else 0)
-        arrowLeft.enabled = storage.page > 0
+        arrowRight.enabled = page < storage.size / getPageSize() - (if (storage.size % getPageSize() == 0) 1 else 0)
+        arrowLeft.enabled = page > 0
     }
+
+    private fun getPageSize() = rows * columns
+
+    private fun getElementsOnPage(pageIndex: Int) = storage.drop(getPageSize() * pageIndex).take(getPageSize())
 
     private fun drawChanger(left: Boolean, text: String) = carved {
         carveSize = 1.0
@@ -195,7 +197,7 @@ class StorageMenu(private val storage: Storage) : ContextGui() {
         }
         onClick {
             if (Mouse.isButtonDown(0)) {
-                storage.page += if (left) -1 else 1
+                page += if (left) -1 else 1
                 redrawGrid()
             }
         }

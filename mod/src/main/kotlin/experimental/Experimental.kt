@@ -1,11 +1,7 @@
 package experimental
 
+import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
-import me.func.protocol.gui.Storage
-import me.func.protocol.gui.StoragePosition
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
@@ -18,7 +14,7 @@ class Experimental {
         Disguise()
 
         registerChannel("storage:open") {
-            StorageMenu(Storage(
+            StorageMenu(
                 UUID.fromString(NetUtil.readUtf8(this)),
                 NetUtil.readUtf8(this), // title
                 NetUtil.readUtf8(this), // money title
@@ -26,14 +22,22 @@ class Experimental {
                 readInt(), // rows
                 readInt(), // columns
                 MutableList(readInt()) { // item count
-                    StoragePosition(
-                        NetUtil.readUtf8(this), // texture
-                        readInt(), // prize
-                        NetUtil.readUtf8(this), // item title
-                        NetUtil.readUtf8(this), // item description
-                    )
-                }
-            )).open()
+                    if (readBoolean()) { // real item
+                        StorageItemStack(
+                            ItemTools.read(this), // item
+                            readLong(), // prize
+                            NetUtil.readUtf8(this), // item title
+                            NetUtil.readUtf8(this), // item description
+                        )
+                    } else { // texture
+                        StorageItemTexture(
+                            NetUtil.readUtf8(this), // texture
+                            readLong(), // prize
+                            NetUtil.readUtf8(this), // item title
+                            NetUtil.readUtf8(this), // item description
+                        )
+                    }
+                }).open()
         }
     }
 }

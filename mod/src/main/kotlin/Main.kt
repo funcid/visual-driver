@@ -2,6 +2,9 @@ import battlepass.BattlePass
 import chat.ChatMod
 import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.network.PluginMessage
+import dev.xdark.clientapi.gui.Screen
+import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
+import dev.xdark.clientapi.gui.ingame.OptionsScreen
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
@@ -42,6 +45,14 @@ class Main : KotlinMod() {
         registerChannel("anime:debug") {
             val fields = readInt()
             repeat(6) { if (fields > it) message(NetUtil.readUtf8(this).replace(": ", ": §b")) }
+        }
+
+        registerChannel("func:close") {
+            val mc = UIEngine.clientApi.minecraft()
+            val screen = mc.currentScreen()
+            if (screen is AdvancementsScreen || screen is OptionsScreen)
+                return@registerChannel
+            UIEngine.clientApi.minecraft().displayScreen(null)
         }
 
         var debugChannels = false

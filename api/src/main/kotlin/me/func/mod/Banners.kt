@@ -94,7 +94,9 @@ object Banners {
     }
 
     @JvmStatic
-    fun remove(uuid: UUID) = banners.remove(uuid)
+    fun remove(uuid: UUID) {
+        banners.remove(uuid)
+    }
 
     @JvmStatic
     fun hide(player: Player, vararg uuid: UUID) =

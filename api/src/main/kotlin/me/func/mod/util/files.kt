@@ -1,6 +1,5 @@
 package me.func.mod.util
 
-import me.func.mod.MOD_LOCAL_DIR_NAME
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path

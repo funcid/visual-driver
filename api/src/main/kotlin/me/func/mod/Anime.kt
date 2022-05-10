@@ -1,4 +1,3 @@
-@file:JvmName("Anime")
 package me.func.mod
 
 import dev.xdark.feder.NetUtil
@@ -29,11 +28,8 @@ import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
 
-@JvmField
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
-@JvmField
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
-@JvmField
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
 const val VERSION = "10.05.2022"
@@ -499,4 +495,7 @@ object Anime {
     @JvmStatic
     fun showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>) =
         showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
+
+    @JvmStatic
+    fun close(player: Player) = sendEmptyBuffer("func:close", player)
 }
