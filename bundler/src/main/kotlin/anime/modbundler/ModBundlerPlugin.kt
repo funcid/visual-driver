@@ -34,7 +34,7 @@ class ModBundlerPlugin : Plugin<Project> {
                     .map { if (it.isDirectory) it else zipTree(it) })
 
                 duplicatesStrategy = DuplicatesStrategy.INCLUDE
-                include("**/*.class", "*.class", "mod.properties")
+                include("**/*.class", "*.class", "mod.properties", "*.png")
             }
         }
 

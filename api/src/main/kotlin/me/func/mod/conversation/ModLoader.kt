@@ -15,6 +15,7 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import ru.cristalix.core.display.DisplayChannels.MOD_CHANNEL
 import ru.cristalix.core.util.UtilNetty
+import sun.audio.AudioPlayer.player
 import java.io.File
 import java.io.FileInputStream
 import java.net.URL
@@ -57,7 +58,6 @@ object ModLoader {
         load(download(fileUrl, saveDir))
 
     @JvmStatic
-    @JvmOverloads
     fun loadManyFromWeb(saveDir: String = MOD_LOCAL_DIR_NAME, vararg fileUrls: String) =
         fileUrls.forEach { loadFromWeb(it, saveDir) }
 
@@ -115,14 +115,18 @@ object ModLoader {
     }
 
     @JvmStatic
-    fun send(modName: String, player: Player) = mods[modName]?.let {
-        (player as CraftPlayer).handle.playerConnection.sendPacket(
-            PacketPlayOutCustomPayload(MOD_CHANNEL, PacketDataSerializer(it.retainedSlice()))
-        )
+    fun send(modName: String, player: Player) {
+        mods[modName]?.let {
+            (player as CraftPlayer).handle.playerConnection.sendPacket(
+                PacketPlayOutCustomPayload(MOD_CHANNEL, PacketDataSerializer(it.retainedSlice()))
+            )
+        }
     }
 
     @JvmStatic
-    fun remove(modName: String) = mods.remove(modName)
+    fun remove(modName: String) {
+        mods.remove(modName)
+    }
 
     @JvmStatic
     fun manyToOne(player: Player) = mods.keys.filter { mod ->
@@ -130,10 +134,14 @@ object ModLoader {
     }.forEach { send(it, player) }
 
     @JvmStatic
-    fun oneToMany(modName: String) = Bukkit.getOnlinePlayers().forEach { send(modName, it) }
+    fun oneToMany(modName: String) {
+        Bukkit.getOnlinePlayers().forEach { send(modName, it) }
+    }
 
     @JvmStatic
-    fun sendAll() = Bukkit.getOnlinePlayers().forEach { manyToOne(it) }
+    fun sendAll() {
+        Bukkit.getOnlinePlayers().forEach { manyToOne(it) }
+    }
 
     @JvmStatic
     fun isLoaded(name: String) = mods.containsKey(name)

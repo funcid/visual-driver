@@ -2,8 +2,8 @@ package experimental
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import me.func.protocol.gui.Storage
 import io.netty.buffer.Unpooled
+import me.func.protocol.gui.Storage
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -12,7 +12,7 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
-class StorageMenu(val storage: Storage) : ContextGui() {
+class StorageMenu(private val storage: Storage) : ContextGui() {
 
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
@@ -85,7 +85,7 @@ class StorageMenu(val storage: Storage) : ContextGui() {
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
 
     private fun redrawGrid() {
-        val elements = storage.getElementsOnPage(storage.page - 1)
+        val elements = storage.getElementsOnPage(storage.page)
         val rows = storage.rows
         val columns = storage.columns
 
@@ -171,8 +171,9 @@ class StorageMenu(val storage: Storage) : ContextGui() {
                 }
             }
         }
-        arrowRight.enabled = storage.page < storage.getPagesCount() + 1
-        arrowLeft.enabled = storage.page > 1
+        arrowRight.enabled =
+            storage.page < storage.storage.size / storage.getPageSize() - (if (storage.storage.size % storage.getPageSize() == 0) 1 else 0)
+        arrowLeft.enabled = storage.page > 0
     }
 
     private fun drawChanger(left: Boolean, text: String) = carved {

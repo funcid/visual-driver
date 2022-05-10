@@ -13,7 +13,7 @@ object AutoSendRegistry : Listener {
     private val registry = arrayListOf<String>()
 
     @JvmStatic
-    fun add(vararg modList: String?) = modList.filterNotNull().forEach { name ->
+    fun add(vararg modList: String?) = modList.filterNotNull().onEach { name ->
         val mod = if (name.endsWith(".jar")) name else "$name.jar"
         if (!ModLoader.isLoaded(name)) ModLoader.load("$MOD_LOCAL_DIR_NAME/$mod")
         if (ModLoader.isLoaded(mod)) registry.add(mod)

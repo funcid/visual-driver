@@ -13,10 +13,15 @@ class Selection(
     var columns: Int = 4,
     var storage: List<Button>? = null
 ) {
+    constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
+            this(UUID.randomUUID(), title, money, hint, rows, columns, storage.toList())
+
+    fun buttons(vararg setup: Button) = apply { storage = setup.toList() }
+
     fun open(player: Player) = apply {
         SelectionManager.handleMap[player.uniqueId] = this
         ModTransfer()
-            .string(toString())
+            .string(uuid.toString())
             .string(title)
             .string(money)
             .string(hint)

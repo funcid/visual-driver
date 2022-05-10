@@ -12,6 +12,8 @@ import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.selection.SelectionManager
+import me.func.mod.selection.button
+import me.func.mod.selection.selection
 import me.func.mod.util.*
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
@@ -26,11 +28,14 @@ import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
 
+@JvmField
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
+@JvmField
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
+@JvmField
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
-const val VERSION = "08.05.2022"
+const val VERSION = "10.05.2022"
 
 object Anime {
 

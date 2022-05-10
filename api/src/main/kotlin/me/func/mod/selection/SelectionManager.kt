@@ -35,7 +35,7 @@ object SelectionManager : Listener {
                     }
                     it.storage?.let { storage ->
                         storage[index].let { button ->
-                            button.onClick?.accept(index, button)
+                            button.onClick?.handle(player, index, button)
                         }
                     }
                 } catch (exception: Throwable) {

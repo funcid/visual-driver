@@ -2,8 +2,9 @@ package me.func.protocol.gui
 
 import java.util.*
 import kotlin.math.floor
+import kotlin.math.round
 
-open class Storage(
+class Storage(
     var uuid: UUID,
     var title: String,
     var money: String,
@@ -11,11 +12,9 @@ open class Storage(
     var rows: Int,
     var columns: Int,
     var storage: List<StoragePosition> = listOf(),
-    var page: Int = 1
+    var page: Int = 0
 ) {
-    private fun getPageSize() = rows * columns
-
-    fun getPagesCount() = floor(storage.size * 1.0 / getPageSize())
+    fun getPageSize() = rows * columns
 
     fun getElementsOnPage(pageIndex: Int) = storage.drop(getPageSize() * pageIndex).take(getPageSize())
 }
