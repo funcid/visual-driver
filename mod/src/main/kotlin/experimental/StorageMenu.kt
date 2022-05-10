@@ -12,7 +12,7 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
-class StorageMenu(storage: Storage) : ContextGui() {
+class StorageMenu(val storage: Storage) : ContextGui() {
 
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
