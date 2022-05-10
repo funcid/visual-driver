@@ -1,5 +1,6 @@
 package me.func.mod.selection
 
+import me.func.mod.Anime.title
 import me.func.mod.conversation.ModTransfer
 import org.bukkit.entity.Player
 import java.util.*
@@ -31,12 +32,14 @@ class Selection(
             .apply {
                 storage?.forEach {
                     val isItem = it.item != null
-                    boolean(isItem).apply {
-                        if (isItem) item(it.item!!)
-                        else string(it.texture)
-                    }.long(it.price)
-                        .string(it.title)
-                        .string(it.description)
+                    boolean(isItem)
+
+                    if (isItem) item(it.item!!)
+                    else string(it.texture)
+
+                    long(it.price)
+                    string(it.title)
+                    string(it.description)
                 }
             }.send("storage:open", player)
     }

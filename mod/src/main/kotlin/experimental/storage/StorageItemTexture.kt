@@ -1,4 +1,4 @@
-package experimental
+package experimental.storage
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import ru.cristalix.uiengine.utility.V3

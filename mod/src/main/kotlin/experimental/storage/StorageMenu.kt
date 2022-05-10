@@ -1,4 +1,4 @@
-package experimental
+package experimental.storage
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
@@ -103,10 +103,13 @@ class StorageMenu(
                 carveSize = 2.0
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
                 color = Color(21, 53, 98, 0.62)
-                val image = element.withPadding(fieldHeight - itemPadding * 2).apply {
+                val image = +rectangle {
+                    val padding = fieldHeight - itemPadding * 2
+                    size = V3(padding, padding, padding)
                     origin = LEFT
                     align = LEFT
                     offset.x += itemPadding / 2 + 2
+                    +element.withPadding(padding).apply { color = WHITE }
                 }
                 val xOffset = image.size.x + itemPadding * 2
                 +flex {

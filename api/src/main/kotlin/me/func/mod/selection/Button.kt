@@ -1,6 +1,7 @@
 package me.func.mod.selection
 
 import me.func.protocol.gui.StoragePosition
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 
@@ -15,6 +16,8 @@ class Button(texture: String = "", price: Long = -1, title: String = "", descrip
     var item: ItemStack? = null
 
     var onClick: ButtonClickHandler? = null
+
+    fun material(material: Material) = apply { item = ItemStack(material) }
 
     fun item(current: ItemStack) = apply { item = current }
 
