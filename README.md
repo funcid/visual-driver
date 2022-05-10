@@ -165,7 +165,7 @@ val menu = selection {
     buttons( // Указание кнопок, если кнопок будет больше чем вмещается, меню станет многостраничным
         button {
             texture = "minecraft:textures/items/apple.png" // Текстура namespace:path
-            price = 88 // Цена предмета, если не указать - монета не покажется
+            price = 88L // Цена предмета, если не указать - монета не покажется
             title = "Куриные\nкрылья" // Название предмета (есть поддержка \n)
             description = "+10 силы" // Комментарий предмета (есть поддержка \n)
             onClick { player, index, button -> // Обработка нажатия по кнопке
@@ -857,6 +857,11 @@ ARROW_LEFT("mcpatcher/cit/others/badges/arrow_left.png")
 же самое, но можно ставить скин трупу по любой ссылке (имя трупу указывать необязательно)<br>
 `Anime.clearAllCorpses(player: Player)` очистить игроку все трупы
 <br><br>
+   
+<b>Закрыть игроку активное меню (кроме настроек и меню ачивок)</b>:<br>
+
+`Anime.close(player: Player)`<br>
+   
 <b>Отправить пустой Buffer игроку в канал</b>:<br>
 
 `Anime.sendEmptyBuffer(channel: String, player: Player)`<br>
