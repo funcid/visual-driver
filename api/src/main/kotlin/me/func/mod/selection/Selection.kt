@@ -1,5 +1,6 @@
 package me.func.mod.selection
 
+import com.mojang.brigadier.arguments.StringArgumentType.string
 import me.func.mod.Anime.title
 import me.func.mod.conversation.ModTransfer
 import org.bukkit.entity.Player
@@ -9,13 +10,14 @@ class Selection(
     var uuid: UUID = UUID.randomUUID(),
     var title: String = "Меню",
     var money: String = "Загрузка...",
+    var vault: String = "coin",
     var hint: String = "Купить",
     var rows: Int = 3,
     var columns: Int = 4,
     var storage: List<Button>? = null
 ) {
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
-            this(UUID.randomUUID(), title, money, hint, rows, columns, storage.toList())
+            this(UUID.randomUUID(), title, "coin", money, hint, rows, columns, storage.toList())
 
     fun buttons(vararg setup: Button) = apply { storage = setup.toList() }
 
@@ -24,6 +26,7 @@ class Selection(
         ModTransfer()
             .string(uuid.toString())
             .string(title)
+            .string(vault)
             .string(money)
             .string(hint)
             .integer(rows)

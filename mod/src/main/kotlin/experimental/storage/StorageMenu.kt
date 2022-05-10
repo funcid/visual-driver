@@ -1,5 +1,6 @@
 package experimental.storage
 
+import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
@@ -15,6 +16,7 @@ import java.util.*
 class StorageMenu(
     var uuid: UUID,
     var title: String,
+    var vault: String,
     var money: String,
     var hint: String,
     var rows: Int,
@@ -25,7 +27,7 @@ class StorageMenu(
     lateinit var arrowRight: CarvedRectangle
 
     private var page = 0
-    private val coinLocation: ResourceLocation = loadTextureFromJar(clientApi, "icons", "coin", "coin.png")
+    private val coinLocation: ResourceLocation = loadTextureFromJar(clientApi, "icons", vault, "$vault.png")
     private val width = 460.0
     private val height = 230.0
     private val padding = height / 12.0
@@ -145,6 +147,12 @@ class StorageMenu(
                     size = this@a.size
                     color = Color(74, 140, 236, 1.0)
                     color.alpha = 0.0
+                    beforeRender {
+                        GlStateManager.disableDepth()
+                    }
+                    afterRender {
+                        GlStateManager.enableDepth()
+                    }
 
                     +text {
                         origin = CENTER
@@ -156,8 +164,6 @@ class StorageMenu(
                     }
                 }
                 onHover {
-                    if (element is StorageItemStack)
-                        image.enabled = !hovered
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hovered) 0.95 else 0.0
                         hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
