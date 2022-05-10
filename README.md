@@ -165,7 +165,8 @@ heart (![heart](https://user-images.githubusercontent.com/42806772/167699766-025
 mining (![mining](https://user-images.githubusercontent.com/42806772/167699785-0804e0c7-d77e-4314-8a6c-7aa1d15385dd.png)),
 ruby (![ruby](https://user-images.githubusercontent.com/42806772/167699803-ab4b1004-33c8-42e5-9c29-44fe5525abf7.png)),
 time (![time](https://user-images.githubusercontent.com/42806772/167699820-898924d5-d5d3-404d-a202-f4c79ab07c8a.png)),
-tree (![tree](https://user-images.githubusercontent.com/42806772/167699889-4b907b04-15ef-49ec-bb00-f8f46623cf64.png))
+tree (![tree](https://user-images.githubusercontent.com/42806772/167699889-4b907b04-15ef-49ec-bb00-f8f46623cf64.png)).
+3. Если нужно закрыть меню, используйте `Anime#close`, которое закрывает любое окно игрока, кроме меню достижений и настроек.
    
 Пример для языка kotlin
 ```kotlin
