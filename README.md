@@ -150,8 +150,9 @@ players.forEach { player -> data.send("lootbox", player) }
 Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods`
 является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
 
-<h3>Меню выбора</h3>
+<h3>Меню выбора EXPERIMENTAL</h3>
 
+<img src="https://user-images.githubusercontent.com/42806772/167634413-839af5f3-bf3a-469b-ae33-8a50a4785b6f.png" width="500">
 
 Пример для языка kotlin
 ```kotlin
@@ -208,7 +209,7 @@ Selection menu = new Selection(
 menu.open(player);
 ```
 
-<h3>Батлпасс</h3>
+<h3>Батлпасс BATTLEPASS</h3>
 
 <img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
 
