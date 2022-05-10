@@ -2,7 +2,7 @@ package experimental
 
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
-import sun.security.jgss.GSSToken.readInt
+import ru.cristalix.clientapi.KotlinMod
 import java.util.*
 
 context(KotlinMod)
