@@ -1,4 +1,4 @@
-package gui
+package experimental
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import ru.cristalix.uiengine.element.RectangleElement

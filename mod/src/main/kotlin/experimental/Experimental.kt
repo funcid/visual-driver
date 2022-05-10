@@ -10,5 +10,6 @@ class Experimental {
         GlowPlaces()
         Recharge()
         Disguise()
+        StorageOpener()
     }
 }

@@ -1,9 +1,8 @@
-package standard
+package experimental
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import gui.Storage
-import gui.TextedIcon
+import me.func.protocol.gui.Storage
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
@@ -13,7 +12,7 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
-class StorageOpener(storage: Storage) : ContextGui() {
+class StorageMenu(storage: Storage) : ContextGui() {
 
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
@@ -45,10 +44,12 @@ class StorageOpener(storage: Storage) : ContextGui() {
         size = V3(width, height)
 
         +menuTitle
-        +textWithMoney(storage.money).apply {
-            origin = TOP_RIGHT
-            align = TOP_RIGHT
-            title.shadow = true
+        if (storage.money.isNotEmpty()) {
+            +textWithMoney(storage.money).apply {
+                origin = TOP_RIGHT
+                align = TOP_RIGHT
+                title.shadow = true
+            }
         }
         +carved {
             carveSize = 1.0
@@ -107,7 +108,8 @@ class StorageOpener(storage: Storage) : ContextGui() {
                     )
                     offset.x += itemPadding / 2 + 2
                     color = WHITE
-                    textureLocation = element.texture
+                    val parts = element.texture.split(":")
+                    textureLocation = ResourceLocation.of(parts.first(), parts.last())
                 }
                 val xOffset = icon.size.x + itemPadding * 2
                 +flex {
@@ -130,9 +132,11 @@ class StorageOpener(storage: Storage) : ContextGui() {
                         content = element.description
                         shadow = true
                     }
-                    +textWithMoney(element.price.toString(), false).apply {
-                        title.shadow = true
-                        scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
+                    if (element.price >= 0) {
+                        +textWithMoney(element.price.toString(), false).apply {
+                            title.shadow = true
+                            scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
+                        }
                     }
                 }
 
@@ -159,7 +163,7 @@ class StorageOpener(storage: Storage) : ContextGui() {
                 }
                 onClick {
                     if (Mouse.isButtonDown(0)) {
-                        clientApi.clientConnection().sendPayload("store:buy", Unpooled.buffer().apply {
+                        clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                             NetUtil.writeUtf8(this, storage.uuid.toString())
                             writeInt(index)
                         })

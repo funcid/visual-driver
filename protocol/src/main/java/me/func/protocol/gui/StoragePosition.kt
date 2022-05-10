@@ -1,17 +1,16 @@
-package gui
+package me.func.protocol.gui
 
-import dev.xdark.clientapi.resource.ResourceLocation
 import java.util.*
 import kotlin.math.floor
 
-class Storage(
+open class Storage(
     var uuid: UUID,
     var title: String,
     var money: String,
     var hint: String,
     var rows: Int,
     var columns: Int,
-    var storage: MutableList<StoragePosition>,
+    var storage: List<StoragePosition> = listOf(),
     var page: Int = 1
 ) {
     private fun getPageSize() = rows * columns
@@ -21,8 +20,8 @@ class Storage(
     fun getElementsOnPage(pageIndex: Int) = storage.drop(getPageSize() * pageIndex).take(getPageSize())
 }
 
-class StoragePosition(
-    var texture: ResourceLocation,
+open class StoragePosition(
+    var texture: String,
     var price: Int,
     var title: String,
     var description: String
