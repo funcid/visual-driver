@@ -17,7 +17,7 @@ class Selection(
     var storage: List<Button>? = null
 ) {
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
-            this(UUID.randomUUID(), title, "coin", money, hint, rows, columns, storage.toList())
+            this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toList())
 
     fun buttons(vararg setup: Button) = apply { storage = setup.toList() }
 

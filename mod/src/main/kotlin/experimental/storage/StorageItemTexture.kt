@@ -7,7 +7,7 @@ import ru.cristalix.uiengine.utility.rectangle
 class StorageItemTexture(icon: String, price: Long, title: String, description: String): StorageNode(price, title, description) {
 
     val icon = rectangle {
-        val parts = icon.split(":")
+        val parts = icon.split(":", limit = 2)
         textureLocation = ResourceLocation.of(parts.first(), parts.last())
     }
 

@@ -16,7 +16,7 @@ import java.util.*
 class StorageMenu(
     var uuid: UUID,
     var title: String,
-    var vault: String,
+    vault: String,
     var money: String,
     var hint: String,
     var rows: Int,
