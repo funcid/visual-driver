@@ -15,6 +15,12 @@ class Confirmation(override var uuid: UUID = UUID.randomUUID(), var text: String
         accept
     )
 
+    constructor(text: List<String>, accept: Consumer<Player>) : this(
+        UUID.randomUUID(),
+        text.joinToString("\n"),
+        accept
+    )
+
     override fun open(player: Player) = open(
         player, "func:accept",
         ModTransfer()
