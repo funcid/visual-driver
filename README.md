@@ -222,7 +222,29 @@ Selection menu = new Selection(
 
 menu.open(player);
 ```
+   
+<h3>Меню подтверждения EXPERIMENTAL</h3>
 
+<img src="https://user-images.githubusercontent.com/42806772/168159225-348a4e78-d9c1-44c1-818f-00e5d15fe395.png" width="500">
+
+Позволяет удостовериться, в корректности мотивов игрока. Поддерживает несколько строк.
+   
+Пример для языка kotlin
+```kotlin
+val menu = Confirmation("Купить Уганду за", "602 рубля", "Или все же нет?") { player -> // Через запятую указываем строки сообщения меню
+   player.sendMessage("Успешная покупка!") // Пишем что делать при подтверждении игроком
+}
+menu.open(player) // Открываем меню игроку
+```
+Пример для языка java
+```java
+Confirmation menu = new Confirmation(Arrays.asList("Купить Уганду за", "602 рубля", "Или все же нет?"), player -> { // Через запятую указываем строки сообщения меню
+    player.sendMessage("Успешная покупка!") // Пишем что делать при подтверждении игроком
+});
+
+menu.open(player); // Открываем меню игроку
+```
+   
 <h3>Батлпасс BATTLEPASS</h3>
 
 <img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
