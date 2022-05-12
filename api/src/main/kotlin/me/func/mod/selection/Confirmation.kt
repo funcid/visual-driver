@@ -1,6 +1,7 @@
 package me.func.mod.selection
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.selection.MenuManager.open
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
@@ -14,10 +15,10 @@ class Confirmation(override var uuid: UUID = UUID.randomUUID(), var text: String
         accept
     )
 
-    override fun open(player: Player) = apply {
+    override fun open(player: Player) = open(
+        player, "func:accept",
         ModTransfer()
             .string(uuid.toString())
             .string(text)
-            .send("func:accept", player)
-    }
+    )
 }

@@ -1,6 +1,7 @@
 package me.func.mod.selection
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.selection.MenuManager.open
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -13,14 +14,13 @@ class Selection(
     var rows: Int = 3,
     var columns: Int = 4,
     var storage: List<Button>? = null
-): Openable {
+) : Openable {
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
             this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toList())
 
     fun buttons(vararg setup: Button) = apply { storage = setup.toList() }
 
-    override fun open(player: Player) = apply {
-        MenuManager.handleMap[player.uniqueId] = this
+    override fun open(player: Player) = open(player, "storage:open",
         ModTransfer()
             .string(uuid.toString())
             .string(title)
@@ -42,6 +42,6 @@ class Selection(
                     string(it.title)
                     string(it.description)
                 }
-            }.send("storage:open", player)
-    }
+            }
+    )
 }

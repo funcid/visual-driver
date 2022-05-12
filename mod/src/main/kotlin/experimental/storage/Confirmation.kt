@@ -2,6 +2,7 @@ package experimental.storage
 
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
+import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
@@ -34,7 +35,7 @@ class Confirmation(var uuid: UUID, vararg lines: String) : ContextGui() {
         }
         size = V3(
             buttonWidth * 2 + 5 * padding / 2,
-            message.lineHeight * lines.size + buttonHeight + padding * 3
+            message.lineHeight * message.content.split("\n").size + buttonHeight + padding * 3
         )
 
         fun button(offsetX: Double, title: String, normal: Color, hover: Color) = carved {
@@ -63,9 +64,12 @@ class Confirmation(var uuid: UUID, vararg lines: String) : ContextGui() {
         }
         agree = +button(-(buttonWidth / 2 + padding / 4), "Подтвердить", Color(34, 174, 73, 1.0), Color(73, 223, 115, 1.0)).apply {
             onClick {
-                clientApi.clientConnection().sendPayload("func:accept", Unpooled.buffer().apply {
-                    NetUtil.writeUtf8(this, uuid.toString())
-                })
+                if (Mouse.isButtonDown(0)) {
+                    clientApi.clientConnection().sendPayload("func:accept", Unpooled.buffer().apply {
+                        NetUtil.writeUtf8(this, uuid.toString())
+                    })
+                    close()
+                }
             }
         }
         disagree = +button(buttonWidth / 2 + padding / 4, "Закрыть", Color(160, 29, 40, 1.0), Color(231, 61, 75, 1.0)).apply {
