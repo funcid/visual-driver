@@ -1,13 +1,11 @@
 package me.func.mod.selection
 
-import com.mojang.brigadier.arguments.StringArgumentType.string
-import me.func.mod.Anime.title
 import me.func.mod.conversation.ModTransfer
 import org.bukkit.entity.Player
 import java.util.*
 
 class Selection(
-    var uuid: UUID = UUID.randomUUID(),
+    override var uuid: UUID = UUID.randomUUID(),
     var title: String = "Меню",
     var money: String = "Загрузка...",
     var vault: String = "coin",
@@ -15,14 +13,14 @@ class Selection(
     var rows: Int = 3,
     var columns: Int = 4,
     var storage: List<Button>? = null
-) {
+): Openable {
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
             this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toList())
 
     fun buttons(vararg setup: Button) = apply { storage = setup.toList() }
 
-    fun open(player: Player) = apply {
-        SelectionManager.handleMap[player.uniqueId] = this
+    override fun open(player: Player) = apply {
+        MenuManager.handleMap[player.uniqueId] = this
         ModTransfer()
             .string(uuid.toString())
             .string(title)

@@ -11,9 +11,7 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
-import me.func.mod.selection.SelectionManager
-import me.func.mod.selection.button
-import me.func.mod.selection.selection
+import me.func.mod.selection.MenuManager
 import me.func.mod.util.*
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
@@ -41,7 +39,7 @@ object Anime {
 
     init {
         log("Enabling animation-api, version: $VERSION")
-        listener(StandardMods, Glow, AutoSendRegistry, SelectionManager)
+        listener(StandardMods, Glow, AutoSendRegistry, MenuManager)
         Debug // Инициализации команды и обработчика сообщений
     }
 
