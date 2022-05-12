@@ -2,6 +2,7 @@ package experimental
 
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
+import experimental.storage.Confirmation
 import experimental.storage.StorageItemStack
 import experimental.storage.StorageItemTexture
 import experimental.storage.StorageMenu
@@ -16,6 +17,10 @@ class Experimental {
         GlowPlaces()
         Recharge()
         Disguise()
+
+        registerChannel("func:accept") {
+            Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
+        }
 
         registerChannel("storage:open") {
             StorageMenu(
