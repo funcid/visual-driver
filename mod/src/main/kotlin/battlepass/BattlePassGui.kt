@@ -7,11 +7,10 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
-import ru.cristalix.clientapi.JavaMod
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.clientapi.writeUtf8
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -28,9 +27,12 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.item
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
+import ru.cristalix.clientapi.KotlinMod
 import java.util.UUID
 import kotlin.math.PI
 import kotlin.math.roundToInt
+
+const val REWARDS_COUNT = 10
 
 context(KotlinMod)
 class BattlePassGui(
@@ -55,7 +57,6 @@ class BattlePassGui(
     private var moveLeftButton: RectangleElement? = null
     private var moveRightButton: RectangleElement? = null
     private var rewards: RectangleElement? = null
-    private val rewardsCount = 10
 
     init {
         color = Color(0, 0, 0, 0.86)
@@ -95,7 +96,7 @@ class BattlePassGui(
                 color = Color(226, 145, 25, 0.28)
 
                 val buyButtonNeed = !isAdvanced
-                val skipButtonNeed = skipPrice != 0
+                val skipButtonNeed = skipPrice != 0 && level < pages.size * REWARDS_COUNT
 
                 if (buyButtonNeed) {
                     var approve = false
@@ -373,7 +374,7 @@ class BattlePassGui(
 
         val betweenX = guiSize.rewardBetweenX
         var offsetX = (guiSize.totalWidthPart * 11.45) + betweenX
-        repeat(rewardsCount) {
+        repeat(REWARDS_COUNT) {
             +rectangle {
                 size = V3(guiSize.totalWidthPart * 8.27, guiSize.totalHeightPart * 7.3)
                 offset.x += offsetX
@@ -383,7 +384,7 @@ class BattlePassGui(
                 +text {
                     origin = CENTER
                     align = CENTER
-                    content = (page * rewardsCount + it + 1).toString()
+                    content = (page * REWARDS_COUNT + it + 1).toString()
                     scale = V3(guiSize.totalWidthPart * 0.2, guiSize.totalWidthPart * 0.2)
                 }
             }
@@ -430,9 +431,9 @@ class BattlePassGui(
             }
 
             taken =
-                taken || claimed.contains(page * rewardsCount + index + if (advanced) pages.size * rewardsCount else 0)
+                taken || claimed.contains(page * REWARDS_COUNT + index + if (advanced) pages.size * REWARDS_COUNT else 0)
 
-            val canTake = index + page * rewardsCount < level && !taken && (!advanced || isAdvanced)
+            val canTake = index + page * REWARDS_COUNT < level && !taken && (!advanced || isAdvanced)
 
             +rectangle rewardMain@{
                 color =
@@ -474,7 +475,7 @@ class BattlePassGui(
                         writeInt(page)
                         writeInt(index)
 
-                        claimed.add(page * rewardsCount + index + if (advanced) pages.size * rewardsCount else 0)
+                        claimed.add(page * REWARDS_COUNT + index + if (advanced) pages.size * REWARDS_COUNT else 0)
                     })
                 }
             }
