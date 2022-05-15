@@ -2,6 +2,7 @@ package standard
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil.readUtf8
+import externalManager
 import me.func.protocol.EndStatus
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -18,6 +19,7 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 import ru.cristalix.clientapi.KotlinMod
+import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class Ending {
@@ -30,7 +32,7 @@ class Ending {
     private var filler: RectangleElement? = null
 
     init {
-        ExternalManager().loadPaths(
+        externalManager.loadPaths(
             "https://i.imgur.com/mF7DWoV.png",
             "https://i.imgur.com/vxyu2tZ.png",
             "https://i.imgur.com/zUxhQ7y.png"
@@ -42,18 +44,18 @@ class Ending {
                 size = V3(185.0, 103.0)
                 color = Color(255, 255, 255, 1.0)
                 offset = V3(0.0, 130.0)
+                cup = +rectangle {
+                    align = CENTER
+                    origin = CENTER
+                    size = V3(63.5, 104.0)
+                    color = Color(255, 255, 255)
+                }
                 text = +text {
                     align = CENTER
                     origin = CENTER
                     color = WHITE
                     scale = V3(2.0, 2.0)
                     offset = V3(5.0, 0.0, 1.0)
-                }
-                cup = +rectangle {
-                    align = CENTER
-                    origin = CENTER
-                    size = V3(63.5, 104.0)
-                    color = Color(255, 255, 255)
                 }
             }
             information = rectangle {

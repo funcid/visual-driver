@@ -10,7 +10,6 @@ class Standard {
     init {
         IndicatorsManager()
         MarkerManager()
-        ExternalManager()
         ModelBlocker()
         KillBoardManager()
         SphereManager()

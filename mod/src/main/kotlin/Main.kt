@@ -15,10 +15,14 @@ import me.func.protocol.Mod
 import npc.NPC
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
+import standard.ExternalManager
 import standard.Standard
 import store.Store
 
+lateinit var externalManager: ExternalManager
+
 class Main : KotlinMod() {
+
     override fun onEnable() {
         UIEngine.initialize(this)
 
@@ -37,6 +41,8 @@ class Main : KotlinMod() {
                 }
             }
         }
+
+        externalManager = ExternalManager()
 
         val apiPrefix = "§a§lAPI §7"
 

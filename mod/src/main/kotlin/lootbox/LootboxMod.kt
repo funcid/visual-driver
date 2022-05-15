@@ -9,12 +9,12 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.utility.V3
 
 context(KotlinMod)
@@ -118,10 +118,8 @@ class LootboxMod {
         }
 
         registerHandler<WindowResize> {
-            animate(0.3) {
-                crateScreen.background.size = UIEngine.overlayContext.size
-                crateScreen.vignette.size = UIEngine.overlayContext.size
-            }
+            crateScreen.background.size = UIEngine.overlayContext.size
+            crateScreen.vignette.size = UIEngine.overlayContext.size
         }
     }
 }
