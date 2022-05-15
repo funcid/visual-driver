@@ -98,7 +98,7 @@ class StorageMenu(
         val elements = getElementsOnPage(page)
         grid.children.clear()
 
-        elements.forEachIndexed { index, element ->
+        elements.forEach { element ->
             grid + carved a@{
                 val fieldHeight =
                     (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows
@@ -174,7 +174,7 @@ class StorageMenu(
                     if (Mouse.isButtonDown(0)) {
                         clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                             NetUtil.writeUtf8(this, uuid.toString())
-                            writeInt(index)
+                            writeInt(storage.indexOf(element))
                         })
                     }
                 }
