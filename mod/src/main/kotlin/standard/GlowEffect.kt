@@ -10,6 +10,8 @@ import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.rectangle
 
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.registerHandler
+import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class GlowEffect {
@@ -39,15 +41,12 @@ class GlowEffect {
         registerChannel("func:glow") {
             showAlways(readInt(), readInt(), readInt(), readDouble())
         }
-
-        registerHandler<WindowResize> {
-            if (added) vignette.size = UIEngine.overlayContext.size
-        }
     }
 
     private fun showAlways(red: Int, blue: Int, green: Int, power: Double) {
         lazy()
 
+        vignette.size = UIEngine.overlayContext.size
         vignette.color.red = red
         vignette.color.blue = blue
         vignette.color.green = green
@@ -60,6 +59,7 @@ class GlowEffect {
         vignette.color.red = red
         vignette.color.blue = blue
         vignette.color.green = green
+        vignette.size = UIEngine.overlayContext.size
 
         vignette.animate(duration) {
             vignette.color.alpha = power

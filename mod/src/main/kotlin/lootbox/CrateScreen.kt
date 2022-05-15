@@ -32,7 +32,7 @@ class CrateScreen {
         color.alpha = 0.6
     }
 
-    private val background = rectangle {
+    val background = rectangle {
         size = UIEngine.overlayContext.size
         color = Color(0, 0, 0, 0.86)
         enabled = false
@@ -49,7 +49,7 @@ class CrateScreen {
         color.alpha = 0.0
     }
 
-    private val vignette = rectangle {
+    val vignette = rectangle {
         size = UIEngine.overlayContext.size
 
         color = PURPLE
