@@ -3,14 +3,14 @@ package me.func.protocol.alert
 import java.util.*
 
 class NotificationData(
-    val source: UUID?,
-    val type: String?,
+    var source: UUID?,
+    var type: String?,
     var content: String?,
-    val timeoutBarColor: Int,
-    val backgroundColor: Int,
+    var timeoutBarColor: Int,
+    var backgroundColor: Int,
     var timeout: Long,
-    val buttons: List<NotificationButton>?,
-    val chatMessage: String?
+    var buttons: List<NotificationButton>?,
+    var chatMessage: String?
 ) : Cloneable {
     private var original: Boolean = true
 

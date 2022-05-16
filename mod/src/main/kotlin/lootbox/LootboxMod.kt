@@ -15,6 +15,7 @@ import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.V3
 
 context(KotlinMod)
@@ -73,7 +74,7 @@ class LootboxMod {
                 for (i in 0 until amount) {
                     val item = ItemTools.read(data)
                     val name = NetUtil.readUtf8(data)
-                    val rarity = when (NetUtil.readUtf8(data)) {
+                    val rarity = when (val rare = NetUtil.readUtf8(data)) {
                         "NOTHING" -> NOTHING
                         "COMMON" -> COMMON
                         "UNCOMMON" -> UNCOMMON
@@ -81,7 +82,7 @@ class LootboxMod {
                         "EPIC" -> EPIC
                         "LEGENDARY" -> LEGENDARY
                         "INCREDIBLE" -> INCREDIBLE
-                        else -> COMMON
+                        else -> Rarity(rare, RARE.color)
                     }
                     loot.add(Loot(item, name, rarity))
                 }

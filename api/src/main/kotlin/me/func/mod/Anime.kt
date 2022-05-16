@@ -64,7 +64,7 @@ object Anime {
         items.forEach {
             item(it.itemStack)
                 .string(it.title)
-                .string(it.rare.name)
+                .string(it.customRare ?: it.rare.name)
         }
     }.send("lootbox", player)
 
@@ -214,11 +214,17 @@ object Anime {
     }
 
     @JvmStatic
+    fun topMessage(player: Player, message: String, vararg objects: Any?) = topMessage(player, message.format(objects))
+
+    @JvmStatic
     fun cursorMessage(player: Player, message: String) {
         ModTransfer()
             .string(message)
             .send("func:cursor", player)
     }
+
+    @JvmStatic
+    fun cursorMessage(player: Player, message: String, vararg objects: Any?) = cursorMessage(player, message.format(objects))
 
     @JvmStatic
     @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
@@ -279,8 +285,9 @@ object Anime {
         transfer.send("func:weekly-reward", player)
     }
 
+    @JvmOverloads
     @JvmStatic
-    fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double) = ModTransfer()
+    fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double = 3.0) = ModTransfer()
         .item(item)
         .string(title ?: "")
         .string(subtitle ?: "")

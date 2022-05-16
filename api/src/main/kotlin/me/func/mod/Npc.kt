@@ -2,6 +2,7 @@ package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.data.NpcSmart
+import me.func.protocol.npc.NpcBehaviour
 import me.func.protocol.npc.NpcData
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -28,6 +29,16 @@ object Npc {
         npcs[data.id] = npc
         return npc
     }
+
+    @JvmStatic
+    fun create(currentName: String, currentBehaviour: NpcBehaviour, currentSkin: String, currentDigest: String) =
+        NpcSmart(NpcData {
+            name = currentName
+            behaviour = currentBehaviour
+            skinUrl = currentSkin
+            skinDigest = currentDigest
+        })
+
 
     @JvmStatic
     fun clear() = Bukkit.getOnlinePlayers().forEach { Anime.sendEmptyBuffer("npc:kill-all", it) }

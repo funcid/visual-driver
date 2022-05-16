@@ -2,10 +2,10 @@ package me.func.protocol.alert
 
 class NotificationButton(
     var text: String? = null,
-    val color: Int,
-    val command: String? = null,
-    val removeButton: Boolean,
-    val removeNotification: Boolean
+    var color: Int,
+    var command: String? = null,
+    var removeButton: Boolean,
+    var removeNotification: Boolean
 ) : Cloneable {
     public override fun clone() = NotificationButton(text, color, command, removeButton, removeNotification)
 }
