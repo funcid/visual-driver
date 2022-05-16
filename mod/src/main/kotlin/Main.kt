@@ -8,6 +8,7 @@ import dev.xdark.clientapi.gui.ingame.OptionsScreen
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
+import experimental.storage.StorageMenu
 import healthbar.Healthbar
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod
@@ -20,6 +21,7 @@ import standard.Standard
 import store.Store
 
 lateinit var externalManager: ExternalManager
+var backMenu: StorageMenu? = null
 
 class Main : KotlinMod() {
 
@@ -58,6 +60,7 @@ class Main : KotlinMod() {
             val screen = mc.currentScreen()
             if (screen is AdvancementsScreen || screen is OptionsScreen)
                 return@registerChannel
+            backMenu = null
             UIEngine.clientApi.minecraft().displayScreen(null)
         }
 

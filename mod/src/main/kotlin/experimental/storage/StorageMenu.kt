@@ -1,5 +1,6 @@
 package experimental.storage
 
+import backMenu
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
@@ -61,6 +62,37 @@ class StorageMenu(
                 title.shadow = true
             }
         }
+        if (backMenu != this@StorageMenu && backMenu != null) {
+            +carved {
+                carveSize = 1.0
+                align = BOTTOM
+                origin = CENTER
+                offset.y = backButtonSize / 2 - padding
+                offset.x -= 65
+                size = V3(40.0, backButtonSize)
+                val normalColor = hex("2A66BD", 0.83)
+                val hoveredColor = hex("E07614", 0.83)
+                color = normalColor
+                onHover {
+                    animate(0.08, Easings.QUINT_OUT) {
+                        color = if (hovered) hoveredColor else normalColor
+                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+                    }
+                }
+                onClick {
+                    backMenu?.open()
+                    clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
+                }
+                +text {
+                    align = CENTER
+                    origin = CENTER
+                    color = WHITE
+                    scale = V3(0.9, 0.9, 0.9)
+                    content = "Назад"
+                    shadow = true
+                }
+            }
+        }
         +carved {
             carveSize = 1.0
             align = BOTTOM
@@ -76,7 +108,10 @@ class StorageMenu(
                     scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
                 }
             }
-            onClick { close() }
+            onClick {
+                close()
+                backMenu = null
+            }
             +text {
                 align = CENTER
                 origin = CENTER

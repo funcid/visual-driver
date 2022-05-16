@@ -12,6 +12,7 @@ import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.selection.MenuManager
+import me.func.mod.selection.Openable
 import me.func.mod.util.*
 import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
@@ -502,5 +503,8 @@ object Anime {
         showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
 
     @JvmStatic
-    fun close(player: Player) = sendEmptyBuffer("func:close", player)
+    fun close(player: Player) {
+        MenuManager.lastMenu.remove(player.uniqueId)
+        sendEmptyBuffer("func:close", player)
+    }
 }

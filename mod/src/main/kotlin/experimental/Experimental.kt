@@ -1,17 +1,24 @@
 package experimental
 
+import backMenu
+import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
+import dev.xdark.clientapi.gui.ingame.InventorySurvivalScreen
+import dev.xdark.clientapi.gui.ingame.OptionsScreen
+import dev.xdark.clientapi.inventory.Inventory
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import experimental.storage.Confirmation
 import experimental.storage.StorageItemStack
 import experimental.storage.StorageItemTexture
 import experimental.storage.StorageMenu
-import sun.security.jgss.GSSToken.readInt
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.uiengine.UIEngine.clientApi
+import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
 context(KotlinMod)
 class Experimental {
+
     init {
         Banners()
         GlowPlaces()
@@ -23,7 +30,7 @@ class Experimental {
         }
 
         registerChannel("storage:open") {
-            StorageMenu(
+            val screen = StorageMenu(
                 UUID.fromString(NetUtil.readUtf8(this)),
                 NetUtil.readUtf8(this), // title
                 NetUtil.readUtf8(this), // vault
@@ -47,7 +54,10 @@ class Experimental {
                             NetUtil.readUtf8(this), // item description
                         )
                     }
-                }).open()
+                })
+            val mc = clientApi.minecraft()
+            backMenu = if (backMenu == null && (mc.inGameHasFocus() || mc.currentScreen() == null || mc.currentScreen() is InventorySurvivalScreen)) screen else backMenu
+            screen.open()
         }
     }
 }

@@ -17,7 +17,8 @@ inline fun button(setup: Button.() -> Unit) = Button().also(setup)
 
 object MenuManager : Listener {
 
-    val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
+    private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
+    val lastMenu = hashMapOf<UUID, Openable?>() // player uuid to last open selection
 
     private inline fun <reified T> handler(
         channel: String,
@@ -56,11 +57,20 @@ object MenuManager : Listener {
         handler<Confirmation>("func:accept") { menu, player, _ ->
             menu.onAccept.accept(player)
         }
+
+
+        // Обработка кнопки назад
+        Anime.createReader("func:back") { player, _ ->
+            lastMenu[player.uniqueId]?.let { menu ->
+                if (menu is Selection && menu.main) handleMap[player.uniqueId] = menu
+            }
+        }
     }
 
     @EventHandler
     fun PlayerQuitEvent.handle() {
         handleMap.remove(player.uniqueId)
+        lastMenu.remove(player.uniqueId)
     }
 
     @JvmStatic
