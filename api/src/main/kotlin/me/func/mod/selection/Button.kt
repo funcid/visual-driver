@@ -1,5 +1,7 @@
 package me.func.mod.selection
 
+import me.func.mod.util.nbt
+import me.func.mod.util.warn
 import me.func.protocol.gui.StoragePosition
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -16,6 +18,17 @@ class Button(texture: String = "", price: Long = -1, title: String = "", descrip
     var item: ItemStack? = null
 
     var onClick: ButtonClickHandler? = null
+
+    fun sale(percent: Int) = apply {
+        if (item == null) {
+            warn("Cannot add sale to non-item button! Sorry :(")
+            return this
+        } else if (percent !in 0..100) {
+            warn("Sale percent must be between 0 and 100!")
+            return this
+        }
+        item = item?.nbt("sale", percent.toString())
+    }
 
     fun material(material: Material) = apply { item = ItemStack(material) }
 

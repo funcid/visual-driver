@@ -159,7 +159,7 @@ class StorageMenu(
                     +text {
                         color = Color(255, 202, 66, 1.0)
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.title
+                        content = element.title.replace("&", "§")
                         shadow = true
                         lineHeight = 8.0
                     }
@@ -171,7 +171,17 @@ class StorageMenu(
                         shadow = true
                     }
                     if (element.price >= 0) {
-                        +textWithMoney(element.price.toString(), false).apply {
+                        val sale = if (element is StorageItemStack && element.icon.stack?.tagCompound?.hasKeyOfType(
+                                "sale",
+                                8
+                            ) == true
+                        ) element.icon.stack?.tagCompound?.getString("sale")?.toInt() ?: 0 else 0
+                        val price = element.price
+
+                        +textWithMoney(
+                            if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()}" else price.toString(),
+                            false
+                        ).apply {
                             title.shadow = true
                             scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         }
