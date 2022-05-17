@@ -1,7 +1,6 @@
 package me.func.mod.selection
 
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.selection.MenuManager.open
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
@@ -15,11 +14,13 @@ class Reconnect(var text: String, var secondsLeft: Int, var hint: String, var on
 
     constructor(consumer: Consumer<Player>) : this(180, consumer)
 
-    override fun open(player: Player) = open(
-        player, "func:reconnect",
-        ModTransfer()
-            .integer(secondsLeft)
-            .string(text)
-            .string(hint)
-    )
+    override fun open(player: Player) =
+        apply {
+            MenuManager.reconnectMap[player.uniqueId] = this@Reconnect
+            ModTransfer()
+                .integer(secondsLeft)
+                .string(text)
+                .string(hint)
+                .send("func:reconnect", player)
+        }
 }

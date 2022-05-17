@@ -18,6 +18,7 @@ inline fun button(setup: Button.() -> Unit) = Button().also(setup)
 object MenuManager : Listener {
 
     private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
+    val reconnectMap = hashMapOf<UUID, Reconnect>() // player uuid to selection
     val lastMenu = hashMapOf<UUID, Openable?>() // player uuid to last open selection
 
     private inline fun <reified T> handler(
@@ -60,7 +61,7 @@ object MenuManager : Listener {
 
         // Обработка нажатия на кнопку в меню реконнекта
         Anime.createReader("func:reconnect") { player, _ ->
-            handleMap[player.uniqueId]?.let { if (it is Reconnect) it.onClick.accept(player) }
+            reconnectMap[player.uniqueId]?.onClick?.accept(player)
         }
 
         // Обработка кнопки назад в меню выбора
@@ -75,6 +76,7 @@ object MenuManager : Listener {
     fun PlayerQuitEvent.handle() {
         handleMap.remove(player.uniqueId)
         lastMenu.remove(player.uniqueId)
+        reconnectMap.remove(player.uniqueId)
     }
 
     @JvmStatic
