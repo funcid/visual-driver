@@ -226,6 +226,19 @@ Selection menu = new Selection(
 menu.open(player);
 ```
    
+<h3>Меню реконнекта EXPERIMENTAL</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/168923320-5465ff25-70be-4324-9371-c830ba31a43c.png" width="500">
+ 
+Пример для языка kotlin
+```kotlin
+var menu = Reconnect { player -> player.sendMessage("Возвращаем вас в игру!") } // Первый вариант конструктора
+menu = Reconnect(90) { player -> player.sendMessage("Возвращаем вас в игру!") } // Теперь указываем сколько секунд осталось
+menu = Reconnect("Продать почку", 90, "Продать") { player -> player.sendMessage("Возвращаем вас в игру!") } // Теперь указываем все что только можно
+   
+menu.open(player) // Открываем меню игроку
+```
+   
 <h3>Меню подтверждения EXPERIMENTAL</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/168159225-348a4e78-d9c1-44c1-818f-00e5d15fe395.png" width="500">
