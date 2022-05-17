@@ -167,7 +167,7 @@ ruby (![ruby](https://user-images.githubusercontent.com/42806772/167699803-ab4b1
 time (![time](https://user-images.githubusercontent.com/42806772/167699820-898924d5-d5d3-404d-a202-f4c79ab07c8a.png)),
 tree (![tree](https://user-images.githubusercontent.com/42806772/167699889-4b907b04-15ef-49ec-bb00-f8f46623cf64.png)).
 3. Если нужно закрыть меню, используйте `Anime#close`, которое закрывает любое окно игрока, кроме меню достижений и настроек.
-   
+
 Пример для языка kotlin
 ```kotlin
 val menu = selection {
@@ -192,7 +192,7 @@ val menu = selection {
             price = 99
             title = "Картошка"
             description = "+гниль"
-        }
+        }.sale(60) // Указать скидку 60%
     )
 }
 
@@ -218,7 +218,9 @@ Selection menu = new Selection(
             999,
             "Название",
             "описание"
-        ).item(new ItemStack(Material.HEAD)) // Иконка по предмету
+        ).item(new ItemStack(Material.HEAD) // Иконка по предмету
+            .sale(90) // Скидка 90%
+        ) 
 );
 
 menu.open(player);

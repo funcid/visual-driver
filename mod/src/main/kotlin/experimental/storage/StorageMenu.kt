@@ -5,6 +5,7 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
+import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -125,6 +126,8 @@ class StorageMenu(
 
         arrowRight = +drawChanger(false, ">")
         arrowLeft = +drawChanger(true, "<")
+
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) backMenu = null }
     }
 
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
@@ -167,7 +170,7 @@ class StorageMenu(
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         if (element.price >= 0)
                             lineHeight = image.size.y - itemPadding * 2 - 10.0
-                        content = element.description
+                        content = element.description.replace("&", "§")
                         shadow = true
                     }
                     if (element.price >= 0) {
@@ -179,7 +182,7 @@ class StorageMenu(
                         val price = element.price
 
                         +textWithMoney(
-                            if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()}" else price.toString(),
+                            if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
                             false
                         ).apply {
                             title.shadow = true

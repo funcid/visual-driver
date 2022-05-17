@@ -27,6 +27,7 @@ class Experimental {
 
         registerChannel("func:accept") {
             Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
+            backMenu = null
         }
 
         registerChannel("storage:open") {

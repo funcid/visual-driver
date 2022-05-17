@@ -29,7 +29,7 @@ class Confirmation(var uuid: UUID, vararg lines: String) : ContextGui() {
         message = +text {
             align = TOP
             origin = TOP
-            content = lines.joinToString("\n")
+            content = lines.joinToString("\n").replace("&", "§")
             offset.y += padding
             shadow = true
         }
