@@ -19,7 +19,7 @@ object MenuManager : Listener {
 
     private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
     val reconnectMap = hashMapOf<UUID, Reconnect>() // player uuid to selection
-    val lastMenu = hashMapOf<UUID, Openable?>() // player uuid to last open selection
+    val menuStacks = hashMapOf<UUID, Stack<Selection>>() // player uuid to openable history
 
     private inline fun <reified T> handler(
         channel: String,
@@ -66,8 +66,10 @@ object MenuManager : Listener {
 
         // Обработка кнопки назад в меню выбора
         Anime.createReader("func:back") { player, _ ->
-            lastMenu[player.uniqueId]?.let { menu ->
-                if (menu is Selection && menu.main) handleMap[player.uniqueId] = menu
+            menuStacks[player.uniqueId]?.let { stack ->
+                stack.pop()
+                val menu = stack.peek()
+                if (menu is Selection) handleMap[player.uniqueId] = menu
             }
         }
     }
@@ -75,13 +77,30 @@ object MenuManager : Listener {
     @EventHandler
     fun PlayerQuitEvent.handle() {
         handleMap.remove(player.uniqueId)
-        lastMenu.remove(player.uniqueId)
+        menuStacks.remove(player.uniqueId)
         reconnectMap.remove(player.uniqueId)
     }
 
     @JvmStatic
-    fun Openable.open(player: Player, channel: String, transfer: ModTransfer) = apply {
+    fun Openable.open(player: Player, channel: String, transfer: ModTransfer) = apply open@{
         handleMap[player.uniqueId] = this
         transfer.send(channel, player)
+    }
+
+    @JvmStatic
+    fun popSelection(player: Player) = menuStacks[player.uniqueId]?.pop()
+
+    @JvmStatic
+    fun pushSelection(player: Player, selection: Selection) = (menuStacks[player.uniqueId] ?: Stack()).apply {
+        if (size > 10) {
+            warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
+            clearHistory(player)
+            return@apply
+        }
+    }.push(selection)
+
+    @JvmStatic
+    fun clearHistory(player: Player) {
+        menuStacks[player.uniqueId]?.clear()
     }
 }

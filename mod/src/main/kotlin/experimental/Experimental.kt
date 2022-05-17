@@ -1,15 +1,11 @@
 package experimental
 
-import backMenu
-import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
-import dev.xdark.clientapi.gui.ingame.InventorySurvivalScreen
-import dev.xdark.clientapi.gui.ingame.OptionsScreen
-import dev.xdark.clientapi.inventory.Inventory
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import experimental.storage.*
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine.clientApi
+import selectionStack
 import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
@@ -25,7 +21,7 @@ class Experimental {
 
         registerChannel("func:accept") {
             Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
-            backMenu = null
+            selectionStack.clear()
         }
 
         registerChannel("storage:open") {
@@ -54,9 +50,8 @@ class Experimental {
                         )
                     }
                 })
-            val mc = clientApi.minecraft()
-            backMenu = if (backMenu == null && (mc.inGameHasFocus() || mc.currentScreen() == null || mc.currentScreen() is InventorySurvivalScreen)) screen else backMenu
             screen.open()
+            selectionStack.push(screen)
         }
     }
 }

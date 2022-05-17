@@ -1,6 +1,5 @@
 package experimental.storage
 
-import backMenu
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
@@ -13,6 +12,7 @@ import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
+import selectionStack
 import java.util.*
 
 class StorageMenu(
@@ -66,7 +66,7 @@ class StorageMenu(
             menuTitle.origin = TOP
             menuTitle.align = TOP
         }
-        if (backMenu != this@StorageMenu && backMenu != null) {
+        if (selectionStack.size > 0) {
             +carved {
                 carveSize = 1.0
                 align = BOTTOM
@@ -84,7 +84,7 @@ class StorageMenu(
                     }
                 }
                 onClick {
-                    backMenu?.open()
+                    selectionStack.apply { pop() }.peek()?.open()
                     clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
                 }
                 +text {
@@ -114,7 +114,7 @@ class StorageMenu(
             }
             onClick {
                 close()
-                backMenu = null
+                selectionStack.clear()
             }
             +text {
                 align = CENTER
@@ -130,7 +130,7 @@ class StorageMenu(
         arrowRight = +drawChanger(false, ">")
         arrowLeft = +drawChanger(true, "<")
 
-        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) backMenu = null }
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) selectionStack.clear() }
     }
 
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)

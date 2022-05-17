@@ -19,9 +19,10 @@ import ru.cristalix.uiengine.UIEngine
 import standard.ExternalManager
 import standard.Standard
 import store.Store
+import java.util.*
 
 lateinit var externalManager: ExternalManager
-var backMenu: StorageMenu? = null
+var selectionStack: Stack<StorageMenu> = Stack()
 
 class Main : KotlinMod() {
 
@@ -60,7 +61,7 @@ class Main : KotlinMod() {
             val screen = mc.currentScreen()
             if (screen is AdvancementsScreen || screen is OptionsScreen)
                 return@registerChannel
-            backMenu = null
+            selectionStack.clear()
             UIEngine.clientApi.minecraft().displayScreen(null)
         }
 
