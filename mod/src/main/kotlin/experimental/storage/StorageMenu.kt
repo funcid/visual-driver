@@ -62,6 +62,9 @@ class StorageMenu(
                 align = TOP_RIGHT
                 title.shadow = true
             }
+        } else {
+            menuTitle.origin = TOP
+            menuTitle.align = TOP
         }
         if (backMenu != this@StorageMenu && backMenu != null) {
             +carved {
@@ -71,8 +74,8 @@ class StorageMenu(
                 offset.y = backButtonSize / 2 - padding
                 offset.x -= 65
                 size = V3(40.0, backButtonSize)
-                val normalColor = hex("2A66BD", 0.83)
-                val hoveredColor = hex("E07614", 0.83)
+                val normalColor = Color(42, 102, 189, 0.83)
+                val hoveredColor = Color(224, 118, 20, 0.83)
                 color = normalColor
                 onHover {
                     animate(0.08, Easings.QUINT_OUT) {

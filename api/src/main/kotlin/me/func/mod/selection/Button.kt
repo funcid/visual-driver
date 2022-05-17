@@ -19,6 +19,8 @@ class Button(texture: String = "", price: Long = -1, title: String = "", descrip
 
     var onClick: ButtonClickHandler? = null
 
+    private var sale = 0
+
     fun sale(percent: Int) = apply {
         if (item == null) {
             warn("Cannot add sale to non-item button! Sorry :(")
@@ -28,7 +30,10 @@ class Button(texture: String = "", price: Long = -1, title: String = "", descrip
             return this
         }
         item = item?.nbt("sale", percent.toString())
+        sale = percent
     }
+
+    fun withSale() = ((100.0 - sale) / 100.0 * price).toInt()
 
     fun material(material: Material) = apply { item = ItemStack(material) }
 

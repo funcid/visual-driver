@@ -58,8 +58,12 @@ object MenuManager : Listener {
             menu.onAccept.accept(player)
         }
 
+        // Обработка нажатия на кнопку в меню реконнекта
+        Anime.createReader("func:reconnect") { player, _ ->
+            handleMap[player.uniqueId]?.let { if (it is Reconnect) it.onClick.accept(player) }
+        }
 
-        // Обработка кнопки назад
+        // Обработка кнопки назад в меню выбора
         Anime.createReader("func:back") { player, _ ->
             lastMenu[player.uniqueId]?.let { menu ->
                 if (menu is Selection && menu.main) handleMap[player.uniqueId] = menu

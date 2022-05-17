@@ -7,10 +7,7 @@ import dev.xdark.clientapi.gui.ingame.OptionsScreen
 import dev.xdark.clientapi.inventory.Inventory
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
-import experimental.storage.Confirmation
-import experimental.storage.StorageItemStack
-import experimental.storage.StorageItemTexture
-import experimental.storage.StorageMenu
+import experimental.storage.*
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine.clientApi
 import sun.security.jgss.GSSToken.readInt
@@ -24,6 +21,7 @@ class Experimental {
         GlowPlaces()
         Recharge()
         Disguise()
+        Reconnect()
 
         registerChannel("func:accept") {
             Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
