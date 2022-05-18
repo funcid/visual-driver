@@ -18,8 +18,8 @@ inline fun button(setup: Button.() -> Unit) = Button().also(setup)
 object MenuManager : Listener {
 
     private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
+    private val menuStacks = hashMapOf<UUID, Stack<Selection>>() // player uuid to openable history
     val reconnectMap = hashMapOf<UUID, Reconnect>() // player uuid to selection
-    val menuStacks = hashMapOf<UUID, Stack<Selection>>() // player uuid to openable history
 
     private inline fun <reified T> handler(
         channel: String,
@@ -88,15 +88,13 @@ object MenuManager : Listener {
     }
 
     @JvmStatic
-    fun popSelection(player: Player) = menuStacks[player.uniqueId]?.pop()
-
-    @JvmStatic
-    fun pushSelection(player: Player, selection: Selection) = (menuStacks[player.uniqueId] ?: Stack()).apply {
+    fun pushSelection(player: Player, selection: Selection): Selection = (menuStacks[player.uniqueId] ?: Stack()).apply {
         if (size > 10) {
             warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
             clearHistory(player)
             return@apply
         }
+        menuStacks[player.uniqueId] = this
     }.push(selection)
 
     @JvmStatic

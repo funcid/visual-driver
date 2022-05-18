@@ -20,8 +20,8 @@ class Experimental {
         Reconnect()
 
         registerChannel("func:accept") {
-            Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
             selectionStack.clear()
+            Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
         }
 
         registerChannel("storage:open") {

@@ -11,7 +11,7 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import java.util.*
 
-class Confirmation(var uuid: UUID, vararg lines: String) : ContextGui() {
+class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
 
     private val padding = 8.0
     private val buttonWidth = 80.0
@@ -29,7 +29,8 @@ class Confirmation(var uuid: UUID, vararg lines: String) : ContextGui() {
         message = +text {
             align = TOP
             origin = TOP
-            content = lines.joinToString("\n").replace("&", "§")
+            content = lines.replace("&", "§")
+            color = WHITE
             offset.y += padding
             shadow = true
         }
