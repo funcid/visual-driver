@@ -18,7 +18,6 @@ import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import standard.ExternalManager
 import standard.Standard
-import store.Store
 import java.util.*
 
 lateinit var externalManager: ExternalManager
@@ -40,7 +39,7 @@ class Main : KotlinMod() {
                     Mod.LOOTBOX -> LootboxMod()
                     Mod.DIALOG -> DialogMod()
                     Mod.CHAT -> ChatMod()
-                    Mod.STORE -> Store()
+                    else -> return@repeat
                 }
             }
         }
