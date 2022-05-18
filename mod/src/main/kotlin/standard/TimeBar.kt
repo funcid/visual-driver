@@ -67,7 +67,7 @@ class TimeBar {
             }
             cooldown.enabled = !Keyboard.isKeyDown(Keyboard.KEY_TAB)
         }
-        registerChannel("func:timebar") {
+        registerChannel("func:bar") {
             val text = NetUtil.readUtf8(this) + " XX:XX ⏳"
             time = this.readInt()
             line.color = Color(readInt(), readInt(), readInt(), 1.0)

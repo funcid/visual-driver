@@ -10,21 +10,22 @@ import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
+import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
-import selectionStack
+import menuStack
 import java.util.*
 
 class StorageMenu(
-    var uuid: UUID,
-    var title: String,
+    override var uuid: UUID,
+    override var title: String,
     vault: String,
     var money: String,
     var hint: String,
     var rows: Int,
     var columns: Int,
-    var storage: MutableList<StorageNode>,
-) : ContextGui() {
+    override var storage: MutableList<StorageNode<*>>,
+) : Storable(uuid, title, storage) {
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
 
@@ -66,7 +67,7 @@ class StorageMenu(
             menuTitle.origin = TOP
             menuTitle.align = TOP
         }
-        if (selectionStack.size > 0) {
+        if (menuStack.size > 0) {
             +carved {
                 carveSize = 1.0
                 align = BOTTOM
@@ -84,7 +85,7 @@ class StorageMenu(
                     }
                 }
                 onClick {
-                    selectionStack.apply { pop() }.peek()?.open()
+                    menuStack.apply { pop() }.peek()?.open()
                     clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
                 }
                 +text {
@@ -114,7 +115,7 @@ class StorageMenu(
             }
             onClick {
                 close()
-                selectionStack.clear()
+                menuStack.clear()
             }
             +text {
                 align = CENTER
@@ -130,7 +131,7 @@ class StorageMenu(
         arrowRight = +drawChanger(false, ">")
         arrowLeft = +drawChanger(true, "<")
 
-        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) selectionStack.clear() }
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
     }
 
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
@@ -147,12 +148,12 @@ class StorageMenu(
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
                 color = Color(21, 53, 98, 0.62)
                 val image = +rectangle {
-                    val padding = fieldHeight - itemPadding * 2
-                    size = V3(padding, padding, padding)
+                    val iconSize = fieldHeight - itemPadding * 2
+                    size = V3(iconSize, iconSize, iconSize)
                     origin = LEFT
                     align = LEFT
                     offset.x += itemPadding / 2 + 2
-                    +element.withPadding(padding).apply { color = WHITE }
+                    +element.scaling(iconSize).apply { color = WHITE }
                 }
                 val xOffset = image.size.x + itemPadding * 2
                 +flex {
@@ -162,14 +163,14 @@ class StorageMenu(
                     offset.y = itemPadding + 1
                     flexDirection = FlexDirection.DOWN
                     flexSpacing = 0.0
-                    +text {
+                    element.titleElement = +text {
                         color = Color(255, 202, 66, 1.0)
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         content = element.title
                         shadow = true
                         lineHeight = 8.0
                     }
-                    +text {
+                    element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         if (element.price >= 0)
                             lineHeight = image.size.y - itemPadding * 2 - 10.0
@@ -177,11 +178,10 @@ class StorageMenu(
                         shadow = true
                     }
                     if (element.price >= 0) {
-                        val sale = if (element is StorageItemStack && element.icon.stack?.tagCompound?.hasKeyOfType(
-                                "sale",
-                                8
-                            ) == true
-                        ) element.icon.stack?.tagCompound?.getString("sale")?.toInt() ?: 0 else 0
+                        val isItem = element.icon is ItemElement
+                        val tag = if (isItem) (element.icon as ItemElement).stack?.tagCompound else null
+                        val hasTag = isItem && tag?.hasKeyOfType("sale", 8) == true
+                        val sale = if (isItem && hasTag) tag?.getString("sale")?.toInt() ?: 0 else 0
                         val price = element.price
 
                         +textWithMoney(
@@ -230,8 +230,8 @@ class StorageMenu(
                     }
                 }
             }.apply {
-                element.fullElement = this
-                element.applyText()
+                element.bundle = this
+                element.optimizeSpace()
             }
         }
         arrowRight.enabled = page < storage.size / getPageSize() - (if (storage.size % getPageSize() == 0) 1 else 0)
@@ -274,7 +274,6 @@ class StorageMenu(
     }
 
     init {
-        color = Color(0, 0, 0, 0.83)
         redrawGrid()
     }
 }

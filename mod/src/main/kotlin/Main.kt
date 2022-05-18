@@ -2,13 +2,12 @@ import battlepass.BattlePass
 import chat.ChatMod
 import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.network.PluginMessage
-import dev.xdark.clientapi.gui.Screen
 import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
 import dev.xdark.clientapi.gui.ingame.OptionsScreen
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
-import experimental.storage.StorageMenu
+import experimental.storage.Storable
 import healthbar.Healthbar
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod
@@ -16,12 +15,13 @@ import me.func.protocol.Mod
 import npc.NPC
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.ContextGui
 import standard.ExternalManager
 import standard.Standard
 import java.util.*
 
 lateinit var externalManager: ExternalManager
-var selectionStack: Stack<StorageMenu> = Stack()
+var menuStack: Stack<Storable> = Stack()
 
 class Main : KotlinMod() {
 
@@ -60,7 +60,7 @@ class Main : KotlinMod() {
             val screen = mc.currentScreen()
             if (screen is AdvancementsScreen || screen is OptionsScreen)
                 return@registerChannel
-            selectionStack.clear()
+            menuStack.clear()
             UIEngine.clientApi.minecraft().displayScreen(null)
         }
 
