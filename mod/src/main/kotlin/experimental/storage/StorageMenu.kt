@@ -211,7 +211,7 @@ class StorageMenu(
                         align = CENTER
                         color = WHITE
                         color.alpha = 0.0
-                        content = hint
+                        content = element.hint.ifEmpty { hint }
                         scale = V3(1.0, 1.0, 1.0)
                     }
                 }
@@ -229,7 +229,10 @@ class StorageMenu(
                         })
                     }
                 }
-            }.apply { element.fullElement = this }
+            }.apply {
+                element.fullElement = this
+                element.applyText()
+            }
         }
         arrowRight.enabled = page < storage.size / getPageSize() - (if (storage.size % getPageSize() == 0) 1 else 0)
         arrowLeft.enabled = page > 0

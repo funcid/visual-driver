@@ -4,11 +4,11 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.storage.*
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.Flex
-import selectionStack
 import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.uiengine.element.CarvedRectangle
+import selectionStack
 import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
@@ -28,24 +28,35 @@ class Experimental {
         }
 
         registerChannel("button:update") {
-            val last = selectionStack.peek() ?: return@registerChannel
+            val last = if (selectionStack.size < 1) return@registerChannel else selectionStack.peek()
             val index = readInt()
             if (index < 0 || index >= last.storage.size) return@registerChannel
             val node = last.storage[index]
             if (node.fullElement == null) return@registerChannel
 
-            fun getLore(order: Int) = ((node.fullElement!!.children[1] as Flex).children[order] as TextElement)
+            fun getLore(order: Int) =
+                ((node.fullElement!!.children.first { it is Flex } as Flex).children[order] as TextElement)
 
             when (readByte().toInt()) {
-                 0 -> {
+                0 -> {
                     val parts = NetUtil.readUtf8(this).split(":", limit = 2)
                     (node as StorageItemTexture).icon.textureLocation = ResourceLocation.of(parts.first(), parts.last())
                 }
                 1 -> (node as StorageItemStack).icon.stack = ItemTools.read(this)
-                2 -> getLore(0).content = NetUtil.readUtf8(this).replace("&", "§")
-
-                3 -> getLore(1).content = NetUtil.readUtf8(this).replace("&", "§")
-                4 -> ((node.fullElement!!.children.last() as CarvedRectangle).children.first() as TextElement).content = NetUtil.readUtf8(this).replace("&", "§")
+                2 -> {
+                    node.title = NetUtil.readUtf8(this).replace("&", "§")
+                    getLore(0).content = node.title
+                }
+                3 -> {
+                    node.description = NetUtil.readUtf8(this).replace("&", "§")
+                    getLore(1).content = node.description
+                    node.applyText()
+                }
+                4 -> {
+                    node.hint = NetUtil.readUtf8(this).replace("&", "§")
+                    ((node.fullElement!!.children.last() as CarvedRectangle).children.first { it is TextElement } as TextElement).content =
+                        node.hint
+                }
             }
         }
 

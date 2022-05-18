@@ -14,12 +14,12 @@ class Selection(
     var hint: String = "Купить",
     var rows: Int = 3,
     var columns: Int = 4,
-    var storage: List<Button>? = null
+    var storage: MutableList<Button>? = null
 ) : Openable {
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
-            this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toList())
+            this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toMutableList())
 
-    fun buttons(vararg setup: Button) = apply { storage = setup.toList() }
+    fun buttons(vararg setup: Button) = apply { storage = setup.toMutableList() }
 
     override fun open(player: Player) = pushSelection(player, this).open(player, "storage:open",
         ModTransfer()

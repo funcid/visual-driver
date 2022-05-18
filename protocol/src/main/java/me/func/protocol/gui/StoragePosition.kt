@@ -13,8 +13,8 @@ class Storage(
 )
 
 open class StoragePosition(
-    open var texture: String,
-    var price: Long,
-    open var title: String,
-    open var description: String
+    open var texture: String? = null,
+    var price: Long = -1,
+    open var title: String? = null,
+    open var description: String? = null
 )

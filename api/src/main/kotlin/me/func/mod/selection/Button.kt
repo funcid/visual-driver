@@ -13,24 +13,35 @@ fun interface ButtonClickHandler {
     fun handle(player: Player, index: Int, button: Button)
 }
 
-class Button(texture: String = "", price: Long = -1, title: String = "", description: String = "") : StoragePosition(
-    texture, price, title, description
-) {
-    override var texture: String = ""
+class Button {
+
+    constructor(title: String, price: Long, vararg description: String) : this(title, price, description.joinToString("\n"))
+
+    constructor(title: String, price: Long, description: List<String>) : this(title, price, *description.toTypedArray())
+
+    constructor(title: String, price: Long, description: String) : this() {
+        this.title = title
+        this.price = price
+        this.description = description
+    }
+
+    constructor()
+
+    var texture: String? = null
         set(value) {
-            reactive { byte(0).string(value) }
+            if (value != field) reactive { byte(0).string(value!!) }
             field = value
         }
 
-    override var title: String = ""
+    var title: String? = null
         set(value) {
-            reactive { byte(2).string(value) }
+            if (value != field) reactive { byte(2).string(value!!) }
             field = value
         }
 
-    override var description: String = ""
+    var description: String? = null
         set(value) {
-            reactive { byte(3).string(value) }
+            if (value != field) reactive { byte(3).string(value!!) }
             field = value
         }
 
@@ -38,16 +49,17 @@ class Button(texture: String = "", price: Long = -1, title: String = "", descrip
 
     var item: ItemStack? = null
         set(value) {
-            value?.let { reactive { byte(1).item(value) } }
+            if (value != field) value?.let { reactive { byte(1).item(value) } }
             field = value
         }
 
-    var hint: String = ""
+    var hint: String? = null
         set(value) {
-            reactive { byte(5).string(value) }
+            if (value != field) reactive { byte(4).string(value!!) }
             field = value
         }
 
+    var price: Long = -1
     private var sale = 0
 
     fun sale(percent: Int) = apply {
@@ -70,15 +82,17 @@ class Button(texture: String = "", price: Long = -1, title: String = "", descrip
 
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
 
+    fun hint(hint: String) = apply { this.hint = hint }
+
     fun write(transfer: ModTransfer) {
         val isItem = item != null
         transfer.boolean(isItem)
 
         if (isItem) transfer.item(item!!)
-        else transfer.string(texture)
+        else transfer.string(texture ?: "")
 
         transfer.long(price)
-        transfer.string(title)
-        transfer.string(description)
+        transfer.string(title ?: "")
+        transfer.string(description ?: "")
     }
 }
