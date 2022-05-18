@@ -31,18 +31,6 @@ class Selection(
             .integer(rows)
             .integer(columns)
             .integer(storage?.size ?: 0)
-            .apply {
-                storage?.forEach {
-                    val isItem = it.item != null
-                    boolean(isItem)
-
-                    if (isItem) item(it.item!!)
-                    else string(it.texture)
-
-                    long(it.price)
-                    string(it.title)
-                    string(it.description)
-                }
-            }
+            .apply { storage?.forEach { it.write(this) } }
     )
 }

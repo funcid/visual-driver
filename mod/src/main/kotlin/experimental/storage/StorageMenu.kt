@@ -165,7 +165,7 @@ class StorageMenu(
                     +text {
                         color = Color(255, 202, 66, 1.0)
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.title.replace("&", "§")
+                        content = element.title
                         shadow = true
                         lineHeight = 8.0
                     }
@@ -173,7 +173,7 @@ class StorageMenu(
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         if (element.price >= 0)
                             lineHeight = image.size.y - itemPadding * 2 - 10.0
-                        content = element.description.replace("&", "§")
+                        content = element.description
                         shadow = true
                     }
                     if (element.price >= 0) {
@@ -229,7 +229,7 @@ class StorageMenu(
                         })
                     }
                 }
-            }
+            }.apply { element.fullElement = this }
         }
         arrowRight.enabled = page < storage.size / getPageSize() - (if (storage.size % getPageSize() == 0) 1 else 0)
         arrowLeft.enabled = page > 0

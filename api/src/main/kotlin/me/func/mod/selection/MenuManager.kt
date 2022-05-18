@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -18,7 +19,7 @@ inline fun button(setup: Button.() -> Unit) = Button().also(setup)
 object MenuManager : Listener {
 
     private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
-    private val menuStacks = hashMapOf<UUID, Stack<Selection>>() // player uuid to openable history
+    val menuStacks = hashMapOf<UUID, Stack<Selection>>() // player uuid to openable history
     val reconnectMap = hashMapOf<UUID, Reconnect>() // player uuid to selection
 
     private inline fun <reified T> handler(
@@ -88,17 +89,24 @@ object MenuManager : Listener {
     }
 
     @JvmStatic
-    fun pushSelection(player: Player, selection: Selection): Selection = (menuStacks[player.uniqueId] ?: Stack()).apply {
-        if (size > 10) {
-            warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
-            clearHistory(player)
-            return@apply
-        }
-        menuStacks[player.uniqueId] = this
-    }.push(selection)
+    fun pushSelection(player: Player, selection: Selection): Selection =
+        (menuStacks[player.uniqueId] ?: Stack()).apply {
+            if (size > 10) {
+                warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
+                clearHistory(player)
+                return@apply
+            }
+            menuStacks[player.uniqueId] = this
+        }.push(selection)
 
     @JvmStatic
     fun clearHistory(player: Player) {
         menuStacks[player.uniqueId]?.clear()
     }
+
+    fun Button.reactive(setup: ModTransfer.() -> Unit) =
+        menuStacks.filter { it.value.peek().storage?.contains(this) != null }.forEach { (uuid, stack) ->
+            ModTransfer().integer(stack.peek().storage?.indexOf(this) ?: -1).also(setup)
+                .send("button:update", Bukkit.getPlayer(uuid) ?: return@forEach)
+        }
 }
