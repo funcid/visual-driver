@@ -150,11 +150,17 @@ players.forEach { player -> data.send("lootbox", player) }
 Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods`
 является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
 
-<h3>Меню выбора EXPERIMENTAL</h3>
+<h3>Меню выбора / Меню выбора подрежима EXPERIMENTAL</h3>
 
+Selection
+   
 <img src="https://user-images.githubusercontent.com/42806772/167634413-839af5f3-bf3a-469b-ae33-8a50a4785b6f.png" width="500">
+   
+Choicer
+   
+<img src="https://user-images.githubusercontent.com/42806772/169326395-2e1b4119-5a6e-45db-b1e2-c377c5410d18.png" width="500">
 
-1. Чтобы загрузить свою текстуру, используйте `Anime#loadTextures` или `Anime#loadTexture`.
+1. Чтобы загрузить свою текстуру, используйте `Anime#loadTextures` или `Anime#loadTexture` (возвращает texture).
 2. Если вы хотетите сменить валюту, то нужно изменить поле `vault` в `Selection` на имя фотографии, список:
 boost (![boost](https://user-images.githubusercontent.com/42806772/167699489-f3b01e86-96fa-40c0-b7f8-d93044f21323.png)),
 coin (![coin](https://user-images.githubusercontent.com/42806772/167699600-2d856415-12c4-4107-92da-1ca6de662394.png)),
@@ -185,6 +191,11 @@ val menu = selection {
             onClick { player, index, button -> // Обработка нажатия по кнопке
                 player.sendMessage("Button id: $index, button $button")
             }
+        },
+        button {
+            texture = Sprites.DUO.path() // Текстура с двойным режимом
+            price = 88L // Цена предмета, если не указать - монета не покажется
+            title = "Куриные\nкрылья" // Название предмета (есть поддержка \n)
         },
         button {
             item = ItemStack(Material.HEAD) // Добавление иконки кнопки по предмету
