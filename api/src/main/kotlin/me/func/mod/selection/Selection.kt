@@ -1,7 +1,6 @@
 package me.func.mod.selection
 
 import me.func.mod.selection.MenuManager.open
-import me.func.mod.selection.MenuManager.pushStorage
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -18,7 +17,7 @@ class Selection(
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
             this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toMutableList())
 
-    override fun open(player: Player) = pushStorage(player, this).open(player, "storage:open") {
+    override fun open(player: Player) = open(player, "storage:open") {
         string(vault).string(money).string(hint).integer(rows).integer(columns)
     }
 }

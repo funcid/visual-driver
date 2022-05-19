@@ -72,7 +72,7 @@ object MenuManager : Listener {
             menuStacks[player.uniqueId]?.let { stack ->
                 stack.pop()
                 val menu = stack.peek()
-                if (menu is Storage) handleMap[player.uniqueId] = menu
+                if (menu is Storage) menu.bind(player)
             }
         }
     }
@@ -85,34 +85,36 @@ object MenuManager : Listener {
     }
 
     @JvmStatic
-    fun Storage.open(player: Player, channel: String, transfer: ModTransfer.() -> Unit) = apply {
+    fun Openable.bind(player: Player): ModTransfer {
         handleMap[player.uniqueId] = this
-        ModTransfer()
-            .string(uuid.toString())
-            .string(title)
-            .also(transfer)
-            .integer(storage.size)
-            .apply { storage.forEach { it.write(this) } }
-            .send(channel, player)
+        return ModTransfer().string(uuid.toString())
     }
 
     @JvmStatic
-    fun pushStorage(player: Player, storage: Storage): Storage =
-        (menuStacks[player.uniqueId] ?: Stack()).apply {
-            if (size > 10) {
-                warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
-                clearHistory(player)
-                return@apply
-            }
-            if (!isEmpty() && peek().javaClass != storage.javaClass)
-                clear()
-            menuStacks[player.uniqueId] = this
-        }.push(storage)
+    fun Storage.open(player: Player, channel: String, transfer: ModTransfer.() -> Unit) =
+        push(player, this).apply {
+            bind(player)
+                .string(title)
+                .also(transfer)
+                .integer(storage.size)
+                .apply { storage.forEach { it.write(this) } }
+                .send(channel, player)
+        }
+
+
+    private fun push(player: Player, storage: Storage) = (menuStacks[player.uniqueId] ?: Stack()).apply {
+        if (size > 10) {
+            warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
+            clearHistory(player)
+            return@apply
+        }
+        if (!isEmpty() && peek().javaClass != storage.javaClass)
+            clearHistory(player)
+        menuStacks[player.uniqueId] = this
+    }.push(storage)
 
     @JvmStatic
-    fun clearHistory(player: Player) {
-        menuStacks[player.uniqueId]?.clear()
-    }
+    fun clearHistory(player: Player) { menuStacks[player.uniqueId]?.clear() }
 
     fun Button.reactive(setup: ModTransfer.() -> Unit) =
         menuStacks.filter { !it.value.empty() && it.value.peek().storage.contains(this) }.forEach { (uuid, stack) ->

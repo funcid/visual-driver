@@ -13,6 +13,5 @@ class Choicer(
     constructor(title: String, description: String, vararg storage: Button) :
             this(UUID.randomUUID(), title, description, storage.toMutableList())
 
-    override fun open(player: Player) =
-        MenuManager.pushStorage(player, this).open(player, "storage:choice") { string(description) }
+    override fun open(player: Player) = open(player, "storage:choice") { string(description) }
 }
