@@ -47,6 +47,8 @@ class Experimental {
                 }
                 3 -> {
                     node.description = NetUtil.readUtf8(this).replace("&", "§")
+                    if (last is PlayChoice)
+                        return@registerChannel
                     node.optimizeSpace()
                 }
                 4 -> {

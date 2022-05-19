@@ -1,6 +1,7 @@
 package me.func.mod.selection
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.data.Sprites
 import me.func.mod.selection.MenuManager.reactive
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
@@ -14,30 +15,6 @@ fun interface ButtonClickHandler {
 }
 
 class Button {
-
-    @JvmOverloads
-    constructor(title: String, price: Long = -1, vararg description: String) : this(title, price, description.joinToString("\n"))
-
-    @JvmOverloads
-    constructor(title: String, price: Long = -1, description: List<String>) : this(title, price, *description.toTypedArray())
-
-    @JvmOverloads
-    constructor(title: String, price: Long = -1, description: String) : this() {
-        this.title = title
-        this.price = price
-        this.description = description
-    }
-
-    @JvmOverloads
-    constructor(itemStack: ItemStack, title: String, description: String = "", price: Long = -1) : this() {
-        item = itemStack
-        this.title = title
-        this.price = price
-        this.description = description
-    }
-
-    constructor()
-
     var texture: String? = null
         set(value) {
             if (value != field) reactive { byte(0).string(value!!) }
@@ -85,6 +62,8 @@ class Button {
         sale = percent
     }
 
+    fun title(title: String) = apply { this.title = title }
+
     fun withSale() = ((100.0 - sale) / 100.0 * price).toInt()
 
     fun material(material: Material) = apply { item = ItemStack(material) }
@@ -94,6 +73,16 @@ class Button {
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
 
     fun hint(hint: String) = apply { this.hint = hint }
+
+    fun texture(texture: String) = apply { this.texture = texture }
+
+    fun texture(sprite: Sprites) = apply { this.texture = sprite.path() }
+
+    fun description(vararg desc: String) = apply { this.description = desc.joinToString("\n") }
+
+    fun description(desc: List<String>) = description(*desc.toTypedArray())
+
+    fun price(price: Long) = apply { this.price = price }
 
     fun write(transfer: ModTransfer) {
         val isItem = item != null

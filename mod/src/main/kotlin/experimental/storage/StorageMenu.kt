@@ -173,25 +173,27 @@ class StorageMenu(
                     }
                     element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        if (element.price >= 0)
-                            lineHeight = image.size.y - itemPadding * 2 - element.titleElement!!.lineHeight * element.title.split("\n").size
                         content = element.description
                         shadow = true
                     }
-                    if (element.price >= 0) {
-                        val isItem = element.icon is ItemElement
-                        val tag = if (isItem) (element.icon as ItemElement).stack?.tagCompound else null
-                        val hasTag = isItem && tag?.hasKeyOfType("sale", 8) == true
-                        val sale = if (isItem && hasTag) tag?.getString("sale")?.toInt() ?: 0 else 0
-                        val price = element.price
+                }
+                if (element.price >= 0) {
+                    val isItem = element.icon is ItemElement
+                    val tag = if (isItem) (element.icon as ItemElement).stack?.tagCompound else null
+                    val hasTag = isItem && tag?.hasKeyOfType("sale", 8) == true
+                    val sale = if (isItem && hasTag) tag?.getString("sale")?.toInt() ?: 0 else 0
+                    val price = element.price
 
-                        +textWithMoney(
-                            if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
-                            false
-                        ).apply {
-                            title.shadow = true
-                            scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        }
+                    +textWithMoney(
+                        if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
+                        false
+                    ).apply {
+                        origin = BOTTOM_LEFT
+                        align = BOTTOM_LEFT
+                        title.shadow = true
+                        offset.y -= itemPadding
+                        offset.x = xOffset
+                        scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                     }
                 }
 

@@ -6,6 +6,7 @@ enum class Sprites {
     DUO,
     SPECIAL,
     TRIO,
+    TEAM,
     SQUAD,;
 
     fun path() = "download:${this.name.lowercase()}"
