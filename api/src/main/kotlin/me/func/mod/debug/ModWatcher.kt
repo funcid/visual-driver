@@ -3,20 +3,33 @@ package me.func.mod.debug
 import me.func.mod.MOD_LOCAL_TEST_DIR_NAME
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.debug.ModWatcher.cooldown
+import me.func.mod.debug.ModWatcher.onReload
+import me.func.mod.debug.ModWatcher.testingPath
+import me.func.mod.selection.Button
 import me.func.mod.util.*
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import ru.cristalix.core.formatting.Formatting
 import java.nio.file.*
 import java.nio.file.StandardWatchEventKinds.*
 import java.util.*
+import java.util.function.Consumer
 import java.util.jar.JarFile
 import kotlin.concurrent.thread
 import kotlin.io.path.absolutePathString
+
+fun interface Subscriber {
+    fun accept()
+}
 
 internal object ModWatcher {
 
     val testingPath: Path = dir(MOD_LOCAL_TEST_DIR_NAME)
     val cooldown = arrayListOf<String>()
+    private var onReload: Subscriber? = null
+
+    fun onReload(subscriber: Subscriber) = apply { onReload = subscriber }
 
     init {
         val watchService = FileSystems.getDefault().newWatchService()
@@ -90,6 +103,7 @@ internal object ModWatcher {
                 send("sdk4reload", it)
                 it.sendMessage(Formatting.fine("Мод ${props["name"]} перезагружен!"))
             }
+            onReload?.accept()
         }
     }
 }
