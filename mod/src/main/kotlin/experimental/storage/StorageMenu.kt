@@ -173,7 +173,7 @@ class StorageMenu(
                     element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         if (element.price >= 0)
-                            lineHeight = image.size.y - itemPadding * 2 - 10.0
+                            lineHeight = image.size.y - itemPadding * 2 - element.titleElement!!.lineHeight * element.title.split("\n").size
                         content = element.description
                         shadow = true
                     }
