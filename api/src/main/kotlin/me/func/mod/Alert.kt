@@ -59,7 +59,7 @@ object Alert {
 
     // Метод для замены текста в сообщении
     fun NotificationData.replace(placeholder: String, content: String) =
-        clone().apply { this.content?.let { this.content = this.content!!.replace(placeholder, content) } }
+        clone().apply { this.text?.let { this.text = this.text!!.replace(placeholder, content) } }
 
     // Метод для отправки готового сообщения игроку
     fun NotificationData.send(player: Player) = ModTransfer()
