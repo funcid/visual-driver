@@ -5,7 +5,6 @@ import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import menuStack
@@ -19,7 +18,7 @@ class PlayChoice(
 ) : Storable(uuid, title, storage) {
     init {
         val padding = 8.0
-        val scaling = 0.625
+        val scaling = 0.7
         val buttonSize = V3(100.0, 145.0, 1.0)
         val iconSize = 70.0
 
@@ -40,10 +39,10 @@ class PlayChoice(
             origin = CENTER
             align = CENTER
             size = V3(UIEngine.overlayContext.size.x, 240.0)
-            val hover = Color(224, 118, 20, 0.28)
+            val centerColor = Color(224, 118, 20, 0.28)
             val normal = Color(42, 102, 189, 0.28)
             val textNormal = Color(74, 140, 236, 1.0)
-            val textHover = Color(255, 157, 66, 1.0)
+            val textCenter = Color(255, 157, 66, 1.0)
             val iconHover = Color(255, 255, 200, 1.0)
             +title
             +description
@@ -52,14 +51,15 @@ class PlayChoice(
                 align = CENTER
                 flexSpacing = padding
                 scale = V3(scaling, scaling, scaling)
-                storage.forEach { element ->
-                    +carved top@{
+                storage.forEachIndexed { index, element ->
+                    val centered = storage.size / 2 == index && storage.size % 2 == 1
+                    element.bundle = +carved top@{
                         size = buttonSize
-                        color = normal
+                        color = if (centered) centerColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = textNormal
+                            color = if (centered) textCenter else textNormal
                             content = element.title
                             scale = V3(1 / scaling, 1 / scaling, 1 / scaling)
                             offset.y += padding
@@ -68,7 +68,6 @@ class PlayChoice(
                             size = V3(iconSize, iconSize, iconSize)
                             align = TOP
                             origin = TOP
-                            color = WHITE
                             offset.y += padding * 2 + element.titleElement!!.lineHeight
                             +element.scaling(iconSize).apply { color = WHITE }
                         }
@@ -82,14 +81,8 @@ class PlayChoice(
                             element.descriptionElement = +text {
                                 align = CENTER
                                 origin = CENTER
+                                lineHeight += padding / 2
                                 content = element.description
-                            }
-                        }
-                        onHover {
-                            animate(0.2, Easings.QUINT_OUT) {
-                                color = if (hovered) hover else normal
-                                element.titleElement!!.color = if (hovered) textHover else textNormal
-                                icon.color = if (hovered) iconHover else WHITE
                             }
                         }
                         onClick {
@@ -101,9 +94,16 @@ class PlayChoice(
                             }
                         }
                         carveSize = 2.0
-                    }.apply {
-                        element.optimizeSpace(buttonSize.x - 2 * padding)
+                        val hint = +element.createHint(size, "Играть")
+                        onHover {
+                            animate(0.2, Easings.CUBIC_OUT) {
+                                hint.color.alpha = if (hovered) 0.95 else 0.0
+                                hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
+                            }
+                        }
                     }
+
+                    element.optimizeSpace((element.bundle?.size?.x ?: 200.0) - 2 * padding)
                 }
             }
         }

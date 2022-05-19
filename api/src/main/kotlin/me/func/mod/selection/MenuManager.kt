@@ -51,7 +51,7 @@ object MenuManager : Listener {
 
     init {
         // Меню выбора
-        handler<Selection>("storage:click") { menu, player, buffer ->
+        handler<Storage>("storage:click") { menu, player, buffer ->
             val index = buffer.readInt()
             val button = menu.storage[index]
             button.onClick?.handle(player, index, button)

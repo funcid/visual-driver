@@ -194,27 +194,7 @@ class StorageMenu(
                     }
                 }
 
-                val hint = +carved {
-                    carveSize = 2.0
-                    size = this@a.size
-                    color = Color(74, 140, 236, 1.0)
-                    color.alpha = 0.0
-                    beforeRender {
-                        GlStateManager.disableDepth()
-                    }
-                    afterRender {
-                        GlStateManager.enableDepth()
-                    }
-
-                    +text {
-                        origin = CENTER
-                        align = CENTER
-                        color = WHITE
-                        color.alpha = 0.0
-                        content = element.hint.ifEmpty { hint }
-                        scale = V3(1.0, 1.0, 1.0)
-                    }
-                }
+                val hint = +element.createHint(this@a.size, hint)
                 onHover {
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hovered) 0.95 else 0.0

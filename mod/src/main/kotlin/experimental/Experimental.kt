@@ -51,8 +51,7 @@ class Experimental {
                 }
                 4 -> {
                     node.hint = NetUtil.readUtf8(this).replace("&", "§")
-                    ((node.bundle!!.children.last() as CarvedRectangle).children.first { it is TextElement } as TextElement).content =
-                        node.hint
+                    node.hintElement?.content = node.hint
                 }
             }
         }
