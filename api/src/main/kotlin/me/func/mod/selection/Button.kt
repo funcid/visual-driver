@@ -15,11 +15,22 @@ fun interface ButtonClickHandler {
 
 class Button {
 
-    constructor(title: String, price: Long, vararg description: String) : this(title, price, description.joinToString("\n"))
+    @JvmOverloads
+    constructor(title: String, price: Long = -1, vararg description: String) : this(title, price, description.joinToString("\n"))
 
-    constructor(title: String, price: Long, description: List<String>) : this(title, price, *description.toTypedArray())
+    @JvmOverloads
+    constructor(title: String, price: Long = -1, description: List<String>) : this(title, price, *description.toTypedArray())
 
-    constructor(title: String, price: Long, description: String) : this() {
+    @JvmOverloads
+    constructor(title: String, price: Long = -1, description: String) : this() {
+        this.title = title
+        this.price = price
+        this.description = description
+    }
+
+    @JvmOverloads
+    constructor(itemStack: ItemStack, title: String, description: String = "", price: Long = -1) : this() {
+        item = itemStack
         this.title = title
         this.price = price
         this.description = description
