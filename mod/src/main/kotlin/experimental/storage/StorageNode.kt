@@ -36,6 +36,7 @@ abstract class StorageNode<T : AbstractElement>(
             origin = CENTER
             align = CENTER
             color = WHITE
+            shadow = true
             color.alpha = 0.0
             content = hint ?: default
             scale = V3(1.5, 1.5, 1.5)
@@ -45,7 +46,7 @@ abstract class StorageNode<T : AbstractElement>(
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
         val words = description.split(" ")
-        descriptionElement!!.content = "§7"
+        descriptionElement!!.content = "§f"
         words.forEach { word ->
             val line = descriptionElement!!.content.split("\n").last() + word
             val color = line.split("§").last().first()

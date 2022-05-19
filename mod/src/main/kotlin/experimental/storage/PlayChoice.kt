@@ -2,12 +2,12 @@ package experimental.storage
 
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
+import menuStack
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
-import menuStack
 import java.util.*
 
 class PlayChoice(
@@ -18,7 +18,7 @@ class PlayChoice(
 ) : Storable(uuid, title, storage) {
     init {
         val padding = 8.0
-        val scaling = 0.7
+        val scaling = 0.8
         val buttonSize = V3(100.0, 145.0, 1.0)
         val iconSize = 70.0
 
@@ -61,8 +61,11 @@ class PlayChoice(
                             origin = TOP
                             color = if (centered) textCenter else textNormal
                             content = element.title
-                            scale = V3(1 / scaling, 1 / scaling, 1 / scaling)
-                            offset.y += padding
+                            val mul = if (UIEngine.clientApi.fontRenderer()
+                                    .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
+                            ) 0.75 else 1.0
+                            scale = V3(1.0 / scaling * mul, 1.0 / scaling * mul, 1.0 / scaling * mul)
+                            offset.y += padding * (1.0 / mul)
                         }
                         val icon = +rectangle {
                             size = V3(iconSize, iconSize, iconSize)
@@ -87,10 +90,11 @@ class PlayChoice(
                         }
                         onClick {
                             if (Mouse.isButtonDown(0)) {
-                                UIEngine.clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
-                                    NetUtil.writeUtf8(this, uuid.toString())
-                                    writeInt(storage.indexOf(element))
-                                })
+                                UIEngine.clientApi.clientConnection()
+                                    .sendPayload("storage:click", Unpooled.buffer().apply {
+                                        NetUtil.writeUtf8(this, uuid.toString())
+                                        writeInt(storage.indexOf(element))
+                                    })
                             }
                         }
                         carveSize = 2.0
@@ -103,7 +107,7 @@ class PlayChoice(
                         }
                     }
 
-                    element.optimizeSpace((element.bundle?.size?.x ?: 200.0) - 2 * padding)
+                    // element.optimizeSpace((element.bundle?.size?.x ?: 200.0) - 2 * padding)
                 }
             }
         }

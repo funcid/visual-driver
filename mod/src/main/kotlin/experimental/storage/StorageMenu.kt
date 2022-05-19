@@ -197,7 +197,7 @@ class StorageMenu(
 
                 val hint = +element.createHint(this@a.size, hint)
                 onHover {
-                    if (element.hint.isNullOrEmpty()) return@onHover
+                    if (element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty()) return@onHover
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hovered) 0.95 else 0.0
                         hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
