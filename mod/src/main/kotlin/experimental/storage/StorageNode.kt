@@ -46,12 +46,12 @@ abstract class StorageNode<T : AbstractElement>(
         if (bundle == null || descriptionElement == null) return
         val words = description.split(" ")
         descriptionElement!!.content = "§7"
-        words.forEach {
-            val line = descriptionElement!!.content.split("\n").last() + it
+        words.forEach { word ->
+            val line = descriptionElement!!.content.split("\n").last() + word
             val color = line.split("§").last().first()
-            if (UIEngine.clientApi.fontRenderer().getStringWidth(line) > length)
+            if (UIEngine.clientApi.fontRenderer().getStringWidth(line.drop(line.count { it == '§' } * 2)) > length)
                 descriptionElement!!.content += "\n§$color"
-            descriptionElement!!.content += "$it "
+            descriptionElement!!.content += "$word "
         }
     }
 
