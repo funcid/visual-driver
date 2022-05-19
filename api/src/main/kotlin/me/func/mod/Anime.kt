@@ -170,19 +170,17 @@ object Anime {
     }
 
     @JvmStatic
-    fun loadTexture(player: Player, url: String) {
+    fun loadTexture(player: Player, url: String): String {
         ModTransfer()
             .string(url)
             .send("func:load-path", player)
+        return "cache/animation:${url.split("/").last()}"
     }
 
     @JvmStatic
-    fun loadTextures(player: Player, vararg url: String) {
-        val transfer = ModTransfer()
-            .integer(url.size)
-        for (one in url)
-            transfer.string(one)
-        transfer.send("func:load-paths", player)
+    fun loadTextures(player: Player, vararg url: String): List<String> {
+        ModTransfer().integer(url.size).apply { url.forEach { string(it) } }.send("func:load-paths", player)
+        return url.map { "cache/animation:${it.split("/").last()}" }
     }
 
     @JvmStatic
@@ -224,7 +222,8 @@ object Anime {
     }
 
     @JvmStatic
-    fun cursorMessage(player: Player, message: String, vararg objects: Any?) = cursorMessage(player, message.format(objects))
+    fun cursorMessage(player: Player, message: String, vararg objects: Any?) =
+        cursorMessage(player, message.format(objects))
 
     @JvmStatic
     @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
@@ -287,12 +286,13 @@ object Anime {
 
     @JvmOverloads
     @JvmStatic
-    fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double = 3.0) = ModTransfer()
-        .item(item)
-        .string(title ?: "")
-        .string(subtitle ?: "")
-        .double(duration)
-        .send("func:drop-item", player)
+    fun itemTitle(player: Player, item: ItemStack, title: String?, subtitle: String?, duration: Double = 3.0) =
+        ModTransfer()
+            .item(item)
+            .string(title ?: "")
+            .string(subtitle ?: "")
+            .double(duration)
+            .send("func:drop-item", player)
 
     @JvmStatic
     fun hideIndicator(player: Player, vararg indicator: Indicators) {
