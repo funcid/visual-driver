@@ -51,7 +51,7 @@ class Experimental {
                 }
                 4 -> {
                     node.hint = NetUtil.readUtf8(this).replace("&", "§")
-                    node.hintElement?.content = node.hint
+                    node.hintElement?.content = node.hint!!
                 }
             }
         }

@@ -1,10 +1,12 @@
 package standard
 
+import ru.cristalix.clientapi.KotlinMod
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
+import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.clientapi.KotlinMod
+import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class ExternalManager {
@@ -42,5 +44,16 @@ class ExternalManager {
         ).thenAccept {
             UIEngine.clientApi.clientConnection().sendPayload("func:loaded", Unpooled.buffer())
         }
+    }
+
+    fun load(path: String): ResourceLocation {
+        val parts = path.split(":", limit = 2)
+        val last = parts.last()
+        val location = if (path.startsWith("runtime")) loadTextureFromJar(UIEngine.clientApi, "icons", last, "$last.png")
+        else if (path.startsWith("download")) ResourceLocation.of("cache/animation", "$last.png").apply {
+          loadPaths("https://storage.c7x.dev/func/animation-api/$last.png")
+        } else ResourceLocation.of(parts.first(), last)
+        textures.add(location)
+        return location
     }
 }

@@ -9,6 +9,7 @@ import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.util.after
+import me.func.mod.util.command
 import me.func.mod.util.fileLastName
 import me.func.mod.util.listener
 import me.func.protocol.Mod
@@ -17,7 +18,10 @@ import org.bukkit.SoundCategory
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.player.*
+import org.bukkit.event.player.AsyncPlayerPreLoginEvent
+import org.bukkit.event.player.PlayerChangedWorldEvent
+import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.player.PlayerQuitEvent
 import ru.cristalix.core.formatting.Formatting
 import java.util.*
 import kotlin.io.path.absolutePathString
@@ -55,13 +59,7 @@ internal object StandardMods : Listener {
 
 enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) : Listener {
     STANDARD({ StandardMods.mods.add(Mod.STANDARD) }),
-    LOOTBOX({ StandardMods.mods.add(Mod.LOOTBOX) }) {
-        @EventHandler(priority = EventPriority.LOW)
-        fun PlayerCommandPreprocessEvent.handle() {
-            if (!cancel && message == "lootboxsound")
-                player.playSound(player.location, Sound.UI_TOAST_CHALLENGE_COMPLETE, SoundCategory.MASTER, 1f, 2f)
-        }
-    },
+    LOOTBOX({ StandardMods.mods.add(Mod.LOOTBOX) }),
     DIALOG({ StandardMods.mods.add(Mod.DIALOG) }),
     EXPERIMENTAL({ StandardMods.mods.add(Mod.EXPERIMENTAL) }) {
         @EventHandler(priority = EventPriority.LOW)
@@ -192,5 +190,14 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     fun init() {
         setup()
         listener(this)
+        command("lootboxsound") { player, _ ->
+            player.playSound(
+                player.location,
+                Sound.UI_TOAST_CHALLENGE_COMPLETE,
+                SoundCategory.MASTER,
+                1f,
+                2f
+            )
+        }
     }
 }

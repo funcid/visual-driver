@@ -12,7 +12,7 @@ abstract class StorageNode<T : AbstractElement>(
     var title: String,
     var description: String,
     open var icon: T,
-    var hint: String = ""
+    var hint: String? = null
 ) {
 
     var bundle: CarvedRectangle? = null
@@ -37,7 +37,7 @@ abstract class StorageNode<T : AbstractElement>(
             align = CENTER
             color = WHITE
             color.alpha = 0.0
-            content = hint.ifEmpty { default }
+            content = hint ?: default
             scale = V3(1.5, 1.5, 1.5)
         }
     }

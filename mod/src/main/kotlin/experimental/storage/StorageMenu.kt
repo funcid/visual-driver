@@ -3,6 +3,7 @@ package experimental.storage
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
+import externalManager
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
@@ -30,7 +31,7 @@ class StorageMenu(
     lateinit var arrowRight: CarvedRectangle
 
     private var page = 0
-    private val coinLocation: ResourceLocation = loadTextureFromJar(clientApi, "icons", vault, "$vault.png")
+    private val coinLocation: ResourceLocation = externalManager.load("runtime:$vault")
     private val width = 460.0
     private val height = 230.0
     private val padding = height / 12.0
@@ -196,6 +197,7 @@ class StorageMenu(
 
                 val hint = +element.createHint(this@a.size, hint)
                 onHover {
+                    if (element.hint.isNullOrEmpty()) return@onHover
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hovered) 0.95 else 0.0
                         hint.children[3].color.alpha = if (hovered) 1.0 else 0.0

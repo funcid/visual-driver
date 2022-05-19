@@ -99,8 +99,11 @@ object MenuManager : Listener {
                 .integer(storage.size)
                 .apply { storage.forEach { it.write(this) } }
                 .send(channel, player)
+        }.apply {
+            // Отдельно обновляем текст при наведении на кнопки
+            storage.filter { it.hint != null }
+                .forEach { it.reactive { byte(4).string(it.hint!!) } }
         }
-
 
     private fun push(player: Player, storage: Storage) = (menuStacks[player.uniqueId] ?: Stack()).apply {
         if (size > 10) {
@@ -114,7 +117,9 @@ object MenuManager : Listener {
     }.push(storage)
 
     @JvmStatic
-    fun clearHistory(player: Player) { menuStacks[player.uniqueId]?.clear() }
+    fun clearHistory(player: Player) {
+        menuStacks[player.uniqueId]?.clear()
+    }
 
     fun Button.reactive(setup: ModTransfer.() -> Unit) =
         menuStacks.filter { !it.value.empty() && it.value.peek().storage.contains(this) }.forEach { (uuid, stack) ->
