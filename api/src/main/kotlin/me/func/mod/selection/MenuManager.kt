@@ -14,12 +14,14 @@ import java.util.*
 
 inline fun selection(setup: Selection.() -> Unit) = Selection().also(setup)
 
+inline fun choicer(setup: Choicer.() -> Unit) = Choicer().also(setup)
+
 inline fun button(setup: Button.() -> Unit) = Button().also(setup)
 
 object MenuManager : Listener {
 
     private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
-    val menuStacks = hashMapOf<UUID, Stack<Selection>>() // player uuid to openable history
+    val menuStacks = hashMapOf<UUID, Stack<Storage>>() // player uuid to openable history
     val reconnectMap = hashMapOf<UUID, Reconnect>() // player uuid to selection
 
     private inline fun <reified T> handler(
@@ -51,7 +53,7 @@ object MenuManager : Listener {
         // Меню выбора
         handler<Selection>("storage:click") { menu, player, buffer ->
             val index = buffer.readInt()
-            val button = menu.storage?.get(index) ?: return@handler
+            val button = menu.storage[index]
             button.onClick?.handle(player, index, button)
         }
 
@@ -70,7 +72,7 @@ object MenuManager : Listener {
             menuStacks[player.uniqueId]?.let { stack ->
                 stack.pop()
                 val menu = stack.peek()
-                if (menu is Selection) handleMap[player.uniqueId] = menu
+                if (menu is Storage) handleMap[player.uniqueId] = menu
             }
         }
     }
@@ -83,21 +85,29 @@ object MenuManager : Listener {
     }
 
     @JvmStatic
-    fun Openable.open(player: Player, channel: String, transfer: ModTransfer) = apply open@{
+    fun Storage.open(player: Player, channel: String, transfer: ModTransfer.() -> Unit) = apply {
         handleMap[player.uniqueId] = this
-        transfer.send(channel, player)
+        ModTransfer()
+            .string(uuid.toString())
+            .string(title)
+            .also(transfer)
+            .integer(storage.size)
+            .apply { storage.forEach { it.write(this) } }
+            .send(channel, player)
     }
 
     @JvmStatic
-    fun pushSelection(player: Player, selection: Selection): Selection =
+    fun pushStorage(player: Player, storage: Storage): Storage =
         (menuStacks[player.uniqueId] ?: Stack()).apply {
             if (size > 10) {
                 warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
                 clearHistory(player)
                 return@apply
             }
+            if (!isEmpty() && peek().javaClass != storage.javaClass)
+                clear()
             menuStacks[player.uniqueId] = this
-        }.push(selection)
+        }.push(storage)
 
     @JvmStatic
     fun clearHistory(player: Player) {
@@ -105,8 +115,8 @@ object MenuManager : Listener {
     }
 
     fun Button.reactive(setup: ModTransfer.() -> Unit) =
-        menuStacks.filter { it.value.peek().storage?.contains(this) != null }.forEach { (uuid, stack) ->
-            ModTransfer().integer(stack.peek().storage?.indexOf(this) ?: -1).also(setup)
+        menuStacks.filter { !it.value.empty() && it.value.peek().storage.contains(this) }.forEach { (uuid, stack) ->
+            ModTransfer().integer(stack.peek().storage.indexOf(this)).also(setup)
                 .send("button:update", Bukkit.getPlayer(uuid) ?: return@forEach)
         }
 }
