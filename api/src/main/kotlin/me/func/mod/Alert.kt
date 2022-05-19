@@ -4,6 +4,7 @@ import me.func.mod.Glow.toRGB
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
 import me.func.protocol.GlowColor
+import me.func.protocol.RGB
 import me.func.protocol.Tricolor
 import me.func.protocol.alert.NotificationButton
 import me.func.protocol.alert.NotificationData
@@ -20,8 +21,8 @@ object Alert {
         player: Player,
         text: String,
         millis: Long,
-        frontColor: Tricolor,
-        backGroundColor: Tricolor,
+        frontColor: RGB,
+        backGroundColor: RGB,
         chatMessage: String,
         vararg buttons: NotificationButton
     ) {
@@ -46,11 +47,11 @@ object Alert {
     fun button(
         message: String,
         command: String,
-        color: GlowColor,
+        color: RGB,
         removeButton: Boolean = false,
         removeNotification: Boolean = true
     ): NotificationButton =
-        NotificationButton(message, toRGB(color), command, removeButton, removeNotification)
+        NotificationButton(message, color.toRGB(), command, removeButton, removeNotification)
 
     @JvmStatic
     fun find(key: String) = alertTemplates[key]!!
