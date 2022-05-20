@@ -1,6 +1,6 @@
 package me.func.protocol
 
-enum class GlowColor(val red: Int, val blue: Int, val green: Int): RGB {
+enum class GlowColor(override var red: Int, override var blue: Int, override var green: Int): RGB {
 
     GREEN(0, 0, 255),
     RED(255, 0, 0),

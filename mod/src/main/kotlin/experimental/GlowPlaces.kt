@@ -5,12 +5,16 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.render.DefaultVertexFormats
 import dev.xdark.feder.NetUtil
 import me.func.protocol.GlowingPlace
+import me.func.protocol.Tricolor
 import org.lwjgl.opengl.GL11
 import ru.cristalix.uiengine.UIEngine
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.uiengine.UIEngine.clientApi
+import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class GlowPlaces {
@@ -22,9 +26,7 @@ class GlowPlaces {
             places.add(
                 GlowingPlace(
                     uuid,
-                    readInt(),
-                    readInt(),
-                    readInt(),
+                    Tricolor(readInt(), readInt(), readInt()),
                     readDouble(),
                     readDouble(),
                     readDouble(),
@@ -43,7 +45,7 @@ class GlowPlaces {
             places.filter { it.uuid == uuid }.forEach { places.remove(it) }
         }
 
-        val mc = UIEngine.clientApi.minecraft()
+        val mc = clientApi.minecraft()
 
         registerHandler<RenderPass> {
             if (places.isEmpty())
@@ -77,7 +79,7 @@ class GlowPlaces {
                         place.x - (entity.x - prevX) * pt - prevX + sin(Math.toRadians(it * 360.0 / angles / 2 - 1 + 45)) * place.radius,
                         place.y - (entity.y - prevY) * pt - prevY + if (it % 2 == 1) 5f else 0f,
                         place.z - (entity.z - prevZ) * pt - prevZ + cos(Math.toRadians(it * 360.0 / angles / 2 - 1 + 45)) * place.radius
-                    ).color(place.red, place.blue, place.green, if (it % 2 == 1) 0 else 100).endVertex()
+                    ).color(place.rgb.red, place.rgb.blue, place.rgb.green, if (it % 2 == 1) 0 else 100).endVertex()
                 }
 
                 tessellator.draw()

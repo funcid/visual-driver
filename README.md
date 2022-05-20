@@ -510,17 +510,17 @@ TRADE
 
 1. Цвета состоят из трез целых чисел и одного дробного, красный [0 .. 255], синий [0 .. 255], зеленый [0 .. 255],
    прозрачность [0 .. 1.0]
-2. Вы можете еспользовать `enum GlowColor` с готовыми частыми цветами
+2. Вы можете еспользовать `enum GlowColor` с готовыми частыми цветами или создать свой `Tricolor()`
 
 Методы взаимодействия с клиентом:<br>
 `Glow.set(player: Player, red: Int, blue: Int, green: Int, alpha: Double)` ставит игроку свечение <br>
-`Glow.set(player: Player, color: GlowColor)` то же самое, но через GlowColor<br><br>
+`Glow.set(player: Player, color: RGB)` то же самое, но через RGB<br><br>
 `Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int, alpha: Double)` плавное появление и
 скрытие свечения с указанием длительности этой анимации<br>
-`Glow.animate(player: Player, seconds: Double, color: GlowColor, alpha: Double)` то же самое, но через GlowColor<br>
+`Glow.animate(player: Player, seconds: Double, color: RGB, alpha: Double)` то же самое, но через RGB<br>
 `Glow.animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int)` то же самое, но без указания
 прозрачности (без прозрачности)<br>
-`Glow.animate(player: Player, seconds: Double, color: GlowColor)` то же самое, но через GlowColor<br>
+`Glow.animate(player: Player, seconds: Double, color: RGB)` то же самое, но через RGB<br>
 
 <h3>Подсвечивание границ места в мире EXPERIMENTAL</h3>
 
@@ -529,8 +529,8 @@ TRADE
 Методы добавления места в глобальный список мест (не показывает игрокам!):<br>
 `Glow.addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit)`<br>
 `Glow.addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double)`<br>
-`Glow.addPlace(color: GlowColor, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit)`<br>
-`Glow.addPlace(color: GlowColor, x: Double, y: Double, z: Double)`<br>
+`Glow.addPlace(color: RGB, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit)`<br>
+`Glow.addPlace(color: RGB, x: Double, y: Double, z: Double)`<br>
 `Glow.addPlace(place: GlowingPlace, onJoin: Consumer<Player>)`<br>
 `Glow.addPlace(place: GlowingPlace)`<br>
 
@@ -552,8 +552,8 @@ TRADE
 Методы:<br>
 
 `Anime.reload(player: Player, seconds: Int, text: String)` простая перезарядка, с розовым цветом<br>
-`Anime.reload(player: Player, seconds: Int, text: String, glowColor: GlowColor, alpha: Double)` с использованием
-GlowColor<br>
+`Anime.reload(player: Player, seconds: Int, text: String, color: RGB, alpha: Double)` с использованием
+RGB<br>
 `Anime.reload(player: Player, seconds: Int, text: String, red: Int, green: Int, blue: Int, alpha: Double)` с любым
 цветом в RGB<br>
 

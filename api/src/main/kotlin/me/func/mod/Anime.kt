@@ -475,8 +475,8 @@ object Anime {
         .send("func:recharge", player)
 
     @JvmStatic
-    fun reload(player: Player, seconds: Double, text: String, glowColor: GlowColor) =
-        reload(player, seconds, text, glowColor.red, glowColor.green, glowColor.blue)
+    fun reload(player: Player, seconds: Double, text: String, color: RGB) =
+        reload(player, seconds, text, color.red, color.green, color.blue)
 
     @JvmStatic
     fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255, 192, 203)

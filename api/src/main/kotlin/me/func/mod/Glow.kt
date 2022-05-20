@@ -1,10 +1,9 @@
 package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.selection.button
 import me.func.mod.util.warn
-import me.func.protocol.GlowColor
 import me.func.protocol.GlowingPlace
+import me.func.protocol.RGB
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -17,14 +16,6 @@ object Glow : Listener {
 
     val glowingPlaces = mutableMapOf<UUID, GlowingPlace>()
     private val playerAccepter = mutableMapOf<UUID, Consumer<Player>>()
-
-    @JvmStatic
-    fun toRGB(alertColor: GlowColor): Int {
-        var rgb: Int = alertColor.red
-        rgb = (rgb shl 8) + alertColor.green
-        rgb = (rgb shl 8) + alertColor.blue
-        return rgb
-    }
 
     @EventHandler
     fun PlayerMoveEvent.handle() {
@@ -49,7 +40,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun set(player: Player, color: GlowColor) = set(player, color.red, color.blue, color.green, 1.0)
+    fun set(player: Player, color: RGB) = set(player, color.red, color.blue, color.green, 1.0)
 
     @JvmStatic
     fun animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int, alpha: Double) {
@@ -63,7 +54,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun animate(player: Player, seconds: Double, color: GlowColor, alpha: Double) {
+    fun animate(player: Player, seconds: Double, color: RGB, alpha: Double) {
         animate(player, seconds, color.red, color.blue, color.green, alpha)
     }
 
@@ -73,31 +64,19 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun animate(player: Player, seconds: Double, color: GlowColor) {
+    fun animate(player: Player, seconds: Double, color: RGB) {
         animate(player, seconds, color.red, color.blue, color.green, 1.0)
     }
 
+    @JvmOverloads
     @JvmStatic
     fun addPlace(
-        red: Int,
-        blue: Int,
-        green: Int,
+        rgb: RGB,
         x: Double,
         y: Double,
         z: Double,
-        onJoin: (Player) -> Unit
-    ) = addPlace(GlowingPlace(UUID.randomUUID(), red, blue, green, x, y, z), onJoin)
-
-    @JvmStatic
-    fun addPlace(red: Int, blue: Int, green: Int, x: Double, y: Double, z: Double) =
-        addPlace(GlowingPlace(UUID.randomUUID(), red, blue, green, x, y, z))
-
-    @JvmStatic
-    fun addPlace(color: GlowColor, x: Double, y: Double, z: Double, onJoin: (Player) -> Unit) =
-        addPlace(GlowingPlace(color, x, y, z), onJoin)
-
-    @JvmStatic
-    fun addPlace(color: GlowColor, x: Double, y: Double, z: Double) = addPlace(GlowingPlace(color, x, y, z))
+        onJoin: (Player) -> Unit = {}
+    ) = addPlace(GlowingPlace(UUID.randomUUID(), rgb, x, y, z), onJoin)
 
     @JvmStatic
     fun addPlace(place: GlowingPlace, onJoin: Consumer<Player>) =
@@ -117,9 +96,9 @@ object Glow : Listener {
     fun showPlace(player: Player, place: GlowingPlace) {
         ModTransfer()
             .string(place.uuid.toString())
-            .integer(place.red)
-            .integer(place.blue)
-            .integer(place.green)
+            .integer(place.rgb.red)
+            .integer(place.rgb.blue)
+            .integer(place.rgb.green)
             .double(place.x)
             .double(place.y)
             .double(place.z)
@@ -130,19 +109,7 @@ object Glow : Listener {
 
     @JvmStatic
     fun showLoadedPlace(player: Player, uuid: UUID) {
-        glowingPlaces[uuid]?.let { place ->
-            ModTransfer()
-                .string(place.uuid.toString())
-                .integer(place.red)
-                .integer(place.blue)
-                .integer(place.green)
-                .double(place.x)
-                .double(place.y)
-                .double(place.z)
-                .double(place.radius)
-                .integer(place.angles)
-                .send("func:place", player)
-        }
+        glowingPlaces[uuid]?.let { place -> showPlace(player, place) }
     }
 
     @JvmStatic
@@ -154,20 +121,15 @@ object Glow : Listener {
             glowingPlaces.remove(place.uuid)
             playerAccepter.remove(place.uuid)
 
-            val current = place.uuid.toString()
-
-            for (player in players) {
-                ModTransfer().string(current).send("func:place-kill", player)
-            }
+            val current = ModTransfer().string(place.uuid.toString())
+            players.forEach { current.send("func:place-kill", it) }
         }
         return place
     }
 
     @JvmStatic
     fun clearPlaces(vararg players: Player) {
-        for (player in players) {
-            Anime.sendEmptyBuffer("func:place-clear", player)
-        }
+        players.forEach { Anime.sendEmptyBuffer("func:place-clear", it) }
         glowingPlaces.clear()
         playerAccepter.clear()
     }
