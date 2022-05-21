@@ -1,11 +1,8 @@
 package me.func.mod
 
-import me.func.mod.Glow.toRGB
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
-import me.func.protocol.GlowColor
 import me.func.protocol.RGB
-import me.func.protocol.Tricolor
 import me.func.protocol.alert.NotificationButton
 import me.func.protocol.alert.NotificationData
 import org.bukkit.entity.Player
