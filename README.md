@@ -219,21 +219,15 @@ Selection menu = new Selection(
         "Купить",
         4, // Количество строчек
         3, // Количество колонок
-        new Button(
-            "minecraft:textures/items/apple.png",
-            999,
-            "Название",
-            "описание"
-        ).onClick((player, index, button) -> {
-            player.sendMessage("Button id: $index, button $button");
-        }), new Button(
-            "",
-            999,
-            "Название",
-            "описание"
-        ).item(new ItemStack(Material.HEAD) // Иконка по предмету
-            .sale(90) // Скидка 90%
-        ) 
+        new Button()
+            .texture("minecraft:textures/items/apple.png")
+            .price(999)
+            .title("Название")
+            .description("описание")
+            .onClick((player, index, button) -> {
+               player.sendMessage("Button id: $index, button $button");
+            }), 
+        new Button().material(Material.HEAD).sale(30) // Иконка по предмету/материалу, скидка 30%
 );
 
 menu.open(player);
