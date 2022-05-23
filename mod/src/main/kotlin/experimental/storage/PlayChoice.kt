@@ -18,7 +18,7 @@ class PlayChoice(
 ) : Storable(uuid, title, storage) {
     init {
         val padding = 8.0
-        val scaling = 0.8
+        val scaling = 0.85
         val buttonSize = V3(100.0, 145.0, 1.0)
         val iconSize = 70.0
 

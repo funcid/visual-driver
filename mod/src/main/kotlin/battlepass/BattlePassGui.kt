@@ -7,6 +7,7 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.clientapi.writeUtf8
 import ru.cristalix.uiengine.UIEngine
@@ -14,22 +15,8 @@ import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.BOTTOM
-import ru.cristalix.uiengine.utility.BOTTOM_LEFT
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.LEFT
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.TOP_LEFT
-import ru.cristalix.uiengine.utility.TOP_RIGHT
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.item
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
-import ru.cristalix.clientapi.KotlinMod
-import java.util.UUID
-import kotlin.math.PI
+import ru.cristalix.uiengine.utility.*
+import java.util.*
 import kotlin.math.roundToInt
 
 const val REWARDS_COUNT = 10
@@ -324,18 +311,13 @@ class BattlePassGui(
         offset.y += guiSize.advancedOffsetY * 2.42
         color = Color(42, 102, 189, 0.28)
 
-        +rectangle {
-            size.x = this@buttonMain.size.x * 2 / 3
-            size.y = size.x
-
+        +text {
             offset.y -= 1
-
             align = CENTER
             origin = CENTER
-            color = Color(255, 255, 255)
-            textureLocation = ResourceLocation.of("minecraft", "textures/gtm/arrow.png")
-
-            if (isToLeft) rotation.degrees = -PI
+            color = WHITE
+            shadow = true
+            content = if (isToLeft) "<" else ">"
         }
 
         onClick {
@@ -408,7 +390,10 @@ class BattlePassGui(
             origin = CENTER
             offset.y -= guiSize.totalHeightPart * 2
             color = WHITE
-            textureLocation = ResourceLocation.of("minecraft", "textures/gui/kirka.png")
+            textureLocation = ResourceLocation.of(
+                "minecraft",
+                if (advanced) "textures/items/emerald.png" else "textures/items/iron_ingot.png"
+            )
         }
         +text {
             origin = BOTTOM
