@@ -1,0 +1,5 @@
+main: App
+name: AnimationAPI
+version: 1.0.0
+depend:
+  - CoreAPI

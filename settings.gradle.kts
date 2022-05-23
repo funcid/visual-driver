@@ -40,6 +40,7 @@ rootProject.name = "animation-api"
 
 arrayOf(
     "api",
+    "plugin",
     "mod",
     "protocol",
     "graffiti",
