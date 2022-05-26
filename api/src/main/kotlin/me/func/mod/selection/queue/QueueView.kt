@@ -2,6 +2,7 @@ package me.func.mod.selection.queue
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.selection.Openable
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
@@ -11,7 +12,7 @@ class QueueView(
     var title: String,
     var icon: String,
     var description: String,
-): Openable {
+) : Openable {
     constructor(title: String, icon: String, description: String) :
             this(UUID.randomUUID(), title, icon, description)
 
@@ -26,6 +27,13 @@ class QueueView(
             .string(title)
             .string(description)
             .send("queue:init", player)
+    }
+
+    fun update(description: String) = apply {
+        ModTransfer().string(description).send(
+            "queue:update",
+            *Bukkit.getOnlinePlayers().filter { QueueViewer.views[it.uniqueId] == this }.toTypedArray()
+        )
     }
 
     fun update(player: Player, description: String) = apply {
