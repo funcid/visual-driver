@@ -11,6 +11,8 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import ru.cristalix.core.GlobalSerializers
+import sun.audio.AudioPlayer
+import sun.audio.AudioPlayer.player
 import java.io.DataOutput
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
@@ -102,12 +104,14 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String?, player: Player?) {
-        if (player == null)
-            return
+        send(channel ?: "channel:bad", player)
+    }
 
-        serializer.a = serializer.retainedSlice()
-
-        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
+    fun send(channel: String, vararg players: Player?) {
+        players.filterNotNull().forEach { player ->
+            serializer.a = serializer.retainedSlice()
+            (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
+        }
     }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {

@@ -4,6 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.selection.queue.QueueView
 import me.func.mod.util.warn
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
