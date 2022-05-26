@@ -15,6 +15,7 @@ import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import menuStack
+import ru.cristalix.uiengine.onMouseUp
 import java.util.*
 
 class StorageMenu(
@@ -85,7 +86,7 @@ class StorageMenu(
                         scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
                     }
                 }
-                onClick {
+                onMouseUp {
                     menuStack.apply { pop() }.peek()?.open()
                     clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
                 }
