@@ -18,10 +18,7 @@ import org.bukkit.SoundCategory
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
-import org.bukkit.event.player.AsyncPlayerPreLoginEvent
-import org.bukkit.event.player.PlayerChangedWorldEvent
-import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
 import java.util.*
 import kotlin.io.path.absolutePathString
@@ -83,6 +80,16 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
         fun PlayerChangedWorldEvent.handle() {
             // Если игрок сменил мир, отправить ему NPC в его мире
             npcs.forEach { (_, npc) -> npc.hide(player) }
+            after(5) {
+                npcs.filter { it.value.worldUuid == null || it.value.worldUuid == player.world.uid }
+                    .forEach { (_, npc) -> npc.spawn(player) }
+            }
+        }
+
+        @EventHandler
+        fun PlayerRespawnEvent.handle() {
+            // Если игрок умер и воскрешается, пересоздать NPC
+            after { npcs.forEach { (_, npc) -> npc.hide(player) } }
             after(5) {
                 npcs.filter { it.value.worldUuid == null || it.value.worldUuid == player.world.uid }
                     .forEach { (_, npc) -> npc.spawn(player) }
