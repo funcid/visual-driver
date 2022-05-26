@@ -22,6 +22,7 @@ class Experimental {
         Recharge()
         Disguise()
         Reconnect()
+        QueueStatus()
 
         registerChannel("func:accept") {
             menuStack.clear()
