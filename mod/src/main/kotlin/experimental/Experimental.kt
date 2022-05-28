@@ -78,7 +78,7 @@ class Experimental {
         }
 
         fun push(gui: Storable) {
-            if (!menuStack.empty() && menuStack.peek().javaClass != gui.javaClass)
+            if (menuStack.size > 20)
                 menuStack.clear()
             menuStack.push(gui)
             gui.open()

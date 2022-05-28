@@ -104,11 +104,11 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String?, player: Player?) {
-        send(channel ?: "channel:bad", player)
+        send(channel ?: "channel:bad", player ?: return)
     }
 
-    fun send(channel: String, vararg players: Player?) {
-        players.filterNotNull().forEach { player ->
+    fun send(channel: String, vararg players: Player) {
+        players.forEach { player ->
             serializer.a = serializer.retainedSlice()
             (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
         }

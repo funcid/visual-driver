@@ -2,12 +2,12 @@ package experimental.storage
 
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
-import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import java.util.*
 
@@ -63,21 +63,25 @@ class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
                 shadow = true
             }
         }
-        agree = +button(-(buttonWidth / 2 + padding / 4), "Подтвердить", Color(34, 174, 73, 1.0), Color(73, 223, 115, 1.0)).apply {
-            onClick {
-                if (Mouse.isButtonDown(0)) {
-                    clientApi.clientConnection().sendPayload("func:accept", Unpooled.buffer().apply {
-                        NetUtil.writeUtf8(this, uuid.toString())
-                    })
-                    close()
-                }
-            }
-        }
-        disagree = +button(buttonWidth / 2 + padding / 4, "Закрыть", Color(160, 29, 40, 1.0), Color(231, 61, 75, 1.0)).apply {
-            onClick {
+        agree = +button(
+            -(buttonWidth / 2 + padding / 4),
+            "Подтвердить",
+            Color(34, 174, 73, 1.0),
+            Color(73, 223, 115, 1.0)
+        ).apply {
+            onMouseUp {
+                clientApi.clientConnection().sendPayload("func:accept", Unpooled.buffer().apply {
+                    NetUtil.writeUtf8(this, uuid.toString())
+                })
                 close()
             }
         }
+        disagree =
+            +button(buttonWidth / 2 + padding / 4, "Закрыть", Color(160, 29, 40, 1.0), Color(231, 61, 75, 1.0)).apply {
+                onMouseUp {
+                    close()
+                }
+            }
     }
 
     init {

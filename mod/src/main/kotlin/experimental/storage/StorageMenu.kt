@@ -1,21 +1,17 @@
 package experimental.storage
 
-import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import externalManager
 import io.netty.buffer.Unpooled
+import menuStack
 import org.lwjgl.input.Keyboard
-import org.lwjgl.input.Mouse
-import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
-import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
-import menuStack
 import ru.cristalix.uiengine.onMouseUp
+import ru.cristalix.uiengine.utility.*
 import java.util.*
 
 class StorageMenu(
@@ -115,7 +111,7 @@ class StorageMenu(
                     scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
                 }
             }
-            onClick {
+            onMouseUp {
                 close()
                 menuStack.clear()
             }
@@ -206,13 +202,11 @@ class StorageMenu(
                         hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
                     }
                 }
-                onClick {
-                    if (Mouse.isButtonDown(0)) {
-                        clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
-                            NetUtil.writeUtf8(this, uuid.toString())
-                            writeInt(storage.indexOf(element))
-                        })
-                    }
+                onMouseUp {
+                    clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
+                        NetUtil.writeUtf8(this, uuid.toString())
+                        writeInt(storage.indexOf(element))
+                    })
                 }
             }.apply {
                 element.bundle = this
@@ -244,11 +238,9 @@ class StorageMenu(
                 scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
             }
         }
-        onClick {
-            if (Mouse.isButtonDown(0)) {
-                page += if (left) -1 else 1
-                redrawGrid()
-            }
+        onMouseUp {
+            page += if (left) -1 else 1
+            redrawGrid()
         }
         +text {
             align = CENTER

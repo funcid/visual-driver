@@ -92,7 +92,7 @@ object MenuManager : Listener {
     }
 
     @JvmStatic
-    fun Storage.open(player: Player, channel: String, transfer: ModTransfer.() -> Unit) =
+    fun Storage.open(player: Player, channel: String, transfer: ModTransfer.() -> Unit): Storage =
         push(player, this).apply {
             bind(player)
                 .string(title)
@@ -112,8 +112,6 @@ object MenuManager : Listener {
             clearHistory(player)
             return@apply
         }
-        if (!isEmpty() && peek().javaClass != storage.javaClass)
-            clearHistory(player)
         menuStacks[player.uniqueId] = this
     }.push(storage)
 

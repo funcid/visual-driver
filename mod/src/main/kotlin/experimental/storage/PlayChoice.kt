@@ -4,9 +4,9 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import menuStack
 import org.lwjgl.input.Keyboard
-import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import java.util.*
 
@@ -88,14 +88,12 @@ class PlayChoice(
                                 content = element.description
                             }
                         }
-                        onClick {
-                            if (Mouse.isButtonDown(0)) {
-                                UIEngine.clientApi.clientConnection()
-                                    .sendPayload("storage:click", Unpooled.buffer().apply {
-                                        NetUtil.writeUtf8(this, uuid.toString())
-                                        writeInt(storage.indexOf(element))
-                                    })
-                            }
+                        onMouseUp {
+                            UIEngine.clientApi.clientConnection()
+                                .sendPayload("storage:click", Unpooled.buffer().apply {
+                                    NetUtil.writeUtf8(this, uuid.toString())
+                                    writeInt(storage.indexOf(element))
+                                })
                         }
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
@@ -128,7 +126,7 @@ class PlayChoice(
                     scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
                 }
             }
-            onClick {
+            onMouseUp {
                 close()
                 menuStack.clear()
             }
