@@ -24,6 +24,6 @@ object QueueViewer : Listener {
     @EventHandler
     fun PlayerQuitEvent.handle() { views.remove(player.uniqueId) }
 
-    fun stop(vararg player: Player) = ModTransfer().send("queue:stop", *player)
+    fun stop(vararg player: Player) = player.forEach { Anime.sendEmptyBuffer("queue:stop", it) }
 
 }

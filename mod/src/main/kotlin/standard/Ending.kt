@@ -10,26 +10,20 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.eventloop.thenAnimate
 import ru.cristalix.uiengine.eventloop.thenWait
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.LEFT
-import ru.cristalix.uiengine.utility.RIGHT
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.uiengine.element.CarvedRectangle
+import ru.cristalix.uiengine.utility.*
 import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class Ending {
     private lateinit var text: TextElement
     private lateinit var cup: RectangleElement
-    private lateinit var information: RectangleElement
+    private lateinit var information: CarvedRectangle
     private lateinit var key: TextElement
     private lateinit var value: TextElement
 
-    private var filler: RectangleElement? = null
+    private var filler: CarvedRectangle? = null
 
     init {
         externalManager.loadPaths(
@@ -38,7 +32,7 @@ class Ending {
             "https://i.imgur.com/zUxhQ7y.png"
         )
         if (filler == null) {
-            filler = rectangle {
+            filler = carved {
                 align = CENTER
                 origin = CENTER
                 size = V3(185.0, 103.0)
@@ -48,17 +42,17 @@ class Ending {
                     align = CENTER
                     origin = CENTER
                     size = V3(63.5, 104.0)
-                    color = Color(255, 255, 255)
+                    color = WHITE
                 }
                 text = +text {
                     align = CENTER
                     origin = CENTER
                     color = WHITE
                     scale = V3(2.0, 2.0)
-                    offset = V3(5.0, 0.0, 1.0)
+                    offset.x += 5
                 }
             }
-            information = rectangle {
+            information = carved {
                 align = CENTER
                 origin = CENTER
                 size = V3(225.0, 103.0)
@@ -68,14 +62,14 @@ class Ending {
                     align = LEFT
                     origin = LEFT
                     size = V3(20.0, 20.0)
-                    color = Color(255, 255, 255, 1.0)
+                    color = WHITE
                     offset.x += 25
                 }
                 value = +text {
                     align = RIGHT
                     origin = RIGHT
                     size = V3(20.0, 20.0)
-                    color = Color(255, 255, 255, 1.0)
+                    color = WHITE
                     offset.x -= 25
                 }
             }

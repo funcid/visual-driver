@@ -104,15 +104,15 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String?, player: Player?) {
-        send(channel ?: "channel:bad", player ?: return)
+        if (player == null)
+            return
+        serializer.a = serializer.retainedSlice()
+        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
     }
 
-    fun send(channel: String, vararg players: Player) {
-        players.forEach { player ->
-            serializer.a = serializer.retainedSlice()
-            (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
-        }
-    }
+    fun bulkSend(channel: String, vararg players: Player) { players.forEach { send(channel, it) } }
+
+    fun bulkSend(channel: String, list: Iterable<Player>) { bulkSend(channel, *list.toList().toTypedArray()) }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {
         if (nbt == null) {

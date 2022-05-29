@@ -30,10 +30,10 @@ class QueueView(
     }
 
     fun update(description: String) = apply {
-        ModTransfer().string(description).send(
-            "queue:update",
-            *Bukkit.getOnlinePlayers().filter { QueueViewer.views[it.uniqueId] == this }.toTypedArray()
-        )
+        val transfer = ModTransfer().string(description)
+        Bukkit.getOnlinePlayers().filter { QueueViewer.views[it.uniqueId] == this }.forEach {
+            transfer.send("queue:update", it)
+        }
     }
 
     fun update(player: Player, description: String) = apply {
