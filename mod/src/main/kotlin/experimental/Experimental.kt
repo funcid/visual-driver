@@ -123,8 +123,8 @@ class Experimental {
 
             val scale = UIEngine.clientApi.resolution().scaleFactor
             peek.hoverContainer.run {
-                offset.x = Mouse.getX() / scale + 8.0
-                offset.y = (Display.getHeight() - Mouse.getY()) / scale - 15.0
+                offset.x = Mouse.getX() / scale + 6.0
+                offset.y = (Display.getHeight() - Mouse.getY()) / scale - 12.0
             }
         }
     }

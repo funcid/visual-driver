@@ -44,14 +44,21 @@ class StorageMenu(
 
     private val hoverText = text {
         shadow = true
+        lineHeight += 2
         scale = V3(0.75, 0.75, 0.75)
         color = WHITE
         offset = V3(itemPadding, itemPadding)
     }
-    var hoverContainer = carved {
+    val hoverCenter = carved {
         color = Color(42, 102, 189, 1.0)
-        enabled = false
+        offset = V3(1.0, 1.0)
         +hoverText
+    }
+
+    val hoverContainer = carved {
+        color = Color(0, 0, 0, 0.38)
+        enabled = false
+        +hoverCenter
 
         beforeRender {
             GlStateManager.disableDepth()
@@ -232,8 +239,10 @@ class StorageMenu(
 
                         hoverContainer.size.x =
                             clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length }!!)
-                                .toDouble() * textScale + 2 * itemPadding
-                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * textScale + 2 * itemPadding
+                                .toDouble() * textScale + 2.5 * itemPadding
+                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * textScale + 2.5 * itemPadding
+                        hoverCenter.size.x = hoverContainer.size.x - 2
+                        hoverCenter.size.y = hoverContainer.size.y - 2
                     } else {
                         hoverContainer.enabled = false
                     }
