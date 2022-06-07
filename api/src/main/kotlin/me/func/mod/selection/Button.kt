@@ -9,12 +9,20 @@ import me.func.protocol.gui.StoragePosition
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import java.util.*
 
 fun interface ButtonClickHandler {
     fun handle(player: Player, index: Int, button: Button)
 }
 
 class Button {
+
+    var hover: String? = null
+        set(value) {
+            if (value != field) reactive { byte(5).string(value!!) }
+            field = value
+        }
+
     var texture: String? = null
         set(value) {
             if (value != field) reactive { byte(0).string(value!!) }
@@ -68,7 +76,17 @@ class Button {
 
     fun material(material: Material) = apply { item = ItemStack(material) }
 
-    fun item(current: ItemStack) = apply { item = current }
+    @JvmOverloads
+    fun item(current: ItemStack, desc: Boolean = false) = apply {
+        item = current
+        if (desc) hover(current.lore ?: Collections.emptyList())
+    }
+
+    fun hover(text: Collection<String>) = hover(*text.toTypedArray())
+
+    fun hover(text: String) = apply { hover = text }
+
+    fun hover(vararg text: String) = apply { hover = text.joinToString("\n") }
 
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
 
@@ -94,5 +112,6 @@ class Button {
         transfer.long(price)
         transfer.string(title ?: "")
         transfer.string(description ?: "")
+        transfer.string(hover ?: "")
     }
 }

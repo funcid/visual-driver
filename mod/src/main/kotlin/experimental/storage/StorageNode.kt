@@ -11,6 +11,7 @@ abstract class StorageNode<T : AbstractElement>(
     var price: Long = -1,
     var title: String,
     var description: String,
+    var hoverText: String,
     open var icon: T,
     var hint: String? = null
 ) {
