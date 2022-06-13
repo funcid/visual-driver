@@ -41,6 +41,7 @@ class StorageMenu(
     private val backButtonSize = 16.0
     private val itemPadding = 4.0
     private val flexSpace = 3.5
+    private val hoverTextScale = 0.5 + 0.25 + 0.125
 
     private val hoverText = text {
         shadow = true
@@ -234,13 +235,12 @@ class StorageMenu(
                             hoverText.content = element.hoverText
                             hoverContainer.enabled = true
                         }
-                        val textScale = 0.75
                         val lines = element.hoverText.split("\n")
 
                         hoverContainer.size.x =
                             clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length }!!)
-                                .toDouble() * textScale + 2.5 * itemPadding
-                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * textScale + 2.5 * itemPadding
+                                .toDouble() * hoverTextScale + 2.5 * itemPadding
+                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + 2.5 * itemPadding
                         hoverCenter.size.x = hoverContainer.size.x - 2
                         hoverCenter.size.y = hoverContainer.size.y - 2
                     } else {

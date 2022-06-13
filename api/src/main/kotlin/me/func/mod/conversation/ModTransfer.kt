@@ -49,7 +49,7 @@ val CRAFT_ITEM_TO_NMS: MethodHandle by lazy {
     }
 }
 
-class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSerializer(Unpooled.buffer())) {
+class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Unpooled.buffer())) {
 
     constructor(vararg data: Any) : this() {
         for (info in data) {
