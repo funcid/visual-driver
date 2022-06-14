@@ -67,14 +67,24 @@ enum class Emotions(val title: String, val uuid: UUID) {
 
     constructor(title: String, uuid: String) : this(title, UUID.fromString(uuid))
 
-    fun play(emotion: UUID, dancer: UUID, vararg receivers: Player) {
-        val transfer = ModTransfer().json(PacketEmotionAction(dancer, emotion, 0, null))
-        receivers.forEach { transfer.send(EMOTION_ACTION, it) }
-    }
+    companion object {
+        @JvmStatic
+        fun play(emotion: UUID, dancer: UUID, vararg receivers: Player) {
+            val transfer = ModTransfer().json(PacketEmotionAction(dancer, emotion, 0, null))
+            receivers.forEach { transfer.send(EMOTION_ACTION, it) }
+        }
 
-    fun play(emotion: Emotions, dancer: UUID, vararg receivers: Player) = play(emotion.uuid, dancer, *receivers)
+        @JvmStatic
+        fun play(emotion: Emotions, dancer: UUID, vararg receivers: Player) = play(emotion.uuid, dancer, *receivers)
+
+        @JvmStatic
+        fun play(emotion: Emotions, dancer: UUID, receivers: Collection<Player>) = play(emotion.uuid, dancer, *receivers.toTypedArray())
+    }
 
     @JvmName("show")
     fun Emotions.play(dancer: UUID, vararg receivers: Player) = play(uuid, dancer, *receivers)
+
+    @JvmName("show")
+    fun Emotions.play(dancer: UUID, receivers: Collection<Player>) = play(uuid, dancer, *receivers.toTypedArray())
 
 }
