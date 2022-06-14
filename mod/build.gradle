@@ -21,5 +21,5 @@ mod {
     name = "Animation Api"
     main = "Main"
     author = "func"
-    jarFileName = "standard-mod-bundle.jar"
+    jarFileName = "standard-hover-mod-bundle.jar"
 }

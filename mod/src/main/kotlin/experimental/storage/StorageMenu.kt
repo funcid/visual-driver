@@ -1,11 +1,17 @@
 package experimental.storage
 
+import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import externalManager
 import io.netty.buffer.Unpooled
 import menuStack
 import org.lwjgl.input.Keyboard
+import org.lwjgl.input.Mouse
+import org.lwjgl.opengl.Display
+import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ItemElement
@@ -35,6 +41,33 @@ class StorageMenu(
     private val backButtonSize = 16.0
     private val itemPadding = 4.0
     private val flexSpace = 3.5
+    private val hoverTextScale = 0.5 + 0.25 + 0.125
+
+    private val hoverText = text {
+        shadow = true
+        lineHeight += 2
+        scale = V3(0.75, 0.75, 0.75)
+        color = WHITE
+        offset = V3(itemPadding, itemPadding)
+    }
+    val hoverCenter = carved {
+        color = Color(42, 102, 189, 1.0)
+        offset = V3(1.0, 1.0)
+        +hoverText
+    }
+
+    val hoverContainer = carved {
+        color = Color(0, 0, 0, 0.38)
+        enabled = false
+        +hoverCenter
+
+        beforeRender {
+            GlStateManager.disableDepth()
+        }
+        afterRender {
+            GlStateManager.enableDepth()
+        }
+    }
     private val menuTitle = text {
         content = title
         shadow = true
@@ -55,6 +88,7 @@ class StorageMenu(
         size = V3(width, height)
 
         +menuTitle
+
         if (money.isNotEmpty()) {
             +textWithMoney(money).apply {
                 origin = TOP_RIGHT
@@ -196,7 +230,25 @@ class StorageMenu(
 
                 val hint = +element.createHint(this@a.size, hint)
                 onHover {
+                    if (hovered && element.hoverText.isNotEmpty()) {
+                        if (!hoverContainer.enabled) {
+                            hoverText.content = element.hoverText
+                            hoverContainer.enabled = true
+                        }
+                        val lines = element.hoverText.split("\n")
+
+                        hoverContainer.size.x =
+                            clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length }!!)
+                                .toDouble() * hoverTextScale + 2.5 * itemPadding
+                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + 2.5 * itemPadding
+                        hoverCenter.size.x = hoverContainer.size.x - 2
+                        hoverCenter.size.y = hoverContainer.size.y - 2
+                    } else {
+                        hoverContainer.enabled = false
+                    }
+
                     if (element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty()) return@onHover
+
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hovered) 0.95 else 0.0
                         hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
@@ -252,5 +304,6 @@ class StorageMenu(
 
     init {
         redrawGrid()
+        +hoverContainer
     }
 }

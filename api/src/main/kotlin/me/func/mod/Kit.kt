@@ -20,11 +20,13 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
+import java.io.File
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.io.path.absolutePathString
 import kotlin.io.path.toPath
 
-val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-mod-bundle.jar"
+val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-hover-mod-bundle.jar"
 val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
 
 @PublishedApi
@@ -34,7 +36,7 @@ internal object StandardMods : Listener {
     init {
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
         ModLoader.load(ModLoader.download(STANDARD_MOD_URL).ifEmpty {
-            javaClass.getResource("/${STANDARD_MOD_URL.fileLastName()}")!!.toURI().toPath().absolutePathString()
+            Anime.provided.classLoader.getResource(STANDARD_MOD_URL.fileLastName())?.path ?: STANDARD_MOD_URL.fileLastName()
         })
     }
 

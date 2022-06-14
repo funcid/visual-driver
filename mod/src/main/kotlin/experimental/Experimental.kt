@@ -1,15 +1,17 @@
 package experimental
 
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.storage.*
 import io.netty.buffer.ByteBuf
-import ru.cristalix.uiengine.element.CarvedRectangle
-import ru.cristalix.uiengine.element.ContextGui
-import ru.cristalix.uiengine.element.TextElement
-import ru.cristalix.clientapi.KotlinMod
 import menuStack
+import org.lwjgl.input.Mouse
+import ru.cristalix.clientapi.KotlinMod
+import org.lwjgl.opengl.Display
+import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.uiengine.UIEngine
 import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
@@ -56,6 +58,7 @@ class Experimental {
                     node.hint = NetUtil.readUtf8(this).replace("&", "§")
                     node.hintElement?.content = node.hint!!
                 }
+                5 -> node.hoverText = NetUtil.readUtf8(this).replace("&", "§")
             }
         }
 
@@ -66,6 +69,7 @@ class Experimental {
                     buffer.readLong(), // price
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item description
+                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
                 )
             } else { // texture
                 StorageItemTexture(
@@ -73,6 +77,7 @@ class Experimental {
                     buffer.readLong(), // price
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item description
+                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
                 )
             }
         }
@@ -108,6 +113,19 @@ class Experimental {
                     readIcons(this)
                 )
             )
+        }
+
+        registerHandler<GameLoop> {
+            if (menuStack.isEmpty()) return@registerHandler
+            val peek = menuStack.peek()
+            if (peek !is StorageMenu) return@registerHandler
+            if (!peek.hoverContainer.enabled) return@registerHandler
+
+            val scale = UIEngine.clientApi.resolution().scaleFactor
+            peek.hoverContainer.run {
+                offset.x = Mouse.getX() / scale + 6.0
+                offset.y = (Display.getHeight() - Mouse.getY()) / scale - 12.0
+            }
         }
     }
 }

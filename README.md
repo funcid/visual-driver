@@ -203,6 +203,7 @@ val menu = selection {
             hint = "Продать" // Надпись при наведении на кнопку
             title = "Картошка"
             description = "+гниль"
+            hover = "Привет" // Всплывающий текст при наведении
         }.sale(60) // Указать скидку 60%
     )
 }
@@ -224,6 +225,7 @@ Selection menu = new Selection(
             .price(999)
             .title("Название")
             .description("описание")
+            .hover("Текст при наведении")
             .onClick((player, index, button) -> {
                player.sendMessage("Button id: $index, button $button");
             }), 
