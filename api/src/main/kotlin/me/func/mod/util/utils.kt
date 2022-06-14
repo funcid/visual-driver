@@ -5,6 +5,7 @@ package me.func.mod.util
 import me.func.mod.Anime
 import me.func.mod.conversation.CRAFT_ITEM_TO_NMS
 import net.minecraft.server.v1_12_R1.NBTTagCompound
+import org.apache.logging.log4j.util.BiConsumer
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
@@ -30,11 +31,10 @@ fun consoleCommand(name: String, consumer: () -> Unit) {
     })
 }
 
-fun command(name: String, consumer: (Player, Array<out String>) -> Unit) {
+fun command(name: String, biConsumer: BiConsumer<Player, Array<out String>>) {
     Bukkit.getCommandMap().register("anime", object : Command(name) {
         override fun execute(sender: CommandSender, var2: String, agrs: Array<out String>): Boolean {
-            if (sender is Player)
-                consumer(sender, agrs)
+            if (sender is Player) biConsumer.accept(sender, agrs)
             return true
         }
     })
