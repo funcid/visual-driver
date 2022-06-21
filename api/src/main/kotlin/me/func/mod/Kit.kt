@@ -20,11 +20,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.player.*
 import ru.cristalix.core.formatting.Formatting
-import java.io.File
 import java.util.*
-import kotlin.collections.HashMap
-import kotlin.io.path.absolutePathString
-import kotlin.io.path.toPath
 
 val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-hover-mod-bundle.jar"
 val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
@@ -36,21 +32,20 @@ internal object StandardMods : Listener {
     init {
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
         ModLoader.load(ModLoader.download(STANDARD_MOD_URL).ifEmpty {
-            Anime.provided.classLoader.getResource(STANDARD_MOD_URL.fileLastName())?.path ?: STANDARD_MOD_URL.fileLastName()
+            Anime.provided.classLoader.getResource(STANDARD_MOD_URL.fileLastName())?.path
+                ?: STANDARD_MOD_URL.fileLastName()
         })
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
     fun PlayerJoinEvent.handle() {
         if (mods.isNotEmpty()) {
-            after {
-                ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
+            ModLoader.send(STANDARD_MOD_URL.fileLastName(), player)
 
-                after {
-                    ModTransfer(mods.size).apply {
-                        mods.forEach { integer(it.ordinal) }
-                    }.send("anime:loadmod", player)
-                }
+            after {
+                ModTransfer(mods.size).apply {
+                    mods.forEach { integer(it.ordinal) }
+                }.send("anime:loadmod", player)
             }
         }
     }
@@ -63,7 +58,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     EXPERIMENTAL({ StandardMods.mods.add(Mod.EXPERIMENTAL) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            after { Banners.show(player, *Banners.banners.map { it.value }.toTypedArray()) }
+            after(3) { Banners.show(player, *Banners.banners.map { it.value }.toTypedArray()) }
         }
     },
     MULTI_CHAT({ StandardMods.mods.add(Mod.CHAT) }),
@@ -101,7 +96,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     BATTLEPASS({ StandardMods.mods.add(Mod.BATTLEPASS) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            after { BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) } }
+            after(3) { BattlePass.battlePasses.forEach { (_, value) -> BattlePass.send(player, value) } }
         }
     },
     HEALTH_BAR({ StandardMods.mods.add(Mod.HEALTHBAR) }),

@@ -82,7 +82,7 @@ object Banners {
                         double(current.motionSettings["offsetY"].toString().toDouble())
                         double(current.motionSettings["offsetZ"].toString().toDouble())
                     }
-                }.send("banner:new", player)
+                }
 
             current.motionSettings["line"]?.let {
                 val sizes = it as MutableList<Pair<Int, Double>>
@@ -91,6 +91,8 @@ object Banners {
                 sizeTransfer.send("banner:size-text", player)
             }
         }
+
+        transfer.send("banner:new", player)
     }
 
     @JvmStatic

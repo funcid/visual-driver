@@ -2,11 +2,13 @@ package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.data.NpcSmart
+import me.func.mod.util.fileLastName
 import me.func.protocol.npc.NpcBehaviour
 import me.func.protocol.npc.NpcData
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import java.util.*
 import java.util.function.Consumer
 
 object Npc {
@@ -66,4 +68,11 @@ object Npc {
         yaw = location.yaw
         pitch = location.pitch
     }
+
+    fun NpcData.skin(url: String) {
+        skinUrl = url
+        skinDigest = url.fileLastName()
+    }
+
+    fun NpcData.skin(uuid: UUID) = skin("https://webdata.c7x.dev/textures/skin/$uuid")
 }

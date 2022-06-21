@@ -6,6 +6,7 @@ import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.selection.queue.QueueView
 import me.func.mod.util.warn
+import me.func.protocol.Tricolor
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
