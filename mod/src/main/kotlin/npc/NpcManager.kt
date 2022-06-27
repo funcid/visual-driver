@@ -29,11 +29,11 @@ class NpcManager {
             entityId = data.id
             setUniqueId(data.uuid)
         } as AbstractClientPlayer
-
-        val profile = GameProfile(id, npcData.displayName)
-            if(npcData.skinUrl != null && npcData.skinDigest != null){
-                profile.properties.put("skinURL", Property("skinURL", npcData.skinUrl, ""))
-                profile.properties.put("skinDigest", Property("skinDigest", npcData.skinDigest, ""))
+        val id = UUID.randomUUID()
+        val profile = GameProfile(id, data.name)
+            if(data.skinUrl != null && data.skinDigest != null){
+                profile.properties.put("skinURL", Property("skinURL", data.skinUrl, ""))
+                profile.properties.put("skinDigest", Property("skinDigest", data.skinDigest, ""))
             }
             npc.gameProfile = profile
 
