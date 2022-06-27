@@ -27,7 +27,6 @@ class NpcManager {
     fun spawn(data: NpcData): NpcEntity {
         val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
             entityId = data.id
-            setUniqueId(data.uuid)
         } as AbstractClientPlayer
         val id = UUID.randomUUID()
         val profile = GameProfile(id, data.name)
@@ -35,8 +34,8 @@ class NpcManager {
                 profile.properties.put("skinURL", Property("skinURL", data.skinUrl, ""))
                 profile.properties.put("skinDigest", Property("skinDigest", data.skinDigest, ""))
             }
-            npc.gameProfile = profile
-
+            spawned.gameProfile = profile
+        spawned.setUniqueId(profile.id)
         val info = clientApi.clientConnection().newPlayerInfo(profile)
 
         spawned.apply {
