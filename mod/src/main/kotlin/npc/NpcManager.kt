@@ -40,7 +40,7 @@ class NpcManager {
 
         spawned.apply {
             wearing.forEach { setWearing(it) }
-            alwaysRenderNameTag = true
+//            alwaysRenderNameTag = true
             customNameTag = data.name
 
             teleport(data.x, data.y, data.z)
