@@ -41,7 +41,7 @@ fun command(name: String, biConsumer: BiConsumer<Player, Array<out String>>) {
 }
 
 @JvmOverloads
-fun after(ticks: Long = 1, runnable: () -> Unit): BukkitTask =
+fun after(ticks: Long = 1, runnable: Runnable): BukkitTask =
     Bukkit.getScheduler().runTaskLater(Anime.provided, runnable, ticks)
 
 fun listener(vararg listener: Listener) =

@@ -70,8 +70,7 @@ enum class Emotions(val title: String, val uuid: UUID) {
     companion object {
         @JvmStatic
         fun play(emotion: UUID, dancer: UUID, vararg receivers: Player) {
-            val transfer = ModTransfer().json(PacketEmotionAction(dancer, emotion, 0, null))
-            receivers.forEach { transfer.send(EMOTION_ACTION, it) }
+            receivers.forEach { ModTransfer().json(PacketEmotionAction(dancer, emotion, 0, null)).send(EMOTION_ACTION, it) }
         }
 
         @JvmStatic
