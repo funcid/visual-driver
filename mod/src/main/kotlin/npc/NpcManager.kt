@@ -7,6 +7,7 @@ import dev.xdark.clientapi.entity.PlayerModelPart
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import me.func.protocol.npc.NpcData
+import org.apache.commons.codec.digest.DigestUtils
 import ru.cristalix.clientapi.KotlinMod
 import java.util.UUID
 
@@ -30,9 +31,12 @@ class NpcManager {
         } as AbstractClientPlayer
         val id = UUID.randomUUID()
         val profile = GameProfile(id, data.name)
-            if(data.skinUrl != null && data.skinDigest != null){
+            if(data.skinUrl != null){
                 profile.properties.put("skinURL", Property("skinURL", data.skinUrl, ""))
-                profile.properties.put("skinDigest", Property("skinDigest", data.skinDigest, ""))
+                if(data.skinDigest == null) {
+                    val generatedDigest = DigestUtils.sha1Hex(data.skinUrl)
+                    profile.properties.put("skinDigest", Property("skinDigest", generatedDigest, ""))
+                }
             }
             spawned.gameProfile = profile
         spawned.setUniqueId(profile.id)
@@ -57,9 +61,7 @@ class NpcManager {
             setNoGravity(true)
         }
          info.responseTime = -2
-            if(npcData.skinType != null){
-                info.skinType = npcData.skinType
-            }
+            info.skinType = if (data.slimArms) "SLIM" else "DEFAULT"
             clientApi.clientConnection().addPlayerInfo(info)
         return NpcEntity(data.uuid, data, spawned).apply { storage[data.uuid] = this }
     }
