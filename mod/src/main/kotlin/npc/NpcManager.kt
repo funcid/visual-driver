@@ -29,18 +29,14 @@ class NpcManager {
         val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
             entityId = data.id
         } as AbstractClientPlayer
-        val id = UUID.randomUUID()
-        val profile = GameProfile(id, data.name)
-            if(data.skinUrl != null){
-                profile.properties.put("skinURL", Property("skinURL", data.skinUrl, ""))
-                if(data.skinDigest == null) {
-                    val generatedDigest = DigestUtils.sha1Hex(data.skinUrl)
-                    profile.properties.put("skinDigest", Property("skinDigest", generatedDigest, ""))
-                }
-            }
-            spawned.gameProfile = profile
-        spawned.setUniqueId(profile.id)
-        val info = clientApi.clientConnection().newPlayerInfo(profile)
+        val info = clientApi.clientConnection().newPlayerInfo(
+            GameProfile(data.uuid, data.name).apply {
+                properties.put("skinURL", Property("skinURL", data.skinUrl))
+                properties.put("skinDigest", Property("skinDigest", (if (data.skinDigest == null) DigestUtils.sha1Hex(data.skinUrl) else data.skinDigest)))
+            }.apply { spawned.gameProfile = this }
+        ).apply { responseTime = -2 }
+
+        spawned.setUniqueId(info.gameProfile.id)
 
         spawned.apply {
             wearing.forEach { setWearing(it) }
@@ -60,9 +56,8 @@ class NpcManager {
 
             setNoGravity(true)
         }
-         info.responseTime = -2
-            info.skinType = if (data.slimArms) "SLIM" else "DEFAULT"
-            clientApi.clientConnection().addPlayerInfo(info)
+        info.skinType = if (data.slimArms) "SLIM" else "DEFAULT"
+        clientApi.clientConnection().addPlayerInfo(info)
         return NpcEntity(data.uuid, data, spawned).apply { storage[data.uuid] = this }
     }
 
