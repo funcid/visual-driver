@@ -122,7 +122,7 @@ object Anime {
     }
 
     @JvmStatic
-    fun title(player: Player, vararg text: String) = title(player, text.joinToString { "\n" })
+    fun title(player: Player, vararg text: String) = title(player, text.joinToString("\n"))
 
     @JvmStatic
     fun timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int) = ModTransfer()
