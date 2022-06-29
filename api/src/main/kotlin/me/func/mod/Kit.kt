@@ -65,7 +65,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     NPC({ StandardMods.mods.add(Mod.NPC) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            after(3) { npcs.forEach { (_, value) -> value.spawn(player) } }
+            after(2) { npcs.forEach { (_, value) -> value.spawn(player) } }
         }
 
         @EventHandler

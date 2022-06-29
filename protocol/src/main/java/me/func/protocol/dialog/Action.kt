@@ -9,7 +9,6 @@ class Action(var type: String) {
 
     fun screen(screen: Screen?): Action {
         this.screen = screen
-
         return this
     }
 

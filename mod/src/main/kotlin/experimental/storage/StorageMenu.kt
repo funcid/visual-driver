@@ -1,6 +1,5 @@
 package experimental.storage
 
-import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
@@ -8,10 +7,6 @@ import externalManager
 import io.netty.buffer.Unpooled
 import menuStack
 import org.lwjgl.input.Keyboard
-import org.lwjgl.input.Mouse
-import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.registerHandler
-import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ItemElement
@@ -238,9 +233,9 @@ class StorageMenu(
                         val lines = element.hoverText.split("\n")
 
                         hoverContainer.size.x =
-                            clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length }!!)
-                                .toDouble() * hoverTextScale + 2.5 * itemPadding
-                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + 2.5 * itemPadding
+                            clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length } ?: "")
+                                .toDouble() * hoverTextScale - 4
+                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + itemPadding
                         hoverCenter.size.x = hoverContainer.size.x - 2
                         hoverCenter.size.y = hoverContainer.size.y - 2
                     } else {

@@ -1,5 +1,6 @@
 package me.func.mod
 
+import com.mojang.brigadier.arguments.UuidArgumentType.uuid
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
 import me.func.protocol.Dimension
@@ -58,7 +59,7 @@ object Banners {
     fun show(player: Player, vararg banner: Banner) {
         val transfer = ModTransfer().integer(banner.size)
 
-        for (current in banner) {
+        banner.forEach { current ->
             transfer.string(current.uuid.toString())
                 .integer(current.motionType.ordinal)
                 .boolean(current.watchingOnPlayer)
@@ -83,16 +84,15 @@ object Banners {
                         double(current.motionSettings["offsetZ"].toString().toDouble())
                     }
                 }
-
-            current.motionSettings["line"]?.let {
-                val sizes = it as MutableList<Pair<Int, Double>>
-                val sizeTransfer = ModTransfer(current.uuid.toString(), sizes.size)
-                sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
-                sizeTransfer.send("banner:size-text", player)
-            }
         }
-
         transfer.send("banner:new", player)
+
+        banner.filter { it.motionSettings.containsKey("line") }.forEach { current ->
+            val sizes = current.motionSettings["line"] as MutableList<Pair<Int, Double>>
+            val sizeTransfer = ModTransfer(current.uuid.toString(), sizes.size)
+            sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
+            sizeTransfer.send("banner:size-text", player)
+        }
     }
 
     @JvmStatic
