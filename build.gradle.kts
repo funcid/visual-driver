@@ -30,11 +30,11 @@ subprojects {
     }
 
     tasks {
-        withType<Jar> {
+        withType<Jar>().configureEach {
             duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         }
-        withType<JavaCompile> { options.encoding = "UTF-8" }
-        withType<KotlinCompile> {
+        withType<JavaCompile>().configureEach { options.encoding = "UTF-8" }
+        withType<KotlinCompile>().configureEach {
             kotlinOptions {
                 jvmTarget = "1.8"
                 freeCompilerArgs = listOf(
