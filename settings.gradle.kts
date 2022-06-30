@@ -2,6 +2,8 @@
 
 pluginManagement {
     repositories {
+        mavenCentral()
+        gradlePluginPortal()
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-public/")
             credentials {
@@ -9,8 +11,6 @@ pluginManagement {
                 password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
-        mavenCentral()
-        gradlePluginPortal()
     }
 
     includeBuild("bundler")
@@ -23,6 +23,7 @@ pluginManagement {
 
 dependencyResolutionManagement {
     repositories {
+        mavenCentral()
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-public/")
             credentials {
@@ -30,7 +31,6 @@ dependencyResolutionManagement {
                 password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
-        mavenCentral()
     }
 
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
