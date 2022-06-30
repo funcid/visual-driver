@@ -7,6 +7,7 @@ plugins {
     `java-library`
     `maven-publish`
     kotlin("jvm") apply false
+    id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
 allprojects {
