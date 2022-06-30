@@ -18,6 +18,7 @@ pluginManagement {
     plugins {
         kotlin("jvm") version "1.6.21"
         kotlin("plugin.serialization") version "1.6.21"
+        id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.10.1"
     }
 }
 

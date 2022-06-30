@@ -1,0 +1,490 @@
+public final class me/func/protocol/Dimension : java/lang/Enum {
+	public static final field X Lme/func/protocol/Dimension;
+	public static final field Y Lme/func/protocol/Dimension;
+	public static final field Z Lme/func/protocol/Dimension;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/Dimension;
+	public static fun values ()[Lme/func/protocol/Dimension;
+}
+
+public final class me/func/protocol/DropRare : java/lang/Enum {
+	public static final field COMMON Lme/func/protocol/DropRare;
+	public static final field EPIC Lme/func/protocol/DropRare;
+	public static final field LEGENDARY Lme/func/protocol/DropRare;
+	public static final field RARE Lme/func/protocol/DropRare;
+	public final fun getBlue ()I
+	public final fun getColor ()Ljava/lang/String;
+	public final fun getColored ()Ljava/lang/String;
+	public final fun getGreen ()I
+	public final fun getRed ()I
+	public final fun getTitle ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/DropRare;
+	public static fun values ()[Lme/func/protocol/DropRare;
+	public final fun with (Ljava/lang/String;)Ljava/lang/String;
+}
+
+public final class me/func/protocol/EndStatus : java/lang/Enum {
+	public static final field DRAW Lme/func/protocol/EndStatus;
+	public static final field LOSE Lme/func/protocol/EndStatus;
+	public static final field WIN Lme/func/protocol/EndStatus;
+	public final fun getBlue ()I
+	public final fun getGreen ()I
+	public final fun getOffset ()D
+	public final fun getRed ()I
+	public final fun getTexture ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/EndStatus;
+	public static fun values ()[Lme/func/protocol/EndStatus;
+}
+
+public final class me/func/protocol/GlowColor : java/lang/Enum, me/func/protocol/RGB {
+	public static final field BLUE Lme/func/protocol/GlowColor;
+	public static final field GOLD Lme/func/protocol/GlowColor;
+	public static final field GREEN Lme/func/protocol/GlowColor;
+	public static final field RED Lme/func/protocol/GlowColor;
+	public fun getBlue ()I
+	public fun getGreen ()I
+	public fun getRed ()I
+	public fun setBlue (I)V
+	public fun setGreen (I)V
+	public fun setRed (I)V
+	public fun toRGB ()I
+	public fun toRGB (III)I
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/GlowColor;
+	public static fun values ()[Lme/func/protocol/GlowColor;
+}
+
+public final class me/func/protocol/GlowingPlace {
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/RGB;DDDDI)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/RGB;DDDDIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/func/protocol/RGB;DDD)V
+	public fun <init> (Lme/func/protocol/RGB;DDDD)V
+	public synthetic fun <init> (Lme/func/protocol/RGB;DDDDILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAngles ()I
+	public final fun getRadius ()D
+	public final fun getRgb ()Lme/func/protocol/RGB;
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getZ ()D
+}
+
+public final class me/func/protocol/Indicators : java/lang/Enum {
+	public static final field AIR_BAR Lme/func/protocol/Indicators;
+	public static final field ARMOR Lme/func/protocol/Indicators;
+	public static final field EXP Lme/func/protocol/Indicators;
+	public static final field HAND Lme/func/protocol/Indicators;
+	public static final field HEALTH Lme/func/protocol/Indicators;
+	public static final field HOT_BAR Lme/func/protocol/Indicators;
+	public static final field HUNGER Lme/func/protocol/Indicators;
+	public static final field NAME_TEMPLATE Lme/func/protocol/Indicators;
+	public static final field POTIONS Lme/func/protocol/Indicators;
+	public static final field TAB Lme/func/protocol/Indicators;
+	public static final field VEHICLE Lme/func/protocol/Indicators;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/Indicators;
+	public static fun values ()[Lme/func/protocol/Indicators;
+}
+
+public final class me/func/protocol/Marker {
+	public fun <init> (DDDDLjava/lang/String;)V
+	public fun <init> (DDDDLme/func/protocol/MarkerSign;)V
+	public fun <init> (DDDLme/func/protocol/MarkerSign;)V
+	public fun <init> (Ljava/util/UUID;DDDDLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/UUID;DDDDLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getScale ()D
+	public final fun getTexture ()Ljava/lang/String;
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getZ ()D
+	public final fun setX (D)V
+	public final fun setY (D)V
+	public final fun setZ (D)V
+}
+
+public final class me/func/protocol/MarkerSign : java/lang/Enum {
+	public static final field ARROW_DOWN Lme/func/protocol/MarkerSign;
+	public static final field ARROW_LEFT Lme/func/protocol/MarkerSign;
+	public static final field ARROW_RIGHT Lme/func/protocol/MarkerSign;
+	public static final field ARROW_UP Lme/func/protocol/MarkerSign;
+	public static final field ERROR Lme/func/protocol/MarkerSign;
+	public static final field FINE Lme/func/protocol/MarkerSign;
+	public static final field QUESTION_ERROR Lme/func/protocol/MarkerSign;
+	public static final field QUESTION_FINE Lme/func/protocol/MarkerSign;
+	public static final field QUESTION_WARNING Lme/func/protocol/MarkerSign;
+	public static final field WARNING Lme/func/protocol/MarkerSign;
+	public final fun getTexture ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/MarkerSign;
+	public static fun values ()[Lme/func/protocol/MarkerSign;
+}
+
+public final class me/func/protocol/Mod : java/lang/Enum {
+	public static final field BATTLEPASS Lme/func/protocol/Mod;
+	public static final field CHAT Lme/func/protocol/Mod;
+	public static final field DIALOG Lme/func/protocol/Mod;
+	public static final field EXPERIMENTAL Lme/func/protocol/Mod;
+	public static final field HEALTHBAR Lme/func/protocol/Mod;
+	public static final field LOOTBOX Lme/func/protocol/Mod;
+	public static final field NPC Lme/func/protocol/Mod;
+	public static final field STANDARD Lme/func/protocol/Mod;
+	public static final field STORE Lme/func/protocol/Mod;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/Mod;
+	public static fun values ()[Lme/func/protocol/Mod;
+}
+
+public final class me/func/protocol/ModChat : java/lang/Enum {
+	public static final field ATTACK Lme/func/protocol/ModChat;
+	public static final field PARTY Lme/func/protocol/ModChat;
+	public static final field SERVER Lme/func/protocol/ModChat;
+	public static final field SYSTEM Lme/func/protocol/ModChat;
+	public static final field TRADE Lme/func/protocol/ModChat;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/ModChat;
+	public static fun values ()[Lme/func/protocol/ModChat;
+}
+
+public abstract interface class me/func/protocol/RGB {
+	public abstract fun getBlue ()I
+	public abstract fun getGreen ()I
+	public abstract fun getRed ()I
+	public abstract fun setBlue (I)V
+	public abstract fun setGreen (I)V
+	public abstract fun setRed (I)V
+	public abstract fun toRGB ()I
+	public abstract fun toRGB (III)I
+}
+
+public final class me/func/protocol/RGB$DefaultImpls {
+	public static fun toRGB (Lme/func/protocol/RGB;III)I
+}
+
+public class me/func/protocol/Tricolor : me/func/protocol/RGB {
+	public fun <init> (I)V
+	public fun <init> (III)V
+	public fun getBlue ()I
+	public fun getGreen ()I
+	public fun getRed ()I
+	public fun setBlue (I)V
+	public fun setGreen (I)V
+	public fun setRed (I)V
+	public fun toRGB ()I
+	public fun toRGB (III)I
+}
+
+public abstract interface class me/func/protocol/Unique {
+	public abstract fun getUuid ()Ljava/util/UUID;
+}
+
+public final class me/func/protocol/alert/NotificationButton : java/lang/Cloneable {
+	public fun <init> (Ljava/lang/String;ILjava/lang/String;ZZ)V
+	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/String;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun clone ()Ljava/lang/Object;
+	public fun clone ()Lme/func/protocol/alert/NotificationButton;
+	public final fun getColor ()I
+	public final fun getCommand ()Ljava/lang/String;
+	public final fun getRemoveButton ()Z
+	public final fun getRemoveNotification ()Z
+	public final fun getText ()Ljava/lang/String;
+	public final fun setColor (I)V
+	public final fun setCommand (Ljava/lang/String;)V
+	public final fun setRemoveButton (Z)V
+	public final fun setRemoveNotification (Z)V
+	public final fun setText (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/alert/NotificationData : java/lang/Cloneable {
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;IIJLjava/util/List;Ljava/lang/String;)V
+	public synthetic fun clone ()Ljava/lang/Object;
+	public fun clone ()Lme/func/protocol/alert/NotificationData;
+	public final fun getBackgroundColor ()I
+	public final fun getButtons ()Ljava/util/List;
+	public final fun getChatMessage ()Ljava/lang/String;
+	public final fun getSource ()Ljava/util/UUID;
+	public final fun getText ()Ljava/lang/String;
+	public final fun getTimeout ()J
+	public final fun getTimeoutBarColor ()I
+	public final fun getType ()Ljava/lang/String;
+	public final fun setBackgroundColor (I)V
+	public final fun setButtons (Ljava/util/List;)V
+	public final fun setChatMessage (Ljava/lang/String;)V
+	public final fun setSource (Ljava/util/UUID;)V
+	public final fun setText (Ljava/lang/String;)V
+	public final fun setTimeout (J)V
+	public final fun setTimeoutBarColor (I)V
+	public final fun setType (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/battlepass/BattlePassFacade {
+	public fun <init> ()V
+	public fun <init> (IDLjava/util/List;)V
+	public synthetic fun <init> (IDLjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getPrice ()I
+	public final fun getSalePercent ()D
+	public final fun getTags ()Ljava/util/List;
+	public final fun setPrice (I)V
+	public final fun setSalePercent (D)V
+	public final fun setTags (Ljava/util/List;)V
+}
+
+public abstract class me/func/protocol/battlepass/BattlePassPage {
+	public fun <init> (II)V
+	public fun getRequiredExp ()I
+	public fun getSkipPrice ()I
+	public fun setRequiredExp (I)V
+	public fun setSkipPrice (I)V
+}
+
+public final class me/func/protocol/battlepass/BattlePassUserData {
+	public fun <init> (IZ)V
+	public final fun getAdvanced ()Z
+	public final fun getExp ()I
+	public final fun setAdvanced (Z)V
+	public final fun setExp (I)V
+}
+
+public final class me/func/protocol/dialog/Action {
+	public static final field Companion Lme/func/protocol/dialog/Action$Companion;
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Lme/func/protocol/dialog/Actions;)V
+	public static final fun command (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
+	public final fun command1 (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
+	public final fun getCommand ()Ljava/lang/String;
+	public final fun getScreen ()Lme/func/protocol/dialog/Screen;
+	public final fun getType ()Ljava/lang/String;
+	public final fun screen (Lme/func/protocol/dialog/Screen;)Lme/func/protocol/dialog/Action;
+	public final fun setCommand (Ljava/lang/String;)V
+	public final fun setScreen (Lme/func/protocol/dialog/Screen;)V
+	public final fun setType (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/dialog/Action$Companion {
+	public final fun command (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
+}
+
+public final class me/func/protocol/dialog/Actions : java/lang/Enum {
+	public static final field CLOSE Lme/func/protocol/dialog/Actions;
+	public static final field COMMAND Lme/func/protocol/dialog/Actions;
+	public static final field OPEN_SCREEN Lme/func/protocol/dialog/Actions;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/dialog/Actions;
+	public static fun values ()[Lme/func/protocol/dialog/Actions;
+}
+
+public final class me/func/protocol/dialog/Button {
+	public fun <init> (Ljava/lang/String;)V
+	public final fun actions ([Lme/func/protocol/dialog/Action;)Lme/func/protocol/dialog/Button;
+	public final fun getActions ()Ljava/util/List;
+	public final fun getText ()Ljava/lang/String;
+	public final fun setActions (Ljava/util/List;)V
+	public final fun setText (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/dialog/Dialog {
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lme/func/protocol/dialog/Entrypoint;)V
+	public final fun getEntrypoints ()Ljava/util/List;
+	public final fun setEntrypoints (Ljava/util/List;)V
+}
+
+public final class me/func/protocol/dialog/Entrypoint {
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/dialog/Screen;)V
+	public final fun getId ()Ljava/lang/String;
+	public final fun getScreen ()Lme/func/protocol/dialog/Screen;
+	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun setScreen (Lme/func/protocol/dialog/Screen;)V
+	public final fun setSubtitle (Ljava/lang/String;)V
+	public final fun subtitle (Ljava/lang/String;)Lme/func/protocol/dialog/Entrypoint;
+}
+
+public final class me/func/protocol/dialog/Screen {
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Ljava/lang/String;)V
+	public final fun buttons ([Lme/func/protocol/dialog/Button;)Lme/func/protocol/dialog/Screen;
+	public final fun getButtons ()Ljava/util/List;
+	public final fun getText ()Ljava/util/List;
+	public final fun setButtons (Ljava/util/List;)V
+}
+
+public final class me/func/protocol/element/Banner {
+	public static final field S Lme/func/protocol/element/Banner$S;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/element/MotionType;ZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIID)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/element/MotionType;ZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIIDILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public static final fun builder ()Lme/func/protocol/element/Banner$Builder;
+	public final fun getBlue ()I
+	public final fun getContent ()Ljava/lang/String;
+	public final fun getGreen ()I
+	public final fun getHeight ()I
+	public final fun getMotionSettings ()Ljava/util/Map;
+	public final fun getMotionType ()Lme/func/protocol/element/MotionType;
+	public final fun getOpacity ()D
+	public final fun getRed ()I
+	public final fun getTexture ()Ljava/lang/String;
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun getWatchingOnPlayer ()Z
+	public final fun getWeight ()I
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getZ ()D
+	public final fun setBlue (I)V
+	public final fun setContent (Ljava/lang/String;)V
+	public final fun setGreen (I)V
+	public final fun setHeight (I)V
+	public final fun setMotionSettings (Ljava/util/Map;)V
+	public final fun setMotionType (Lme/func/protocol/element/MotionType;)V
+	public final fun setOpacity (D)V
+	public final fun setRed (I)V
+	public final fun setTexture (Ljava/lang/String;)V
+	public final fun setWatchingOnPlayer (Z)V
+	public final fun setWeight (I)V
+	public final fun setX (D)V
+	public final fun setY (D)V
+	public final fun setZ (D)V
+}
+
+public final class me/func/protocol/element/Banner$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/protocol/element/Banner;)V
+	public synthetic fun <init> (Lme/func/protocol/element/Banner;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun blue (I)Lme/func/protocol/element/Banner$Builder;
+	public final fun build ()Lme/func/protocol/element/Banner;
+	public final fun content ([Ljava/lang/String;)Lme/func/protocol/element/Banner$Builder;
+	public final fun getBanner ()Lme/func/protocol/element/Banner;
+	public final fun green (I)Lme/func/protocol/element/Banner$Builder;
+	public final fun height (I)Lme/func/protocol/element/Banner$Builder;
+	public final fun motionType (Lme/func/protocol/element/MotionType;)Lme/func/protocol/element/Banner$Builder;
+	public final fun opacity (D)Lme/func/protocol/element/Banner$Builder;
+	public final fun pitch (F)Lme/func/protocol/element/Banner$Builder;
+	public final fun red (I)Lme/func/protocol/element/Banner$Builder;
+	public final fun resizeLine (ID)Lme/func/protocol/element/Banner$Builder;
+	public final fun texture (Ljava/lang/String;)Lme/func/protocol/element/Banner$Builder;
+	public final fun watchingOnPlayer (Z)Lme/func/protocol/element/Banner$Builder;
+	public final fun weight (I)Lme/func/protocol/element/Banner$Builder;
+	public final fun x (D)Lme/func/protocol/element/Banner$Builder;
+	public final fun y (D)Lme/func/protocol/element/Banner$Builder;
+	public final fun yaw (F)Lme/func/protocol/element/Banner$Builder;
+	public final fun z (D)Lme/func/protocol/element/Banner$Builder;
+}
+
+public final class me/func/protocol/element/Banner$S {
+	public final fun builder ()Lme/func/protocol/element/Banner$Builder;
+}
+
+public final class me/func/protocol/element/Figure {
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/element/FigureType;DDDDIIIDLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/element/FigureType;DDDDIIIDLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getAlpha ()D
+	public final fun getBlue ()I
+	public final fun getGreen ()I
+	public final fun getRed ()I
+	public final fun getSize ()D
+	public final fun getTexture ()Ljava/lang/String;
+	public final fun getType ()Lme/func/protocol/element/FigureType;
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getZ ()D
+	public final fun setAlpha (D)V
+	public final fun setBlue (I)V
+	public final fun setGreen (I)V
+	public final fun setRed (I)V
+	public final fun setSize (D)V
+	public final fun setTexture (Ljava/lang/String;)V
+	public final fun setX (D)V
+	public final fun setY (D)V
+	public final fun setZ (D)V
+}
+
+public final class me/func/protocol/element/FigureType : java/lang/Enum {
+	public static final field SPHERE Lme/func/protocol/element/FigureType;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/element/FigureType;
+	public static fun values ()[Lme/func/protocol/element/FigureType;
+}
+
+public final class me/func/protocol/element/MotionType : java/lang/Enum {
+	public static final field CHAOTIC Lme/func/protocol/element/MotionType;
+	public static final field CONSTANT Lme/func/protocol/element/MotionType;
+	public static final field PERIODIC Lme/func/protocol/element/MotionType;
+	public static final field STEP_BY_TARGET Lme/func/protocol/element/MotionType;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/element/MotionType;
+	public static fun values ()[Lme/func/protocol/element/MotionType;
+}
+
+public final class me/func/protocol/gui/Storage {
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getColumns ()I
+	public final fun getHint ()Ljava/lang/String;
+	public final fun getMoney ()Ljava/lang/String;
+	public final fun getRows ()I
+	public final fun getStorage ()Ljava/util/List;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun setColumns (I)V
+	public final fun setHint (Ljava/lang/String;)V
+	public final fun setMoney (Ljava/lang/String;)V
+	public final fun setRows (I)V
+	public final fun setStorage (Ljava/util/List;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public final fun setUuid (Ljava/util/UUID;)V
+}
+
+public class me/func/protocol/gui/StoragePosition {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;JLjava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getDescription ()Ljava/lang/String;
+	public final fun getPrice ()J
+	public fun getTexture ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun setDescription (Ljava/lang/String;)V
+	public final fun setPrice (J)V
+	public fun setTexture (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
+	public static final field NONE Lme/func/protocol/npc/NpcBehaviour;
+	public static final field STARE_AND_LOOK_AROUND Lme/func/protocol/npc/NpcBehaviour;
+	public static final field STARE_AT_PLAYER Lme/func/protocol/npc/NpcBehaviour;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/npc/NpcBehaviour;
+	public static fun values ()[Lme/func/protocol/npc/NpcBehaviour;
+}
+
+public final class me/func/protocol/npc/NpcData {
+	public fun <init> ()V
+	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZ)V
+	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun getBehaviour ()Lme/func/protocol/npc/NpcBehaviour;
+	public final fun getId ()I
+	public final fun getName ()Ljava/lang/String;
+	public final fun getPitch ()F
+	public final fun getSitting ()Z
+	public final fun getSkinDigest ()Ljava/lang/String;
+	public final fun getSkinUrl ()Ljava/lang/String;
+	public final fun getSleeping ()Z
+	public final fun getSlimArms ()Z
+	public final fun getSneaking ()Z
+	public final fun getType ()I
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getYaw ()F
+	public final fun getZ ()D
+	public final fun setBehaviour (Lme/func/protocol/npc/NpcBehaviour;)V
+	public final fun setId (I)V
+	public final fun setName (Ljava/lang/String;)V
+	public final fun setPitch (F)V
+	public final fun setSitting (Z)V
+	public final fun setSkinDigest (Ljava/lang/String;)V
+	public final fun setSkinUrl (Ljava/lang/String;)V
+	public final fun setSleeping (Z)V
+	public final fun setSlimArms (Z)V
+	public final fun setSneaking (Z)V
+	public final fun setType (I)V
+	public final fun setX (D)V
+	public final fun setY (D)V
+	public final fun setYaw (F)V
+	public final fun setZ (D)V
+}
+
