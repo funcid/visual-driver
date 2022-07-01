@@ -4,6 +4,7 @@ plugins {
 }
 
 repositories {
+    mavenCentral()
     maven {
         url = uri("https://repo.c7x.ru/repository/maven-public/")
         credentials {
@@ -11,7 +12,6 @@ repositories {
             password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
         }
     }
-    mavenCentral()
 }
 
 dependencies {
