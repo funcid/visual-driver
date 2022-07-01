@@ -72,3 +72,7 @@ subprojects {
         }
     }
 }
+
+apiValidation {
+    ignoredProjects.addAll(listOf("mod", "graffiti", "graffiti-service"))
+}
