@@ -11,7 +11,6 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             artifactId = "animation-api-protocol-serialization"
-            version = project.version.toString()
 
             from(components["java"])
         }
