@@ -9,7 +9,6 @@ import dev.xdark.clientapi.util.EnumFacing
 import me.func.protocol.npc.NpcData
 import org.apache.commons.codec.digest.DigestUtils
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
 import java.util.UUID
 
 class NpcManager {
@@ -32,7 +31,13 @@ class NpcManager {
         val info = clientApi.clientConnection().newPlayerInfo(
             GameProfile(data.uuid, data.name).apply {
                 properties.put("skinURL", Property("skinURL", data.skinUrl))
-                properties.put("skinDigest", Property("skinDigest", (if (data.skinDigest == null) DigestUtils.sha1Hex(data.skinUrl) else data.skinDigest)))
+                properties.put(
+                    "skinDigest",
+                    Property(
+                        "skinDigest",
+                        (if (data.skinDigest == null) DigestUtils.sha1Hex(data.skinUrl) else data.skinDigest)
+                    )
+                )
             }.apply { spawned.gameProfile = this }
         ).apply { responseTime = -2 }
 
