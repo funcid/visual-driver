@@ -1,8 +1,8 @@
 package experimental.storage
 
+import Main.Companion.externalManager
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import externalManager
 import io.netty.buffer.Unpooled
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod

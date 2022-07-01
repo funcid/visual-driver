@@ -1,8 +1,8 @@
 package experimental.storage
 
+import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
-import menuStack
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate

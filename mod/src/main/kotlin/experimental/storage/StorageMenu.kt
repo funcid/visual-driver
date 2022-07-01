@@ -1,11 +1,11 @@
 package experimental.storage
 
+import Main.Companion.externalManager
+import Main.Companion.menuStack
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import externalManager
 import io.netty.buffer.Unpooled
-import menuStack
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle

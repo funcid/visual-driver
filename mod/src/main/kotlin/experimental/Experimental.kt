@@ -1,15 +1,14 @@
 package experimental
 
+import Main.Companion.menuStack
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.storage.*
 import io.netty.buffer.ByteBuf
-import menuStack
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import java.util.*

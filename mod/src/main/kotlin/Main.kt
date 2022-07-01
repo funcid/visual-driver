@@ -19,10 +19,12 @@ import standard.ExternalManager
 import standard.Standard
 import java.util.Stack
 
-lateinit var externalManager: ExternalManager
-var menuStack: Stack<Storable> = Stack()
-
 class Main : KotlinMod() {
+    companion object {
+        lateinit var externalManager: ExternalManager
+        var menuStack: Stack<Storable> = Stack()
+    }
+
     override fun onEnable() {
         UIEngine.initialize(this)
 

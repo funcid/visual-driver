@@ -1,10 +1,9 @@
 package standard
 
+import Main.Companion.externalManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil.readUtf8
-import externalManager
 import me.func.protocol.EndStatus
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle
