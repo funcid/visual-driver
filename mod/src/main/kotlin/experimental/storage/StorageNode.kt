@@ -26,22 +26,21 @@ abstract class StorageNode<T : AbstractElement>(
         size = sized
         color = Color(74, 140, 236, 1.0)
         color.alpha = 0.0
-        beforeRender {
-            GlStateManager.disableDepth()
-        }
-        afterRender {
-            GlStateManager.enableDepth()
-        }
+        beforeRender { GlStateManager.disableDepth() }
+        afterRender { GlStateManager.enableDepth() }
 
-        hintElement = +text {
-            origin = CENTER
-            align = CENTER
-            color = WHITE
-            shadow = true
-            color.alpha = 0.0
-            content = hint ?: default
-            scale = V3(1.5, 1.5, 1.5)
+        if (hintElement == null) {
+            hintElement = text {
+                origin = CENTER
+                align = CENTER
+                color = WHITE
+                shadow = true
+                color.alpha = 0.0
+                content = hint ?: default
+                scale = V3(1.5, 1.5, 1.5)
+            }
         }
+        +hintElement!!
     }
 
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
