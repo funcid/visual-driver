@@ -1,5 +1,4 @@
 -dontnote
--dontwarn
 
 -target 1.8
 #-keepattributes *Annotation*
