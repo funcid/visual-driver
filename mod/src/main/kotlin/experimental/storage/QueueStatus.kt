@@ -4,7 +4,9 @@ import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
 import externalManager
 import io.netty.buffer.Unpooled
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -14,7 +16,6 @@ import ru.cristalix.uiengine.utility.*
 private const val margin = 3
 private const val width = 140.0
 
-context(KotlinMod)
 class QueueStatus {
     private var counter = 0
 
@@ -116,7 +117,7 @@ class QueueStatus {
 
         var before = System.currentTimeMillis()
 
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             if (!box.enabled)
                 return@registerHandler
             val now = System.currentTimeMillis()
@@ -129,7 +130,7 @@ class QueueStatus {
             if (counter >= 300) leave()
         }
 
-        registerChannel("queue:init") {
+        mod.registerChannel("queue:init") {
             if (!box.enabled) {
                 box.animate(0.4, Easings.BACK_OUT) {
                     offset.y = 15.0
@@ -148,11 +149,11 @@ class QueueStatus {
             box.enabled = true
         }
 
-        registerChannel("queue:update") {
+        mod.registerChannel("queue:update") {
             online.content = NetUtil.readUtf8(this) // description
         }
 
-        registerChannel("queue:stop") {
+        mod.registerChannel("queue:stop") {
             box.animate(0.25, Easings.QUART_IN) {
                 offset.y = -width + 15
             }

@@ -8,6 +8,8 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.utility.Color
@@ -20,7 +22,6 @@ import ru.cristalix.uiengine.utility.rotationMatrix
  * @project animation-api
  * @author Рейдж
  */
-context(KotlinMod)
 class Healthbar {
     init {
         val context = Context3D(V3())
@@ -42,7 +43,7 @@ class Healthbar {
 
         context.addChild(body)
 
-        registerHandler<RenderTickPre> {
+        mod.registerHandler<RenderTickPre> {
             val player = UIEngine.clientApi.minecraft().player
             val matrix = Matrix4f()
             Matrix4f.setIdentity(matrix)
@@ -56,7 +57,7 @@ class Healthbar {
             context.matrices[rotationMatrix] = matrix
         }
 
-        registerHandler<NameTemplateRender> a@{
+        mod.registerHandler<NameTemplateRender> a@{
             if (entity !is EntityLivingBase) return@a
             val entity = entity as EntityLivingBase
             val part = entity.health / entity.maxHealth

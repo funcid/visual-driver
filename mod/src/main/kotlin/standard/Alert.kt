@@ -1,6 +1,7 @@
 package standard
 
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -18,7 +19,6 @@ import ru.cristalix.uiengine.utility.text
 
 private const val VECTOR = 65
 
-context(KotlinMod)
 class Alert {
     private lateinit var dayTitle: TextElement
     private lateinit var lore: TextElement
@@ -61,7 +61,7 @@ class Alert {
     init {
         UIEngine.overlayContext + dayTitleBox
 
-        registerChannel("func:alert") {
+        mod.registerChannel("func:alert") {
             dayTitle.content = readUtf8()
             lore.content = readUtf8()
 

@@ -7,21 +7,22 @@ import dev.xdark.clientapi.entity.EntityProvider
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import java.util.UUID
 
-context(KotlinMod)
 class CorpseManager {
     private val corpses: MutableList<AbstractClientPlayer> = arrayListOf()
 
     init {
-        registerChannel("func:corpse-clear") {
+        mod.registerChannel("func:corpse-clear") {
             corpses.forEach { clientApi.minecraft().world.removeEntity(it) }
             corpses.clear()
         }
 
-        registerChannel("func:corpse") {
+        mod.registerChannel("func:corpse") {
             val name = NetUtil.readUtf8(this)
 
             if (corpses.size > 36)

@@ -1,10 +1,7 @@
 package standard
 
-import ru.cristalix.clientapi.KotlinMod
-
 const val NAMESPACE = "cache/animation"
 
-context(KotlinMod)
 class Standard {
     init {
         IndicatorsManager()

@@ -1,25 +1,24 @@
 package battlepass
 
-import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.JavaMod.clientApi
 
-context(KotlinMod)
 class BattlePassGuiSize {
-    var totalWidth = 550.0
-    var totalHeight = 230.0
+    @JvmField var totalWidth = 550.0
+    @JvmField var totalHeight = 230.0
 
-    var totalWidthPart = 0.0
-    var totalHeightPart = 0.0
-    var buyButtonWidth = 0.0
-    var buyButtonHeight = 0.0
-    var buyButtonOffsetX = 0.0
-    var buyButtonPickaxeOffsetX = 0.0
-    var buyButtonPickaxeOffsetY = 0.0
-    var rewardSizeX = 0.0
-    var rewardSizeY = 0.0
-    var rewardNameOffsetY = 0.0
-    var advancedOffsetY = 0.0
-    var rewardBetweenX = 0.0
-    var rewardBlockWidth = 0.0
+    @JvmField var totalWidthPart = 0.0
+    @JvmField var totalHeightPart = 0.0
+    @JvmField var buyButtonWidth = 0.0
+    @JvmField var buyButtonHeight = 0.0
+    @JvmField var buyButtonOffsetX = 0.0
+    @JvmField var buyButtonPickaxeOffsetX = 0.0
+    @JvmField var buyButtonPickaxeOffsetY = 0.0
+    @JvmField var rewardSizeX = 0.0
+    @JvmField var rewardSizeY = 0.0
+    @JvmField var rewardNameOffsetY = 0.0
+    @JvmField var advancedOffsetY = 0.0
+    @JvmField var rewardBetweenX = 0.0
+    @JvmField var rewardBlockWidth = 0.0
 
     init {
         calculate()
@@ -50,5 +49,4 @@ class BattlePassGuiSize {
 
         return this
     }
-
 }

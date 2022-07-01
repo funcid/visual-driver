@@ -8,10 +8,10 @@ import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import me.func.protocol.npc.NpcData
 import org.apache.commons.codec.digest.DigestUtils
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
 import java.util.UUID
 
-context(KotlinMod)
 class NpcManager {
 
     private val storage = mutableMapOf<UUID, NpcEntity>()

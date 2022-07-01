@@ -15,8 +15,10 @@ import dev.xdark.clientapi.event.render.PotionsRender
 import dev.xdark.clientapi.event.render.VehicleHealthRender
 import me.func.protocol.Indicators
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
+import ru.cristalix.uiengine.UIEngine.listener
 
-context(KotlinMod)
 class IndicatorsManager {
 
     private val states = Indicators.values()
@@ -43,12 +45,12 @@ class IndicatorsManager {
     private fun <T> register(clazz: Class<T>, indicator: Indicators)
         where T : Event,
               T : Cancellable {
-        Event.bus(clazz).register(listener, {
+        Event.bus(clazz).register(mod.listener, {
             if (states[indicator] == true) it.isCancelled = true
         }, 1)
     }
 
     private fun changeIt(channel: String, value: Boolean) {
-        registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
+        mod.registerChannel(channel) { states[Indicators.values()[readInt()]] = value }
     }
 }

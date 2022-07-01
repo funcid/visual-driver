@@ -1,5 +1,5 @@
 public final class App : org/bukkit/plugin/java/JavaPlugin {
 	public fun <init> ()V
-	public fun onEnable ()V
+	public final fun onEnable ()V
 }
 

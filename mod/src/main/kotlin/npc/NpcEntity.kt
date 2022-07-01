@@ -5,7 +5,7 @@ import me.func.protocol.npc.NpcData
 import java.util.UUID
 
 class NpcEntity(
-    val uuid: UUID,
-    var data: NpcData,
-    var entity: EntityLivingBase? = null
+    @JvmField val uuid: UUID,
+    @JvmField var data: NpcData,
+    @JvmField var entity: EntityLivingBase? = null
 )

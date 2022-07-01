@@ -23,7 +23,6 @@ lateinit var externalManager: ExternalManager
 var menuStack: Stack<Storable> = Stack()
 
 class Main : KotlinMod() {
-
     override fun onEnable() {
         UIEngine.initialize(this)
 

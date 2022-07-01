@@ -12,9 +12,9 @@ import ru.cristalix.uiengine.utility.item
 import ru.cristalix.uiengine.utility.text
 
 class Day(
-    val day: Int,
+    @JvmField val day: Int,
     private val icon: ItemStack,
-    val name: String,
+    @JvmField val name: String,
     private val claimedStatus: String,
     private val claimed: Boolean
 ) : RectangleElement() {

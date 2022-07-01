@@ -3,7 +3,9 @@ package standard
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.eventloop.animate
@@ -14,13 +16,12 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import kotlin.collections.set
 
-context(KotlinMod)
 class MarkerManager {
 
     private var holos: MutableMap<String, Context3D> = HashMap()
 
     init {
-        registerChannel("func:marker-new") {
+        mod.registerChannel("func:marker-new") {
             val uuid = NetUtil.readUtf8(this)
             val x = readDouble()
             val y = readDouble()
@@ -30,7 +31,7 @@ class MarkerManager {
             addHolo(uuid, x, y, z, scale, texture)
         }
 
-        registerChannel("func:marker-move") {
+        mod.registerChannel("func:marker-move") {
             val uuid = NetUtil.readUtf8(this)
             val x = readDouble()
             val y = readDouble()
@@ -46,7 +47,7 @@ class MarkerManager {
         }
 
 
-        registerChannel("func:marker-kill") {
+        mod.registerChannel("func:marker-kill") {
             val uuid = NetUtil.readUtf8(this)
             holos[uuid]?.let {
                 UIEngine.worldContexts.remove(it)
@@ -54,12 +55,12 @@ class MarkerManager {
             holos.remove(uuid)
         }
 
-        registerChannel("func:clear") {
+        mod.registerChannel("func:clear") {
             holos.forEach { UIEngine.worldContexts.remove(it.value) }
             holos.clear()
         }
 
-        registerHandler<RenderTickPre> {
+        mod.registerHandler<RenderTickPre> {
             val player = clientApi.minecraft().player
             val timer = clientApi.minecraft().timer
             val yaw =
