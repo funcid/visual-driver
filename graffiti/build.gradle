@@ -6,10 +6,10 @@ dependencies {
     implementation project(':protocol')
     implementation project(':protocol-mod')
 
-    compileOnly 'ru.cristalix:client-api:live-SNAPSHOT'
+    compileOnly 'ru.cristalix:client-api:foranelfer-SNAPSHOT'
 
-    implementation 'ru.cristalix:uiengine:live-SNAPSHOT'
-    implementation 'ru.cristalix:client-sdk:live-SNAPSHOT'
+    implementation 'ru.cristalix:uiengine:foranelfer-SNAPSHOT'
+    implementation 'ru.cristalix:client-sdk:foranelfer-SNAPSHOT'
 }
 
 mod {

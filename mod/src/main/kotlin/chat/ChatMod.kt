@@ -6,6 +6,7 @@ import dev.xdark.clientapi.text.Text
 import dev.xdark.clientapi.text.TextJSON
 import io.netty.buffer.Unpooled
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -18,7 +19,6 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-context(KotlinMod)
 class ChatMod {
     private var currentChat = 1
 
@@ -77,17 +77,17 @@ class ChatMod {
             UIEngine.overlayContext.addChild(button)
         }
 
-        registerChannel("delete-chat") {
+        mod.registerChannel("delete-chat") {
             val index = readInt()
             chats[index]!!.button.enabled = false
             chats.remove(index)
         }
 
-        registerChannel("zabelix:chat_message") {
+        mod.registerChannel("zabelix:chat_message") {
             handleMessage(readInt(), TextJSON.jsonToText(readUtf8()))
         }
 
-        registerHandler<ChatReceive> {
+        mod.registerHandler<ChatReceive> {
             val raw = text.unformattedText
             if (currentChat != 1 && raw.startsWith("[VC]")) {
                 isCancelled = true

@@ -35,10 +35,10 @@ class StorageMenu(
     override var uuid: UUID,
     override var title: String,
     vault: String,
-    var money: String,
-    var hint: String,
-    var rows: Int,
-    var columns: Int,
+    @JvmField var money: String,
+    @JvmField var hint: String,
+    @JvmField var rows: Int,
+    @JvmField var columns: Int,
     override var storage: MutableList<StorageNode<*>>,
 ) : Storable(uuid, title, storage) {
     lateinit var arrowLeft: CarvedRectangle
@@ -61,13 +61,13 @@ class StorageMenu(
         color = WHITE
         offset = V3(itemPadding, itemPadding)
     }
-    val hoverCenter = carved {
+    @JvmField val hoverCenter = carved {
         color = Color(42, 102, 189, 1.0)
         offset = V3(1.0, 1.0)
         +hoverText
     }
 
-    val hoverContainer = carved {
+    @JvmField val hoverContainer = carved {
         color = Color(0, 0, 0, 0.38)
         enabled = false
         +hoverCenter

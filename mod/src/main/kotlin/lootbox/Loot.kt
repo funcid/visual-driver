@@ -2,4 +2,8 @@ package lootbox
 
 import dev.xdark.clientapi.item.ItemStack
 
-class Loot(val item: ItemStack, val name: String, val rarity: Rarity)
+class Loot(
+    @JvmField val item: ItemStack,
+    @JvmField val name: String,
+    @JvmField val rarity: Rarity
+)

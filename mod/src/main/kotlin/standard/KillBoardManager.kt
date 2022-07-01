@@ -2,14 +2,16 @@ package standard
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.JavaMod.*
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Relative
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 
-context(KotlinMod)
 class KillBoardManager {
 
     private var board = UIEngine.overlayContext + rectangle {
@@ -20,9 +22,9 @@ class KillBoardManager {
     }
 
     init {
-        val minecraft = UIEngine.clientApi.minecraft()
+        val minecraft = clientApi.minecraft()
 
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             val inGame = minecraft.inGameHasFocus() && board.offset.y <= 20
             if (board.enabled && !inGame)
                 board.enabled = false
@@ -30,7 +32,7 @@ class KillBoardManager {
                 board.enabled = true
         }
 
-        registerChannel("func:notice") {
+        mod.registerChannel("func:notice") {
             val text = NetUtil.readUtf8(this)
             board.offset.y = readInt().toDouble()
             val notice = KillBoard(text)

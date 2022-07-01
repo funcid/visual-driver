@@ -3,15 +3,14 @@ package battlepass
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
 
-context(KotlinMod)
 class BattlePass {
-    private val map = mutableMapOf<UUID, BattlePassGui>()
+    private val map = hashMapOf<UUID, BattlePassGui>()
 
     init {
-        registerChannel("bp:send") {
+        mod.registerChannel("bp:send") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             val price = readInt()
             val sale = readDouble()
@@ -35,7 +34,7 @@ class BattlePass {
             map[uuid] = BattlePassGui(uuid, tags.joinToString("\n"), price, sale, pages, quests, mutableListOf())
         }
 
-        registerChannel("bp:show") {
+        mod.registerChannel("bp:show") {
             val gui = map[UUID.fromString(NetUtil.readUtf8(this))]!!
             val exp = readInt()
             gui.isAdvanced = readBoolean()
@@ -50,14 +49,14 @@ class BattlePass {
             gui.open()
         }
 
-        registerChannel("bp:quests") {
+        mod.registerChannel("bp:quests") {
             map[UUID.fromString(NetUtil.readUtf8(this))]?.let {
                 it.quests = MutableList(readInt()) { NetUtil.readUtf8(this) }
                 it.update()
             }
         }
 
-        registerChannel("bp:claimed") {
+        mod.registerChannel("bp:claimed") {
             map[UUID.fromString(NetUtil.readUtf8(this))]?.let {
                 it.claimed = MutableList(readInt()) { readInt() }
             }

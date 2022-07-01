@@ -10,7 +10,7 @@ import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
 class TextedIcon(text: String, icon: ResourceLocation, textLeft: Boolean = true) : RectangleElement() {
-    val title = +text {
+    @JvmField val title = +text {
         origin = if (textLeft) LEFT else RIGHT
         align = if (textLeft) LEFT else RIGHT
         content = text

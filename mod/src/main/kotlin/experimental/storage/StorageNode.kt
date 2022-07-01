@@ -13,18 +13,18 @@ import ru.cristalix.uiengine.utility.carved
 import ru.cristalix.uiengine.utility.text
 
 abstract class StorageNode<T : AbstractElement>(
-    var price: Long = -1,
-    var title: String,
-    var description: String,
-    var hoverText: String,
+    @JvmField var price: Long = -1,
+    @JvmField var title: String,
+    @JvmField var description: String,
+    @JvmField var hoverText: String,
     open var icon: T,
-    var hint: String? = null
+    @JvmField var hint: String? = null
 ) {
 
-    var bundle: CarvedRectangle? = null
-    var titleElement: TextElement? = null
-    var descriptionElement: TextElement? = null
-    var hintElement: TextElement? = null
+    @JvmField var bundle: CarvedRectangle? = null
+    @JvmField var titleElement: TextElement? = null
+    @JvmField var descriptionElement: TextElement? = null
+    @JvmField var hintElement: TextElement? = null
 
     fun createHint(sized: V3, default: String) = carved {
         carveSize = 2.0

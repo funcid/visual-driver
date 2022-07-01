@@ -9,20 +9,21 @@ import dev.xdark.clientapi.util.EnumHand
 import dev.xdark.feder.NetUtil
 import me.func.protocol.npc.NpcBehaviour
 import me.func.protocol.npc.NpcData
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-context(KotlinMod)
 class NPC {
     init {
         // Утилита для работы с NPC
         val npcManager = NpcManager()
 
         // Чтение NPC
-        registerChannel("npc:spawn") {
+        mod.registerChannel("npc:spawn") {
             val data = NpcData(
                 readInt(),
                 UUID.fromString(NetUtil.readUtf8(this)),
@@ -46,17 +47,17 @@ class NPC {
         }
 
         // Скрыть NPC
-        registerChannel("npc:hide") {
+        mod.registerChannel("npc:hide") {
             npcManager.hide(UUID.fromString(NetUtil.readUtf8(this)))
         }
 
         // Показать NPC
-        registerChannel("npc:show") {
+        mod.registerChannel("npc:show") {
             npcManager.show(UUID.fromString(NetUtil.readUtf8(this)))
         }
 
         // Удалить NPC
-        registerChannel("npc:kill") {
+        mod.registerChannel("npc:kill") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
                 npcManager.hide(this)
                 npcManager.kill(this)
@@ -64,7 +65,7 @@ class NPC {
         }
 
         // Обновить метаданные NPC
-        registerChannel("npc:update") {
+        mod.registerChannel("npc:update") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
                 npcManager.get(this)?.let { entity ->
                     entity.entity?.let { npc ->
@@ -91,7 +92,7 @@ class NPC {
         }
 
         // Ударить рукой
-        registerChannel("npc:kick") {
+        mod.registerChannel("npc:kick") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
                 npcManager.get(this)?.let { entity ->
                     entity.entity?.swingArm(if (readBoolean()) EnumHand.MAIN_HAND else EnumHand.OFF_HAND)
@@ -100,7 +101,7 @@ class NPC {
         }
 
         // Удалить всех NPC
-        registerChannel("npc:kill-all") {
+        mod.registerChannel("npc:kill-all") {
             npcManager.each { uuid, _ ->
                 npcManager.hide(uuid)
                 npcManager.kill(uuid)
@@ -108,7 +109,7 @@ class NPC {
         }
 
         // Изменение предмета в инвентаре
-        registerChannel("npc:slot") {
+        mod.registerChannel("npc:slot") {
             npcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
                 it.entity?.let { npc ->
                     readInt().let { slot ->
@@ -127,7 +128,7 @@ class NPC {
             }
         }
 
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             val player = clientApi.minecraft().player
 
             npcManager.each { _, data ->

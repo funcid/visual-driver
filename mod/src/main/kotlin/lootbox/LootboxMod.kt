@@ -9,20 +9,21 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 
-context(KotlinMod)
 class LootboxMod {
     init {
         val crateScreen = CrateScreen()
         var ready = false
         var pressed = false
 
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             if (!ready && !crateScreen.opened)
                 return@registerHandler
 
@@ -61,9 +62,9 @@ class LootboxMod {
             }
         }
 
-        registerHandler<MousePress> { isCancelled = ready }
+        mod.registerHandler<MousePress> { isCancelled = ready }
 
-        registerHandler<PluginMessage> {
+        mod.registerHandler<PluginMessage> {
             if (channel == "lootbox") {
                 val amount = data.readInt()
 
@@ -95,7 +96,7 @@ class LootboxMod {
             }
         }
 
-        registerHandler<RenderTickPre> {
+        mod.registerHandler<RenderTickPre> {
             if (!crateScreen.opened)
                 return@registerHandler
 
@@ -115,7 +116,7 @@ class LootboxMod {
             }
         }
 
-        registerHandler<WindowResize> {
+        mod.registerHandler<WindowResize> {
             crateScreen.background.size = UIEngine.overlayContext.size
             crateScreen.vignette.size = UIEngine.overlayContext.size
         }

@@ -2,6 +2,7 @@ package standard
 
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -11,7 +12,6 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-context(KotlinMod)
 class Title {
 
     private lateinit var element: TextElement
@@ -33,7 +33,7 @@ class Title {
     init {
         UIEngine.overlayContext + message
 
-        registerChannel("func:title") {
+        mod.registerChannel("func:title") {
             element.content = NetUtil.readUtf8(this)
             message.enabled = true
             element.animate(0.3) {

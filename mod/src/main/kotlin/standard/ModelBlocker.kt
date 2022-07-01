@@ -1,7 +1,9 @@
 package standard
 
 import dev.xdark.clientapi.event.render.BlockLayerRender
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -11,7 +13,6 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.text
 
-context(KotlinMod)
 class ModelBlocker {
     private var locker: TextElement? = null
 
@@ -27,7 +28,7 @@ class ModelBlocker {
         locker!!.content = "Недоступно на\nданном режиме"
         UIEngine.overlayContext + locker!!
 
-        registerHandler<BlockLayerRender> {
+        mod.registerHandler<BlockLayerRender> {
             if (inModelMenu()) {
                 UIEngine.clientApi.minecraft().displayScreen(null)
                 locker!!.enabled = true
@@ -48,11 +49,11 @@ class ModelBlocker {
     }
 
     init {
-        registerChannel("func:break-ui") {
+        mod.registerChannel("func:break-ui") {
             if (locker == null) lazyAdd()
         }
 
-        registerChannel("func:return-ui") {
+        mod.registerChannel("func:return-ui") {
             locker = null
         }
     }

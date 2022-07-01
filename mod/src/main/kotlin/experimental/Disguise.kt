@@ -6,9 +6,9 @@ import dev.xdark.clientapi.event.lifecycle.GameTickPre
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 
-context(KotlinMod)
 class Disguise {
     private val minecraft = UIEngine.clientApi.minecraft()
 
@@ -24,13 +24,13 @@ class Disguise {
     init {
         minecraft.player.run { players.put(name, this) }
 
-        registerHandler<NameTemplateRender> {
+        mod.registerHandler<NameTemplateRender> {
             if (entity is EntityPlayer) players[(entity as EntityPlayer).name] = entity as EntityPlayer
         }
 
-        registerHandler<GameTickPre> { disguise() }
+        mod.registerHandler<GameTickPre> { disguise() }
 
-        registerChannel("anime:disguise") {
+        mod.registerChannel("anime:disguise") {
             try {
                 val world = minecraft.world
 

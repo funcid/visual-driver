@@ -8,6 +8,7 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.element.Banner
 import me.func.protocol.element.MotionType
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
@@ -20,7 +21,6 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import java.util.UUID
 
-context(KotlinMod)
 class Banners {
     private val banners = hashMapOf<UUID, Pair<Banner, Context3D>>()
     private val sizes = hashMapOf<Pair<UUID, Int>, Double>()
@@ -29,7 +29,7 @@ class Banners {
         "¨222200" + string.replace(Regex("(§[0-9a-fA-F]|¨......)"), "¨222200")
 
     init {
-        registerChannel("banner:new") {
+        mod.registerChannel("banner:new") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
@@ -95,7 +95,7 @@ class Banners {
             }
         }
 
-        registerChannel("banner:change-content") {
+        mod.registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 if (pair.second.children.isNotEmpty()) {
@@ -106,7 +106,7 @@ class Banners {
             }
         }
 
-        registerChannel("banner:size-text") {
+        mod.registerChannel("banner:size-text") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { pair ->
                 repeat(readInt()) {
@@ -127,7 +127,7 @@ class Banners {
             }
         }
 
-        registerChannel("banner:remove") {
+        mod.registerChannel("banner:remove") {
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 banners[uuid]?.let {
@@ -137,7 +137,7 @@ class Banners {
             }
         }
 
-        registerHandler<NameTemplateRender> {
+        mod.registerHandler<NameTemplateRender> {
             if (entity !is Entity)
                 return@registerHandler
             val current = entity as Entity
@@ -154,7 +154,7 @@ class Banners {
             }
         }
 
-        registerHandler<RenderTickPre> {
+        mod.registerHandler<RenderTickPre> {
             val player = UIEngine.clientApi.minecraft().player
             val timer = UIEngine.clientApi.minecraft().timer
             val yaw =

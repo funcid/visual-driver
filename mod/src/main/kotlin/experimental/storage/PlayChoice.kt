@@ -23,7 +23,7 @@ import java.util.UUID
 class PlayChoice(
     override var uuid: UUID,
     override var title: String,
-    var description: String,
+    @JvmField var description: String,
     override var storage: MutableList<StorageNode<*>>
 ) : Storable(uuid, title, storage) {
     init {

@@ -3,14 +3,16 @@ package experimental.storage
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
-context(KotlinMod)
 class Reconnect {
 
     private val offsetX = 10.0
@@ -64,7 +66,7 @@ class Reconnect {
             }
         }
 
-        registerChannel("func:reconnect") {
+        mod.registerChannel("func:reconnect") {
             secondsLeft = readInt()
             originalString = NetUtil.readUtf8(this).replace("&", "§")
             buttonText?.content = NetUtil.readUtf8(this).replace("&", "§")
@@ -74,7 +76,7 @@ class Reconnect {
         }
 
         var lastSecond = 0L
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             val now = System.currentTimeMillis()
             if (now - lastSecond > 1_000 && element != null) {
                 if (secondsLeft < 1 && container.enabled) {
