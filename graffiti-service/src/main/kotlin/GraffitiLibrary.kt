@@ -1,7 +1,7 @@
 import me.func.protocol.DropRare
 import me.func.protocol.personalization.Graffiti
 import me.func.protocol.personalization.GraffitiPack
-import java.util.*
+import java.util.UUID
 
 fun createPack(
     title: String,

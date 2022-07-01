@@ -8,8 +8,13 @@ import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.inventory.EquipmentSlot
-import org.bukkit.inventory.EquipmentSlot.*
-import java.util.*
+import org.bukkit.inventory.EquipmentSlot.CHEST
+import org.bukkit.inventory.EquipmentSlot.FEET
+import org.bukkit.inventory.EquipmentSlot.HAND
+import org.bukkit.inventory.EquipmentSlot.HEAD
+import org.bukkit.inventory.EquipmentSlot.LEGS
+import org.bukkit.inventory.EquipmentSlot.OFF_HAND
+import java.util.UUID
 import java.util.function.Consumer
 
 data class NpcSmart(

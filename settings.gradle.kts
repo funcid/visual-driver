@@ -2,6 +2,8 @@
 
 pluginManagement {
     repositories {
+        mavenCentral()
+        gradlePluginPortal()
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-public/")
             credentials {
@@ -9,20 +11,21 @@ pluginManagement {
                 password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
-        mavenCentral()
-        gradlePluginPortal()
     }
 
     includeBuild("bundler")
 
     plugins {
-        kotlin("jvm") version "1.6.21"
-        kotlin("plugin.serialization") version "1.6.21"
+        kotlin("jvm") version "1.7.0"
+        kotlin("plugin.serialization") version "1.7.0"
+        id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.10.1"
+        id("com.github.johnrengelman.shadow") version "7.1.2"
     }
 }
 
 dependencyResolutionManagement {
     repositories {
+        mavenCentral()
         maven {
             url = uri("https://repo.c7x.ru/repository/maven-public/")
             credentials {
@@ -30,7 +33,6 @@ dependencyResolutionManagement {
                 password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD")
             }
         }
-        mavenCentral()
     }
 
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)

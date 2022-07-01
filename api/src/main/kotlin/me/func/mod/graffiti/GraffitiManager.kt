@@ -2,16 +2,16 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
-import me.func.protocol.personalization.FeatureUserData
-import me.func.protocol.personalization.GraffitiPlaced
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
+import me.func.protocol.personalization.FeatureUserData
+import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import ru.cristalix.core.formatting.Formatting
 import ru.cristalix.core.network.ISocketClient
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import kotlin.math.abs
 

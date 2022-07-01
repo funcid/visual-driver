@@ -7,11 +7,11 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.JavaMod.clientApi
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.writeUtf8
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -21,7 +21,6 @@ import kotlin.math.roundToInt
 
 const val REWARDS_COUNT = 10
 
-context(KotlinMod)
 class BattlePassGui(
     var uuid: UUID,
     private val buyBlockText: String,
@@ -31,12 +30,12 @@ class BattlePassGui(
     var quests: List<String> = listOf(),
     var claimed: MutableList<Int>
 ) : ContextGui() {
-    var isAdvanced: Boolean = false
-    var level: Int = 1
-    var exp: Int = 0
-    var requiredExp: Int = 1
-    var skipPrice: Int = 0
-    var lock = false
+    @JvmField var isAdvanced: Boolean = false
+    @JvmField var level: Int = 1
+    @JvmField var exp: Int = 0
+    @JvmField var requiredExp: Int = 1
+    @JvmField var skipPrice: Int = 0
+    @JvmField var lock = false
 
     private val guiSize = BattlePassGuiSize()
 
@@ -50,8 +49,8 @@ class BattlePassGui(
 
         update()
 
-        registerHandler<ScaleChange> { update() }
-        registerHandler<WindowResize> { update() }
+        mod.registerHandler<ScaleChange> { update() }
+        mod.registerHandler<WindowResize> { update() }
 
         afterRender {
             val hoveredItem = hoveredReward ?: return@afterRender
@@ -59,7 +58,7 @@ class BattlePassGui(
                 val wholeDescription = hoveredItem.displayName
                 screen.drawHoveringText(
                     wholeDescription, Mouse.getX() / scaleFactor,
-                    (scaledHeight_double * scaleFactor / scaleFactor - Mouse.getY() / scaleFactor).toInt()
+                    (clientApi.resolution().scaledHeight_double * scaleFactor / scaleFactor - Mouse.getY() / scaleFactor).toInt()
                 )
             }
         }

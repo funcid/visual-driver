@@ -7,11 +7,12 @@ plugins {
     `java-library`
     `maven-publish`
     kotlin("jvm") apply false
+    id("org.jetbrains.kotlinx.binary-compatibility-validator")
 }
 
 allprojects {
     group = "me.func.animation-api"
-    version = "0.0.26-SNAPSHOT"
+    version = "0.0.27"
 }
 
 subprojects {
@@ -30,10 +31,8 @@ subprojects {
     }
 
     tasks {
-        withType<Jar>().configureEach {
-            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        }
         withType<JavaCompile>().configureEach { options.encoding = "UTF-8" }
+        withType<Jar>().configureEach { duplicatesStrategy = DuplicatesStrategy.EXCLUDE }
         withType<KotlinCompile>().configureEach {
             kotlinOptions {
                 jvmTarget = "1.8"
@@ -43,11 +42,9 @@ subprojects {
                     "-Xno-receiver-assertions",
                     "-Xno-call-assertions",
                     "-Xbackend-threads=0",
-                    "-Xuse-ir",
                     "-Xassertions=always-disable",
                     "-Xuse-fast-jar-file-system",
-                    "-Xsam-conversions=indy",
-                    "-Xskip-prerelease-check" // IDEA Bug fix
+                    "-Xsam-conversions=indy"
                 )
             }
         }
@@ -70,4 +67,8 @@ subprojects {
             }
         }
     }
+}
+
+apiValidation {
+    ignoredProjects.addAll(listOf("mod", "graffiti", "graffiti-service"))
 }

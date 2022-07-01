@@ -1,14 +1,13 @@
 package battlepass
 
 import dev.xdark.clientapi.item.ItemStack
-import kotlin.math.abs
 
 class BattlePage(
-    val items: List<ItemStack?> = listOf(),
-    val advancedItems: List<ItemStack?> = listOf(),
-    var exp: Int,
-    val requiredExp: Int,
-    val skipPrice: Int
+    @JvmField val items: List<ItemStack?> = listOf(),
+    @JvmField val advancedItems: List<ItemStack?> = listOf(),
+    @JvmField var exp: Int,
+    @JvmField val requiredExp: Int,
+    @JvmField val skipPrice: Int
 )
 
 fun getPage(pages: List<BattlePage>, expCurrent: Int): Pair<BattlePage?, Int> {

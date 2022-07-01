@@ -13,8 +13,16 @@ import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.selection.MenuManager
 import me.func.mod.selection.queue.QueueViewer
-import me.func.mod.util.*
-import me.func.protocol.*
+import me.func.mod.util.dir
+import me.func.mod.util.fileLastName
+import me.func.mod.util.listener
+import me.func.mod.util.log
+import me.func.mod.util.warn
+import me.func.protocol.EndStatus
+import me.func.protocol.Indicators
+import me.func.protocol.Marker
+import me.func.protocol.ModChat
+import me.func.protocol.RGB
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
@@ -24,7 +32,7 @@ import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import java.awt.Color
-import java.util.*
+import java.util.UUID
 import java.util.function.BiConsumer
 
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"

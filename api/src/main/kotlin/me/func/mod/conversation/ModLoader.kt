@@ -15,11 +15,15 @@ import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Player
 import ru.cristalix.core.display.DisplayChannels.MOD_CHANNEL
 import ru.cristalix.core.util.UtilNetty
-import sun.audio.AudioPlayer.player
 import java.io.File
 import java.io.FileInputStream
 import java.net.URL
-import java.nio.file.*
+import java.nio.file.FileVisitResult
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.SimpleFileVisitor
+import java.nio.file.StandardCopyOption
 import java.nio.file.attribute.BasicFileAttributes
 import kotlin.io.path.absolutePathString
 

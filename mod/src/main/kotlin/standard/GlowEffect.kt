@@ -1,21 +1,17 @@
 package standard
 
-import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import org.lwjgl.opengl.GL11
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.rectangle
 
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.registerHandler
-import sun.security.jgss.GSSToken.readInt
-
-context(KotlinMod)
 class GlowEffect {
-
     private var added = false
     private val vignette = rectangle {
         size = UIEngine.overlayContext.size
@@ -34,11 +30,11 @@ class GlowEffect {
     }
 
     init {
-        registerChannel("func:glow-short") {
+        mod.registerChannel("func:glow-short") {
             show(readDouble(), readInt(), readInt(), readInt(), readDouble())
         }
 
-        registerChannel("func:glow") {
+        mod.registerChannel("func:glow") {
             showAlways(readInt(), readInt(), readInt(), readDouble())
         }
     }

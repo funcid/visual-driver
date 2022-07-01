@@ -1,6 +1,6 @@
 package me.func.protocol.gui
 
-import java.util.*
+import java.util.UUID
 
 class Storage(
     var uuid: UUID,

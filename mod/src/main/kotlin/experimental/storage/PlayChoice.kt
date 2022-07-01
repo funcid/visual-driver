@@ -1,19 +1,29 @@
 package experimental.storage
 
+import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
-import menuStack
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
-import ru.cristalix.uiengine.utility.*
-import java.util.*
+import ru.cristalix.uiengine.utility.BOTTOM
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.TOP
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.carved
+import ru.cristalix.uiengine.utility.flex
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
+import java.util.UUID
 
 class PlayChoice(
     override var uuid: UUID,
     override var title: String,
-    var description: String,
+    @JvmField var description: String,
     override var storage: MutableList<StorageNode<*>>
 ) : Storable(uuid, title, storage) {
     init {

@@ -3,6 +3,8 @@ package standard
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.BOTTOM
@@ -11,9 +13,6 @@ import ru.cristalix.uiengine.utility.TOP
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.text
 
-import ru.cristalix.clientapi.KotlinMod
-
-context(KotlinMod)
 class ItemTitle {
     init {
         val title = text {
@@ -39,7 +38,7 @@ class ItemTitle {
 
         UIEngine.overlayContext.addChild(title, subtitle)
 
-        registerChannel("func:drop-item") {
+        mod.registerChannel("func:drop-item") {
             UIEngine.clientApi.overlayRenderer().displayItemActivation(ItemTools.read(this))
             title.content = NetUtil.readUtf8(this)
             subtitle.content = NetUtil.readUtf8(this)

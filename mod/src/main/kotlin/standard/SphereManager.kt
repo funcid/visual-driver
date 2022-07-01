@@ -1,6 +1,7 @@
 package standard
 
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.eventloop.animate
@@ -9,14 +10,12 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.sphere
 import java.util.UUID
 
-context(KotlinMod)
 class SphereManager {
-
     private val contents: MutableMap<UUID, Context3D> = hashMapOf()
     private val lock = ClientApiAllowedLock()
 
     init {
-        registerChannel("fiwka:sphere") {
+        mod.registerChannel("fiwka:sphere") {
             when (readInt()) {
                 0 -> {
                     drawSphere(
@@ -66,11 +65,9 @@ class SphereManager {
         }
     }
 
-    context(ru.cristalix.clientapi.JavaMod)
     fun drawSphere(uuid: UUID, x: Double, y: Double, z: Double, color: Color, radius: Double) =
         drawSphere(uuid, x, y, z, color, radius, radius, radius)
 
-    context(ru.cristalix.clientapi.JavaMod)
     fun drawSphere(uuid: UUID, x: Double, y: Double, z: Double, color: Color, sX: Double, sY: Double, sZ: Double) {
         lock.lock()
 

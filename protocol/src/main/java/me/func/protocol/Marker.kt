@@ -1,6 +1,6 @@
 package me.func.protocol
 
-import java.util.*
+import java.util.UUID
 
 class Marker(
     val uuid: UUID = UUID.randomUUID(),

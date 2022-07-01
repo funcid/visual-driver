@@ -1,19 +1,19 @@
 package standard
 
-import ru.cristalix.clientapi.KotlinMod
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import sun.security.jgss.GSSToken.readInt
 
-context(KotlinMod)
 class ExternalManager {
     private val textures = arrayListOf<ResourceLocation>()
 
     init {
-        registerChannel("func:load-paths") {
+        mod.registerChannel("func:load-paths") {
             val count = readInt()
             val paths = arrayListOf<String>()
 
@@ -24,11 +24,11 @@ class ExternalManager {
             loadPaths(*paths.toTypedArray())
         }
 
-        registerChannel("func:load-path") {
+        mod.registerChannel("func:load-path") {
             loadPaths(NetUtil.readUtf8(this))
         }
 
-        onDisable.add {
+        mod.onDisable.add {
             val renderEngine = UIEngine.clientApi.renderEngine()
             textures.forEach { renderEngine.deleteTexture(it) }
         }

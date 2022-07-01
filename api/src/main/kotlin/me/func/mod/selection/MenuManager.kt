@@ -4,15 +4,14 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.selection.queue.QueueView
 import me.func.mod.util.warn
-import me.func.protocol.Tricolor
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
-import java.util.*
+import java.util.Stack
+import java.util.UUID
 
 inline fun selection(setup: Selection.() -> Unit) = Selection().also(setup)
 

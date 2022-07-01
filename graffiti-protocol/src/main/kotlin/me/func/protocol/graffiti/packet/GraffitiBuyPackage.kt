@@ -1,7 +1,7 @@
 package me.func.protocol.graffiti.packet
 
 import ru.cristalix.core.network.CorePackage
-import java.util.*
+import java.util.UUID
 
 data class GraffitiBuyPackage(
     val playerUUID: UUID, // request

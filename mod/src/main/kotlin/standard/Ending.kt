@@ -1,21 +1,19 @@
 package standard
 
+import Main.Companion.externalManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil.readUtf8
-import externalManager
 import me.func.protocol.EndStatus
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.eventloop.thenAnimate
 import ru.cristalix.uiengine.eventloop.thenWait
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.utility.*
-import sun.security.jgss.GSSToken.readInt
 
-context(KotlinMod)
 class Ending {
     private lateinit var text: TextElement
     private lateinit var cup: RectangleElement
@@ -74,7 +72,7 @@ class Ending {
                 }
             }
         }
-        registerChannel("crazy:ending") {
+        mod.registerChannel("crazy:ending") {
             val endStatus = EndStatus.values()[readInt()]
             key.content = readUtf8(this)
             value.content = readUtf8(this)

@@ -5,8 +5,10 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
+import ru.cristalix.clientapi.JavaMod.clientApi
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -18,9 +20,6 @@ import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-import ru.cristalix.clientapi.KotlinMod
-
-context(KotlinMod)
 class RewardManager {
     lateinit var hintText: TextElement
     private var currentDay = 0
@@ -38,7 +37,7 @@ class RewardManager {
         val gui = ContextGui()
         gui + box
 
-        registerChannel("func:weekly-reward") {
+        mod.registerChannel("func:weekly-reward") {
             currentDay = readInt()
 
             val topText = text {
@@ -126,7 +125,7 @@ class RewardManager {
             gui.open()
         }
 
-        registerHandler<RenderTickPre> {
+        mod.registerHandler<RenderTickPre> {
             hint.offset.x = (Mouse.getX() / clientApi.resolution().scaleFactor).toDouble()
             hint.offset.y = ((Display.getHeight() - Mouse.getY()) / clientApi.resolution().scaleFactor).toDouble()
         }

@@ -15,15 +15,15 @@ import me.func.protocol.Mod
 import npc.NPC
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.element.ContextGui
 import standard.ExternalManager
 import standard.Standard
-import java.util.*
-
-lateinit var externalManager: ExternalManager
-var menuStack: Stack<Storable> = Stack()
+import java.util.Stack
 
 class Main : KotlinMod() {
+    companion object {
+        lateinit var externalManager: ExternalManager
+        var menuStack: Stack<Storable> = Stack()
+    }
 
     override fun onEnable() {
         UIEngine.initialize(this)

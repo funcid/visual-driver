@@ -5,7 +5,7 @@ import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.battlepass.BattlePassUserData
 import org.bukkit.entity.Player
-import java.util.*
+import java.util.UUID
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 

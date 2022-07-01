@@ -1,12 +1,12 @@
 package standard
 
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.BOTTOM
 import ru.cristalix.uiengine.utility.text
-import ru.cristalix.clientapi.KotlinMod
 
-context(KotlinMod)
 class BigAlert {
     private val title = text {
         origin = BOTTOM
@@ -21,7 +21,7 @@ class BigAlert {
     init {
         UIEngine.overlayContext.addChild(title)
 
-        registerChannel("ilisov:bigtitle") {
+        mod.registerChannel("ilisov:bigtitle") {
             title.content = NetUtil.readUtf8(this)
             title.enabled = true
 

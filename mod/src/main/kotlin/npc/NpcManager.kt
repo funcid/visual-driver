@@ -7,13 +7,11 @@ import dev.xdark.clientapi.entity.PlayerModelPart
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import me.func.protocol.npc.NpcData
-import org.apache.commons.codec.digest.DigestUtils
-import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.JavaMod.clientApi
+import java.security.MessageDigest
 import java.util.UUID
 
-context(KotlinMod)
 class NpcManager {
-
     private val storage = mutableMapOf<UUID, NpcEntity>()
     private val wearing = arrayOf(
         PlayerModelPart.CAPE,
@@ -25,6 +23,25 @@ class NpcManager {
         PlayerModelPart.RIGHT_SLEEVE
     )
 
+    private val digitsLower =
+        charArrayOf('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f')
+
+    private fun sha1Hex(input: String): String {
+        val data = MessageDigest.getInstance("SHA-1").digest(input.toByteArray(Charsets.UTF_8))
+
+        val l = data.size
+        val out = CharArray(l shl 1)
+        // two characters form the hex value.
+        var i = 0
+        var j = 0
+        while (i < 0 + data.size) {
+            out[j++] = digitsLower[0xF0 and data[i].toInt() ushr 4]
+            out[j++] = digitsLower[0x0F and data[i].toInt()]
+            i++
+        }
+        return String(out)
+    }
+
     fun spawn(data: NpcData): NpcEntity {
         val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
             entityId = data.id
@@ -32,7 +49,13 @@ class NpcManager {
         val info = clientApi.clientConnection().newPlayerInfo(
             GameProfile(data.uuid, data.name).apply {
                 properties.put("skinURL", Property("skinURL", data.skinUrl))
-                properties.put("skinDigest", Property("skinDigest", (if (data.skinDigest == null) DigestUtils.sha1Hex(data.skinUrl) else data.skinDigest)))
+                properties.put(
+                    "skinDigest",
+                    Property(
+                        "skinDigest",
+                        (if (data.skinDigest == null) data.skinUrl?.let { sha1Hex(it) } ?: "null" else data.skinDigest)
+                    )
+                )
             }.apply { spawned.gameProfile = this }
         ).apply { responseTime = -2 }
 

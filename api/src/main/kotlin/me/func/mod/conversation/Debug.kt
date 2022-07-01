@@ -1,7 +1,11 @@
 package me.func.mod.conversation
 
-import me.func.mod.*
+import me.func.mod.Anime
+import me.func.mod.MOD_LOCAL_DIR_NAME
+import me.func.mod.MOD_LOCAL_TEST_DIR_NAME
+import me.func.mod.STANDARD_MOD_URL
 import me.func.mod.StandardMods
+import me.func.mod.VERSION
 import me.func.mod.util.consoleCommand
 import me.func.mod.util.fileLastName
 import me.func.mod.util.listFiles

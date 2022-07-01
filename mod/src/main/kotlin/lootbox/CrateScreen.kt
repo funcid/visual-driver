@@ -26,13 +26,13 @@ import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
 class CrateScreen {
-    var opened = false
+    @JvmField var opened = false
 
-    val rotationIntensity = rectangle {
+    @JvmField val rotationIntensity = rectangle {
         color.alpha = 0.6
     }
 
-    val background = rectangle {
+    @JvmField val background = rectangle {
         size = UIEngine.overlayContext.size
         color = Color(0, 0, 0, 0.86)
         enabled = false
@@ -49,7 +49,7 @@ class CrateScreen {
         color.alpha = 0.0
     }
 
-    val vignette = rectangle {
+    @JvmField val vignette = rectangle {
         size = UIEngine.overlayContext.size
 
         color = PURPLE
@@ -67,7 +67,7 @@ class CrateScreen {
         }
     }
 
-    val glowRect = rectangle {
+    @JvmField val glowRect = rectangle {
         rotation.y = 1.0
         rotation.z = 0.0
 
@@ -170,7 +170,7 @@ class CrateScreen {
         })
     }
 
-    val chest = cube {
+    @JvmField val chest = cube {
         align = V3(0.5, 0.5, 0.5)
 
         rotation = Rotation(0.0, 1.0, 0.0, 0.0)
@@ -208,14 +208,14 @@ class CrateScreen {
         }
     }
 
-    val body1 = rectangle {
+    @JvmField val body1 = rectangle {
         rotation = Rotation(y = 1.0, z = 0.0)
         addChild(wrapper)
         addChild(glowRect)
         addChild(itemRect)
     }
 
-    val body2 = rectangle {
+    @JvmField val body2 = rectangle {
         rotation = Rotation(x = 1.0, z = 0.0)
         align = CENTER
         addChild(body1)

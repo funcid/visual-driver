@@ -1,6 +1,6 @@
 package experimental.storage
 
-import externalManager
+import Main.Companion.externalManager
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle

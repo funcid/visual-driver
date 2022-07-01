@@ -5,11 +5,10 @@ import me.func.mod.data.Sprites
 import me.func.mod.selection.MenuManager.reactive
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
-import me.func.protocol.gui.StoragePosition
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.*
+import java.util.Collections
 
 fun interface ButtonClickHandler {
     fun handle(player: Player, index: Int, button: Button)

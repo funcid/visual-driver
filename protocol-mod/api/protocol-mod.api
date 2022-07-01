@@ -1,0 +1,104 @@
+public final class me/func/protocol/personalization/FeatureUserData : me/func/protocol/Unique {
+	public fun <init> (Ljava/util/UUID;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;)V
+	public final fun getActivePack ()I
+	public final fun getActiveSticker ()Ljava/util/UUID;
+	public final fun getPacks ()Ljava/util/List;
+	public final fun getStickers ()Ljava/util/List;
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun setActivePack (I)V
+	public final fun setActiveSticker (Ljava/util/UUID;)V
+	public final fun setPacks (Ljava/util/List;)V
+	public final fun setStickers (Ljava/util/List;)V
+	public fun setUuid (Ljava/util/UUID;)V
+}
+
+public final class me/func/protocol/personalization/Graffiti : java/lang/Cloneable, me/func/protocol/Unique {
+	public fun <init> (Ljava/lang/String;IIILjava/lang/String;II)V
+	public synthetic fun <init> (Ljava/lang/String;IIILjava/lang/String;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;)V
+	public synthetic fun <init> (Lme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun clone ()Ljava/lang/Object;
+	public fun clone ()Lme/func/protocol/personalization/Graffiti;
+	public final fun getAddress ()Lme/func/protocol/personalization/GraffitiInfo;
+	public final fun getAuthor ()Ljava/lang/String;
+	public final fun getUses ()I
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun setAddress (Lme/func/protocol/personalization/GraffitiInfo;)V
+	public final fun setAuthor (Ljava/lang/String;)V
+	public final fun setUses (I)V
+	public fun setUuid (Ljava/util/UUID;)V
+}
+
+public final class me/func/protocol/personalization/GraffitiInfo : me/func/protocol/Unique {
+	public fun <init> (Ljava/lang/String;IIII)V
+	public fun <init> (Ljava/util/UUID;IIII)V
+	public final fun getMaxUses ()I
+	public final fun getSize ()I
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun getX ()I
+	public final fun getY ()I
+	public final fun setMaxUses (I)V
+	public final fun setSize (I)V
+	public fun setUuid (Ljava/util/UUID;)V
+	public final fun setX (I)V
+	public final fun setY (I)V
+}
+
+public final class me/func/protocol/personalization/GraffitiPack : java/lang/Cloneable, me/func/protocol/Unique {
+	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;IIZ)V
+	public synthetic fun clone ()Ljava/lang/Object;
+	public fun clone ()Lme/func/protocol/personalization/GraffitiPack;
+	public final fun getAvailable ()Z
+	public final fun getCreator ()Ljava/lang/String;
+	public final fun getGraffiti ()Ljava/util/List;
+	public final fun getPrice ()I
+	public final fun getRare ()I
+	public final fun getTitle ()Ljava/lang/String;
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun setAvailable (Z)V
+	public final fun setCreator (Ljava/lang/String;)V
+	public final fun setGraffiti (Ljava/util/List;)V
+	public final fun setPrice (I)V
+	public final fun setRare (I)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public fun setUuid (Ljava/util/UUID;)V
+}
+
+public final class me/func/protocol/personalization/GraffitiPlaced {
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDZZ)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getGraffiti ()Lme/func/protocol/personalization/Graffiti;
+	public final fun getLocal ()Z
+	public final fun getOnGround ()Z
+	public final fun getOwner ()Ljava/util/UUID;
+	public final fun getRotationAngle ()D
+	public final fun getRotationAxisX ()D
+	public final fun getRotationAxisY ()D
+	public final fun getRotationAxisZ ()D
+	public final fun getTicksLeft ()I
+	public final fun getWorld ()Ljava/lang/String;
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getZ ()D
+	public final fun setGraffiti (Lme/func/protocol/personalization/Graffiti;)V
+	public final fun setLocal (Z)V
+	public final fun setOnGround (Z)V
+	public final fun setOwner (Ljava/util/UUID;)V
+	public final fun setRotationAngle (D)V
+	public final fun setRotationAxisX (D)V
+	public final fun setRotationAxisY (D)V
+	public final fun setRotationAxisZ (D)V
+	public final fun setTicksLeft (I)V
+	public final fun setX (D)V
+	public final fun setY (D)V
+	public final fun setZ (D)V
+}
+
+public final class me/func/protocol/personalization/Sticker : me/func/protocol/Unique {
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/DropRare;J)V
+	public final fun getName ()Ljava/lang/String;
+	public final fun getOpenTime ()J
+	public final fun getRare ()Lme/func/protocol/DropRare;
+	public fun getUuid ()Ljava/util/UUID;
+}
+

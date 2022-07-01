@@ -1,23 +1,19 @@
 package experimental
 
+import Main.Companion.menuStack
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.storage.*
 import io.netty.buffer.ByteBuf
-import menuStack
 import org.lwjgl.input.Mouse
-import ru.cristalix.clientapi.KotlinMod
 import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
-context(KotlinMod)
 class Experimental {
-
     init {
         Banners()
         GlowPlaces()
@@ -26,12 +22,12 @@ class Experimental {
         Reconnect()
         QueueStatus()
 
-        registerChannel("func:accept") {
+        mod.registerChannel("func:accept") {
             menuStack.clear()
             Confirmation(UUID.fromString(NetUtil.readUtf8(this)), NetUtil.readUtf8(this)).open()
         }
 
-        registerChannel("button:update") {
+        mod.registerChannel("button:update") {
             val last = if (menuStack.size < 1) return@registerChannel else menuStack.peek()
             val index = readInt()
             if (index < 0 || index >= last.storage.size) return@registerChannel
@@ -89,7 +85,7 @@ class Experimental {
             gui.open()
         }
 
-        registerChannel("storage:choice") {
+        mod.registerChannel("storage:choice") {
             push(
                 PlayChoice(
                     UUID.fromString(NetUtil.readUtf8(this)),
@@ -100,7 +96,7 @@ class Experimental {
             )
         }
 
-        registerChannel("storage:open") {
+        mod.registerChannel("storage:open") {
             push(
                 StorageMenu(
                     UUID.fromString(NetUtil.readUtf8(this)),
@@ -115,7 +111,7 @@ class Experimental {
             )
         }
 
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             if (menuStack.isEmpty()) return@registerHandler
             val peek = menuStack.peek()
             if (peek !is StorageMenu) return@registerHandler

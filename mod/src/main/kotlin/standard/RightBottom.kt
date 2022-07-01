@@ -1,13 +1,12 @@
 package standard
 
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.BOTTOM_RIGHT
 import ru.cristalix.uiengine.utility.text
 
-import ru.cristalix.clientapi.KotlinMod
-
-context(KotlinMod)
 class RightBottom {
     private val right = text {
         origin = BOTTOM_RIGHT
@@ -20,7 +19,7 @@ class RightBottom {
     init {
         UIEngine.overlayContext + right
 
-        registerChannel("func:bottom") {
+        mod.registerChannel("func:bottom") {
             right.content = NetUtil.readUtf8(this)
         }
     }

@@ -4,7 +4,7 @@ import me.func.mod.conversation.ModTransfer
 import me.func.mod.selection.Openable
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
-import java.util.*
+import java.util.UUID
 import java.util.function.Consumer
 
 class QueueView(

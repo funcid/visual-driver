@@ -8,7 +8,6 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             artifactId = "animation-api-graffiti-protocol"
-            version = project.version.toString()
 
             from(components["java"])
         }

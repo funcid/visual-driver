@@ -7,7 +7,7 @@ import me.func.protocol.alert.NotificationButton
 import me.func.protocol.alert.NotificationData
 import org.bukkit.entity.Player
 import java.nio.charset.StandardCharsets
-import java.util.*
+import java.util.UUID
 
 object Alert {
 

@@ -2,6 +2,8 @@ package standard
 
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -13,20 +15,17 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-import ru.cristalix.clientapi.KotlinMod
-
-context(KotlinMod)
 class ScreenAlert {
 
     private var topmessage: RectangleElement? = null
 
     init {
-        registerHandler<WindowResize> {
+        mod.registerHandler<WindowResize> {
             topmessage?.size = UIEngine.overlayContext.size
             (topmessage?.children?.get(0) as RectangleElement?)?.size = V3(UIEngine.overlayContext.size.x, 0.0)
         }
 
-        registerChannel("func:top-alert") {
+        mod.registerChannel("func:top-alert") {
             val resolution = UIEngine.clientApi.resolution()
 
             if (topmessage == null) {

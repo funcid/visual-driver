@@ -11,7 +11,10 @@ import java.nio.file.StandardOpenOption
 import java.util.concurrent.CompletableFuture
 import javax.imageio.ImageIO
 
-class RemoteTexture(val location: ResourceLocation, val sha1: String)
+class RemoteTexture(
+    @JvmField val location: ResourceLocation,
+    @JvmField val sha1: String,
+)
 
 private val cacheDir = Paths.get("$NAMESPACE/")
 
@@ -47,5 +50,6 @@ fun loadTextures(urlString: String, vararg info: RemoteTexture): CompletableFutu
             }
         }
     }
+
 fun load(path: String, hash: String): RemoteTexture =
     RemoteTexture(ResourceLocation.of(NAMESPACE, path), hash)

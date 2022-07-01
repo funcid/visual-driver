@@ -1,5 +1,4 @@
 -dontnote
--dontwarn org.apache.commons.codec.**
 
 -target 1.8
 #-keepattributes *Annotation*
@@ -9,7 +8,6 @@
 -allowaccessmodification
 -optimizationpasses 10
 -overloadaggressively
--dontobfuscate
 
 -assumenosideeffects class kotlin.jvm.internal.Intrinsics {
     <methods>;

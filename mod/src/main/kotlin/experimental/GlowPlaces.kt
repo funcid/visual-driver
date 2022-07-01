@@ -7,21 +7,19 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.GlowingPlace
 import me.func.protocol.Tricolor
 import org.lwjgl.opengl.GL11
-import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.clientapi.JavaMod.clientApi
+import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.registerHandler
-import ru.cristalix.uiengine.UIEngine.clientApi
-import sun.security.jgss.GSSToken.readInt
 
-context(KotlinMod)
 class GlowPlaces {
     private val places = arrayListOf<GlowingPlace>()
 
     init {
-        registerChannel("func:place") {
+        mod.registerChannel("func:place") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             places.add(
                 GlowingPlace(
@@ -36,18 +34,18 @@ class GlowPlaces {
             )
         }
 
-        registerChannel("func:place-clear") {
+        mod.registerChannel("func:place-clear") {
             places.clear()
         }
 
-        registerChannel("func:place-kill") {
+        mod.registerChannel("func:place-kill") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             places.filter { it.uuid == uuid }.forEach { places.remove(it) }
         }
 
         val mc = clientApi.minecraft()
 
-        registerHandler<RenderPass> {
+        mod.registerHandler<RenderPass> {
             if (places.isEmpty())
                 return@registerHandler
 

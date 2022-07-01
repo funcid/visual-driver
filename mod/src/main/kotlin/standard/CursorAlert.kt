@@ -3,6 +3,7 @@ package standard
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -13,14 +14,13 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-context(KotlinMod)
 class CursorAlert {
     private var hints = ArrayList<Pair<Long, AbstractElement>>()
 
     init {
         val timeLife = 3 * 1000
 
-        registerChannel("func:cursor") {
+        mod.registerChannel("func:cursor") {
             val hint = rectangle {
                 offset = Relative.CENTER
                 align = Relative.CENTER
@@ -42,7 +42,7 @@ class CursorAlert {
             hints.add(Pair(System.currentTimeMillis(), hint))
         }
 
-        registerHandler<GameLoop> {
+        mod.registerHandler<GameLoop> {
             if (hints.isEmpty())
                 return@registerHandler
 

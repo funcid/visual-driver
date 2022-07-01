@@ -1,6 +1,5 @@
 package me.func.mod
 
-import com.mojang.brigadier.arguments.UuidArgumentType.uuid
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
 import me.func.protocol.Dimension
@@ -10,7 +9,7 @@ import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.lang.StrictMath.pow
-import java.util.*
+import java.util.UUID
 import kotlin.math.sqrt
 
 object Banners {
