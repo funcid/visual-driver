@@ -7,7 +7,6 @@ dependencies {
     implementation 'ru.cristalix:client-sdk:9.0-SNAPSHOT'
     implementation 'ru.cristalix:uiengine:9.0-SNAPSHOT'
     implementation 'implario:humanize:1.1.3'
-    implementation 'commons-codec:commons-codec:1.15'
     implementation project(':protocol')
 }
 

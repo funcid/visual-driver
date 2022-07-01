@@ -1,6 +1,6 @@
 -dontnote
--dontwarn org.apache.commons.codec.**
 -dontwarn
+
 -target 1.8
 #-keepattributes *Annotation*
 -mergeinterfacesaggressively
