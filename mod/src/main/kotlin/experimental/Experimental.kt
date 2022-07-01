@@ -8,11 +8,9 @@ import experimental.storage.*
 import io.netty.buffer.ByteBuf
 import menuStack
 import org.lwjgl.input.Mouse
-import ru.cristalix.clientapi.KotlinMod
 import org.lwjgl.opengl.Display
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import sun.security.jgss.GSSToken.readInt
 import java.util.*
 
 context(KotlinMod)

@@ -2,6 +2,7 @@ package standard
 
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -12,8 +13,6 @@ import ru.cristalix.uiengine.utility.Relative
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
-
-import ru.cristalix.clientapi.KotlinMod
 
 context(KotlinMod)
 class ScreenAlert {

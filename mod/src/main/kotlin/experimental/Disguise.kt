@@ -5,8 +5,8 @@ import dev.xdark.clientapi.entity.EntityPlayer
 import dev.xdark.clientapi.event.lifecycle.GameTickPre
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.feder.NetUtil
-import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.clientapi.KotlinMod
+import ru.cristalix.uiengine.UIEngine
 
 context(KotlinMod)
 class Disguise {

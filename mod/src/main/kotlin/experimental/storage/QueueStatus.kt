@@ -1,19 +1,15 @@
 package experimental.storage
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
-import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.KotlinMod
 import externalManager
 import io.netty.buffer.Unpooled
-import ru.cristalix.clientapi.registerHandler
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
-import sun.security.jgss.GSSToken.readInt
 
 private const val margin = 3
 private const val width = 140.0

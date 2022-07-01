@@ -1,7 +1,7 @@
 package me.func.protocol.personalization
 
 import me.func.protocol.Unique
-import java.util.*
+import java.util.UUID
 
 class GraffitiPack(
     override var uuid: UUID,

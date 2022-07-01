@@ -7,14 +7,10 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.GlowingPlace
 import me.func.protocol.Tricolor
 import org.lwjgl.opengl.GL11
-import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.clientapi.KotlinMod
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.registerHandler
-import ru.cristalix.uiengine.UIEngine.clientApi
-import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class GlowPlaces {

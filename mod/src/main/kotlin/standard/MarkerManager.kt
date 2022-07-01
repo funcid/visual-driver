@@ -3,8 +3,8 @@ package standard
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Relative
@@ -12,12 +12,7 @@ import ru.cristalix.uiengine.utility.Rotation
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
-import kotlin.collections.HashMap
-import kotlin.collections.MutableMap
-import kotlin.collections.forEach
 import kotlin.collections.set
-
-import ru.cristalix.clientapi.KotlinMod
 
 context(KotlinMod)
 class MarkerManager {

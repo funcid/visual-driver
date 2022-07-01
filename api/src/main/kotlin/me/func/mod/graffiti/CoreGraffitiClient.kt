@@ -7,7 +7,7 @@ import me.func.protocol.personalization.FeatureUserData
 import me.func.protocol.personalization.packet.StickersAvailablePackage
 import ru.cristalix.core.network.Capability
 import ru.cristalix.core.network.ISocketClient
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
 class CoreGraffitiClient : GraffitiClient {

@@ -1,7 +1,6 @@
 package standard
 
 import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.uiengine.UIEngine
 
 const val NAMESPACE = "cache/animation"
 

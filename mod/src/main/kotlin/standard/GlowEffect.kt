@@ -1,17 +1,13 @@
 package standard
 
-import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import org.lwjgl.opengl.GL11
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.rectangle
-
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.registerHandler
-import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class GlowEffect {

@@ -10,7 +10,6 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.npc.NpcBehaviour
 import me.func.protocol.npc.NpcData
 import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.uiengine.UIEngine
 import java.util.UUID
 import kotlin.math.atan
 import kotlin.math.atan2

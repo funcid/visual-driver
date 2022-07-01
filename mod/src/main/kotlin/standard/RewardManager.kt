@@ -5,8 +5,8 @@ import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
@@ -17,8 +17,6 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
-
-import ru.cristalix.clientapi.KotlinMod
 
 context(KotlinMod)
 class RewardManager {

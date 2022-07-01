@@ -1,9 +1,8 @@
 package me.func.mod.battlepass
 
 import me.func.protocol.battlepass.BattlePassFacade
-import me.func.protocol.battlepass.BattlePassPage
 import org.bukkit.entity.Player
-import java.util.*
+import java.util.UUID
 import java.util.function.BiConsumer
 import java.util.function.Consumer
 import java.util.function.Function

@@ -1,6 +1,6 @@
 package me.func.protocol.npc
 
-import java.util.*
+import java.util.UUID
 
 class NpcData(
     var id: Int = (Math.random() * Int.MAX_VALUE).toInt(),

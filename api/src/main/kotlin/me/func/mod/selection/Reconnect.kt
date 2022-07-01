@@ -2,7 +2,7 @@ package me.func.mod.selection
 
 import me.func.mod.conversation.ModTransfer
 import org.bukkit.entity.Player
-import java.util.*
+import java.util.UUID
 import java.util.function.Consumer
 
 class Reconnect(var text: String, var secondsLeft: Int, var hint: String, var onClick: Consumer<Player>) :

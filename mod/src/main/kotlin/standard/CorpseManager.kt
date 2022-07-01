@@ -7,9 +7,9 @@ import dev.xdark.clientapi.entity.EntityProvider
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.feder.NetUtil
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import java.util.UUID
-import ru.cristalix.clientapi.KotlinMod
 
 context(KotlinMod)
 class CorpseManager {

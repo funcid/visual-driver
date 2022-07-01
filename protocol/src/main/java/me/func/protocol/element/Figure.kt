@@ -1,6 +1,6 @@
 package me.func.protocol.element
 
-import java.util.*
+import java.util.UUID
 
 class Figure(
     val uuid: UUID = UUID.randomUUID(),

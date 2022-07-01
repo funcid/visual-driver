@@ -14,8 +14,6 @@ import dev.xdark.clientapi.event.render.PlayerListRender
 import dev.xdark.clientapi.event.render.PotionsRender
 import dev.xdark.clientapi.event.render.VehicleHealthRender
 import me.func.protocol.Indicators
-import kotlin.reflect.KClass
-
 import ru.cristalix.clientapi.KotlinMod
 
 context(KotlinMod)

@@ -15,23 +15,18 @@ import net.minecraft.server.v1_12_R1.PacketPlayOutEntityEffect
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityEquipment
 import net.minecraft.server.v1_12_R1.PacketPlayOutEntityMetadata
 import net.minecraft.server.v1_12_R1.PacketPlayOutNamedEntitySpawn
-import net.minecraft.server.v1_12_R1.PacketPlayOutPlayerInfo
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntity
 import net.minecraft.server.v1_12_R1.PacketPlayOutSpawnEntityLiving
 import net.minecraft.server.v1_12_R1.World
 import net.minecraft.server.v1_12_R1.WorldData
 import net.minecraft.server.v1_12_R1.WorldServer
-import org.bukkit.Bukkit
-import org.bukkit.World.*
+import org.bukkit.World.Environment
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftEntity
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftLivingEntity
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
-import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
-import java.lang.IllegalStateException
-import java.lang.UnsupportedOperationException
 import net.minecraft.server.v1_12_R1.Entity as NMSEntity
 
 /**

@@ -1,7 +1,6 @@
 package battlepass
 
 import dev.xdark.clientapi.item.ItemStack
-import kotlin.math.abs
 
 class BattlePage(
     val items: List<ItemStack?> = listOf(),

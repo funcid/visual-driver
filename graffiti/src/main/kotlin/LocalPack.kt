@@ -4,8 +4,12 @@ import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.*
-import java.util.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
+import java.util.UUID
 
 data class LocalPack(
     var packUuid: UUID,

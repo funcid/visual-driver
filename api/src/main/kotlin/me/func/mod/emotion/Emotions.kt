@@ -1,13 +1,10 @@
 package me.func.mod.emotion
 
 import me.func.mod.conversation.ModTransfer
-import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload
 import org.bukkit.entity.Player
-import pw.lach.p13n.network.client.P13nChannels
-import pw.lach.p13n.network.client.P13nChannels.*
+import pw.lach.p13n.network.client.P13nChannels.EMOTION_ACTION
 import pw.lach.p13n.network.client.PacketEmotionAction
-import sun.audio.AudioPlayer.player
-import java.util.*
+import java.util.UUID
 
 
 enum class Emotions(val title: String, val uuid: UUID) {

@@ -5,7 +5,12 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
-import ru.cristalix.uiengine.utility.*
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.carved
+import ru.cristalix.uiengine.utility.text
 
 abstract class StorageNode<T : AbstractElement>(
     var price: Long = -1,

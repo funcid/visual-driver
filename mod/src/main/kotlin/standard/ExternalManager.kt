@@ -1,12 +1,11 @@
 package standard
 
-import ru.cristalix.clientapi.KotlinMod
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import sun.security.jgss.GSSToken.readInt
 
 context(KotlinMod)
 class ExternalManager {

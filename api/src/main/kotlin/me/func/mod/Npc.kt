@@ -8,7 +8,7 @@ import me.func.protocol.npc.NpcData
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
-import java.util.*
+import java.util.UUID
 import java.util.function.Consumer
 
 object Npc {

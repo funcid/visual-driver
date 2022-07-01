@@ -1,5 +1,6 @@
 package standard
 
+import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
@@ -14,7 +15,6 @@ import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
-import ru.cristalix.clientapi.KotlinMod
 
 private const val VECTOR = 65
 

@@ -8,10 +8,8 @@ import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.clientapi.writeUtf8
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
