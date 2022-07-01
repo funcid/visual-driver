@@ -1,5 +1,6 @@
 plugins {
     id 'org.jetbrains.kotlin.plugin.serialization'
+    id("com.github.johnrengelman.shadow")
 }
 
 group 'me.func'
@@ -19,13 +20,13 @@ dependencies {
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.3'
 }
 
-jar {
+jar { enabled = false }
+
+shadowJar {
     manifest {
         attributes(
             'Main-Class': 'App',
             'Multi-Release': 'true'
         )
     }
-
-    from configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
 }

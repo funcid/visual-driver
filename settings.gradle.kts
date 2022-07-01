@@ -19,6 +19,7 @@ pluginManagement {
         kotlin("jvm") version "1.7.0"
         kotlin("plugin.serialization") version "1.7.0"
         id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.10.1"
+        id("com.github.johnrengelman.shadow") version "7.1.2"
     }
 }
 
