@@ -58,6 +58,20 @@ object MenuManager : Listener {
             button.onClick?.handle(player, index, button)
         }
 
+        // Меню выбора левый клик
+        handler<Storage>("storage:leftClick") { menu, player, buffer ->
+            val index = buffer.readInt()
+            val button = menu.storage[index]
+            button.onLeftClick?.handle(player, index, button)
+        }
+
+        // Меню выбора правый клик
+        handler<Storage>("storage:rightClick") { menu, player, buffer ->
+            val index = buffer.readInt()
+            val button = menu.storage[index]
+            button.onRightClick?.handle(player, index, button)
+        }
+
         // Меню подтверждения
         handler<Confirmation>("func:accept") { menu, player, _ ->
             menu.onAccept.accept(player)

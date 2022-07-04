@@ -42,6 +42,10 @@ class Button {
 
     var onClick: ButtonClickHandler? = null
 
+    var onLeftClick: ButtonClickHandler? = null
+
+    var onRightClick: ButtonClickHandler? = null
+
     var item: ItemStack? = null
         set(value) {
             if (value != field) value?.let { reactive { byte(1).item(value) } }
@@ -88,6 +92,10 @@ class Button {
     fun hover(vararg text: String) = apply { hover = text.joinToString("\n") }
 
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
+
+    fun onLeftClick(click: ButtonClickHandler) = apply { onLeftClick = click }
+
+    fun onRightClick(click: ButtonClickHandler) = apply { onRightClick = click }
 
     fun hint(hint: String) = apply { this.hint = hint }
 
