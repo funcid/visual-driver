@@ -401,8 +401,10 @@ class DialogMod {
             }
         }
         mod.registerHandler<GameLoop> {
+            if (!visible)
+                return@registerHandler
             val wheel = Mouse.getDWheel()
-            if (visible && wheel != 0)
+            if (wheel != 0)
                 shiftButtonCursor(sign(-wheel.toDouble()).toInt())
         }
         mod.registerHandler<WindowResize> { if (visible) update() }
