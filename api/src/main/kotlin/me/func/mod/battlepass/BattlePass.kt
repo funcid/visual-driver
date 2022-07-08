@@ -21,6 +21,7 @@ object BattlePass {
     }
 
     @JvmStatic
+    @JvmName("create")
     fun new(data: BattlePassData): BattlePassData {
         battlePasses[data.uuid] = data
         return data

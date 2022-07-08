@@ -3,10 +3,10 @@ public final class me/func/mod/Alert {
 	public static final fun button (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/RGB;ZZ)Lme/func/protocol/alert/NotificationButton;
 	public static synthetic fun button$default (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/RGB;ZZILjava/lang/Object;)Lme/func/protocol/alert/NotificationButton;
 	public static final fun find (Ljava/lang/String;)Lme/func/protocol/alert/NotificationData;
+	public static final fun notificationDataReplace (Lme/func/protocol/alert/NotificationData;Ljava/lang/String;Ljava/lang/String;)Lme/func/protocol/alert/NotificationData;
 	public static final fun put (Ljava/lang/String;Lme/func/protocol/alert/NotificationData;)Lme/func/protocol/alert/NotificationData;
-	public final fun replace (Lme/func/protocol/alert/NotificationData;Ljava/lang/String;Ljava/lang/String;)Lme/func/protocol/alert/NotificationData;
-	public final fun send (Lme/func/protocol/alert/NotificationData;Lorg/bukkit/entity/Player;)V
 	public static final fun send (Lorg/bukkit/entity/Player;Ljava/lang/String;JLme/func/protocol/RGB;Lme/func/protocol/RGB;Ljava/lang/String;[Lme/func/protocol/alert/NotificationButton;)V
+	public static final fun sendNotificationData (Lme/func/protocol/alert/NotificationData;Lorg/bukkit/entity/Player;)V
 }
 
 public final class me/func/mod/Anime {
@@ -103,7 +103,7 @@ public final class me/func/mod/Banners {
 	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/element/Banner;)V
 	public final fun location (Lme/func/protocol/element/Banner;Lorg/bukkit/Location;)V
 	public final synthetic fun new (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/element/Banner;
-	public static final fun new (Lme/func/protocol/element/Banner;)Lme/func/protocol/element/Banner;
+	public static final synthetic fun new (Lme/func/protocol/element/Banner;)Lme/func/protocol/element/Banner;
 	public static final fun remove (Ljava/util/UUID;)V
 	public final fun setBanners (Ljava/util/Map;)V
 	public final fun shineBlocks (Lme/func/protocol/element/Banner;Z)V
@@ -185,9 +185,9 @@ public final class me/func/mod/StandardMods : org/bukkit/event/Listener {
 public final class me/func/mod/battlepass/BattlePass {
 	public static final field INSTANCE Lme/func/mod/battlepass/BattlePass;
 	public final fun buy (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
+	public static final fun create (Lme/func/mod/battlepass/BattlePassData;)Lme/func/mod/battlepass/BattlePassData;
 	public final fun getBattlePasses ()Ljava/util/Map;
 	public final fun new (ILkotlin/jvm/functions/Function1;)Lme/func/mod/battlepass/BattlePassData;
-	public static final fun new (Lme/func/mod/battlepass/BattlePassData;)Lme/func/mod/battlepass/BattlePassData;
 	public final fun onBuyAdvanced (Lme/func/mod/battlepass/BattlePassData;Ljava/util/function/Consumer;)V
 	public final fun onBuyPage (Lme/func/mod/battlepass/BattlePassData;Ljava/util/function/BiConsumer;)V
 	public final fun sale (Lme/func/mod/battlepass/BattlePassData;D)V
@@ -492,6 +492,8 @@ public final class me/func/mod/emotion/Emotions$Companion {
 public abstract interface class me/func/mod/experimental/disguise/EntityDisguiser {
 	public static final field Companion Lme/func/mod/experimental/disguise/EntityDisguiser$Companion;
 	public abstract fun disguise (Lorg/bukkit/entity/Entity;Lorg/bukkit/entity/EntityType;[Lorg/bukkit/entity/Player;)V
+	public static fun getMod ()Lme/func/mod/experimental/disguise/EntityDisguiser;
+	public static fun getPacket ()Lme/func/mod/experimental/disguise/EntityDisguiser;
 	public abstract fun reset (Lorg/bukkit/entity/Entity;[Lorg/bukkit/entity/Player;)V
 }
 

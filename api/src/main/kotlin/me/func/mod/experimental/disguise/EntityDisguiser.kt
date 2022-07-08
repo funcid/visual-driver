@@ -8,8 +8,8 @@ internal const val CHANNEL = "anime:disguise"
 
 interface EntityDisguiser {
     companion object {
-        val packet: EntityDisguiser = PacketEntityDisguiser()
-        val mod: EntityDisguiser = ModEntityDisguiser()
+        @JvmStatic val packet: EntityDisguiser = PacketEntityDisguiser()
+        @JvmStatic val mod: EntityDisguiser = ModEntityDisguiser()
     }
 
     /**

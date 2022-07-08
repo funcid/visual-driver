@@ -1,7 +1,6 @@
 package me.func.mod.selection
 
 interface Storage : Openable {
-
     var title: String
     var storage: MutableList<Button>
 
@@ -10,5 +9,5 @@ interface Storage : Openable {
     fun clear() { storage.clear() }
 
     fun buttons(vararg button: Button) { storage = button.toMutableList() }
-
 }
+

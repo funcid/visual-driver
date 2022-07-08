@@ -10,7 +10,6 @@ import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 object Alert {
-
     private val alertTemplates = hashMapOf<String, NotificationData>()
 
     @JvmStatic
@@ -57,10 +56,14 @@ object Alert {
     fun put(key: String, alert: NotificationData) = alertTemplates.put(key, alert)
 
     // Метод для замены текста в сообщении
+    @JvmStatic
+    @JvmName("notificationDataReplace")
     fun NotificationData.replace(placeholder: String, content: String) =
         clone().apply { this.text?.let { this.text = this.text!!.replace(placeholder, content) } }
 
     // Метод для отправки готового сообщения игроку
+    @JvmStatic
+    @JvmName("sendNotificationData")
     fun NotificationData.send(player: Player) = ModTransfer()
         .byteArray(*ru.cristalix.core.GlobalSerializers.toJson(this).toByteArray(StandardCharsets.UTF_8))
         .send("socials:notify", player)

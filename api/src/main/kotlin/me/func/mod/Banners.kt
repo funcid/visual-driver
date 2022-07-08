@@ -27,6 +27,7 @@ object Banners {
     fun add(banner: Banner): Banner = new(banner)
 
     @JvmStatic
+    @JvmSynthetic
     fun new(banner: Banner): Banner {
         if (banners.size > 300) {
             val unique = banners.values.distinctBy { it.x }.distinctBy { it.y }.distinctBy { it.z }
