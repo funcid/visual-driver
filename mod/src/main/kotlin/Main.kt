@@ -32,7 +32,7 @@ class Main : KotlinMod() {
             repeat(readInt() /* Count */) {
                 when (Mod.values()[readInt() /* Mod Ordinal */]) {
                     Mod.STANDARD -> Standard()
-                    Mod.EXPERIMENTAL -> Experimental()
+                    Mod.EXPERIMENTAL -> Experimental.bruh()
                     Mod.NPC -> NPC()
                     Mod.HEALTHBAR -> Healthbar()
                     Mod.BATTLEPASS -> BattlePass()

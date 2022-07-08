@@ -10,43 +10,45 @@ import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 
 class Disguise {
-    private val minecraft = UIEngine.clientApi.minecraft()
+    companion object {
+        private val minecraft = UIEngine.clientApi.minecraft()
 
-    private val entityProvider = UIEngine.clientApi.entityProvider()
+        private val entityProvider = UIEngine.clientApi.entityProvider()
 
-    private val players = hashMapOf<String, EntityPlayer>()
-    private val disguised = hashMapOf<String, Entity>()
+        private val players = hashMapOf<String, EntityPlayer>()
+        private val disguised = hashMapOf<String, Entity>()
 
-    private fun disguise() {
-        disguised.forEach { players[it.key]?.renderingEntity = it.value }
-    }
-
-    init {
-        minecraft.player.run { players.put(name, this) }
-
-        mod.registerHandler<NameTemplateRender> {
-            if (entity is EntityPlayer) players[(entity as EntityPlayer).name] = entity as EntityPlayer
+        private fun disguise() {
+            disguised.forEach { players[it.key]?.renderingEntity = it.value }
         }
 
-        mod.registerHandler<GameTickPre> { disguise() }
+        init {
+            minecraft.player.run { players.put(name, this) }
 
-        mod.registerChannel("anime:disguise") {
-            try {
-                val world = minecraft.world
+            mod.registerHandler<NameTemplateRender> {
+                if (entity is EntityPlayer) players[(entity as EntityPlayer).name] = entity as EntityPlayer
+            }
 
-                val playerName = NetUtil.readUtf8(this) // Player Name
-                val player = players[playerName] ?: return@registerChannel
+            mod.registerHandler<GameTickPre> { disguise() }
 
-                if (readBoolean()) { // Reset
-                    player.renderingEntity = player
-                    disguised.remove(player.name)
-                } else {
-                    val entityType = readShort() // Entity Type
+            mod.registerChannel("anime:disguise") {
+                try {
+                    val world = minecraft.world
 
-                    disguised[player.name] = entityProvider.newEntity(entityType.toInt(), world)
-                    disguise()
+                    val playerName = NetUtil.readUtf8(this) // Player Name
+                    val player = players[playerName] ?: return@registerChannel
+
+                    if (readBoolean()) { // Reset
+                        player.renderingEntity = player
+                        disguised.remove(player.name)
+                    } else {
+                        val entityType = readShort() // Entity Type
+
+                        disguised[player.name] = entityProvider.newEntity(entityType.toInt(), world)
+                        disguise()
+                    }
+                } catch (_: Exception) {
                 }
-            } catch (_: Exception) {
             }
         }
     }
