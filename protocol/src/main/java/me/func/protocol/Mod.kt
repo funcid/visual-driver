@@ -9,6 +9,6 @@ enum class Mod {
     LOOTBOX,
     DIALOG,
     CHAT,
-    STORE
+    STORE,
     ;
 }
