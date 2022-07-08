@@ -22,7 +22,7 @@ subprojects {
     apply(plugin = "maven-publish")
 
     dependencies {
-        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.21")
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
     }
 
     java {
