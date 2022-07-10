@@ -98,25 +98,12 @@ class PlayChoice(
                                 content = element.description
                             }
                         }
-                        onLeftClick {
-                            UIEngine.clientApi.clientConnection()
-                                .sendPayload("storage:leftClick", Unpooled.buffer().apply {
-                                    NetUtil.writeUtf8(this, uuid.toString())
-                                    writeInt(storage.indexOf(element))
-                                })
-                        }
-                        onRightClick {
-                            UIEngine.clientApi.clientConnection()
-                                .sendPayload("storage:rightClick", Unpooled.buffer().apply {
-                                    NetUtil.writeUtf8(this, uuid.toString())
-                                    writeInt(storage.indexOf(element))
-                                })
-                        }
                         onMouseUp {
                             UIEngine.clientApi.clientConnection()
                                 .sendPayload("storage:click", Unpooled.buffer().apply {
                                     NetUtil.writeUtf8(this, uuid.toString())
                                     writeInt(storage.indexOf(element))
+                                    writeInt(button.ordinal)
                                 })
                         }
                         carveSize = 2.0
