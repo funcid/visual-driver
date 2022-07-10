@@ -4,6 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.util.MouseButton
 import me.func.mod.util.warn
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -55,7 +56,12 @@ object MenuManager : Listener {
         handler<Storage>("storage:click") { menu, player, buffer ->
             val index = buffer.readInt()
             val button = menu.storage[index]
-            button.onClick?.handle(player, index, button, buffer.readInt())
+            when(buffer.readInt()) {
+                MouseButton.LEFT.ordinal -> button.onLeftClick?.handle(player, index, button)
+                MouseButton.RIGHT.ordinal -> button.onRightClick?.handle(player, index, button)
+                MouseButton.MIDDLE.ordinal -> button.onMiddleClick?.handle(player, index, button)
+            }
+            button.onClick?.handle(player, index, button)
         }
 
         // Меню подтверждения

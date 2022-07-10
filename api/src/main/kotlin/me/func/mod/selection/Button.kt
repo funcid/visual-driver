@@ -3,6 +3,7 @@ package me.func.mod.selection
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.Sprites
 import me.func.mod.selection.MenuManager.reactive
+import me.func.mod.util.MouseButton
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
 import org.bukkit.Material
@@ -11,7 +12,7 @@ import org.bukkit.inventory.ItemStack
 import java.util.Collections
 
 fun interface ButtonClickHandler {
-    fun handle(player: Player, index: Int, button: Button, key: Int)
+    fun handle(player: Player, index: Int, button: Button)
 }
 
 class Button {
@@ -41,6 +42,12 @@ class Button {
         }
 
     var onClick: ButtonClickHandler? = null
+
+    var onLeftClick: ButtonClickHandler? = null
+
+    var onRightClick: ButtonClickHandler? = null
+
+    var onMiddleClick: ButtonClickHandler? = null
 
     var item: ItemStack? = null
         set(value) {
@@ -88,6 +95,12 @@ class Button {
     fun hover(vararg text: String) = apply { hover = text.joinToString("\n") }
 
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
+
+    fun onLeftClick(click: ButtonClickHandler) = apply { onLeftClick = click }
+
+    fun onRightClick(click: ButtonClickHandler) = apply { onRightClick = click }
+
+    fun onMiddleClick(click: ButtonClickHandler) = apply { onMiddleClick = click }
 
     fun hint(hint: String) = apply { this.hint = hint }
 
