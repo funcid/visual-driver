@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack
 import java.util.Collections
 
 fun interface ButtonClickHandler {
-    fun handle(player: Player, index: Int, button: Button)
+    fun handle(player: Player, index: Int, button: Button, key: Int)
 }
 
 class Button {
@@ -41,10 +41,6 @@ class Button {
         }
 
     var onClick: ButtonClickHandler? = null
-
-    var onLeftClick: ButtonClickHandler? = null
-
-    var onRightClick: ButtonClickHandler? = null
 
     var item: ItemStack? = null
         set(value) {
@@ -92,10 +88,6 @@ class Button {
     fun hover(vararg text: String) = apply { hover = text.joinToString("\n") }
 
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
-
-    fun onLeftClick(click: ButtonClickHandler) = apply { onLeftClick = click }
-
-    fun onRightClick(click: ButtonClickHandler) = apply { onRightClick = click }
 
     fun hint(hint: String) = apply { this.hint = hint }
 

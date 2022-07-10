@@ -3,37 +3,26 @@ package dialog
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import dev.xdark.clientapi.event.input.KeyPress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
-import dev.xdark.clientapi.event.render.ArmorRender
-import dev.xdark.clientapi.event.render.ExpBarRender
-import dev.xdark.clientapi.event.render.HealthRender
-import dev.xdark.clientapi.event.render.HotbarRender
-import dev.xdark.clientapi.event.render.HungerRender
+import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.event.window.WindowResize
-import me.func.protocol.dialog.Action
-import me.func.protocol.dialog.Actions
-import me.func.protocol.dialog.Button
-import me.func.protocol.dialog.Entrypoint
-import me.func.protocol.dialog.Screen
+import me.func.protocol.dialog.*
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Easings
-import ru.cristalix.uiengine.utility.Relative
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.onMouseUp
+import ru.cristalix.uiengine.utility.*
 import kotlin.math.sign
 
 class DialogMod {
+    private var gui = ContextGui()
     private var buttons: RectangleElement = rectangle { }
     private var buttonCursor: RectangleElement
     private var buttonsBG: RectangleElement
@@ -175,6 +164,7 @@ class DialogMod {
             pickedItem = -1
             npcPart.size.y = 0.0
             buttonPart.align.x = 1.0
+            gui.close()
         }
 
         fun openEntrypoint(target: Entrypoint) {
@@ -308,11 +298,9 @@ class DialogMod {
                     align = Relative.CENTER
                     color = Color(0, 0, 0, 100.0 / 255)
 
-                    onClick {
-                        if (Mouse.isButtonDown(0)) {
-                            activateButton(it)
-                            update()
-                        }
+                    onMouseUp {
+                        activateButton(it)
+                        update()
                     }
                 }
                 buttonsBG.addChild(bg)
@@ -331,6 +319,33 @@ class DialogMod {
                 resolve()
                 return
             }
+            activateButton(screen.buttons!![pickedItem])
+            update()
+        }
+
+        gui.onKeyTyped { _, code ->
+            if (code == Keyboard.KEY_ESCAPE)
+                close(entrypoint)
+
+            if (visible) {
+                var i = 0
+                while (i < buttonHotkeys.size) {
+                    if (code == buttonHotkeys[i]) {
+                        activateButton(screen.buttons!![i])
+                        update()
+                        println("" + screen.buttons!![i] + ' ' + i)
+                    }
+                    i++
+                }
+                when (code) {
+                    Keyboard.KEY_UP -> shiftButtonCursor(-1)
+                    Keyboard.KEY_DOWN -> shiftButtonCursor(+1)
+                    Keyboard.KEY_RETURN -> pressEnter()
+                }
+            }
+        }
+
+        buttonCursor.onMouseUp {
             activateButton(screen.buttons!![pickedItem])
             update()
         }
@@ -360,6 +375,7 @@ class DialogMod {
                         success = true
                         openEntrypoint(it)
                         update()
+                        gui.open()
                     }
 
                     if (!success) println("Entrypoint $id is not exists!")
@@ -381,25 +397,6 @@ class DialogMod {
             }
         }
 
-
-        mod.registerHandler<KeyPress> {
-            if (visible) {
-                var i = 0
-                while (i < buttonHotkeys.size) {
-                    if (this.key == buttonHotkeys[i]) {
-                        activateButton(screen.buttons!![i])
-                        update()
-                        println("" + screen.buttons!![i] + ' ' + i)
-                    }
-                    i++
-                }
-                when (this.key) {
-                    Keyboard.KEY_UP -> shiftButtonCursor(-1)
-                    Keyboard.KEY_DOWN -> shiftButtonCursor(+1)
-                    Keyboard.KEY_RETURN -> pressEnter()
-                }
-            }
-        }
         mod.registerHandler<GameLoop> {
             if (!visible)
                 return@registerHandler

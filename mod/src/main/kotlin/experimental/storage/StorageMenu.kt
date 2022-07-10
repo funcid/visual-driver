@@ -7,6 +7,7 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
+import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ItemElement
@@ -269,6 +270,7 @@ class StorageMenu(
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                         NetUtil.writeUtf8(this, uuid.toString())
                         writeInt(storage.indexOf(element))
+                        writeInt(button.ordinal)
                     })
                 }
             }.apply {
