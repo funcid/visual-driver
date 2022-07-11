@@ -532,6 +532,7 @@ public final class me/func/mod/selection/Button {
 	public final fun getItem ()Lorg/bukkit/inventory/ItemStack;
 	public final fun getOnClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getOnLeftClick ()Lme/func/mod/selection/ButtonClickHandler;
+	public final fun getOnMiddleClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getOnRightClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getPrice ()J
 	public final fun getTexture ()Ljava/lang/String;
@@ -546,6 +547,7 @@ public final class me/func/mod/selection/Button {
 	public final fun material (Lorg/bukkit/Material;)Lme/func/mod/selection/Button;
 	public final fun onClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
 	public final fun onLeftClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
+	public final fun onMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
 	public final fun onRightClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
 	public final fun price (J)Lme/func/mod/selection/Button;
 	public final fun sale (I)Lme/func/mod/selection/Button;
@@ -555,6 +557,7 @@ public final class me/func/mod/selection/Button {
 	public final fun setItem (Lorg/bukkit/inventory/ItemStack;)V
 	public final fun setOnClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setOnLeftClick (Lme/func/mod/selection/ButtonClickHandler;)V
+	public final fun setOnMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setOnRightClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setPrice (J)V
 	public final fun setTexture (Ljava/lang/String;)V
@@ -736,6 +739,14 @@ public final class me/func/mod/util/LogKt {
 	public static final field ANSI_YELLOW Ljava/lang/String;
 	public static final fun log (Ljava/lang/String;)V
 	public static final fun warn (Ljava/lang/String;)V
+}
+
+public final class me/func/mod/util/MouseButton : java/lang/Enum {
+	public static final field LEFT Lme/func/mod/util/MouseButton;
+	public static final field MIDDLE Lme/func/mod/util/MouseButton;
+	public static final field RIGHT Lme/func/mod/util/MouseButton;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/util/MouseButton;
+	public static fun values ()[Lme/func/mod/util/MouseButton;
 }
 
 public final class me/func/mod/util/Utils {
