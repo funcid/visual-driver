@@ -64,9 +64,14 @@ object MenuManager : Listener {
             button.onClick?.handle(player, index, button)
         }
 
-        // Меню подтверждения
+        // Меню подтверждения - принятие
         handler<Confirmation>("func:accept") { menu, player, _ ->
             menu.onAccept.accept(player)
+        }
+
+        // Меню подтверждения - отказ
+        handler<Confirmation>("func:deny") { menu, player, _ ->
+            menu.onDeny?.accept(player)
         }
 
         // Обработка нажатия на кнопку в меню реконнекта

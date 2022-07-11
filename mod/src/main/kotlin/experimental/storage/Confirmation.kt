@@ -87,6 +87,9 @@ class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
         disagree =
             +button(buttonWidth / 2 + padding / 4, "Закрыть", Color(160, 29, 40, 1.0), Color(231, 61, 75, 1.0)).apply {
                 onMouseUp {
+                    clientApi.clientConnection().sendPayload("func:deny", Unpooled.buffer().apply {
+                        NetUtil.writeUtf8(this, uuid.toString())
+                    })
                     close()
                 }
             }

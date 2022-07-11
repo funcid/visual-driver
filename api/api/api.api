@@ -594,16 +594,24 @@ public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage
 }
 
 public final class me/func/mod/selection/Confirmation : me/func/mod/selection/Openable {
+	public fun <init> (Ljava/lang/String;Ljava/util/function/Consumer;)V
 	public fun <init> (Ljava/util/List;Ljava/util/function/Consumer;)V
+	public fun <init> (Ljava/util/List;Ljava/util/function/Consumer;Ljava/util/function/Consumer;)V
+	public synthetic fun <init> (Ljava/util/List;Ljava/util/function/Consumer;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/util/function/Consumer;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/util/function/Consumer;Ljava/util/function/Consumer;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/util/function/Consumer;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> ([Ljava/lang/String;Ljava/util/function/Consumer;)V
+	public fun <init> ([Ljava/lang/String;Ljava/util/function/Consumer;Ljava/util/function/Consumer;)V
+	public synthetic fun <init> ([Ljava/lang/String;Ljava/util/function/Consumer;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getOnAccept ()Ljava/util/function/Consumer;
+	public final fun getOnDeny ()Ljava/util/function/Consumer;
 	public final fun getText ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
 	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Confirmation;
 	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
 	public final fun setOnAccept (Ljava/util/function/Consumer;)V
+	public final fun setOnDeny (Ljava/util/function/Consumer;)V
 	public final fun setText (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
 }
