@@ -4,6 +4,7 @@ import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.CENTER
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
@@ -27,7 +28,7 @@ data class LocalPack(
         size = V3(boxSize, boxSize)
         color = WHITE
 
-        onClick {
+        onMouseUp {
             graffitiMod.gui.children.clear()
             graffitiMod.userData.activePack = index
             graffitiMod.loadPackIntoMenu()
@@ -82,7 +83,7 @@ data class LocalPack(
                     }
                 }
             }
-            onClick {
+            onMouseUp {
                 // Выбор граффити
                 graffitiMod.gui.close()
 
