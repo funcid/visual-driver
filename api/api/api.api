@@ -612,6 +612,7 @@ public final class me/func/mod/selection/MenuManager : org/bukkit/event/Listener
 	public static final field INSTANCE Lme/func/mod/selection/MenuManager;
 	public static final fun bind (Lme/func/mod/selection/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
 	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
+	public final fun getHandleMap ()Ljava/util/HashMap;
 	public final fun getMenuStacks ()Ljava/util/HashMap;
 	public final fun getReconnectMap ()Ljava/util/HashMap;
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
