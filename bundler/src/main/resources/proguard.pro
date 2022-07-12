@@ -27,6 +27,8 @@
 -keep, allowoptimization class MAINCLASS
 -keep, allowoptimization class MAINCLASS$**
 
+-keep, allowoptimization class experimental.storage.Confirmation**
+
 -keepclassmembers, allowoptimization class ** {
     public void load(dev.xdark.clientapi.ClientApi);
     public void unload();
