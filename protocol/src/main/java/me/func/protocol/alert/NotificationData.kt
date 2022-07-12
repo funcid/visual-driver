@@ -11,10 +11,10 @@ class NotificationData(
     var timeout: Long,
     var buttons: List<NotificationButton>?,
     var chatMessage: String?
-) : Cloneable {
+) {
     private var original: Boolean = true
 
-    public override fun clone() = if (original) NotificationData(
+    fun clone() = if (original) NotificationData(
         source,
         type,
         text,

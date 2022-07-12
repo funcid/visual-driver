@@ -11,7 +11,7 @@ class GraffitiPack(
     var price: Int,
     var rare: Int,
     var available: Boolean
-) : Unique, Cloneable {
-    public override fun clone() =
+) : Unique {
+    fun clone() =
         GraffitiPack(uuid, graffiti.map { it.clone() }.toMutableList(), title, creator, price, rare, available)
 }

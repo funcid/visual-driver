@@ -173,11 +173,10 @@ public abstract interface class me/func/protocol/Unique {
 	public abstract fun getUuid ()Ljava/util/UUID;
 }
 
-public final class me/func/protocol/alert/NotificationButton : java/lang/Cloneable {
+public final class me/func/protocol/alert/NotificationButton {
 	public fun <init> (Ljava/lang/String;ILjava/lang/String;ZZ)V
 	public synthetic fun <init> (Ljava/lang/String;ILjava/lang/String;ZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun clone ()Ljava/lang/Object;
-	public fun clone ()Lme/func/protocol/alert/NotificationButton;
+	public final fun clone ()Lme/func/protocol/alert/NotificationButton;
 	public final fun getColor ()I
 	public final fun getCommand ()Ljava/lang/String;
 	public final fun getRemoveButton ()Z
@@ -190,10 +189,9 @@ public final class me/func/protocol/alert/NotificationButton : java/lang/Cloneab
 	public final fun setText (Ljava/lang/String;)V
 }
 
-public final class me/func/protocol/alert/NotificationData : java/lang/Cloneable {
+public final class me/func/protocol/alert/NotificationData {
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;IIJLjava/util/List;Ljava/lang/String;)V
-	public synthetic fun clone ()Ljava/lang/Object;
-	public fun clone ()Lme/func/protocol/alert/NotificationData;
+	public final fun clone ()Lme/func/protocol/alert/NotificationData;
 	public final fun getBackgroundColor ()I
 	public final fun getButtons ()Ljava/util/List;
 	public final fun getChatMessage ()Ljava/lang/String;

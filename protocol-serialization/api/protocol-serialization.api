@@ -41,15 +41,14 @@ public final class me/func/protocol/personalization/FeatureUserData$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/func/protocol/personalization/Graffiti : java/lang/Cloneable, me/func/protocol/Unique {
+public final class me/func/protocol/personalization/Graffiti : me/func/protocol/Unique {
 	public static final field Companion Lme/func/protocol/personalization/Graffiti$Companion;
 	public synthetic fun <init> (ILme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/lang/String;IIILjava/lang/String;II)V
 	public synthetic fun <init> (Ljava/lang/String;IIILjava/lang/String;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;)V
 	public synthetic fun <init> (Lme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun clone ()Ljava/lang/Object;
-	public fun clone ()Lme/func/protocol/personalization/Graffiti;
+	public final fun clone ()Lme/func/protocol/personalization/Graffiti;
 	public final fun component1 ()Lme/func/protocol/personalization/GraffitiInfo;
 	public final fun component2 ()Ljava/lang/String;
 	public final fun component3 ()I
@@ -130,12 +129,11 @@ public final class me/func/protocol/personalization/GraffitiInfo$Companion {
 	public final fun serializer ()Lkotlinx/serialization/KSerializer;
 }
 
-public final class me/func/protocol/personalization/GraffitiPack : java/lang/Cloneable, me/func/protocol/Unique {
+public final class me/func/protocol/personalization/GraffitiPack : me/func/protocol/Unique {
 	public static final field Companion Lme/func/protocol/personalization/GraffitiPack$Companion;
 	public synthetic fun <init> (ILjava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;IIZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
 	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;IIZ)V
-	public synthetic fun clone ()Ljava/lang/Object;
-	public fun clone ()Lme/func/protocol/personalization/GraffitiPack;
+	public final fun clone ()Lme/func/protocol/personalization/GraffitiPack;
 	public final fun component1 ()Ljava/util/UUID;
 	public final fun component2 ()Ljava/util/List;
 	public final fun component3 ()Ljava/lang/String;

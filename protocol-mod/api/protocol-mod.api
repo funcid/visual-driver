@@ -12,13 +12,12 @@ public final class me/func/protocol/personalization/FeatureUserData : me/func/pr
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public final class me/func/protocol/personalization/Graffiti : java/lang/Cloneable, me/func/protocol/Unique {
+public final class me/func/protocol/personalization/Graffiti : me/func/protocol/Unique {
 	public fun <init> (Ljava/lang/String;IIILjava/lang/String;II)V
 	public synthetic fun <init> (Ljava/lang/String;IIILjava/lang/String;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;)V
 	public synthetic fun <init> (Lme/func/protocol/personalization/GraffitiInfo;Ljava/lang/String;ILjava/util/UUID;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun clone ()Ljava/lang/Object;
-	public fun clone ()Lme/func/protocol/personalization/Graffiti;
+	public final fun clone ()Lme/func/protocol/personalization/Graffiti;
 	public final fun getAddress ()Lme/func/protocol/personalization/GraffitiInfo;
 	public final fun getAuthor ()Ljava/lang/String;
 	public final fun getUses ()I
@@ -44,10 +43,9 @@ public final class me/func/protocol/personalization/GraffitiInfo : me/func/proto
 	public final fun setY (I)V
 }
 
-public final class me/func/protocol/personalization/GraffitiPack : java/lang/Cloneable, me/func/protocol/Unique {
+public final class me/func/protocol/personalization/GraffitiPack : me/func/protocol/Unique {
 	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;IIZ)V
-	public synthetic fun clone ()Ljava/lang/Object;
-	public fun clone ()Lme/func/protocol/personalization/GraffitiPack;
+	public final fun clone ()Lme/func/protocol/personalization/GraffitiPack;
 	public final fun getAvailable ()Z
 	public final fun getCreator ()Ljava/lang/String;
 	public final fun getGraffiti ()Ljava/util/List;
