@@ -22,7 +22,7 @@ inline fun button(setup: Button.() -> Unit) = Button().also(setup)
 
 object MenuManager : Listener {
 
-    private val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
+    val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
     val menuStacks = hashMapOf<UUID, Stack<Storage>>() // player uuid to openable history
     val reconnectMap = hashMapOf<UUID, Reconnect>() // player uuid to selection
 
