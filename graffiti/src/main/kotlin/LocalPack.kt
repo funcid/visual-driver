@@ -86,6 +86,9 @@ data class LocalPack(
                 }
             }
             onMouseUp {
+                // Если граффити нет - не выбирать
+                if (currentGraffiti.uses < 1) return@onMouseUp
+
                 // Выбор граффити
                 mod.gui.children.clear()
                 mod.gui.close()

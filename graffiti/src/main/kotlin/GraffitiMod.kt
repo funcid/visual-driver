@@ -234,7 +234,7 @@ class GraffitiMod : KotlinMod() {
             align = CENTER
             origin = CENTER
 
-            offset.y += OVAL_RADIUS + 20
+            offset.y += OVAL_RADIUS + 30
 
             packs.forEachIndexed { index, it ->
                 +it.iconContainer.apply {
@@ -255,10 +255,14 @@ class GraffitiMod : KotlinMod() {
         mod = this
         UIEngine.initialize(this)
 
-        registerHandler<HealthRender> { if (open) isCancelled = true }
-        registerHandler<HungerRender> { if (open) isCancelled = true }
-        registerHandler<ArmorRender> { if (open) isCancelled = true }
-        registerHandler<ExpBarRender> { if (open) isCancelled = true }
+        fun safeOpen() = open && !clientApi.minecraft().inGameHasFocus()
+
+        registerHandler<HealthRender> { if (safeOpen()) isCancelled = true }
+        registerHandler<HungerRender> { if (safeOpen()) isCancelled = true }
+        registerHandler<ArmorRender> { if (safeOpen()) isCancelled = true }
+        registerHandler<ExpBarRender> { if (safeOpen()) isCancelled = true }
+        registerHandler<HandRender> { if (safeOpen()) isCancelled = true }
+        registerHandler<HotbarRender> { if (safeOpen()) isCancelled = true }
 
         gui.onKeyTyped { char, code ->
             if (code == Keyboard.KEY_LEFT || code == Keyboard.KEY_DOWN) moveCursor(maxOf(0, userData.activePack - 1))
@@ -267,7 +271,7 @@ class GraffitiMod : KotlinMod() {
                     packs.size - 1,
                     userData.activePack + 1
                 )
-            )
+            ) else if (code == Keyboard.KEY_ESCAPE) open = false
         }
 
         val prompt = text {
@@ -284,6 +288,7 @@ class GraffitiMod : KotlinMod() {
             prompt.enabled = activeGraffiti != null
 
             if (open) {
+                if (activeGraffiti != null) open = false
                 val move = Mouse.getDWheel()
                 if (move == 0) return@registerHandler
 
