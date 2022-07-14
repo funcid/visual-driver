@@ -11,20 +11,18 @@ fun createPack(
     counter: Int,
     vararg graffitiUuid: String
 ) = graffitiPacksUuid[counter] to GraffitiPack(graffitiPacksUuid[counter], graffitiUuid.mapIndexed { index, uuid ->
-    Graffiti(uuid, 83 + 192 * (index % graffitiUuid.size), counter * 192, 192, "func")
+    Graffiti(uuid, 256 * (index % graffitiUuid.size), counter * 256, 256, "func")
 }.toMutableList(), title, author, price, rare.ordinal, true)
 
 val graffitiPacksUuid = listOf(
-    "307264a1-2c69-11e8-b5ea-1cb72caa35fd",
-    "307264a1-2c69-11e8-b5ea-1cb72caa35fa",
-    "a7f4b7d3-c44f-4bfa-89e5-57c84a6410cd",
-    "c46002de-25ef-404a-b3ea-df66d142bb81",
-    "6a0b6461-13da-4d8d-afc2-8b391097605f",
-    "43c2c419-e866-4a2b-8778-6e4b35c95d6a",
-    "92c5d468-829d-4ea5-bd39-2669681624dc",
-    "4d48c377-540b-4313-b870-bc03c9b47993",
-    "deaafb8d-5254-40da-942e-9f7a91d9ced3",
-    "7f1acdca-03de-40b4-ba47-f242e6ac36d3",
+    "fff264a1-2c69-11e8-b5ea-1cb72caa35bb",
+    "fff264a1-2c69-11e8-b5ea-1cb72caa35fa",
+    "fff4b7d3-c44f-4bfa-89e5-57c84a6410cd",
+    "fff002de-25ef-404a-b3ea-df66d142bb81",
+    "fffb6461-13da-4d8d-afc2-8b391097605f",
+    "fff2c419-e866-4a2b-8778-6e4b35c95d6a",
+    "fff5d468-829d-4ea5-bd39-2669681624dc",
+    "fff8c377-540b-4313-b870-bc03c9b47993",
 ).map { UUID.fromString(it) }
 
 val actualGraffitiPacks = mutableMapOf(
@@ -37,6 +35,7 @@ val actualGraffitiPacks = mutableMapOf(
         "4f25a82e-6197-43f5-bd20-2200bbf96fa7",
         "c530a244-422c-41df-8854-dfa1f23bd890",
         "b99261af-c4e9-4a5e-bdde-3438c36b15f4",
+        "b99261af-c4e9-4a5e-bdde-3438c36a15f4",
     ),
     createPack(
         "Домашняя Лиса", "func", 99, DropRare.COMMON, 1,
@@ -47,6 +46,7 @@ val actualGraffitiPacks = mutableMapOf(
         "302e569f-6e84-4a66-8536-2000fc288dce",
         "728628d3-ad54-44ad-a3cb-40a49303e284",
         "f1411866-4906-4217-9887-bdaffa8af56f",
+        "f1411866-4906-4214-9887-bdaffa8af56f",
     ),
     createPack(
         "Тест 3", "func", 999, DropRare.COMMON, 2,
@@ -57,6 +57,7 @@ val actualGraffitiPacks = mutableMapOf(
         "8ac71aa5-f34b-4e44-8591-0bebb5596676",
         "58487e34-0faf-4d32-ad4f-78e7ca9783e0",
         "6fee1070-a907-4aa4-918e-006f2cbce616",
+        "f14aa866-4906-4217-9887-bdaffa8af56f",
     ),
     createPack(
         "Тест 4", "func", 999, DropRare.COMMON, 3,
@@ -66,6 +67,7 @@ val actualGraffitiPacks = mutableMapOf(
         "4bab1c4d-95c8-4e2d-904c-3ddcc62de4de",
         "a85430f7-5eeb-477e-a138-9de09c07366e",
         "57641929-4269-4ac7-bbd0-72ce6d8c8013",
+        "f1411866-49ff-4217-9887-bdaffa8af56f",
         "fe75c6f8-4977-4c18-a421-5bab0b799652",
     ),
     createPack(
@@ -77,6 +79,7 @@ val actualGraffitiPacks = mutableMapOf(
         "edfb758a-377b-4105-a7d4-8bf4deed3a0a",
         "012dbdc8-7a8d-4a1a-8612-c48063b2726e",
         "0629ec28-e683-4633-9a02-c68ab19b2a20",
+        "f1411866-4906-4217-988a-bdaffa8af56f",
     ),
     createPack(
         "Тест 6", "func", 999, DropRare.COMMON, 5,
@@ -87,6 +90,7 @@ val actualGraffitiPacks = mutableMapOf(
         "03e3b6ae-5c4b-421a-89b7-921888532b96",
         "3a2f8713-d234-4273-bea3-b945ecb9516e",
         "1ec24bf8-4844-4b58-811d-76006c73b688",
+        "f1411866-4906-4217-9887-bdaffa8afaaf",
     ),
     createPack(
         "Тест 7", "func", 999, DropRare.COMMON, 6,
@@ -97,6 +101,7 @@ val actualGraffitiPacks = mutableMapOf(
         "4bcb9ec9-e42b-44ac-91bf-a4a415b96abf",
         "dcdda835-1931-4c5d-a433-6327eba7b6c2",
         "5c190495-74e8-4ac0-a0d3-f98d510fc07b",
+        "f14118aa-b906-4217-9887-bdaffa8af56f",
     ),
     createPack(
         "Тест 8", "func", 999, DropRare.COMMON, 7,
@@ -107,25 +112,6 @@ val actualGraffitiPacks = mutableMapOf(
         "54615d94-98e2-4eda-bc6a-386ca35086c7",
         "13f0d871-0798-496d-83fd-9c853beff015",
         "04a18e4b-1cf2-4e59-8608-4d87d819088e",
-    ),
-    createPack(
-        "Тест 9", "func", 999, DropRare.COMMON, 8,
-        "bb2978d3-fd70-4672-a621-b6e1849bcdc1",
-        "bf827e4f-301b-4932-b37d-bc3c4516baa3",
-        "584d315f-e347-41f1-892d-97a72cee654d",
-        "92614f67-814b-45ff-8cac-2d72293cbe84",
-        "076bd846-52e8-4544-8ad0-4568464c8ee4",
-        "9b71de91-0dbd-4751-96ba-21ec33d9cd80",
-        "6d95cece-1dd2-48e0-b6e2-ad50a148f006",
-    ),
-    createPack(
-        "Тест 10", "func", 999, DropRare.COMMON, 9,
-        "9e610970-1b38-4fd8-9881-b5f36d09da22",
-        "f925a361-7d74-4a2d-9d6a-dbbfe980601e",
-        "e362b228-e5a6-4af4-9904-566e2c3cf013",
-        "de4a8b35-3ceb-4800-8144-e578cdd1463a",
-        "d9dbd4a1-2238-4081-9756-7bab77d9f189",
-        "7924f8de-b9d2-499e-9014-a9b4bd3a0861",
-        "8db35be6-69f0-4946-a506-ce40b571e6fc",
+        "abb11866-4906-4217-9887-bdaffa8af56f",
     ),
 )

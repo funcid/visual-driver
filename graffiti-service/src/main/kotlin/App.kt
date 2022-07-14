@@ -3,12 +3,8 @@
 import data.FeatureUserStorage
 import data.GraffitiPackStorage
 import data.GraffitiUnitStorage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.future.await
-import kotlinx.coroutines.launch
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
@@ -22,10 +18,17 @@ import ru.cristalix.core.network.ISocketClient
 import ru.cristalix.core.network.packages.MoneyTransactionRequestPackage
 import ru.cristalix.core.network.packages.MoneyTransactionResponsePackage
 import ru.cristalix.core.realm.RealmId
-import java.util.UUID
+import java.util.*
 
 private val scope = CoroutineScope(Dispatchers.IO)
 private lateinit var mongoAdapter: MongoAdapter
+
+fun syncProfile(player: UUID, data: FeatureUserData? = null) = FeatureUserStorage(player, actualGraffitiPacks.values.map {
+        GraffitiPackStorage(
+            it.uuid,
+            it.graffiti.map { GraffitiUnitStorage(it.uses, it.uuid) }.toMutableList()
+        )
+    }.toMutableList(), data?.activePack ?: 0, mutableListOf(), null)
 
 fun main() {
     mongoAdapter = MongoAdapter(
@@ -56,9 +59,11 @@ fun main() {
         // Загрузка профиля игрока
         scope.launch {
             loadProfile(packet.playerUuid) { data ->
+                var update = false
+
                 // Если данные уже есть - обновляем набор паков, если нет - создаем новые
                 packet.data = data?.let {
-                    println("Loaded $data.")
+                    println("Loaded data for ${packet.playerUuid}.")
                     FeatureUserData(
                         it.uuid,
                         it.packs.mapNotNull { it.toFullData() }.toMutableList().apply {
@@ -66,9 +71,8 @@ fun main() {
                             val actual =
                                 actualGraffitiPacks.values.filter { pack -> it.packs.none { it.uuid == pack.uuid } }
                             if (actual.isNotEmpty()) {
+                                update = true
                                 addAll(actual)
-                                // Если данные только что были сгенерированы - сохранить
-                                mongoAdapter.save(it)
                             }
                         },
                         it.activePack,
@@ -77,10 +81,11 @@ fun main() {
                     )
                 } ?: standardProfile.apply {
                     uuid = packet.playerUuid
-
-                    // Если данные только что были сгенерированы - сохранить
-                    mongoAdapter.save(packet.data!!)
+                    update = true
                 }
+
+                // Если данные только что были сгенерированы - сохранить
+                if (update) scope.launch { mongoAdapter.save(syncProfile(packet.playerUuid, packet.data)) }
 
                 // Ответ серверу
                 ISocketClient.get().write(packet)
@@ -172,12 +177,7 @@ fun main() {
 }
 
 private suspend fun loadProfile(uuid: UUID, accept: suspend (FeatureUserStorage?) -> (Any)) =
-    accept(mongoAdapter.find(uuid) ?: FeatureUserStorage(uuid, actualGraffitiPacks.values.map {
-        GraffitiPackStorage(
-            uuid,
-            it.graffiti.map { GraffitiUnitStorage(it.uses, it.uuid) }.toMutableList()
-        )
-    }.toMutableList(), 0, mutableListOf(), null))
+    accept(mongoAdapter.find(uuid) ?: syncProfile(uuid))
 
 private inline fun <reified T : CorePackage> registerHandler(noinline packageHandler: (RealmId, T) -> Unit) =
     ISocketClient.get().addListener(T::class.java, packageHandler)

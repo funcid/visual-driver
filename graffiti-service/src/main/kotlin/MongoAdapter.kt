@@ -44,7 +44,7 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
 
                 // Создание индекса UUID для быстрого поиска
                 collections.forEach { (_, value) ->
-                    value.createIndex(Indexes.ascending("uuid"))
+                    value.createIndex(Indexes.hashed("uuid"))
                     println("Created index for collection.")
                     println("Documents total: ${value.countDocuments()}")
                 }

@@ -16,7 +16,6 @@ import me.func.protocol.personalization.GraffitiInfo
 import me.func.protocol.personalization.GraffitiPack
 import me.func.protocol.personalization.GraffitiPlaced
 import org.lwjgl.input.Keyboard
-import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
 import ru.cristalix.clientapi.KotlinMod
@@ -24,22 +23,17 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Rotation
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.rotationMatrix
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.onMouseUp
+import ru.cristalix.uiengine.utility.*
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.sin
 
 lateinit var graffitiMod: GraffitiMod
-const val PICTURE_SIZE = 1920
-const val OVAL_RADIUS = 90
+const val PICTURE_SIZE = 2049
+const val OVAL_RADIUS = 100
 const val ICON_PACK_SIZE = 20.0
+const val BASE_SCALE = 0.22
 
 class GraffitiMod : KotlinMod() {
 
@@ -75,6 +69,13 @@ class GraffitiMod : KotlinMod() {
     }
 
     private fun addGraffiti(graffiti: LocalGraffitiPlaced) {
+        // Если этот игрок поставил граффити - убрать использование
+        if (graffiti.graffiti.owner == clientApi.minecraft().player.uniqueID) {
+            userData.packs.forEach { pack ->
+                pack.graffiti.find { it.uuid == graffiti.graffiti.graffiti.uuid }?.let { it.uses-- }
+            }
+        }
+
         // Добавить граффити в мир
         val context = graffiti.context3D
 
@@ -157,8 +158,6 @@ class GraffitiMod : KotlinMod() {
         buffer.writeBoolean(graffiti.onGround)
         buffer.writeBoolean(false)
 
-        graffiti.graffiti.uses--
-
         clientApi.clientConnection().sendPayload("graffiti:use", buffer)
     }
 
@@ -179,19 +178,19 @@ class GraffitiMod : KotlinMod() {
         GlowEffect.showAlways(rare.red, rare.green, rare.blue, 0.11)
 
         active.graffiti.forEachIndexed { index, element ->
-            element.icon.scale.x = 0.25
-            element.icon.scale.y = 0.25
+            element.icon.scale.x = BASE_SCALE
+            element.icon.scale.y = BASE_SCALE
 
             val angle = 2 * Math.PI / active.graffiti.size * index
             element.icon.offset.x = sin(angle) * OVAL_RADIUS
-            element.icon.offset.y = cos(angle) * OVAL_RADIUS * 0.75 - 40
+            element.icon.offset.y = cos(angle) * OVAL_RADIUS * 0.85 - 45
             element.icon.enabled = true
 
             gui + element.icon
         }
         gui + active.title
         val text = "Купить - ${pack.price} кристаликов"
-        gui + rectangle {
+        gui + carved {
             align = CENTER
             origin = CENTER
             color = Color(42, 102, 189, 1.0)
@@ -204,13 +203,24 @@ class GraffitiMod : KotlinMod() {
                 shadow = true
                 content = text
             }
-            onClick { if (Mouse.isButtonDown(0)) buyPack(active) }
+            onMouseUp { if (button == MouseButton.LEFT) buyPack(active) }
         }
-        packs.forEachIndexed { index, it ->
-            gui + it.icon.apply {
-                val boost = if (index == graffitiMod.userData.activePack) 2 else 0
-                it.icon.size.x = ICON_PACK_SIZE + boost
-                it.icon.size.y = ICON_PACK_SIZE + boost
+
+        gui + flex {
+            flexSpacing = 5.0
+
+            align = CENTER
+            origin = CENTER
+
+            offset.y += OVAL_RADIUS - 5
+
+            packs.forEachIndexed { index, it ->
+                +it.icon.apply {
+                    val boost = if (index == graffitiMod.userData.activePack) 2 else 0
+
+                    it.icon.size.x = ICON_PACK_SIZE + boost
+                    it.icon.size.y = ICON_PACK_SIZE + boost
+                }
             }
         }
     }

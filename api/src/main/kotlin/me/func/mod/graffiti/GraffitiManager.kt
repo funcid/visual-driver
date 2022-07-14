@@ -17,9 +17,9 @@ import kotlin.math.abs
 
 object GraffitiManager {
 
-    private const val GRAFFITI_TICKS_ALIVE = 20 * 30
+    private const val GRAFFITI_TICKS_ALIVE = 20 * 60
     private const val MAX_GRAFFITI_IN_WORLD = 50
-    private const val MAX_GRAFFITI_PER_PLAYER = 3
+    private const val MAX_GRAFFITI_PER_PLAYER = 7
     private const val MAX_PLACE_DISTANCE = 10
 
     private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
@@ -115,7 +115,7 @@ object GraffitiManager {
             }
 
             // Если на одного игрока много поставленных граффити
-            if (placed.filter { it.owner == player.uniqueId }.size > MAX_GRAFFITI_PER_PLAYER) {
+            if (placed.filter { it.owner == player.uniqueId }.size >= MAX_GRAFFITI_PER_PLAYER) {
                 player.sendMessage(Formatting.error("Вы поставили слишком много граффити!"))
                 return@createReader
             }

@@ -5,27 +5,17 @@ import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 import java.util.UUID
 
 data class LocalPack(
     var packUuid: UUID,
     val index: Int,
-    val icon: RectangleElement = rectangle {
+    val icon: RectangleElement = carved {
         origin = CENTER
         align = CENTER
 
-        val boxSize = ICON_PACK_SIZE
-        val boxOpposite = 8
-
-        offset.y += OVAL_RADIUS - 10
-        offset.x += index * boxSize + index * boxOpposite - graffitiMod.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
-
-        size = V3(boxSize, boxSize)
+        size = V3(ICON_PACK_SIZE, ICON_PACK_SIZE)
         color = WHITE
 
         onMouseUp {
@@ -60,8 +50,8 @@ data class LocalPack(
 
                 if (child != null && !hovered) {
                     animate(0.1) {
-                        scale.x = 0.25
-                        scale.y = 0.25
+                        scale.x = BASE_SCALE
+                        scale.y = BASE_SCALE
                         color.alpha = 1.0
                     }
                     removeChild(child!!)
@@ -77,8 +67,8 @@ data class LocalPack(
                     }
                     addChild(child!!)
                     animate(0.1) {
-                        scale.x = 0.37
-                        scale.y = 0.37
+                        scale.x = 0.3
+                        scale.y = 0.3
                         color.alpha = 0.7
                     }
                 }
