@@ -453,6 +453,7 @@ object Anime {
 
         ModTransfer()
             .string(placed.owner.toString())
+            .string(placed.ownerName)
             .string(placed.world)
             .string(placed.graffiti.uuid.toString())
             .integer(placed.graffiti.address.x)
@@ -469,8 +470,8 @@ object Anime {
             .double(placed.rotationAxisX)
             .double(placed.rotationAxisY)
             .double(placed.rotationAxisZ)
+            .double(placed.extraRotation)
             .boolean(placed.onGround)
-            .boolean(placed.local)
             .send("graffiti:create", player)
     }
 

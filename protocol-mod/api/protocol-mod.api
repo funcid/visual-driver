@@ -63,10 +63,10 @@ public final class me/func/protocol/personalization/GraffitiPack : me/func/proto
 }
 
 public final class me/func/protocol/personalization/GraffitiPlaced {
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDZZ)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZ)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getExtraRotation ()D
 	public final fun getGraffiti ()Lme/func/protocol/personalization/Graffiti;
-	public final fun getLocal ()Z
 	public final fun getOnGround ()Z
 	public final fun getOwner ()Ljava/util/UUID;
 	public final fun getRotationAngle ()D
@@ -78,8 +78,8 @@ public final class me/func/protocol/personalization/GraffitiPlaced {
 	public final fun getX ()D
 	public final fun getY ()D
 	public final fun getZ ()D
+	public final fun setExtraRotation (D)V
 	public final fun setGraffiti (Lme/func/protocol/personalization/Graffiti;)V
-	public final fun setLocal (Z)V
 	public final fun setOnGround (Z)V
 	public final fun setOwner (Ljava/util/UUID;)V
 	public final fun setRotationAngle (D)V

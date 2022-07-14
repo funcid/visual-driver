@@ -9,6 +9,7 @@ import java.util.UUID
 data class FeatureUserData(
     @Serializable(with = UUIDSerializer::class)
     override var uuid: UUID,
+    var name: String,
     var packs: MutableList<GraffitiPack>,
     var activePack: Int,
     var stickers: MutableList<Sticker>,

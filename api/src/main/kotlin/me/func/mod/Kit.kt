@@ -127,7 +127,7 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
 
             after(5) {
                 // Отправить картинку с граффити
-                Anime.loadTexture(player, "https://storage.c7x.ru/func/animation-api/graffiti.png")
+                Anime.loadTexture(player, "https://storage.c7x.dev/func/animation-api/graffiti.png")
 
                 // Отправить игроку мод
                 ModLoader.send(GRAFFITI_MOD_URL.fileLastName(), player)

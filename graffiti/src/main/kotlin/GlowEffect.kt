@@ -3,7 +3,6 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import org.lwjgl.opengl.GL11
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.rectangle
 
@@ -26,11 +25,11 @@ object GlowEffect {
     }
 
     init {
-        graffitiMod.registerHandler<WindowResize> { vignette.size = UIEngine.overlayContext.size }
+        mod.registerHandler<WindowResize> { vignette.size = UIEngine.overlayContext.size }
     }
 
     fun showAlways(red: Int, green: Int, blue: Int, power: Double) {
-        graffitiMod.gui + vignette
+        mod.gui + vignette
 
         vignette.color.red = red
         vignette.color.blue = blue

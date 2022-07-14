@@ -4,6 +4,7 @@ import java.util.UUID
 
 class GraffitiPlaced(
     var owner: UUID,
+    var ownerName: String,
     val world: String,
     var graffiti: Graffiti,
     var x: Double,
@@ -14,6 +15,6 @@ class GraffitiPlaced(
     var rotationAxisX: Double = 0.0,
     var rotationAxisY: Double = 0.0,
     var rotationAxisZ: Double = 0.0,
-    var onGround: Boolean = false,
-    var local: Boolean = false
+    var extraRotation: Double = 0.0,
+    var onGround: Boolean = false
 )

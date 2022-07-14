@@ -32,6 +32,7 @@ object GraffitiManager {
 
         needed.forEach { place ->
             transfer.string(place.owner.toString())
+                .string(place.ownerName)
                 .string(place.world)
                 .string(place.graffiti.uuid.toString())
                 .integer(place.graffiti.address.x)
@@ -43,13 +44,13 @@ object GraffitiManager {
                 .double(place.x)
                 .double(place.y)
                 .double(place.z)
+                .integer(place.ticksLeft)
                 .double(place.rotationAngle)
                 .double(place.rotationAxisX)
                 .double(place.rotationAxisY)
                 .double(place.rotationAxisZ)
-                .integer(place.ticksLeft)
+                .double(place.extraRotation)
                 .boolean(place.onGround)
-                .boolean(place.local)
         }
 
         transfer.send("graffiti:create-bulk", player) // На моде все стоящие очистятся
@@ -141,6 +142,7 @@ object GraffitiManager {
                 // Создание граффити в мире
                 val placedGraffiti = GraffitiPlaced(
                     player.uniqueId,
+                    player.displayName,
                     player.world.name,
                     graffiti, x, y, z,
                     GRAFFITI_TICKS_ALIVE,
@@ -148,7 +150,7 @@ object GraffitiManager {
                     buffer.readDouble(),
                     buffer.readDouble(),
                     buffer.readDouble(),
-                    buffer.readBoolean(),
+                    buffer.readDouble(),
                     buffer.readBoolean()
                 )
 

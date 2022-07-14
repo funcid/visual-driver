@@ -1,21 +1,16 @@
 import dev.xdark.clientapi.event.entity.RotateAround
 import dev.xdark.clientapi.event.input.KeyPress
-import dev.xdark.clientapi.event.render.ArmorRender
-import dev.xdark.clientapi.event.render.ExpBarRender
-import dev.xdark.clientapi.event.render.HealthRender
-import dev.xdark.clientapi.event.render.HungerRender
-import dev.xdark.clientapi.event.render.RenderTickPre
+import dev.xdark.clientapi.event.input.MousePress
+import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
-import me.func.protocol.personalization.FeatureUserData
-import me.func.protocol.personalization.Graffiti
-import me.func.protocol.personalization.GraffitiInfo
-import me.func.protocol.personalization.GraffitiPack
-import me.func.protocol.personalization.GraffitiPlaced
+import me.func.protocol.personalization.*
 import org.lwjgl.input.Keyboard
+import org.lwjgl.input.Mouse
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
 import ru.cristalix.clientapi.KotlinMod
@@ -25,11 +20,14 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
-import java.util.UUID
+import sun.audio.AudioPlayer.player
+import java.util.*
 import kotlin.math.cos
+import kotlin.math.pow
+import kotlin.math.sign
 import kotlin.math.sin
 
-lateinit var graffitiMod: GraffitiMod
+lateinit var mod: GraffitiMod
 const val PICTURE_SIZE = 2049
 const val OVAL_RADIUS = 100
 const val ICON_PACK_SIZE = 20.0
@@ -49,6 +47,12 @@ class GraffitiMod : KotlinMod() {
     var activeGraffiti: LocalGraffitiPlaced? = null
     private var drewGraffities = mutableListOf<LocalGraffitiPlaced>()
 
+    fun moveCursor(index: Int) {
+        mod.gui.children.clear()
+        mod.userData.activePack = index
+        mod.loadPackIntoMenu()
+    }
+
     fun getPack(uuid: UUID): GraffitiPack {
         // Получить пак по UUID
         return userData.packs.first { it.uuid == uuid }
@@ -65,7 +69,7 @@ class GraffitiMod : KotlinMod() {
         graffiti.graffiti.rotationAxisX = rotation.x
         graffiti.graffiti.rotationAxisY = rotation.y
         graffiti.graffiti.rotationAxisZ = rotation.z
-        graffiti.context3D.rotation = rotation
+        graffiti.container.rotation = rotation
     }
 
     private fun addGraffiti(graffiti: LocalGraffitiPlaced) {
@@ -76,20 +80,31 @@ class GraffitiMod : KotlinMod() {
             }
         }
 
+        val mark = graffiti.graffiti
+
         // Добавить граффити в мир
-        val context = graffiti.context3D
+        val context = graffiti.container
 
         context.offset.x = graffiti.graffiti.x
         context.offset.y = graffiti.graffiti.y
         context.offset.z = graffiti.graffiti.z
 
-        val mark = graffiti.graffiti
+        context.beforeRender {
+            if (mark.onGround) {
+                val matrix = Matrix4f()
+                Matrix4f.setIdentity(matrix)
+                Matrix4f.rotate(mark.extraRotation.toFloat(), Vector3f(0f, -1f, 0f), matrix, matrix)
+                Matrix4f.rotate((-Math.PI / 2).toFloat(), Vector3f(1f, 0f, 0f), matrix, matrix)
+                context.matrices[rotationMatrix] = matrix
+            }
+        }
+
         val realGraffiti = rectangle {
             origin = CENTER
             align = CENTER
             color = WHITE
 
-            textureLocation = graffitiMod.texture
+            textureLocation = mod.texture
             textureFrom =
                 V3(mark.graffiti.address.x.toDouble() / PICTURE_SIZE, mark.graffiti.address.y.toDouble() / PICTURE_SIZE)
             textureSize = V3(
@@ -102,7 +117,16 @@ class GraffitiMod : KotlinMod() {
         }
 
         setRotation(graffiti, Rotation(mark.rotationAngle, mark.rotationAxisX, mark.rotationAxisY, mark.rotationAxisZ))
+
         context.addChild(realGraffiti)
+        context.addChild(graffiti.indicatorContainer)
+        context.addChild(graffiti.author)
+        context.addChild(graffiti.authorShadow)
+
+        graffiti.indicator.animate(mark.ticksLeft / 19.0) {
+            size.x = 0.0
+        }
+
         UIEngine.worldContexts.add(context)
 
         // Удалить ихз мира через время
@@ -116,6 +140,7 @@ class GraffitiMod : KotlinMod() {
     private fun readLocalGraffitiPlace(buffer: ByteBuf): LocalGraffitiPlaced {
         val graffiti = GraffitiPlaced(
             UUID.fromString(NetUtil.readUtf8(buffer)),
+            NetUtil.readUtf8(buffer),
             NetUtil.readUtf8(buffer),
             Graffiti(
                 GraffitiInfo(
@@ -134,8 +159,8 @@ class GraffitiMod : KotlinMod() {
             buffer.readDouble(),
             buffer.readDouble(),
             buffer.readDouble(),
+            buffer.readDouble(),
             buffer.readBoolean(),
-            buffer.readBoolean()
         )
 
         return LocalGraffitiPlaced(graffiti, Context3D(V3(graffiti.x, graffiti.y, graffiti.z)))
@@ -155,8 +180,8 @@ class GraffitiMod : KotlinMod() {
         buffer.writeDouble(graffiti.rotationAxisX)
         buffer.writeDouble(graffiti.rotationAxisY)
         buffer.writeDouble(graffiti.rotationAxisZ)
+        buffer.writeDouble(graffiti.extraRotation)
         buffer.writeBoolean(graffiti.onGround)
-        buffer.writeBoolean(false)
 
         clientApi.clientConnection().sendPayload("graffiti:use", buffer)
     }
@@ -175,7 +200,7 @@ class GraffitiMod : KotlinMod() {
         val pack = getPack(active.packUuid)
         val rare = DropRare.values()[pack.rare]
 
-        GlowEffect.showAlways(rare.red, rare.green, rare.blue, 0.11)
+        GlowEffect.showAlways(rare.red, rare.green, rare.blue, 0.2)
 
         active.graffiti.forEachIndexed { index, element ->
             element.icon.scale.x = BASE_SCALE
@@ -216,17 +241,19 @@ class GraffitiMod : KotlinMod() {
 
             packs.forEachIndexed { index, it ->
                 +it.icon.apply {
-                    val boost = if (index == graffitiMod.userData.activePack) 2 else 0
+                    val boost = if (index == mod.userData.activePack) 2 else 0
 
                     it.icon.size.x = ICON_PACK_SIZE + boost
                     it.icon.size.y = ICON_PACK_SIZE + boost
+
+                    onMouseUp { moveCursor(index) }
                 }
             }
         }
     }
 
     override fun onEnable() {
-        graffitiMod = this
+        mod = this
         UIEngine.initialize(this)
 
         registerHandler<HealthRender> { if (open) isCancelled = true }
@@ -234,12 +261,53 @@ class GraffitiMod : KotlinMod() {
         registerHandler<ArmorRender> { if (open) isCancelled = true }
         registerHandler<ExpBarRender> { if (open) isCancelled = true }
 
+        gui.onKeyTyped { char, code ->
+            if (code == Keyboard.KEY_LEFT || code == Keyboard.KEY_DOWN) moveCursor(maxOf(0, userData.activePack - 1))
+            else if (code == Keyboard.KEY_RIGHT || code == Keyboard.KEY_UP) moveCursor(
+                minOf(
+                    packs.size - 1,
+                    userData.activePack + 1
+                )
+            )
+        }
+
+        val prompt = text {
+            align = CENTER
+            origin = CENTER
+            shadow = true
+            content = "§bРазместить граффити §lПКМ\n§cУбрать §lЛКМ"
+            offset.y += 10
+        }
+
+        UIEngine.overlayContext + prompt
+
+        registerHandler<GameLoop> {
+            if (open) {
+                val move = Mouse.getDWheel()
+                if (move == 0) return@registerHandler
+
+                moveCursor(maxOf(0, minOf(userData.activePack - sign(move.toDouble()).toInt(), packs.size - 1)))
+            } else {
+                val player = clientApi.minecraft().player
+                drewGraffities.forEach {
+                    val v3 = it.container.offset
+                    val close =
+                        (v3.x - player.x).pow(2.0) + (v3.y - player.y).pow(2.0) + (v3.z - player.z).pow(2.0) < 10
+                    it.authorShadow.enabled = close
+                    it.author.enabled = close
+                    it.indicatorContainer.enabled = close
+                }
+
+                prompt.enabled = activeGraffiti != null
+            }
+        }
+
         gui.color = Color(0, 0, 0, 0.86)
 
         // Загрузить кучу граффити (Например когда игрок меняет мир)
         registerChannel("graffiti:create-bulk") {
             // Удалить все граффити из мира
-            drewGraffities.forEach { UIEngine.worldContexts.remove(it.context3D) }
+            drewGraffities.forEach { UIEngine.worldContexts.remove(it.container) }
 
             // Поставить в мире новые граффити
             drewGraffities = MutableList(readInt()) { readLocalGraffitiPlace(this) }
@@ -314,6 +382,23 @@ class GraffitiMod : KotlinMod() {
             }
         }
 
+
+        fun pick() {
+            if (activeGraffiti != null) {
+                // Вернуть граффити в меню
+                getActivePack().backGraffitiToPack(activeGraffiti!!)
+
+                // Поставить граффити у всех игроков
+                sendGraffitiToServer(activeGraffiti!!)
+
+                // Очистить выбранное граффити
+                activeGraffiti = null
+                open = false
+            }
+        }
+
+        registerHandler<MousePress> { if (activeGraffiti != null) pick() }
+
         registerHandler<KeyPress> {
             if (!inited) return@registerHandler
 
@@ -328,20 +413,7 @@ class GraffitiMod : KotlinMod() {
                     gui.close()
                     false
                 }
-            }
-
-            if (key == Keyboard.KEY_J) {
-                if (activeGraffiti != null && !open) {
-                    // Вернуть граффити в меню
-                    getActivePack().backGraffitiToPack(activeGraffiti!!)
-
-                    // Поставить граффити у всех игроков
-                    sendGraffitiToServer(activeGraffiti!!)
-
-                    // Очистить выбранное граффити
-                    activeGraffiti = null
-                }
-            }
+            } else if (key == Keyboard.KEY_NEXT) pick()
         }
     }
 
@@ -386,15 +458,19 @@ class GraffitiMod : KotlinMod() {
 
                         val matrix = Matrix4f()
                         Matrix4f.setIdentity(matrix)
+
+                        val playerRotation = (player.rotationYaw + 180) / 180 * Math.PI
+
                         Matrix4f.rotate(
-                            ((player.rotationYaw + 180) / 180 * Math.PI).toFloat(),
+                            playerRotation.toFloat(),
                             Vector3f(0f, -1f, 0f),
                             matrix,
                             matrix
                         )
                         Matrix4f.rotate((-Math.PI / 2).toFloat(), Vector3f(1f, 0f, 0f), matrix, matrix)
-                        activeGraffiti!!.context3D.matrices[rotationMatrix] = matrix
 
+                        activeGraffiti!!.container.matrices[rotationMatrix] = matrix
+                        activeGraffiti!!.graffiti.extraRotation = playerRotation
                         setRotation(activeGraffiti!!, Rotation(-Math.PI / 2, 1.0, 0.0, 0.0))
                     } else {
                         moveY += 0.3
@@ -425,7 +501,7 @@ class GraffitiMod : KotlinMod() {
                         }
                     }
 
-                    activeGraffiti!!.context3D.animate(0.03) {
+                    activeGraffiti!!.container.animate(0.03) {
                         offset.x = moveX
                         offset.y = moveY
                         offset.z = moveZ
