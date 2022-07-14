@@ -20,7 +20,6 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
-import sun.audio.AudioPlayer.player
 import java.util.*
 import kotlin.math.cos
 import kotlin.math.pow
@@ -30,7 +29,7 @@ import kotlin.math.sin
 lateinit var mod: GraffitiMod
 const val PICTURE_SIZE = 2049
 const val OVAL_RADIUS = 100
-const val ICON_PACK_SIZE = 20.0
+const val ICON_PACK_SIZE = 32.0
 const val BASE_SCALE = 0.22
 
 class GraffitiMod : KotlinMod() {
@@ -123,9 +122,7 @@ class GraffitiMod : KotlinMod() {
         context.addChild(graffiti.author)
         context.addChild(graffiti.authorShadow)
 
-        graffiti.indicator.animate(mark.ticksLeft / 19.0) {
-            size.x = 0.0
-        }
+        graffiti.indicator.animate(mark.ticksLeft / 19.0) { size.x = 0.0 }
 
         UIEngine.worldContexts.add(context)
 
@@ -208,13 +205,13 @@ class GraffitiMod : KotlinMod() {
 
             val angle = 2 * Math.PI / active.graffiti.size * index
             element.icon.offset.x = sin(angle) * OVAL_RADIUS
-            element.icon.offset.y = cos(angle) * OVAL_RADIUS * 0.85 - 45
+            element.icon.offset.y = cos(angle) * OVAL_RADIUS * 0.85 - 30
             element.icon.enabled = true
 
             gui + element.icon
         }
         gui + active.title
-        val text = "Купить - ${pack.price} кристаликов"
+        /*val text = "Купить - ${pack.price} кристаликов"
         gui + carved {
             align = CENTER
             origin = CENTER
@@ -229,7 +226,7 @@ class GraffitiMod : KotlinMod() {
                 content = text
             }
             onMouseUp { if (button == MouseButton.LEFT) buyPack(active) }
-        }
+        }*/
 
         gui + flex {
             flexSpacing = 5.0
@@ -237,14 +234,16 @@ class GraffitiMod : KotlinMod() {
             align = CENTER
             origin = CENTER
 
-            offset.y += OVAL_RADIUS - 5
+            offset.y += OVAL_RADIUS + 20
 
             packs.forEachIndexed { index, it ->
-                +it.icon.apply {
-                    val boost = if (index == mod.userData.activePack) 2 else 0
+                +it.iconContainer.apply {
+                    val boost = if (index == mod.userData.activePack) 6 else 0
 
-                    it.icon.size.x = ICON_PACK_SIZE + boost
-                    it.icon.size.y = ICON_PACK_SIZE + boost
+                    it.iconContainer.size.x = ICON_PACK_SIZE + boost
+                    it.iconContainer.size.y = ICON_PACK_SIZE + boost
+                    it.icon.size.x = ICON_PACK_SIZE + boost - 4
+                    it.icon.size.y = ICON_PACK_SIZE + boost - 4
 
                     onMouseUp { moveCursor(index) }
                 }
@@ -276,12 +275,14 @@ class GraffitiMod : KotlinMod() {
             origin = CENTER
             shadow = true
             content = "§bРазместить граффити §lПКМ\n§cУбрать §lЛКМ"
-            offset.y += 10
+            offset.y += 30
         }
 
         UIEngine.overlayContext + prompt
 
         registerHandler<GameLoop> {
+            prompt.enabled = activeGraffiti != null
+
             if (open) {
                 val move = Mouse.getDWheel()
                 if (move == 0) return@registerHandler
@@ -297,8 +298,6 @@ class GraffitiMod : KotlinMod() {
                     it.author.enabled = close
                     it.indicatorContainer.enabled = close
                 }
-
-                prompt.enabled = activeGraffiti != null
             }
         }
 
@@ -397,7 +396,12 @@ class GraffitiMod : KotlinMod() {
             }
         }
 
-        registerHandler<MousePress> { if (activeGraffiti != null) pick() }
+        registerHandler<MousePress> {
+            if (activeGraffiti != null) {
+                if (button == MouseButton.LEFT.ordinal) pick()
+                else if (button == MouseButton.RIGHT.ordinal) activeGraffiti = null
+            }
+        }
 
         registerHandler<KeyPress> {
             if (!inited) return@registerHandler

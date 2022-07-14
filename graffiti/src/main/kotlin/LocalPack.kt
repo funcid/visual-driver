@@ -2,6 +2,7 @@ import me.func.protocol.personalization.GraffitiPlaced
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.Context3D
+import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
@@ -11,12 +12,23 @@ import java.util.*
 data class LocalPack(
     var packUuid: UUID,
     val index: Int,
-    val icon: CarvedRectangle = carved {
+    val icon: RectangleElement = rectangle {
         origin = CENTER
         align = CENTER
 
-        size = V3(ICON_PACK_SIZE, ICON_PACK_SIZE)
+        val total = mod.getPack(packUuid).graffiti.first().address.size * 1.0 / PICTURE_SIZE
+        textureLocation = mod.texture
+        textureFrom = V3(0.0, total * index)
+        textureSize = V3(total, total)
+        size = V3(ICON_PACK_SIZE - 4, ICON_PACK_SIZE - 4)
         color = WHITE
+    },
+    val iconContainer: CarvedRectangle = carved {
+        origin = CENTER
+        align = CENTER
+        size = V3(ICON_PACK_SIZE, ICON_PACK_SIZE)
+        color = Color(0, 0, 0, 0.62)
+        +icon
     },
     val title: TextElement = text {
         val pack = mod.getPack(packUuid)
@@ -25,7 +37,7 @@ data class LocalPack(
         color = WHITE
         offset.y -= 30
         shadow = true
-        content = "${pack.title}\nby ${pack.creator}"
+        content = "${pack.title}\n${pack.creator}"
     }, var graffiti: List<LocalGraffiti> = mod.getPack(packUuid).graffiti.map { currentGraffiti ->
         LocalGraffiti(mod.getPack(packUuid), currentGraffiti, rectangle {
             origin = CENTER

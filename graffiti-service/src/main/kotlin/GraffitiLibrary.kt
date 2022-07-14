@@ -27,7 +27,7 @@ val graffitiPacksUuid = listOf(
 
 val actualGraffitiPacks = mutableMapOf(
     createPack(
-        "Ты котик!", "func", 99, DropRare.COMMON, 0,
+        "Тёмный Инь", "Ян Ханин", 99, DropRare.EPIC, 0,
         "307264a1-2c69-11e8-b5ea-1cb72caa35f1",
         "307264a1-2c69-11e8-b5ea-1cb72caa35f2",
         "307264a1-2c69-11e8-b5ea-1cb72caa35f3",
@@ -38,7 +38,7 @@ val actualGraffitiPacks = mutableMapOf(
         "b99261af-c4e9-4a5e-bdde-3438c36a15f4",
     ),
     createPack(
-        "Домашняя Лиса", "func", 99, DropRare.COMMON, 1,
+        "Чамп", "Антон Андреев", 99, DropRare.COMMON, 1,
         "d647e5ab-676c-4f08-9e07-46ae8d368f1b",
         "803d713e-787c-43d1-af90-b2e6207e57aa",
         "714f520c-fddb-44db-ba76-a83fafb5b152",
@@ -49,7 +49,7 @@ val actualGraffitiPacks = mutableMapOf(
         "f1411866-4906-4214-9887-bdaffa8af56f",
     ),
     createPack(
-        "Тест 3", "func", 999, DropRare.COMMON, 2,
+        "Рулет и Булка", "Ксения Крашник", 999, DropRare.COMMON, 2,
         "69ff2678-d869-4858-9211-7501f97dd69b",
         "641a2440-d5f5-4ab4-80e8-10b8f076499a",
         "c9ce4f1b-f4b7-4031-be2d-0c40bc964e16",
@@ -60,7 +60,7 @@ val actualGraffitiPacks = mutableMapOf(
         "f14aa866-4906-4217-9887-bdaffa8af56f",
     ),
     createPack(
-        "Тест 4", "func", 999, DropRare.COMMON, 3,
+        "Бу", "Юрий Краснощёк", 999, DropRare.EPIC, 3,
         "0f0e9808-4faf-4ba3-8793-f5f87f40044f",
         "2fda2abd-261c-440b-9384-09794f510ec0",
         "2a00d4ea-06ba-4966-b914-f63badf0dbd7",
@@ -71,7 +71,7 @@ val actualGraffitiPacks = mutableMapOf(
         "fe75c6f8-4977-4c18-a421-5bab0b799652",
     ),
     createPack(
-        "Тест 5", "func", 999, DropRare.COMMON, 4,
+        "Зимний Рулет", "Ксения Крашник", 999, DropRare.COMMON, 4,
         "16a95c62-f9d7-4b3b-bc0b-e75415abc5d4",
         "5851f3b2-e5cf-4c3f-8642-152f2717d1b5",
         "5ca5eb2d-8074-4d3f-b7f2-11e29ade77a6",
@@ -82,7 +82,7 @@ val actualGraffitiPacks = mutableMapOf(
         "f1411866-4906-4217-988a-bdaffa8af56f",
     ),
     createPack(
-        "Тест 6", "func", 999, DropRare.COMMON, 5,
+        "Котялок", "Ксения Крашник", 999, DropRare.COMMON, 5,
         "b75db498-2b78-4639-9cc1-667f935e86b4",
         "6afd3c08-85f6-45a0-bea7-530601318e04",
         "dbd7a57d-b8e0-48c0-97b3-4f46fabd3250",
@@ -93,7 +93,7 @@ val actualGraffitiPacks = mutableMapOf(
         "f1411866-4906-4217-9887-bdaffa8afaaf",
     ),
     createPack(
-        "Тест 7", "func", 999, DropRare.COMMON, 6,
+        "Айрис", "Кристина Третьякова", 999, DropRare.LEGENDARY, 6,
         "05bd7557-7c18-4974-a01d-595c2b3a1578",
         "63b2b097-9a45-459c-9f1d-337a3ae5a099",
         "6d9087c1-9d0b-4199-a890-61e9269547fa",
@@ -104,7 +104,7 @@ val actualGraffitiPacks = mutableMapOf(
         "f14118aa-b906-4217-9887-bdaffa8af56f",
     ),
     createPack(
-        "Тест 8", "func", 999, DropRare.COMMON, 7,
+        "Нутри", "Ирина Брэдкэт", 999, DropRare.LEGENDARY, 7,
         "862fb214-82d9-4b1e-825a-fe3ca0fbf488",
         "0420ed16-d2c5-43a4-85d8-f9efa9386418",
         "1e62d38c-73de-4d64-a974-29bcd5047890",

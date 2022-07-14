@@ -52,7 +52,7 @@ fun main() {
     }
 
     val standardProfile = FeatureUserData(
-        UUID.randomUUID(), actualGraffitiPacks.values.toMutableList(), 0, mutableListOf(), null
+        UUID.randomUUID(), "", actualGraffitiPacks.values.toMutableList(), 0, mutableListOf(), null
     )
 
     registerHandler<GraffitiLoadUserPackage> { realm, packet ->
@@ -66,6 +66,7 @@ fun main() {
                     println("Loaded data for ${packet.playerUuid}.")
                     FeatureUserData(
                         it.uuid,
+                        "",
                         it.packs.mapNotNull { it.toFullData() }.toMutableList().apply {
                             // Если не хватает новых паков - добавить и сохранить
                             val actual =
