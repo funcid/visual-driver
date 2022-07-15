@@ -751,6 +751,12 @@ public final class me/func/mod/selection/queue/QueueViewerKt {
 	public static final fun queueView (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/queue/QueueView;
 }
 
+public final class me/func/mod/service/Services {
+	public static final field INSTANCE Lme/func/mod/service/Services;
+	public final fun getBalanceData (Lorg/bukkit/entity/Player;)Ljava/util/concurrent/CompletableFuture;
+	public final fun getDiscount (Lorg/bukkit/entity/Player;)Ljava/util/concurrent/CompletableFuture;
+}
+
 public final class me/func/mod/util/FilesKt {
 	public static final fun dir (Ljava/lang/String;)Ljava/nio/file/Path;
 	public static final fun fileLastName (Ljava/lang/String;)Ljava/lang/String;
