@@ -1,20 +1,19 @@
 package me.func.mod.graffiti
 
-import me.func.mod.service.Services
+import me.func.mod.service.Services.socketClient
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
 import me.func.protocol.personalization.FeatureUserData
 import me.func.protocol.personalization.packet.StickersAvailablePackage
 import ru.cristalix.core.network.Capability
-import ru.cristalix.core.network.ISocketClient
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
 class CoreGraffitiClient : GraffitiClient {
 
     init {
-        Services.socketClient.registerCapabilities(
+        socketClient.registerCapabilities(
             Capability.builder()
                 .className(GraffitiBuyPackage::class.java.name)
                 .notification(true)
@@ -35,17 +34,17 @@ class CoreGraffitiClient : GraffitiClient {
     }
 
     override fun loadUser(uuid: UUID): CompletableFuture<FeatureUserData?> =
-        Services.socketClient
+        socketClient
             .writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid))
             .thenApply { it.data }
 
     override fun use(uuid: UUID, pack: UUID, graffiti: UUID): CompletableFuture<Boolean> =
-        Services.socketClient
+        socketClient
             .writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(uuid, pack, graffiti))
             .thenApply { it.success }
 
     override fun buy(uuid: UUID, pack: UUID, price: Int): CompletableFuture<String?> =
-        Services.socketClient
+        socketClient
             .writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(uuid, pack, price))
             .thenApply { it.errorMessage }
 }
