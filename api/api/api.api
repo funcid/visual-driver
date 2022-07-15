@@ -524,6 +524,7 @@ public final class me/func/mod/graffiti/GraffitiManager {
 
 public final class me/func/mod/selection/Button {
 	public fun <init> ()V
+	public final fun copy ()Lme/func/mod/selection/Button;
 	public final fun description (Ljava/util/List;)Lme/func/mod/selection/Button;
 	public final fun description ([Ljava/lang/String;)Lme/func/mod/selection/Button;
 	public final fun getDescription ()Ljava/lang/String;
@@ -608,6 +609,27 @@ public final class me/func/mod/selection/Confirmation : me/func/mod/selection/Op
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
+public class me/func/mod/selection/DonateSelection : me/func/mod/selection/Selection {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Z)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZI)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZII)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZIILjava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZIILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun getMoney ()Ljava/lang/String;
+	public final fun getVault ()Ljava/lang/String;
+	public final fun getWithGlobalSale ()Z
+	public final fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/DonateSelection;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Selection;
+	public final fun setMoney (Ljava/lang/String;)V
+	public final fun setVault (Ljava/lang/String;)V
+	public final synthetic fun setWithGlobalSale (Z)V
+	public final fun withGlobalSale (Z)V
+}
+
 public final class me/func/mod/selection/MenuManager : org/bukkit/event/Listener {
 	public static final field INSTANCE Lme/func/mod/selection/MenuManager;
 	public static final fun bind (Lme/func/mod/selection/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
@@ -616,7 +638,8 @@ public final class me/func/mod/selection/MenuManager : org/bukkit/event/Listener
 	public final fun getMenuStacks ()Ljava/util/HashMap;
 	public final fun getReconnectMap ()Ljava/util/HashMap;
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
-	public static final fun open (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Storage;
+	public static final fun open (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Storage;
+	public static synthetic fun open$default (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/func/mod/selection/Storage;
 	public final fun reactive (Lme/func/mod/selection/Button;Lkotlin/jvm/functions/Function1;)V
 }
 
@@ -650,32 +673,33 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public final class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
+public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/selection/Button;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/selection/Button;)V
 	public fun buttons ([Lme/func/mod/selection/Button;)V
 	public fun clear ()V
-	public final fun getColumns ()I
-	public final fun getHint ()Ljava/lang/String;
-	public final fun getMoney ()Ljava/lang/String;
-	public final fun getRows ()I
+	public fun getColumns ()I
+	public fun getHint ()Ljava/lang/String;
+	public fun getMoney ()Ljava/lang/String;
+	public fun getRows ()I
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public final fun getVault ()Ljava/lang/String;
+	public fun getVault ()Ljava/lang/String;
 	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
-	public final fun setColumns (I)V
-	public final fun setHint (Ljava/lang/String;)V
-	public final fun setMoney (Ljava/lang/String;)V
-	public final fun setRows (I)V
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Selection;
+	public fun setColumns (I)V
+	public fun setHint (Ljava/lang/String;)V
+	public fun setMoney (Ljava/lang/String;)V
+	public fun setRows (I)V
 	public fun setStorage (Ljava/util/List;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
-	public final fun setVault (Ljava/lang/String;)V
+	public fun setVault (Ljava/lang/String;)V
 }
 
 public abstract interface class me/func/mod/selection/Storage : me/func/mod/selection/Openable {
