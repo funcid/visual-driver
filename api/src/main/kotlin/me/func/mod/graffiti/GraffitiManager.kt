@@ -2,6 +2,7 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.service.Services
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
@@ -131,7 +132,7 @@ object GraffitiManager {
                 return@createReader
 
             // Мы прошли все проверки теперь можно тратить граффити!
-            ISocketClient.get().writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(player.uniqueId, packUuid, graffitiUuid)).thenAccept { pckg ->
+            Services.socketClient.writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(player.uniqueId, packUuid, graffitiUuid)).thenAccept { pckg ->
                 if (!pckg.success) {
                     player.sendMessage(Formatting.error("У вас закончилось это граффити! Если это ошибка, перезайдите на сервер."))
                     return@thenAccept
@@ -173,7 +174,7 @@ object GraffitiManager {
             val pack = data.packs.find { it.uuid == packUuid } ?: return@createReader
 
             // Попробовать купить пак граффити
-            ISocketClient.get().writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(player.uniqueId, packUuid, pack.price)).thenAccept { pckg ->
+            Services.socketClient.writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(player.uniqueId, packUuid, pack.price)).thenAccept { pckg ->
                 pckg.errorMessage?.let {
                     player.sendMessage(Formatting.error(it))
                     return@thenAccept
@@ -198,7 +199,7 @@ object GraffitiManager {
         if (value != null) {
             future.complete(value)
         } else {
-            ISocketClient.get().writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid)).thenAccept { pckg ->
+            Services.socketClient.writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid)).thenAccept { pckg ->
                 // Если данные успешно загрузились
                 val data = pckg.data
 

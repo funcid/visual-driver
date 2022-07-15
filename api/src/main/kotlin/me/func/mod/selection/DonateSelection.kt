@@ -1,16 +1,12 @@
 package me.func.mod.selection
 
-import com.github.benmanes.caffeine.cache.Caffeine
 import me.func.mod.Anime.provided
 import me.func.mod.selection.MenuManager.open
+import me.func.mod.service.Services.getBalanceData
+import me.func.mod.service.Services.getDiscount
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import ru.cristalix.core.coupons.ICouponsService
-import ru.cristalix.core.invoice.BalanceData
-import ru.cristalix.core.invoice.IInvoiceService
-import java.util.UUID
-import java.util.concurrent.CompletableFuture
-import java.util.concurrent.TimeUnit
 
 /**
  * Selection, у которого valut - donate, и money устанавливается сам, Кристалики N,
@@ -33,23 +29,6 @@ open class DonateSelection @JvmOverloads constructor(
     columns = columns,
     storage = storage
 ) {
-    private companion object {
-        val couponService: ICouponsService = ICouponsService.get()
-        val invoiceService: IInvoiceService = IInvoiceService.get()
-
-        val balanceDataCache = Caffeine.newBuilder()
-            .maximumSize(150)
-            .expireAfterWrite(1, TimeUnit.MINUTES)
-            .buildAsync<UUID, BalanceData> { key, _ -> invoiceService.getBalanceData(key) }
-
-        val discountCache = Caffeine.newBuilder()
-            .maximumSize(150)
-            .expireAfterWrite(1, TimeUnit.MINUTES)
-            .buildAsync<UUID, Int> { key, executor ->
-                CompletableFuture.supplyAsync({ couponService.getDiscount(key) }, executor)
-            }
-    }
-
     final override var money: String
         get() = super.money
         set(_) = error("cannot set money in DonateSelection")
@@ -76,24 +55,23 @@ open class DonateSelection @JvmOverloads constructor(
      * @return Этот же DonateSelection
      */
     final override fun open(player: Player): DonateSelection {
-        balanceDataCache.get(player.uniqueId)
-            .thenCombine(discountCache.get(player.uniqueId)) { balanceData, sale ->
-                Bukkit.getScheduler().runTask(provided) {
-                    open(
-                        player,
-                        "storage:open",
-                        customStorage = if (withGlobalSale) storage.map {
-                            it.copy().sale(sale)
-                        } else storage
-                    ) {
-                        string(vault)
-                        string("Кристалики ${balanceData.crystals + balanceData.coins}")
-                        string(hint)
-                        integer(rows)
-                        integer(columns)
-                    }
+        getBalanceData(player).thenCombine(getDiscount(player)) { balanceData, sale ->
+            Bukkit.getScheduler().runTask(provided) {
+                open(
+                    player,
+                    "storage:open",
+                    customStorage = if (withGlobalSale) storage.map {
+                        it.copy().sale(sale)
+                    } else storage
+                ) {
+                    string(vault)
+                    string("Кристалики ${balanceData.crystals + balanceData.coins}")
+                    string(hint)
+                    integer(rows)
+                    integer(columns)
                 }
             }
+        }
         return this
     }
 }
