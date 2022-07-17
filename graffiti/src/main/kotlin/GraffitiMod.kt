@@ -1,3 +1,4 @@
+import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.entity.RotateAround
 import dev.xdark.clientapi.event.input.KeyPress
 import dev.xdark.clientapi.event.input.MousePress
@@ -411,11 +412,11 @@ class GraffitiMod : KotlinMod() {
             }
         }
 
-        registerHandler<KeyPress> {
-            if (!inited) return@registerHandler
+        registerHandler<ChatSend> {
+            if (message.startsWith("/graffiti")) {
+                if (!inited) return@registerHandler
 
-            // Выбрать другое граффити
-            if (key == Keyboard.KEY_H) {
+                // Выбрать другое граффити
                 open = if (activeGraffiti == null) {
                     loadPackIntoMenu()
                     gui.open()
@@ -425,7 +426,24 @@ class GraffitiMod : KotlinMod() {
                     gui.close()
                     false
                 }
-            } else if (key == Keyboard.KEY_NEXT) pick()
+            }
+        }
+
+        registerHandler<KeyPress> {
+            //if (!inited) return@registerHandler
+
+            // Выбрать другое граффити
+            //if (key == Keyboard.KEY_H) {
+            //    open = if (activeGraffiti == null) {
+            //        loadPackIntoMenu()
+            //        gui.open()
+            //        true
+            //    } else {
+            //        gui.children.clear()
+            //        gui.close()
+            //        false
+            //    }
+            //} else if (key == Keyboard.KEY_NEXT) pick()
         }
     }
 

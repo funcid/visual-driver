@@ -108,11 +108,7 @@ class PlayChoice(
                         }
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
-                        var block = false
                         onHover {
-                            if (block) return@onHover
-                            block = true
-                            UIEngine.schedule(0.2) { block = false }
                             animate(0.2, Easings.CUBIC_OUT) {
                                 hint.color.alpha = if (hovered) 0.95 else 0.0
                                 element.hintElement?.color?.alpha = if (hovered) 1.0 else 0.0

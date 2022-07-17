@@ -17,7 +17,7 @@ import kotlin.math.abs
 
 object GraffitiManager {
 
-    private const val GRAFFITI_TICKS_ALIVE = 20 * 60
+    private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
     private const val MAX_GRAFFITI_IN_WORLD = 30
     private const val MAX_GRAFFITI_PER_PLAYER = 5
     private const val MAX_PLACE_DISTANCE = 10

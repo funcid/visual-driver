@@ -19,6 +19,7 @@ import ru.cristalix.core.network.packages.MoneyTransactionRequestPackage
 import ru.cristalix.core.network.packages.MoneyTransactionResponsePackage
 import ru.cristalix.core.realm.RealmId
 import java.util.*
+import kotlin.concurrent.thread
 
 private val scope = CoroutineScope(Dispatchers.IO)
 private lateinit var mongoAdapter: MongoAdapter
@@ -172,6 +173,30 @@ fun main() {
 
                 // Ответ серверу об игроке
                 ISocketClient.get().write(pckg)
+            }
+        }
+    }
+
+    thread {
+        while (true) {
+            val line = readLine()
+            if (line?.startsWith("give ") == true) {
+                val uuid = UUID.fromString(line.drop(5))
+                scope.launch {
+                    loadProfile(uuid) { data ->
+                        if (data != null) {
+                            data.packs.forEach { pack ->
+                                pack.data.forEach { unit ->
+                                    unit.uses += 1000
+                                }
+                            }
+                            mongoAdapter.save(data)
+                            println("Done! $uuid get graffiti...")
+                        } else {
+                            println("Player not initialized!")
+                        }
+                    }
+                }
             }
         }
     }
