@@ -623,7 +623,7 @@ public class me/func/mod/selection/DonateSelection : me/func/mod/selection/Selec
 	public final fun getWithGlobalSale ()Z
 	public final fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/DonateSelection;
 	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Selection;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
 	public final fun setMoney (Ljava/lang/String;)V
 	public final fun setVault (Ljava/lang/String;)V
 	public final synthetic fun setWithGlobalSale (Z)V
@@ -691,7 +691,7 @@ public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun getUuid ()Ljava/util/UUID;
 	public fun getVault ()Ljava/lang/String;
 	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Selection;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
 	public fun setColumns (I)V
 	public fun setHint (Ljava/lang/String;)V
 	public fun setMoney (Ljava/lang/String;)V

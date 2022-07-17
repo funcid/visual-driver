@@ -36,7 +36,7 @@ open class Selection(
         storage = storage.toMutableList()
     )
 
-    override fun open(player: Player) = open(player, "storage:open") {
+    override fun open(player: Player): Storage = open(player, "storage:open") {
         string(vault).string(money).string(hint).integer(rows).integer(columns)
     }
 }
