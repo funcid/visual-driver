@@ -12,7 +12,7 @@ plugins {
 
 allprojects {
     group = "me.func.animation-api"
-    version = "0.0.43"
+    version = "0.0.44"
 }
 
 subprojects {
