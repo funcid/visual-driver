@@ -7,30 +7,13 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
-import org.lwjgl.input.Mouse
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
-import ru.cristalix.uiengine.utility.BOTTOM
-import ru.cristalix.uiengine.utility.BOTTOM_LEFT
-import ru.cristalix.uiengine.utility.BOTTOM_RIGHT
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Easings
-import ru.cristalix.uiengine.utility.FlexDirection
-import ru.cristalix.uiengine.utility.LEFT
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.TOP_LEFT
-import ru.cristalix.uiengine.utility.TOP_RIGHT
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.carved
-import ru.cristalix.uiengine.utility.flex
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
-import java.util.UUID
+import ru.cristalix.uiengine.utility.*
+import java.util.*
 
 class StorageMenu(
     override var uuid: UUID,
@@ -62,13 +45,15 @@ class StorageMenu(
         color = WHITE
         offset = V3(itemPadding, itemPadding)
     }
-    @JvmField val hoverCenter = carved {
+    @JvmField
+    val hoverCenter = carved {
         color = Color(42, 102, 189, 1.0)
         offset = V3(1.0, 1.0)
         +hoverText
     }
 
-    @JvmField val hoverContainer = carved {
+    @JvmField
+    val hoverContainer = carved {
         color = Color(0, 0, 0, 0.38)
         enabled = false
         +hoverCenter
@@ -180,11 +165,15 @@ class StorageMenu(
 
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
 
-    private fun redrawGrid() {
+    fun redrawGrid() {
         val elements = getElementsOnPage(page)
         grid.children.clear()
 
         elements.forEach { element ->
+            element.bundle?.let {
+                grid + it
+                return@forEach
+            }
             grid + carved a@{
                 val fieldHeight =
                     (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows

@@ -165,12 +165,15 @@ object GraffitiManager {
 
         // Попытка купить граффити с клиента
         Anime.createReader("graffiti:buy") { player, buffer ->
-
             val data = safeRead(player) ?: return@createReader
             val packUuid = Anime.safeReadUUID(buffer) ?: return@createReader
 
             // Если такого пака не существует
             val pack = data.packs.find { it.uuid == packUuid } ?: return@createReader
+
+            // Покупка граффити недоступна
+            player.sendMessage(Formatting.error("А ты умный! Но тут серверная проверка 㬓"))
+            return@createReader
 
             // Попробовать купить пак граффити
             ISocketClient.get().writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(player.uniqueId, packUuid, pack.price)).thenAccept { pckg ->

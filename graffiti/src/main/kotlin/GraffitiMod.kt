@@ -404,7 +404,10 @@ class GraffitiMod : KotlinMod() {
         registerHandler<MousePress> {
             if (activeGraffiti != null) {
                 if (button == MouseButton.LEFT.ordinal) pick()
-                else if (button == MouseButton.RIGHT.ordinal) activeGraffiti = null
+                else if (button == MouseButton.RIGHT.ordinal) {
+                    UIEngine.worldContexts.remove(activeGraffiti?.container)
+                    activeGraffiti = null
+                }
             }
         }
 

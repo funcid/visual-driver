@@ -5,28 +5,24 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.carved
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,
     @JvmField var title: String,
     @JvmField var description: String,
-    @JvmField var hoverText: String,
+    var hoverText: String,
     open var icon: T,
-    @JvmField var hint: String? = null
+    var hint: String? = null
 ) {
 
-    @JvmField var bundle: CarvedRectangle? = null
-    @JvmField var titleElement: TextElement? = null
-    @JvmField var descriptionElement: TextElement? = null
-    @JvmField var hintElement: TextElement? = null
+    var bundle: CarvedRectangle? = null
+    var titleElement: TextElement? = null
+    var descriptionElement: TextElement? = null
+    var hintElement: TextElement? = null
+    var hintContainer: CarvedRectangle? = null
 
-    fun createHint(sized: V3, default: String) = carved {
+    fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
         color = Color(74, 140, 236, 1.0)
@@ -34,19 +30,16 @@ abstract class StorageNode<T : AbstractElement>(
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }
 
-        if (hintElement == null) {
-            hintElement = text {
-                origin = CENTER
-                align = CENTER
-                color = WHITE
-                shadow = true
-                color.alpha = 0.0
-                content = hint ?: default
-                scale = V3(1.5, 1.5, 1.5)
-            }
+        hintElement = +text {
+            origin = CENTER
+            align = CENTER
+            color = WHITE
+            shadow = true
+            color.alpha = 0.0
+            content = hint ?: default
+            scale = V3(1.5, 1.5, 1.5)
         }
-        +hintElement!!
-    }
+    }.apply { hintContainer = this }
 
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return

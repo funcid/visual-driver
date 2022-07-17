@@ -41,29 +41,38 @@ class Experimental {
                 val index = readInt()
                 if (index < 0 || index >= last.storage.size) return@registerChannel
                 val node = last.storage[index]
-                if (node.bundle == null) return@registerChannel
+                val inited = node.bundle != null
 
                 when (readByte().toInt()) {
                     0 -> {
+                        if (!inited) return@registerChannel
                         val parts = NetUtil.readUtf8(this).split(":", limit = 2)
                         (node as StorageItemTexture).icon.textureLocation = ResourceLocation.of(parts.first(), parts.last())
                     }
-                    1 -> (node as StorageItemStack).icon.stack = ItemTools.read(this)
+                    1 -> {
+                        if (!inited) return@registerChannel
+                        (node as StorageItemStack).icon.stack = ItemTools.read(this)
+                    }
                     2 -> {
                         node.title = NetUtil.readUtf8(this).replace("&", "§")
+                        if (!inited) return@registerChannel
                         node.titleElement?.content = node.title
                     }
                     3 -> {
                         node.description = NetUtil.readUtf8(this).replace("&", "§")
-                        if (last is PlayChoice)
-                            return@registerChannel
+                        if (last is PlayChoice || !inited) return@registerChannel
                         node.optimizeSpace()
                     }
                     4 -> {
                         node.hint = NetUtil.readUtf8(this).replace("&", "§")
+                        if (!inited) return@registerChannel
                         node.hintElement?.content = node.hint!!
                     }
-                    5 -> node.hoverText = NetUtil.readUtf8(this).replace("&", "§")
+                    5 -> {
+                        if (!inited) return@registerChannel
+                        node.hoverText = NetUtil.readUtf8(this).replace("&", "§")
+                    }
+                    else -> return@registerChannel
                 }
             }
 
