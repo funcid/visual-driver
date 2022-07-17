@@ -126,4 +126,19 @@ class Button {
         transfer.string(description ?: "")
         transfer.string(hover ?: "")
     }
+
+    fun copy(): Button = Button().also {
+        it.hover = hover
+        it.texture = texture
+        it.title = title
+        it.description = description
+        it.onClick = onClick
+        it.onLeftClick = onLeftClick
+        it.onRightClick = onRightClick
+        it.onMiddleClick = onMiddleClick
+        it.item = item
+        it.hint = hint
+        it.price = price
+        it.sale = sale
+    }
 }

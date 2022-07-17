@@ -2,6 +2,7 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.service.Services.socketClient
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
 import me.func.protocol.graffiti.packet.GraffitiUsePackage
@@ -10,7 +11,6 @@ import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import ru.cristalix.core.formatting.Formatting
-import ru.cristalix.core.network.ISocketClient
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
 import kotlin.math.abs
@@ -131,7 +131,7 @@ object GraffitiManager {
                 return@createReader
 
             // Мы прошли все проверки теперь можно тратить граффити!
-            ISocketClient.get().writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(player.uniqueId, packUuid, graffitiUuid)).thenAccept { pckg ->
+            socketClient.writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(player.uniqueId, packUuid, graffitiUuid)).thenAccept { pckg ->
                 if (!pckg.success) {
                     player.sendMessage(Formatting.error("У вас закончилось это граффити! Если это ошибка, перезайдите на сервер."))
                     return@thenAccept
@@ -176,7 +176,7 @@ object GraffitiManager {
             return@createReader
 
             // Попробовать купить пак граффити
-            ISocketClient.get().writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(player.uniqueId, packUuid, pack.price)).thenAccept { pckg ->
+            socketClient.writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(player.uniqueId, packUuid, pack.price)).thenAccept { pckg ->
                 pckg.errorMessage?.let {
                     player.sendMessage(Formatting.error(it))
                     return@thenAccept
@@ -201,7 +201,7 @@ object GraffitiManager {
         if (value != null) {
             future.complete(value)
         } else {
-            ISocketClient.get().writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid)).thenAccept { pckg ->
+            socketClient.writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid)).thenAccept { pckg ->
                 // Если данные успешно загрузились
                 val data = pckg.data
 

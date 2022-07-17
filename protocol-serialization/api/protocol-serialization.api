@@ -1,23 +1,26 @@
 public final class me/func/protocol/personalization/FeatureUserData : me/func/protocol/Unique {
 	public static final field Companion Lme/func/protocol/personalization/FeatureUserData$Companion;
-	public synthetic fun <init> (ILjava/util/UUID;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/UUID;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;)V
+	public synthetic fun <init> (ILjava/util/UUID;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;Lkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;)V
 	public final fun component1 ()Ljava/util/UUID;
-	public final fun component2 ()Ljava/util/List;
-	public final fun component3 ()I
-	public final fun component4 ()Ljava/util/List;
-	public final fun component5 ()Ljava/util/UUID;
-	public final fun copy (Ljava/util/UUID;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;)Lme/func/protocol/personalization/FeatureUserData;
-	public static synthetic fun copy$default (Lme/func/protocol/personalization/FeatureUserData;Ljava/util/UUID;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;ILjava/lang/Object;)Lme/func/protocol/personalization/FeatureUserData;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()I
+	public final fun component5 ()Ljava/util/List;
+	public final fun component6 ()Ljava/util/UUID;
+	public final fun copy (Ljava/util/UUID;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;)Lme/func/protocol/personalization/FeatureUserData;
+	public static synthetic fun copy$default (Lme/func/protocol/personalization/FeatureUserData;Ljava/util/UUID;Ljava/lang/String;Ljava/util/List;ILjava/util/List;Ljava/util/UUID;ILjava/lang/Object;)Lme/func/protocol/personalization/FeatureUserData;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getActivePack ()I
 	public final fun getActiveSticker ()Ljava/util/UUID;
+	public final fun getName ()Ljava/lang/String;
 	public final fun getPacks ()Ljava/util/List;
 	public final fun getStickers ()Ljava/util/List;
 	public fun getUuid ()Ljava/util/UUID;
 	public fun hashCode ()I
 	public final fun setActivePack (I)V
 	public final fun setActiveSticker (Ljava/util/UUID;)V
+	public final fun setName (Ljava/lang/String;)V
 	public final fun setPacks (Ljava/util/List;)V
 	public final fun setStickers (Ljava/util/List;)V
 	public fun setUuid (Ljava/util/UUID;)V
@@ -181,29 +184,31 @@ public final class me/func/protocol/personalization/GraffitiPack$Companion {
 
 public final class me/func/protocol/personalization/GraffitiPlaced {
 	public static final field Companion Lme/func/protocol/personalization/GraffitiPlaced$Companion;
-	public synthetic fun <init> (ILjava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZ)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILjava/util/UUID;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZ)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Ljava/util/UUID;
 	public final fun component10 ()D
 	public final fun component11 ()D
 	public final fun component12 ()D
-	public final fun component13 ()Z
+	public final fun component13 ()D
+	public final fun component14 ()Z
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lme/func/protocol/personalization/Graffiti;
-	public final fun component4 ()D
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Lme/func/protocol/personalization/Graffiti;
 	public final fun component5 ()D
 	public final fun component6 ()D
-	public final fun component7 ()I
-	public final fun component8 ()D
+	public final fun component7 ()D
+	public final fun component8 ()I
 	public final fun component9 ()D
-	public final fun copy (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZ)Lme/func/protocol/personalization/GraffitiPlaced;
-	public static synthetic fun copy$default (Lme/func/protocol/personalization/GraffitiPlaced;Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZILjava/lang/Object;)Lme/func/protocol/personalization/GraffitiPlaced;
+	public final fun copy (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZ)Lme/func/protocol/personalization/GraffitiPlaced;
+	public static synthetic fun copy$default (Lme/func/protocol/personalization/GraffitiPlaced;Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/personalization/Graffiti;DDDIDDDDDZILjava/lang/Object;)Lme/func/protocol/personalization/GraffitiPlaced;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getExtraRotation ()D
 	public final fun getGraffiti ()Lme/func/protocol/personalization/Graffiti;
 	public final fun getOnGround ()Z
 	public final fun getOwner ()Ljava/util/UUID;
+	public final fun getOwnerName ()Ljava/lang/String;
 	public final fun getRotationAngle ()D
 	public final fun getRotationAxisX ()D
 	public final fun getRotationAxisY ()D
@@ -218,6 +223,7 @@ public final class me/func/protocol/personalization/GraffitiPlaced {
 	public final fun setGraffiti (Lme/func/protocol/personalization/Graffiti;)V
 	public final fun setOnGround (Z)V
 	public final fun setOwner (Ljava/util/UUID;)V
+	public final fun setOwnerName (Ljava/lang/String;)V
 	public final fun setRotationAngle (D)V
 	public final fun setRotationAxisX (D)V
 	public final fun setRotationAxisY (D)V

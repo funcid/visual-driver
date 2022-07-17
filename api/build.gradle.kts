@@ -3,6 +3,8 @@ dependencies {
     compileOnly("cristalix:dark-paper:21.02.03")
 
     implementation("dev.xdark:feder:1.0")
+    implementation("com.github.ben-manes.caffeine:caffeine:2.9.3")
+    implementation("org.apache.logging.log4j:log4j-jul:2.17.2")
 
     api(project(":protocol"))
     api(project(":graffiti-protocol"))
