@@ -145,6 +145,7 @@ class StorageMenu(
     fun redrawGrid() {
         val elements = getElementsOnPage(page)
         grid.children.clear()
+        hoverContainer.enabled = false
 
         elements.forEach { element ->
             element.bundle?.let {
