@@ -5,6 +5,12 @@ import Main.Companion.menuStack
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
+import experimental.Experimental.Companion.acceptHover
+import experimental.Experimental.Companion.hoverCenter
+import experimental.Experimental.Companion.hoverContainer
+import experimental.Experimental.Companion.hoverText
+import experimental.Experimental.Companion.hoverTextScale
+import experimental.Experimental.Companion.itemPadding
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -34,37 +40,8 @@ class StorageMenu(
     private val height = 230.0
     private val padding = height / 12.0
     private val backButtonSize = 16.0
-    private val itemPadding = 4.0
     private val flexSpace = 3.5
-    private val hoverTextScale = 0.5 + 0.25 + 0.125
 
-    private val hoverText = text {
-        shadow = true
-        lineHeight += 2
-        scale = V3(0.75, 0.75, 0.75)
-        color = WHITE
-        offset = V3(itemPadding, itemPadding)
-    }
-    @JvmField
-    val hoverCenter = carved {
-        color = Color(42, 102, 189, 1.0)
-        offset = V3(1.0, 1.0)
-        +hoverText
-    }
-
-    @JvmField
-    val hoverContainer = carved {
-        color = Color(0, 0, 0, 0.38)
-        enabled = false
-        +hoverCenter
-
-        beforeRender {
-            GlStateManager.disableDepth()
-        }
-        afterRender {
-            GlStateManager.enableDepth()
-        }
-    }
     private val menuTitle = text {
         content = title
         shadow = true
@@ -231,22 +208,7 @@ class StorageMenu(
 
                 val hint = +element.createHint(this@a.size, hint)
                 onHover {
-                    if (hovered && element.hoverText.isNotEmpty()) {
-                        if (!hoverContainer.enabled) {
-                            hoverText.content = element.hoverText
-                            hoverContainer.enabled = true
-                        }
-                        val lines = element.hoverText.split("\n")
-
-                        hoverContainer.size.x =
-                            clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length } ?: "")
-                                .toDouble() * hoverTextScale - 4
-                        hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + itemPadding
-                        hoverCenter.size.x = hoverContainer.size.x - 2
-                        hoverCenter.size.y = hoverContainer.size.y - 2
-                    } else {
-                        hoverContainer.enabled = false
-                    }
+                    acceptHover(hovered, element)
 
                     if (element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty()) return@onHover
 

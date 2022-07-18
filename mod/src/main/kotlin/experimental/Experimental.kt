@@ -3,6 +3,7 @@ package experimental
 import Main.Companion.menuStack
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
+import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.storage.*
@@ -11,12 +12,62 @@ import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import java.lang.invoke.MutableCallSite
+import ru.cristalix.uiengine.element.AbstractElement
+import ru.cristalix.uiengine.utility.*
 import java.util.*
 
 // не пытайтесь это "оптимизировать", иначе вы все сломаете
 class Experimental {
     companion object {
+
+        val itemPadding = 4.0
+        val hoverTextScale = 0.5 + 0.25 + 0.125
+
+        val hoverText = text {
+            shadow = true
+            lineHeight += 2
+            scale = V3(0.75, 0.75, 0.75)
+            color = WHITE
+            offset = V3(itemPadding, itemPadding)
+        }
+        val hoverCenter = carved {
+            color = Color(42, 102, 189, 1.0)
+            offset = V3(1.0, 1.0)
+            +hoverText
+        }
+
+        val hoverContainer = carved {
+            color = Color(0, 0, 0, 0.38)
+            enabled = false
+            +hoverCenter
+
+            beforeRender {
+                GlStateManager.disableDepth()
+            }
+            afterRender {
+                GlStateManager.enableDepth()
+            }
+        }
+
+        fun <T> acceptHover(hovered: Boolean, element: StorageNode<T>) where T : AbstractElement {
+            if (hovered && element.hoverText.isNotEmpty()) {
+                if (!hoverContainer.enabled) {
+                    hoverText.content = element.hoverText
+                    hoverContainer.enabled = true
+                }
+                val lines = element.hoverText.split("\n")
+
+                hoverContainer.size.x =
+                    UIEngine.clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length } ?: "")
+                        .toDouble() * hoverTextScale
+                hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + itemPadding
+                hoverCenter.size.x = hoverContainer.size.x - 2
+                hoverCenter.size.y = hoverContainer.size.y - 2
+            } else {
+                hoverContainer.enabled = false
+            }
+        }
+
         fun bruh(): Class<*>? {
             Banners()
             Banners.Companion
@@ -47,7 +98,8 @@ class Experimental {
                     0 -> {
                         if (!inited) return@registerChannel
                         val parts = NetUtil.readUtf8(this).split(":", limit = 2)
-                        (node as StorageItemTexture).icon.textureLocation = ResourceLocation.of(parts.first(), parts.last())
+                        (node as StorageItemTexture).icon.textureLocation =
+                            ResourceLocation.of(parts.first(), parts.last())
                     }
                     1 -> {
                         if (!inited) return@registerChannel
@@ -125,11 +177,11 @@ class Experimental {
             mod.registerHandler<GameLoop> {
                 if (menuStack.isEmpty()) return@registerHandler
                 val peek = menuStack.peek()
-                if (peek !is StorageMenu) return@registerHandler
-                if (!peek.hoverContainer.enabled) return@registerHandler
+                if (!(peek is StorageMenu || peek is PlayChoice)) return@registerHandler
+                if (!hoverContainer.enabled) return@registerHandler
 
                 val scale = UIEngine.clientApi.resolution().scaleFactor
-                peek.hoverContainer.run {
+                hoverContainer.run {
                     offset.x = Mouse.getX() / scale + 6.0
                     offset.y = (Display.getHeight() - Mouse.getY()) / scale - 12.0
                 }

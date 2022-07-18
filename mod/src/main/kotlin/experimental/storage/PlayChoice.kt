@@ -2,6 +2,10 @@ package experimental.storage
 
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
+import experimental.Experimental
+import experimental.Experimental.Companion.hoverCenter
+import experimental.Experimental.Companion.hoverContainer
+import experimental.Experimental.Companion.hoverTextScale
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
@@ -109,6 +113,7 @@ class PlayChoice(
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
                         onHover {
+                            Experimental.acceptHover(hovered, element)
                             animate(0.2, Easings.CUBIC_OUT) {
                                 hint.color.alpha = if (hovered) 0.95 else 0.0
                                 element.hintElement?.color?.alpha = if (hovered) 1.0 else 0.0
@@ -151,5 +156,6 @@ class PlayChoice(
             }
         }
         onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
+        +hoverContainer
     }
 }
