@@ -17,9 +17,9 @@ import kotlin.math.abs
 
 object GraffitiManager {
 
-    private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
-    private const val MAX_GRAFFITI_IN_WORLD = 30
-    private const val MAX_GRAFFITI_PER_PLAYER = 5
+    private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 3
+    private const val MAX_GRAFFITI_IN_WORLD = 250
+    private const val MAX_GRAFFITI_PER_PLAYER = 20
     private const val MAX_PLACE_DISTANCE = 10
 
     private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
@@ -142,7 +142,7 @@ object GraffitiManager {
                 // Создание граффити в мире
                 val placedGraffiti = GraffitiPlaced(
                     player.uniqueId,
-                    player.displayName,
+                    player.name,
                     player.world.name,
                     graffiti, x, y, z,
                     GRAFFITI_TICKS_ALIVE,

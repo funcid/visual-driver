@@ -86,6 +86,11 @@ fun main() {
                     update = true
                 }
 
+                packet.data?.packs?.forEach {
+                    it.graffiti.onEach { it.uses = 50 }
+                }
+                update = true
+
                 // Если данные только что были сгенерированы - сохранить
                 if (update) scope.launch { mongoAdapter.save(syncProfile(packet.playerUuid, packet.data)) }
 
@@ -158,7 +163,8 @@ fun main() {
                 // Если данные игрока успешно загружены
                 // Получение пака
                 userData?.packs?.firstOrNull { it.uuid == pckg.packUUID }?.let { pack ->
-                    pack.data.firstOrNull { it.uuid == pckg.graffitiUUID && it.uses > 0 }?.let {
+                    // pack.data.firstOrNull { it.uuid == pckg.graffitiUUID && it.uses > 0 }?.let {
+                    pack.data.firstOrNull { it.uuid == pckg.graffitiUUID }?.let {
                         // Разрешить ставить граффити если оно есть
                         pckg.success = true
 

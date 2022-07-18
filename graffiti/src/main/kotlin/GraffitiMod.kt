@@ -1,3 +1,4 @@
+import dev.xdark.clientapi.event.block.BlockRightClick
 import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.entity.RotateAround
 import dev.xdark.clientapi.event.input.KeyPress
@@ -279,7 +280,7 @@ class GraffitiMod : KotlinMod() {
             align = CENTER
             origin = CENTER
             shadow = true
-            content = "§bРазместить граффити §lПКМ\n§cУбрать §lЛКМ"
+            content = "§bРазместить граффити §lЛКМ\n§cУбрать §lПКМ"
             offset.y += 30
         }
 
@@ -317,9 +318,6 @@ class GraffitiMod : KotlinMod() {
             // Поставить в мире новые граффити
             drewGraffities = MutableList(readInt()) { readLocalGraffitiPlace(this) }
             drewGraffities.forEach { addGraffiti(it) }
-
-            // Начать показывать подсказки
-            startShowHints()
         }
 
         // Загрузить единичное граффити
@@ -403,13 +401,16 @@ class GraffitiMod : KotlinMod() {
         }
 
         registerHandler<MousePress> {
-            if (activeGraffiti != null) {
-                if (button == MouseButton.LEFT.ordinal) pick()
-                else if (button == MouseButton.RIGHT.ordinal) {
-                    UIEngine.worldContexts.remove(activeGraffiti?.container)
-                    activeGraffiti = null
-                }
+            // Если нажата левая кнопка мыши - убрать граффити
+            if (activeGraffiti != null && Mouse.isButtonDown(button) && button == MouseButton.LEFT.ordinal) {
+                UIEngine.worldContexts.remove(activeGraffiti?.container)
+                activeGraffiti = null
             }
+        }
+
+        registerHandler<BlockRightClick> {
+            // Поставить граффити
+            if (activeGraffiti != null) pick()
         }
 
         registerHandler<ChatSend> {
@@ -543,18 +544,6 @@ class GraffitiMod : KotlinMod() {
                     break
                 }
             }
-        }
-    }
-
-    private fun startShowHints() {
-        val player = clientApi.minecraft().player
-
-        registerHandler<RenderTickPre> {
-            //val nearGraffiti = drewGraffities.firstOrNull {
-            //    val location = it.first.offset
-            //    pow(location.x - player.x, 2.0) + pow(location.z - player.z, 2.0) <= 1.2 &&
-            //            abs(location.y - player.y) < 2.6
-            //}
         }
     }
 }
