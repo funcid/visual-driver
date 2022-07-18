@@ -402,8 +402,8 @@ class GraffitiMod : KotlinMod() {
 
         registerHandler<MousePress> {
             // Если нажата левая кнопка мыши - убрать граффити
-            if (activeGraffiti != null && Mouse.isButtonDown(button) && button == MouseButton.LEFT.ordinal) {
-                UIEngine.worldContexts.remove(activeGraffiti?.container)
+            if (activeGraffiti != null) {
+                UIEngine.worldContexts.remove(activeGraffiti!!.container)
                 activeGraffiti = null
             }
         }
