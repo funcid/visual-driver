@@ -282,6 +282,7 @@ class GraffitiMod : KotlinMod() {
             shadow = true
             content = "§bРазместить граффити §lЛКМ\n§cУбрать §lПКМ"
             offset.y += 30
+            enabled = false
         }
 
         UIEngine.overlayContext + prompt

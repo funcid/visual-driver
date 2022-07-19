@@ -1,7 +1,6 @@
 package experimental
 
 import Main.Companion.menuStack
-import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
@@ -42,6 +41,9 @@ class Experimental {
             +hoverCenter
 
             beforeRender {
+                val scale = UIEngine.clientApi.resolution().scaleFactor
+                offset.x = Mouse.getX() / scale + 6.0
+                offset.y = (Display.getHeight() - Mouse.getY()) / scale - 12.0
                 GlStateManager.disableDepth()
             }
             afterRender {
@@ -172,19 +174,6 @@ class Experimental {
                         readIcons(this)
                     )
                 )
-            }
-
-            mod.registerHandler<GameLoop> {
-                if (menuStack.isEmpty()) return@registerHandler
-                val peek = menuStack.peek()
-                if (!(peek is StorageMenu || peek is PlayChoice)) return@registerHandler
-                if (!hoverContainer.enabled) return@registerHandler
-
-                val scale = UIEngine.clientApi.resolution().scaleFactor
-                hoverContainer.run {
-                    offset.x = Mouse.getX() / scale + 6.0
-                    offset.y = (Display.getHeight() - Mouse.getY()) / scale - 12.0
-                }
             }
             return null
         }
