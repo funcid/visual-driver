@@ -1,5 +1,6 @@
 package standard
 
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
@@ -13,6 +14,7 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.CENTER
 import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.V3
@@ -23,7 +25,7 @@ import ru.cristalix.uiengine.utility.text
 class RewardManager {
     lateinit var hintText: TextElement
     private var currentDay = 0
-    private lateinit var hint: RectangleElement
+    private var hint: RectangleElement? = null
 
     init {
         val box = rectangle {
@@ -38,6 +40,7 @@ class RewardManager {
         gui + box
 
         mod.registerChannel("func:weekly-reward") {
+            if (box.enabled) return@registerChannel
             currentDay = readInt()
 
             val topText = text {
@@ -68,11 +71,11 @@ class RewardManager {
                     else -> {
                         topElement.content = "§lУРА!\nнаграда"
                         dayBox.color = Color(224, 118, 20, 0.3)
-                        dayBox.onClick {
+                        dayBox.onMouseUp {
                             gui.removeChild(
                                 box,
                                 topElement,
-                                hint,
+                                hint!!,
                                 *week.toTypedArray(),
                                 topText
                             )
@@ -85,8 +88,8 @@ class RewardManager {
                 dayBox.onHover {
                     if (hovered) {
                         hintText.content = dayBox.name
-                        hint.enabled = true
-                        hint.size.x = hintText.size.x + 4
+                        hint?.enabled = true
+                        hint?.size?.x = hintText.size.x + 4
                         week.forEach {
                             if (it != this) {
                                 it.normalize()
@@ -106,7 +109,7 @@ class RewardManager {
                             size.y = 175.0
                         }
                     } else {
-                        hint.enabled = false
+                        hint?.enabled = false
                         week.forEach {
                             if (it != dayBox) {
                                 it.normalize()
@@ -125,9 +128,10 @@ class RewardManager {
             gui.open()
         }
 
-        mod.registerHandler<RenderTickPre> {
-            hint.offset.x = (Mouse.getX() / clientApi.resolution().scaleFactor).toDouble()
-            hint.offset.y = ((Display.getHeight() - Mouse.getY()) / clientApi.resolution().scaleFactor).toDouble()
+        mod.registerHandler<GameLoop> {
+            val scale = clientApi.resolution().scaleFactor
+            hint?.offset?.x = (Mouse.getX() / scale).toDouble()
+            hint?.offset?.y = ((Display.getHeight() - Mouse.getY()) / scale).toDouble()
         }
 
         hint = gui + rectangle {

@@ -1,6 +1,7 @@
 package standard
 
 import dev.xdark.clientapi.item.ItemStack
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.BOTTOM
@@ -17,7 +18,7 @@ class Day(
     @JvmField val name: String,
     private val claimedStatus: String,
     private val claimed: Boolean
-) : RectangleElement() {
+) : CarvedRectangle() {
     private var originalX = 0.0
 
     init {
