@@ -19,6 +19,7 @@ class NpcData(
     var sneaking: Boolean = false,
     var sleeping: Boolean = false,
     var sitting: Boolean = false,
+    var activationDistance: Int = -1,
 ) {
     constructor(init: NpcData.() -> Unit) : this() { this.init() }
 }

@@ -15,6 +15,7 @@ import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
 import kotlin.math.atan
 import kotlin.math.atan2
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 class NPC {
@@ -139,7 +140,7 @@ class NPC {
                     var dy: Double = player.y - entity.y
                     val dz: Double = player.z - entity.z
 
-                    val active = dx * dx + dy * dy + dz * dz < 196
+                    val active = if(data.data.activationDistance == -1) true else dx * dx + dy * dy + dz * dz < data.data.activationDistance.toDouble().pow(2)
 
                     dy /= sqrt(dx * dx + dz * dz)
                     val yaw = if (active) (atan2(-dx, dz) / Math.PI * 180).toFloat() else data.data.yaw
