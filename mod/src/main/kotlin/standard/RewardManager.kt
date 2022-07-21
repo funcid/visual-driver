@@ -40,7 +40,7 @@ class RewardManager {
         gui + box
 
         mod.registerChannel("func:weekly-reward") {
-            if (box.enabled) return@registerChannel
+            gui.children.clear()
             currentDay = readInt()
 
             val topText = text {
