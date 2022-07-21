@@ -64,7 +64,7 @@ class RewardManager {
                         else -> "§f§lВЗЯТЬ"
                     }, i + 1 < currentDay
                 )
-                val topElement = dayBox.children[0] as TextElement
+                val topElement = dayBox.title
                 when {
                     currentDay > i + 1 -> topElement.content = "§7" + topElement.content
                     currentDay < i + 1 -> topElement.content = "§b" + topElement.content
