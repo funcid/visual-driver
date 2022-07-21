@@ -37,10 +37,12 @@ class RewardManager {
         }
         val week = arrayListOf<Day>()
         val gui = ContextGui()
-        gui + box
 
         mod.registerChannel("func:weekly-reward") {
             gui.children.clear()
+
+            gui + box
+
             currentDay = readInt()
 
             val topText = text {
