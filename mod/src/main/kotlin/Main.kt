@@ -1,5 +1,5 @@
 import battlepass.BattlePass
-import chat.ChatMod
+import chat.MultiChat
 import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.network.PluginMessage
 import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
@@ -38,7 +38,7 @@ class Main : KotlinMod() {
                     Mod.BATTLEPASS -> BattlePass()
                     Mod.LOOTBOX -> LootboxMod()
                     Mod.DIALOG -> DialogMod()
-                    Mod.CHAT -> ChatMod()
+                    Mod.CHAT -> MultiChat()
                     else -> return@repeat
                 }
             }
