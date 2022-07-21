@@ -619,7 +619,8 @@ var skinDigest: String? = null,
 var slimArms: Boolean = false, // тонкие руки
 var sneaking: Boolean = false, // шифтит
 var sleeping: Boolean = false, // спит
-val sitting: Boolean = false // сидит
+val sitting: Boolean = false, // сидит
+val activationDistance: Int = -1 // -1  = без ограничения по блоком, любое другое число большее, чем 0 - радиус, в котором начинает смотреть на игрока
 ```
 
 `NpcData.onClick(init: Consumer<PlayerUseUnknownEntityEvent>)` при клике на NPC обработать событие<br>
