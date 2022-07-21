@@ -450,9 +450,10 @@ public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
 
 public final class me/func/protocol/npc/NpcData {
 	public fun <init> ()V
-	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZ)V
-	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZI)V
+	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun getActivationDistance ()I
 	public final fun getBehaviour ()Lme/func/protocol/npc/NpcBehaviour;
 	public final fun getId ()I
 	public final fun getName ()Ljava/lang/String;
@@ -469,6 +470,7 @@ public final class me/func/protocol/npc/NpcData {
 	public final fun getY ()D
 	public final fun getYaw ()F
 	public final fun getZ ()D
+	public final fun setActivationDistance (I)V
 	public final fun setBehaviour (Lme/func/protocol/npc/NpcBehaviour;)V
 	public final fun setId (I)V
 	public final fun setName (Ljava/lang/String;)V
