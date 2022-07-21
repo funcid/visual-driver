@@ -18,7 +18,6 @@ public final class me/func/mod/Anime {
 	public static final fun bigTitle (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
-	public static final fun chat (Lorg/bukkit/entity/Player;Lme/func/protocol/ModChat;Ljava/lang/String;)V
 	public static final fun clearAllCorpses (Lorg/bukkit/entity/Player;)V
 	public static final fun clearMarkers (Lorg/bukkit/entity/Player;)V
 	public static final fun close (Lorg/bukkit/entity/Player;)V
@@ -57,7 +56,6 @@ public final class me/func/mod/Anime {
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;III)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/RGB;)V
-	public static final fun removeChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)V
 	public static final fun removeSphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
@@ -157,6 +155,20 @@ public class me/func/mod/Kit : java/lang/Enum, org/bukkit/event/Listener {
 public final class me/func/mod/KitKt {
 	public static final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public static final fun getSTANDARD_MOD_URL ()Ljava/lang/String;
+}
+
+public final class me/func/mod/MultiChat {
+	public static final field INSTANCE Lme/func/mod/MultiChat;
+	public static final fun broadcastMessage (Ljava/util/Collection;Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun broadcastMessage (Ljava/util/Collection;Lme/func/protocol/ModChat;Ljava/lang/String;)V
+	public static final fun broadcastMessage (Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun broadcastMessage (Lme/func/protocol/ModChat;Ljava/lang/String;)V
+	public static final fun registerHandler (Lme/func/protocol/ModChat;Ljava/util/function/BiConsumer;)V
+	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
+	public static final fun removeChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
+	public static final fun sendChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
+	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun sendMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/ModChat;Ljava/lang/String;)V
 }
 
 public final class me/func/mod/Npc {
