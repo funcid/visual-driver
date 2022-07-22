@@ -159,14 +159,28 @@ public final class me/func/mod/KitKt {
 
 public final class me/func/mod/MultiChat {
 	public static final field INSTANCE Lme/func/mod/MultiChat;
+	public static final fun broadcastMessage (Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun broadcastMessage (Ljava/util/Collection;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun broadcastMessage (Ljava/util/Collection;Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun broadcastMessage (Ljava/util/Collection;Lme/func/protocol/ModChat;Ljava/lang/String;)V
 	public static final fun broadcastMessage (Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun broadcastMessage (Lme/func/protocol/ModChat;Ljava/lang/String;)V
+	public static final fun createKey (Ljava/lang/String;Lme/func/protocol/ModChat;)V
+	public static final fun registerHandler (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
+	public static final fun registerHandler (Ljava/util/UUID;Ljava/util/function/BiConsumer;)V
 	public static final fun registerHandler (Lme/func/protocol/ModChat;Ljava/util/function/BiConsumer;)V
+	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
 	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun removeChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
+	public static final fun removeHandler (Ljava/lang/String;)V
+	public static final fun removeHandler (Ljava/util/UUID;)V
+	public static final fun removeHandler (Lme/func/protocol/ModChat;)V
+	public static final fun removeKey (Ljava/lang/String;)V
+	public static final fun removeKey (Ljava/util/UUID;)V
+	public static final fun removeKey (Lme/func/protocol/ModChat;)V
+	public static final fun sendChats (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
 	public static final fun sendChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
+	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/ModChat;Ljava/lang/String;)V
 }
