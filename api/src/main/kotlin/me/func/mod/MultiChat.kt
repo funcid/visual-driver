@@ -142,32 +142,32 @@ object MultiChat {
     }
 
     @JvmStatic
-    fun broadcastMessage(players: Collection<Player>, chat: ModChat, message: String) {
+    fun broadcast(players: Collection<Player>, chat: ModChat, message: String) {
         players.forEach { sendMessage(it, chat, message) }
     }
 
     @JvmStatic
-    fun broadcastMessage(chat: ModChat, message: String) {
-        broadcastMessage(Bukkit.getOnlinePlayers(), chat, message)
+    fun broadcast(chat: ModChat, message: String) {
+        broadcast(Bukkit.getOnlinePlayers(), chat, message)
     }
 
     @JvmStatic
-    fun broadcastMessage(players: Collection<Player>, key: String, message: String) {
+    fun broadcast(players: Collection<Player>, key: String, message: String) {
         players.forEach { sendMessage(it, key, message) }
     }
 
     @JvmStatic
-    fun broadcastMessage(key: String, message: String) {
-        broadcastMessage(Bukkit.getOnlinePlayers(), key, message)
+    fun broadcast(key: String, message: String) {
+        broadcast(Bukkit.getOnlinePlayers(), key, message)
     }
 
     @JvmStatic
-    fun broadcastMessage(players: Collection<Player>, id: UUID, message: String) {
+    fun broadcast(players: Collection<Player>, id: UUID, message: String) {
         players.forEach { sendMessage(it, id, message) }
     }
 
     @JvmStatic
-    fun broadcastMessage(id: UUID, message: String) {
-        broadcastMessage(Bukkit.getOnlinePlayers(), id, message)
+    fun broadcast(id: UUID, message: String) {
+        broadcast(Bukkit.getOnlinePlayers(), id, message)
     }
 }

@@ -522,14 +522,14 @@ MultiChat.removeChats(player, "system") //Удаляем у игрока чат
 `MultiChat.sendMessage(player: Player, chat: ModChat, message: String)` отправить игроку сообщение в чат<br>
 `MultiChat.sendMessage(player: Player, chat: UUID, message: String)` отправить игроку сообщение в чат по id чата<br>
 `MultiChat.sendMessage(player: Player, chat: String, message: String)` отправить игроку сообщение в чат по ключу чата<br>
-`MultiChat.broadcastMessage(players: Collection<Player>, chat: ModChat, message: String)` отправить указанным игрокам сообщение в чат<br>
-`MultiChat.broadcastMessage(chat: ModChat, message: String)` отправить всем игрокам на сервере сообщение в чат<br>
-`MultiChat.broadcastMessage(players: Collection<Player>, chat: UUID, message: String)` отправить указанным игрокам сообщение в чат по id чата<br>
-`MultiChat.broadcastMessage(chat: UUID, message: String)` отправить всем игрокам на сервере сообщение в чат по id чата<br>
-`MultiChat.broadcastMessage(players: Collection<Player>, chat: UUID, message: String)` отправить указанным игрокам сообщение в чат по id чата<br>
-`MultiChat.broadcastMessage(chat: UUID, message: String)` отправить всем игрокам на сервере сообщение в чат по id чата<br>
-`MultiChat.broadcastMessage(players: Collection<Player>, chat: String, message: String)` отправить указанным игрокам сообщение в чат по ключу чата<br>
-`MultiChat.broadcastMessage(chat: String, message: String)` отправить всем игрокам на сервере сообщение в чат по ключу чата<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: ModChat, message: String)` отправить указанным игрокам сообщение в чат<br>
+`MultiChat.broadcast(chat: ModChat, message: String)` отправить всем игрокам на сервере сообщение в чат<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: UUID, message: String)` отправить указанным игрокам сообщение в чат по id чата<br>
+`MultiChat.broadcast(chat: UUID, message: String)` отправить всем игрокам на сервере сообщение в чат по id чата<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: UUID, message: String)` отправить указанным игрокам сообщение в чат по id чата<br>
+`MultiChat.broadcast(chat: UUID, message: String)` отправить всем игрокам на сервере сообщение в чат по id чата<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: String, message: String)` отправить указанным игрокам сообщение в чат по ключу чата<br>
+`MultiChat.broadcast(chat: String, message: String)` отправить всем игрокам на сервере сообщение в чат по ключу чата<br>
 
 <h3>Подсвечивание границ экрана, виньетка (модуль STANDARD)</h3>
 
