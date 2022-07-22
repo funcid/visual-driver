@@ -42,7 +42,8 @@ dependencies {
 , <a href="https://vk.com/funcid">@func</a>)<br>
 `LOOTBOX` - набор для подключения лутбоксов (by <a href="https://vk.com/delfikpro">@delfikpro</a>
 , <a href="https://vk.com/funcid">@func</a>)<br>
-`MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>)<br>
+`MULTICHAT` - набор для мультичата (by <a href="https://vk.com/zabelovq">@zabelov</a>
+, <a href="https://vk.com/izenkk">@zenk</a>)<br>
 `GRAFFITI` - кит с клиентом к сервису граффити и подключением мода (by <a href="https://vk.com/funcid">@func</a>)<br>
 `EXPERIMENTAL` - экспериментальный набор для тестирования новых модов (by <a href="https://vk.com/funcid">@func</a>)<br>
 `NPC` - модуль для работы с NPC (by <a href="https://vk.com/funcid">@func</a>)<br>
@@ -482,21 +483,53 @@ Banner banner = Banner.S.builder() // Создание баннера
 
 <h3>Мультичат MULTICHAT</h3>
 
-<img src="https://user-images.githubusercontent.com/42806772/146237931-759b0902-50e4-44e3-a692-409089ef7d6a.png" width="500">
+<img src="https://user-images.githubusercontent.com/73703007/180320456-ba52de50-258e-40df-bcab-3579f7947e97.png" width="500">
 
-Чаты по умолчанию: <br>
+```kotlin
+val chat = ModChat(
+    UUID.randomUUID(), //Id чата
+    "Системный чат", //Название
+    "С" //Символ на кнопке (можно несколько символов)
+)
 
-```
-SERVER
-SYSTEM
-ATTACK
-PARTY
-TRADE
+MultiChat.createKey("system", chat) //Делаем удобный ключ для использования
+
+//Делаем обработку сообщений
+MultiChat.registerHandler(chat) { player, message ->
+    player.sendMessage("Ты отправил в этот чат: $message")
+}
+
+MultiChat.sendChats(player, "system") //Отправляем игроку чат
+
+MultiChat.sendMessage(player, "system", "Ты крутой сынок!") //Отправляем игроку сообщение
+
+MultiChat.removeChats(player, "system") //Удаляем у игрока чат
 ```
 
 Методы взаимодействия с клиентом:<br>
-`Anime.chat(player: Player, chat: ModChat, message: String)` отправить игроку сообщение в чат <br>
-`Anime.removeChats(player: Player, vararg chats: ModChat)` удалить все указанные в чаты у игрока <br>
+`MultiChat.createKey(id: String, chat: ModChat)` создать ключ для удобного использования чата<br>
+`MultiChat.removeKey(chat: ModChat)` удалить ключ<br>
+`MultiChat.removeKey(key: String)` удалить ключ по ключу чата<br>
+`MultiChat.removeKey(id: UUID)` удалить ключ по id чата<br>
+`MultiChat.registerHandler(id: UUID, consumer: BiConsumer<Player, String>)` добавить обработчик для сообщений, которые приходят в чат по id чата<br>
+`MultiChat.registerHandler(key: String, consumer: BiConsumer<Player, String>)` добавить обработчик для сообщений, которые приходят в чат по ключу чата<br>
+`MultiChat.sendChats(player: Player, vararg chats: ModChat)` отправить игроку сообщение все указанные чаты<br>
+`MultiChat.sendChats(player: Player, vararg chats: UUID)` отправить игроку сообщение все указанные чаты по их id<br>
+`MultiChat.sendChats(player: Player, vararg chats: String)` отправить игроку сообщение все указанные чаты по их ключу<br>
+`MultiChat.removeChats(player: Player, vararg chats: ModChat)` удалить игроку все указанные чаты<br>
+`MultiChat.removeChats(player: Player, vararg chats: UUID)` удалить игроку все указанные чаты по их id<br>
+`MultiChat.removeChats(player: Player, vararg chats: String)` удалить игроку все указанные чаты по их ключу<br>
+`MultiChat.sendMessage(player: Player, chat: ModChat, message: String)` отправить игроку сообщение в чат<br>
+`MultiChat.sendMessage(player: Player, chat: UUID, message: String)` отправить игроку сообщение в чат по id чата<br>
+`MultiChat.sendMessage(player: Player, chat: String, message: String)` отправить игроку сообщение в чат по ключу чата<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: ModChat, message: String)` отправить указанным игрокам сообщение в чат<br>
+`MultiChat.broadcast(chat: ModChat, message: String)` отправить всем игрокам на сервере сообщение в чат<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: UUID, message: String)` отправить указанным игрокам сообщение в чат по id чата<br>
+`MultiChat.broadcast(chat: UUID, message: String)` отправить всем игрокам на сервере сообщение в чат по id чата<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: UUID, message: String)` отправить указанным игрокам сообщение в чат по id чата<br>
+`MultiChat.broadcast(chat: UUID, message: String)` отправить всем игрокам на сервере сообщение в чат по id чата<br>
+`MultiChat.broadcast(players: Collection<Player>, chat: String, message: String)` отправить указанным игрокам сообщение в чат по ключу чата<br>
+`MultiChat.broadcast(chat: String, message: String)` отправить всем игрокам на сервере сообщение в чат по ключу чата<br>
 
 <h3>Подсвечивание границ экрана, виньетка (модуль STANDARD)</h3>
 
