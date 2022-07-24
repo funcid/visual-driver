@@ -28,9 +28,14 @@ class PlayChoice(
     override var uuid: UUID,
     override var title: String,
     @JvmField var description: String,
+    allowClosing: Boolean,
     override var storage: MutableList<StorageNode<*>>
 ) : Storable(uuid, title, storage) {
     init {
+        if (!allowClosing) {
+            keyTypedHandlers.removeFirstOrNull() // удаление листенера ESC перед регистрацией наших листенеров
+        }
+
         val padding = 8.0
         val scaling = 0.85
         val buttonSize = V3(100.0, 145.0, 1.0)
@@ -126,36 +131,38 @@ class PlayChoice(
             }
         }
 
-        val backButtonSize = 20.0
-        +carved {
-            carveSize = 1.0
-            align = CENTER
-            origin = CENTER
-            offset.y = buttonSize.y * scaling
-            size = V3(76.0, backButtonSize)
-            val normalColor = Color(160, 29, 40, 0.83)
-            val hoveredColor = Color(231, 61, 75, 0.83)
-            color = normalColor
-            onHover {
-                animate(0.08, Easings.QUINT_OUT) {
-                    color = if (hovered) hoveredColor else normalColor
-                    scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
-                }
-            }
-            onMouseUp {
-                close()
-                menuStack.clear()
-            }
-            +text {
+        if (allowClosing) {
+            val backButtonSize = 20.0
+            +carved {
+                carveSize = 1.0
                 align = CENTER
                 origin = CENTER
-                color = WHITE
-                scale = V3(0.9, 0.9, 0.9)
-                content = "Выйти [ ESC ]"
-                shadow = true
+                offset.y = buttonSize.y * scaling
+                size = V3(76.0, backButtonSize)
+                val normalColor = Color(160, 29, 40, 0.83)
+                val hoveredColor = Color(231, 61, 75, 0.83)
+                color = normalColor
+                onHover {
+                    animate(0.08, Easings.QUINT_OUT) {
+                        color = if (hovered) hoveredColor else normalColor
+                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+                    }
+                }
+                onMouseUp {
+                    close()
+                    menuStack.clear()
+                }
+                +text {
+                    align = CENTER
+                    origin = CENTER
+                    color = WHITE
+                    scale = V3(0.9, 0.9, 0.9)
+                    content = "Выйти [ ESC ]"
+                    shadow = true
+                }
             }
+            onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
         }
-        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
         +hoverContainer
     }
 }

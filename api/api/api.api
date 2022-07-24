@@ -608,12 +608,14 @@ public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage
 	public fun add (Lme/func/mod/selection/Button;)V
 	public fun buttons ([Lme/func/mod/selection/Button;)V
 	public fun clear ()V
+	public final fun getAllowClosing ()Z
 	public final fun getDescription ()Ljava/lang/String;
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
 	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
 	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
+	public final fun setAllowClosing (Z)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public fun setStorage (Ljava/util/List;)V
 	public fun setTitle (Ljava/lang/String;)V
