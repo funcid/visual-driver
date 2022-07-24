@@ -21,7 +21,6 @@ import me.func.mod.util.warn
 import me.func.protocol.EndStatus
 import me.func.protocol.Indicators
 import me.func.protocol.Marker
-import me.func.protocol.ModChat
 import me.func.protocol.RGB
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.personalization.GraffitiPlaced
@@ -39,7 +38,7 @@ val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.r
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
-const val VERSION = "08.07.2022"
+const val VERSION = "21.07.2022"
 
 object Anime {
 
@@ -428,23 +427,6 @@ object Anime {
             .long(uuid.mostSignificantBits)
             .long(uuid.leastSignificantBits)
             .send("fiwka:sphere", to)
-
-    @JvmStatic
-    fun chat(player: Player, chat: ModChat, message: String) {
-        ModTransfer()
-            .integer(chat.ordinal + 1)
-            .json(message)
-            .send("zabelix:chat_message", player)
-    }
-
-    @JvmStatic
-    fun removeChats(player: Player, vararg chats: ModChat) {
-        for (chat in chats) {
-            ModTransfer()
-                .integer(chat.ordinal + 1)
-                .send("delete-chat", player)
-        }
-    }
 
     @JvmStatic
     fun graffiti(player: Player, placed: GraffitiPlaced) {

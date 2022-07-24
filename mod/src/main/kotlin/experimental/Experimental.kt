@@ -156,6 +156,7 @@ class Experimental {
                         UUID.fromString(NetUtil.readUtf8(this)),
                         NetUtil.readUtf8(this).replace("&", "§"), // title
                         NetUtil.readUtf8(this).replace("&", "§"), // description
+                        readBoolean(), // allow closing this menu
                         readIcons(this)
                     )
                 )

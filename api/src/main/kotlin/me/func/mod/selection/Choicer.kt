@@ -10,8 +10,13 @@ class Choicer(
     var description: String = "Выбери нужный под-режим!",
     override var storage: MutableList<Button> = mutableListOf()
 ) : Storage {
+    var allowClosing: Boolean = true
+
     constructor(title: String, description: String, vararg storage: Button) :
             this(UUID.randomUUID(), title, description, storage.toMutableList())
 
-    override fun open(player: Player): Storage = open(player, "storage:choice") { string(description) }
+    override fun open(player: Player): Storage = open(player, "storage:choice") {
+        string(description)
+        boolean(allowClosing)
+    }
 }

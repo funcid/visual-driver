@@ -1,11 +1,9 @@
 package me.func.protocol
 
-enum class ModChat {
+import java.util.*
 
-    SERVER,
-    SYSTEM,
-    ATTACK,
-    PARTY,
-    TRADE,
-
-}
+data class ModChat(
+    val id: UUID,
+    val name: String,
+    val symbol: String,
+)
