@@ -3,6 +3,7 @@ package me.func.mod.selection
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
+import me.func.mod.Anime.provided
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.MouseButton
 import me.func.mod.util.warn
@@ -11,8 +12,7 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
-import java.util.Stack
-import java.util.UUID
+import java.util.*
 
 inline fun selection(setup: Selection.() -> Unit) = Selection().also(setup)
 
@@ -56,7 +56,7 @@ object MenuManager : Listener {
         handler<Storage>("storage:click") { menu, player, buffer ->
             val index = buffer.readInt()
             val button = menu.storage[index]
-            when(buffer.readInt()) {
+            when (buffer.readInt()) {
                 MouseButton.LEFT.ordinal -> button.onLeftClick?.handle(player, index, button)
                 MouseButton.RIGHT.ordinal -> button.onRightClick?.handle(player, index, button)
                 MouseButton.MIDDLE.ordinal -> button.onMiddleClick?.handle(player, index, button)
@@ -87,6 +87,16 @@ object MenuManager : Listener {
                 if (menu is Storage) menu.bind(player)
             }
         }
+
+        // Тикаем все меню
+        Bukkit.getScheduler().runTaskTimer(provided, {
+            Bukkit.getOnlinePlayers().filter { handleMap.containsKey(it.uniqueId) }.forEach {
+                val stack = menuStacks[it.uniqueId] ?: return@forEach
+                if (stack.empty()) return@forEach
+                val top = stack.peek()
+                if (top is Selection) top.tick?.accept(top)
+            }
+        }, 1, 1)
     }
 
     @EventHandler

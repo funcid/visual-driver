@@ -3,6 +3,7 @@ package me.func.mod.selection
 import me.func.mod.selection.MenuManager.open
 import org.bukkit.entity.Player
 import java.util.UUID
+import java.util.function.Consumer
 
 open class Selection(
     override var uuid: UUID = UUID.randomUUID(),
@@ -14,6 +15,9 @@ open class Selection(
     open var columns: Int = 4,
     override var storage: MutableList<Button> = mutableListOf()
 ) : Storage {
+
+    var tick: Consumer<Storage>? = null
+
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
             this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toMutableList())
 
