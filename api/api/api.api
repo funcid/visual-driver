@@ -16,6 +16,7 @@ public final class me/func/mod/Anime {
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;D)V
 	public static final fun bigTitle (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun booster (Lorg/bukkit/entity/Player;Lme/func/protocol/booster/bar/OpenBoosterRequest;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
 	public static final fun chat (Lorg/bukkit/entity/Player;Lme/func/protocol/ModChat;Ljava/lang/String;)V

@@ -238,6 +238,25 @@ public final class me/func/protocol/battlepass/BattlePassUserData {
 	public final fun setExp (I)V
 }
 
+public final class me/func/protocol/booster/bar/OpenBoosterRequest {
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Z
+	public final fun component5 ()D
+	public final fun copy (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)Lme/func/protocol/booster/bar/OpenBoosterRequest;
+	public static synthetic fun copy$default (Lme/func/protocol/booster/bar/OpenBoosterRequest;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZDILjava/lang/Object;)Lme/func/protocol/booster/bar/OpenBoosterRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getProgress ()D
+	public final fun getSegments ()Ljava/util/List;
+	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isShowBackground ()Z
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/func/protocol/dialog/Action {
 	public static final field Companion Lme/func/protocol/dialog/Action$Companion;
 	public fun <init> (Ljava/lang/String;)V
