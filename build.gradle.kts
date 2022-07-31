@@ -56,7 +56,7 @@ subprojects {
             maven {
                 name = "func"
                 url = uri(
-                    "https://repo.c7x.ru/repository/maven-${
+                    "https://repo.c7x.dev/repository/maven-${
                         if (project.version.toString().contains("SNAPSHOT")) "snapshots" else "releases"
                     }/"
                 )

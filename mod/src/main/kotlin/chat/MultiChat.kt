@@ -35,7 +35,7 @@ class MultiChat {
                 val resolution = UIEngine.clientApi.resolution()
                 val scaleFactor = resolution.scaleFactor
 
-                UIEngine.clientApi.minecraft().currentScreen().drawHoveringText(
+                UIEngine.clientApi.minecraft().currentScreen()?.drawHoveringText(
                     hoveringText,
                     Mouse.getX() / scaleFactor,
                     resolution.scaledHeight - Mouse.getY() / scaleFactor

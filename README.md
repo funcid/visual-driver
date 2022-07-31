@@ -20,7 +20,7 @@
 repositories {
     mavenCentral()
     maven {
-        url 'https://repo.c7x.ru/repository/maven-public/'
+        url 'https://repo.c7x.dev/repository/maven-public/'
         credentials {
             username System.getenv("CRI_REPO_LOGIN")
             password System.getenv("CRI_REPO_PASSWORD")
