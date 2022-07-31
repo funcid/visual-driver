@@ -2,25 +2,17 @@ package experimental
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.BOTTOM
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.LEFT
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 
 class Recharge {
     companion object {
-        private lateinit var rechargeLine: RectangleElement
+        private lateinit var rechargeLine: CarvedRectangle
         private lateinit var rechargeContent: TextElement
 
         private var cooldown: RectangleElement? = null
@@ -44,7 +36,7 @@ class Recharge {
                         align = BOTTOM
                         size = V3(180.0, 5.0, 0.0)
                         color = Color(0, 0, 0, 0.62)
-                        rechargeLine = +rectangle {
+                        rechargeLine = +carved {
                             origin = LEFT
                             align = LEFT
                             size = V3(180.0, 5.0, 0.0)

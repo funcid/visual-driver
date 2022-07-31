@@ -2,38 +2,25 @@ package standard
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.element.RectangleElement
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Easings
-import ru.cristalix.uiengine.utility.LEFT
-import ru.cristalix.uiengine.utility.Property
-import ru.cristalix.uiengine.utility.Rotation
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.get
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.set
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 
 class TimeBar {
-    private lateinit var line: RectangleElement
+    private lateinit var line: CarvedRectangle
     private lateinit var content: TextElement
 
     init {
-        val cooldown = rectangle {
+        val cooldown = carved {
             offset.y += 30
             origin = TOP
             align = TOP
             size = V3(180.0, 5.0, 0.0)
             color = Color(0, 0, 0, 0.62)
-            line = +rectangle {
+            line = +carved {
                 origin = LEFT
                 align = LEFT
                 size = V3(180.0, 5.0, 0.0)
