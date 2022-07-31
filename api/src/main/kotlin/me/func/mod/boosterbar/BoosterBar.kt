@@ -42,18 +42,3 @@ class BoosterBar(
     }
 
 }
-
-class BoosterBarTest(val player: Player) {
-
-    fun onJoin() {
-        val boosterBar = boosterBar {
-            segments = listOf()
-            title = ""
-            subtitle = ""
-            isShowBackground = false
-            progress = 1.0
-        }
-
-        boosterBar.open(player)
-    }
-}

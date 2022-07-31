@@ -510,18 +510,4 @@ object Anime {
         MenuManager.clearHistory(player)
         sendEmptyBuffer("func:close", player)
     }
-
-    @JvmStatic
-    fun boosterBarOpen(player: Player, openBoosterRequest: OpenBoosterRequest) {
-        ModTransfer()
-            .json(openBoosterRequest)
-            .send("boosterbar:open", player)
-    }
-
-    @JvmStatic
-    fun boosterBarClose(player: Player, closeBoosterRequest: CloseBoosterRequest) {
-        ModTransfer()
-            .json(closeBoosterRequest)
-            .send("boosterbar:close", player)
-    }
 }
