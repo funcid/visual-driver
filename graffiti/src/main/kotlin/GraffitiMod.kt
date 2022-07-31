@@ -280,7 +280,7 @@ class GraffitiMod : KotlinMod() {
             align = CENTER
             origin = CENTER
             shadow = true
-            content = "§bРазместить граффити §lЛКМ\n§cУбрать §lПКМ"
+            content = "§bРазместить граффити §lПКМ\n§cУбрать §lЛКМ"
             offset.y += 30
             enabled = false
         }
@@ -403,8 +403,9 @@ class GraffitiMod : KotlinMod() {
 
         registerHandler<MousePress> {
             // Если нажата левая кнопка мыши - убрать граффити
-            if (activeGraffiti != null) {
-                UIEngine.worldContexts.remove(activeGraffiti!!.container)
+            if (activeGraffiti != null && button == 0) {
+                // Вернуть граффити в меню
+                getActivePack().backGraffitiToPack(activeGraffiti!!)
                 activeGraffiti = null
             }
         }

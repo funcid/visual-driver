@@ -1,9 +1,10 @@
 import battlepass.BattlePass
-import chat.ChatMod
+import chat.MultiChat
 import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.network.PluginMessage
 import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
 import dev.xdark.clientapi.gui.ingame.OptionsScreen
+import dev.xdark.clientapi.opengl.OpenGlHelper
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
@@ -13,6 +14,7 @@ import io.netty.buffer.Unpooled
 import lootbox.LootboxMod
 import me.func.protocol.Mod
 import npc.NPC
+import org.lwjgl.opengl.GL20
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import standard.ExternalManager
@@ -38,10 +40,29 @@ class Main : KotlinMod() {
                     Mod.BATTLEPASS -> BattlePass()
                     Mod.LOOTBOX -> LootboxMod()
                     Mod.DIALOG -> DialogMod()
-                    Mod.CHAT -> ChatMod()
+                    Mod.CHAT -> MultiChat()
                     else -> return@repeat
                 }
             }
+        }
+
+        registerChannel("fiwka:shaders") {
+            val shader = NetUtil.readUtf8(this)
+            val type = readInt()
+
+            val id = OpenGlHelper.glCreateShader(type)
+
+            GL20.glShaderSource(id, shader)
+
+            OpenGlHelper.glCompileShader(id)
+
+            val program = OpenGlHelper.glCreateProgram()
+            OpenGlHelper.glAttachShader(program, id)
+            OpenGlHelper.glLinkProgram(program)
+
+            OpenGlHelper.glUseProgram(program)
+
+            GL20.glDetachShader(program, id)
         }
 
         externalManager = ExternalManager()
