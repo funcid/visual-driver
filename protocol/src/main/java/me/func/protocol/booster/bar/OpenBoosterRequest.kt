@@ -1,9 +1,13 @@
 package me.func.protocol.booster.bar
 
 data class OpenBoosterRequest(
-    val segments: List<String>,
-    val title: String,
-    val subtitle: String,
-    val isShowBackground: Boolean,
-    val progress: Double
-)
+    var segments: List<String>,
+    var title: String,
+    var subtitle: String,
+    var isShowBackground: Boolean,
+    var progress: Double
+) {
+    
+
+    constructor() : this(listOf(), "", "", false, 1.0)
+}

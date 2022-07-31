@@ -1,3 +1,7 @@
 package me.func.protocol.booster.bar
 
-data class CloseBoosterRequest(val isShowBackground: Boolean)
+import java.util.*
+
+data class CloseBoosterRequest(var isShowBackground: Boolean) {
+    constructor() : this(false)
+}
