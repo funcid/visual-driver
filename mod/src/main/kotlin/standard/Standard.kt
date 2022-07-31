@@ -7,7 +7,7 @@ class Standard {
         IndicatorsManager()
         MarkerManager()
         ModelBlocker()
-        KillBoardManager()
+        KillBoard()
         SphereManager()
         Title()
         Alert()

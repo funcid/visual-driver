@@ -7,42 +7,36 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.Matrix4f
 import org.lwjgl.util.vector.Vector3f
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Relative
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.rotationMatrix
+import ru.cristalix.uiengine.utility.*
 
 /**
  * @project animation-api
  * @author Рейдж
  */
 class Healthbar {
+    private val context = Context3D(V3())
+
+    private val bar = carved {
+        origin = Relative.LEFT
+        align = Relative.LEFT
+        offset.x = 0.5
+        size.x = 10.0
+        size.y = 3.0
+        color = Color(51, 240, 51)
+    }
+
+    private val body = carved {
+        size = V3(16.0, 4.0)
+        color = Color(0, 0, 0, 0.5)
+        origin = Relative.CENTER
+        addChild(bar)
+    }
+
     init {
-        val context = Context3D(V3())
-        val bar = rectangle {
-            origin = Relative.LEFT
-            align = Relative.LEFT
-            offset.x = 0.5
-            size.x = 10.0
-            size.y = 3.0
-            color = Color(51, 240, 51)
-        }
-
-        val body = rectangle {
-            size = V3(16.0, 4.0)
-            color = Color(0, 0, 0, 0.5)
-            origin = Relative.CENTER
-            addChild(bar)
-        }
-
         context.addChild(body)
-
         mod.registerHandler<RenderTickPre> {
             val player = UIEngine.clientApi.minecraft().player
             val matrix = Matrix4f()
