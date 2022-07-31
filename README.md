@@ -545,18 +545,21 @@ TRADE
 
 <img src="https://user-images.githubusercontent.com/63064550/181641989-22a7f776-1137-472d-8e55-5a8e468f82d7.png" width="500">
 
-Методы:<br>
-`Anime.boosterBarOpen(player: Player, openBoosterRequest: OpenBoosterRequest)`<br>
-Открытие оверлея. В класс `OpenBoosterRequest`, передается основная информация о состоянии бустера.<br>
-`segments: List<String>` Количество ячеек с описанием статуса бустера.<br>
-`title: String и subTitle: String` Надписи, которые появляются, только при том, что `boolean: isShowBackroung = true`,<br>
-так-же, за анимацию, если значение `false`, анимация сработает.<br>
-`progress: Double` Отвечает за заполненность бустера от 0.0 до 1.0<br>
+Показывает текущее состояние бустера игрока.
 
-`Anime.boosterBarClose(player: Player, closeBoosterRequest: CloseBoosterRequest)`<br>
-Закрытие оверлея. В класс `CloseBoosterRequest`, передается информация для закрытия меню.<br>
-`boolean: isShowBackroung` Если её значение истинно, то анимация отменяется.<br>
+Пример для языка Kotlin:
 
+```kotlin
+val boosterBar = boosterBar {
+    segments = listOf()
+    title = ""
+    subtitle = ""
+    isShowBackground = false
+    progress = 1.0
+}
+
+boosterBar.open(player)
+```
 <h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
 
 <img src ="https://user-images.githubusercontent.com/63064550/149799259-9129ba80-b2a8-4553-9638-666b5ba950ab.png" width="500">
