@@ -159,12 +159,12 @@ public final class me/func/mod/KitKt {
 
 public final class me/func/mod/MultiChat {
 	public static final field INSTANCE Lme/func/mod/MultiChat;
-	public static final fun broadcastMessage (Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun broadcastMessage (Ljava/util/Collection;Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun broadcastMessage (Ljava/util/Collection;Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun broadcastMessage (Ljava/util/Collection;Lme/func/protocol/ModChat;Ljava/lang/String;)V
-	public static final fun broadcastMessage (Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun broadcastMessage (Lme/func/protocol/ModChat;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/Collection;Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/Collection;Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/Collection;Lme/func/protocol/ModChat;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun broadcast (Lme/func/protocol/ModChat;Ljava/lang/String;)V
 	public static final fun createKey (Ljava/lang/String;Lme/func/protocol/ModChat;)V
 	public static final fun registerHandler (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
 	public static final fun registerHandler (Ljava/util/UUID;Ljava/util/function/BiConsumer;)V
@@ -200,6 +200,11 @@ public final class me/func/mod/Npc {
 	public final fun skin (Lme/func/protocol/npc/NpcData;Ljava/lang/String;)V
 	public final fun skin (Lme/func/protocol/npc/NpcData;Ljava/util/UUID;)V
 	public static final fun spawn (I)Lkotlin/Unit;
+}
+
+public final class me/func/mod/Shaders {
+	public static final field INSTANCE Lme/func/mod/Shaders;
+	public final fun loadShader (Lorg/bukkit/entity/Player;ILjava/lang/String;)V
 }
 
 public final class me/func/mod/StandardMods : org/bukkit/event/Listener {
@@ -715,6 +720,7 @@ public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun getMoney ()Ljava/lang/String;
 	public fun getRows ()I
 	public fun getStorage ()Ljava/util/List;
+	public final fun getTick ()Ljava/util/function/Consumer;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
 	public fun getVault ()Ljava/lang/String;
@@ -725,6 +731,7 @@ public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun setMoney (Ljava/lang/String;)V
 	public fun setRows (I)V
 	public fun setStorage (Ljava/util/List;)V
+	public final fun setTick (Ljava/util/function/Consumer;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
 	public fun setVault (Ljava/lang/String;)V
