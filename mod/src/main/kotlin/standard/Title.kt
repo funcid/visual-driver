@@ -1,16 +1,11 @@
 package standard
 
 import dev.xdark.feder.NetUtil
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 
 class Title {
 
@@ -37,9 +32,7 @@ class Title {
             element.content = NetUtil.readUtf8(this)
             message.enabled = true
             element.animate(0.3) {
-                color.red = 255
-                color.green = 140
-                color.blue = 185
+                color = WHITE
                 color.alpha = 1.0
                 scale.x = 2.2
                 scale.y = 2.2
@@ -53,9 +46,7 @@ class Title {
             }
             UIEngine.schedule(3.3) {
                 message.enabled = false
-                element.color.red = 0
-                element.color.green = 0
-                element.color.blue = 0
+                element.color = WHITE
                 element.color.alpha = 0.0
                 element.scale.x = 1.0
                 element.scale.y = 1.0

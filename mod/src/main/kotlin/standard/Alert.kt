@@ -1,30 +1,21 @@
 package standard
 
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.element.RectangleElement
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
-import ru.cristalix.uiengine.utility.BOTTOM
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Easings
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 
 private const val VECTOR = 65
 
 class Alert {
     private lateinit var dayTitle: TextElement
     private lateinit var lore: TextElement
-    private lateinit var loreBox: RectangleElement
+    private lateinit var loreBox: CarvedRectangle
 
-    private val dayTitleBox = rectangle {
+    private val dayTitleBox = carved {
         align = TOP
         origin = TOP
 
@@ -41,7 +32,7 @@ class Alert {
             shadow = true
             content = "Название игры"
         }
-        loreBox = +rectangle {
+        loreBox = +carved {
             align = BOTTOM
             origin = BOTTOM
             size = V3(180.0, 18.0)
