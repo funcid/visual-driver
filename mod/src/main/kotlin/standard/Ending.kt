@@ -82,9 +82,11 @@ class Ending {
 
             filler?.color = Color(endStatus.red, endStatus.green, endStatus.blue, 0.86)
 
-            cup.offset.x -= endStatus.offset
+            cup.offset.x = endStatus.offset
             cup.offset.z = 50.0
             cup.textureLocation = ResourceLocation.of("cache/animation", endStatus.texture)
+
+            information.size.x = 225.0
 
             UIEngine.overlayContext + filler!!
             filler!!.animate(1.0) {
