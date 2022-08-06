@@ -21,5 +21,6 @@ class Standard {
         RightBottom()
         Ending()
         BigAlert()
+        Boosters()
     }
 }
