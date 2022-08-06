@@ -6,9 +6,7 @@ import pw.lach.p13n.network.client.P13nChannels.EMOTION_ACTION
 import pw.lach.p13n.network.client.PacketEmotionAction
 import java.util.UUID
 
-
 enum class Emotions(val title: String, val uuid: UUID) {
-
     THING_ABOUT_IT("Think about it", "83ae4880-f3bd-4697-8879-657f494e4d77"),
     BOY("Boy", "d7d8f03e-4cd9-411a-ba1e-2e37bfd0daca"),
     YES("Да", "122faf60-0fb2-44c5-982a-235bb0a7ee85"),
@@ -60,27 +58,34 @@ enum class Emotions(val title: String, val uuid: UUID) {
     CRYING("Плачу", "e2546694-33ab-4464-8235-8ee95ac07503"),
     SKIBIDI("Скибиди", "26ae7ce9-da74-4e57-a112-a15b00d36c3e"),
     HYPE("Хайп", "0db21207-ced0-4a2f-bdf9-692f7c590e7d"),
-    TWERK("Тверк", "9c416131-282c-4dad-b19d-2d1f69bc789a");
+    TWERK("Тверк", "9c416131-282c-4dad-b19d-2d1f69bc789a"),
+    ;
 
     constructor(title: String, uuid: String) : this(title, UUID.fromString(uuid))
 
     companion object {
         @JvmStatic
         fun play(emotion: UUID, dancer: UUID, vararg receivers: Player) {
-            receivers.forEach { ModTransfer().json(PacketEmotionAction(dancer, emotion, 0, null)).send(EMOTION_ACTION, it) }
+            val pk = ModTransfer().json(PacketEmotionAction(dancer, emotion, 0, null))
+            receivers.forEach { pk.send(EMOTION_ACTION, it) }
         }
-
-        @JvmStatic
-        fun play(emotion: Emotions, dancer: UUID, vararg receivers: Player) = play(emotion.uuid, dancer, *receivers)
-
-        @JvmStatic
-        fun play(emotion: Emotions, dancer: UUID, receivers: Collection<Player>) = play(emotion.uuid, dancer, *receivers.toTypedArray())
     }
 
     @JvmName("show")
-    fun Emotions.play(dancer: UUID, vararg receivers: Player) = play(uuid, dancer, *receivers)
+    fun play(dancer: UUID, vararg receivers: Player): Unit = play(uuid, dancer, *receivers)
 
     @JvmName("show")
-    fun Emotions.play(dancer: UUID, receivers: Collection<Player>) = play(uuid, dancer, *receivers.toTypedArray())
-
+    fun play(dancer: UUID, receivers: Collection<Player>): Unit = play(uuid, dancer, *receivers.toTypedArray())
 }
+
+@JvmName("playEmotion")
+fun Emotions.play(
+    dancer: Player,
+    vararg receivers: Player
+): Unit = play(dancer.uniqueId, *receivers)
+
+@JvmName("playEmotion")
+fun Emotions.play(
+    dancer: Player,
+    receivers: Collection<Player>
+): Unit = play(dancer.uniqueId, *receivers.toTypedArray())

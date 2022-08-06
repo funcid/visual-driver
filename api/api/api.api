@@ -506,18 +506,19 @@ public final class me/func/mod/emotion/Emotions : java/lang/Enum {
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun getUuid ()Ljava/util/UUID;
 	public static final fun play (Ljava/util/UUID;Ljava/util/UUID;[Lorg/bukkit/entity/Player;)V
-	public static final fun play (Lme/func/mod/emotion/Emotions;Ljava/util/UUID;Ljava/util/Collection;)V
-	public static final fun play (Lme/func/mod/emotion/Emotions;Ljava/util/UUID;[Lorg/bukkit/entity/Player;)V
-	public final fun show (Lme/func/mod/emotion/Emotions;Ljava/util/UUID;Ljava/util/Collection;)V
-	public final fun show (Lme/func/mod/emotion/Emotions;Ljava/util/UUID;[Lorg/bukkit/entity/Player;)V
+	public final fun show (Ljava/util/UUID;Ljava/util/Collection;)V
+	public final fun show (Ljava/util/UUID;[Lorg/bukkit/entity/Player;)V
 	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/emotion/Emotions;
 	public static fun values ()[Lme/func/mod/emotion/Emotions;
 }
 
 public final class me/func/mod/emotion/Emotions$Companion {
 	public final fun play (Ljava/util/UUID;Ljava/util/UUID;[Lorg/bukkit/entity/Player;)V
-	public final fun play (Lme/func/mod/emotion/Emotions;Ljava/util/UUID;Ljava/util/Collection;)V
-	public final fun play (Lme/func/mod/emotion/Emotions;Ljava/util/UUID;[Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/emotion/EmotionsKt {
+	public static final fun playEmotion (Lme/func/mod/emotion/Emotions;Lorg/bukkit/entity/Player;Ljava/util/Collection;)V
+	public static final fun playEmotion (Lme/func/mod/emotion/Emotions;Lorg/bukkit/entity/Player;[Lorg/bukkit/entity/Player;)V
 }
 
 public abstract interface class me/func/mod/experimental/disguise/EntityDisguiser {
