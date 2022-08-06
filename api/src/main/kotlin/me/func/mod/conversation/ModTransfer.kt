@@ -1,5 +1,6 @@
 package me.func.mod.conversation
 
+import com.google.common.collect.ImmutableList
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
@@ -102,15 +103,45 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String?, player: Player?) {
-        if (player == null)
-            return
-        serializer.a = serializer.retainedSlice()
-        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
+        if (player == null) return
+        val readerIndex = serializer.readerIndex()
+        try {
+            (player as CraftPlayer).handle.playerConnection.sendPacket(
+                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer))
+            )
+        } finally {
+            serializer.readerIndex(readerIndex)
+        }
     }
 
-    fun bulkSend(channel: String, vararg players: Player) { players.forEach { send(channel, it) } }
+    fun bulkSend(channel: String, vararg players: Player) {
+        bulkSend(channel, object : List<Player> { // TODO: Вынести
+            override val size: Int get() = players.size
+            override fun get(index: Int): Player = players[index]
+            override fun isEmpty(): Boolean = players.isEmpty()
+            override fun iterator(): Iterator<Player> = players.iterator()
+            override fun lastIndexOf(element: Player): Int = players.lastIndexOf(element)
+            override fun indexOf(element: Player): Int = players.indexOf(element)
+            override fun contains(element: Player): Boolean = players.contains(element)
+            override fun listIterator() = TODO("Not yet implemented")
+            override fun listIterator(index: Int) = TODO("Not yet implemented")
+            override fun subList(fromIndex: Int, toIndex: Int)= TODO("Not yet implemented")
+            override fun containsAll(elements: Collection<Player>) = TODO("Not yet implemented")
+        })
+    }
 
-    fun bulkSend(channel: String, list: Iterable<Player>) { bulkSend(channel, *list.toList().toTypedArray()) }
+    fun bulkSend(channel: String, players: Iterable<Player>) {
+        val readerIndex = serializer.readerIndex()
+        val pk = PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer))
+
+        players.forEach { player ->
+            try {
+                (player as CraftPlayer).handle.playerConnection.sendPacket(pk)
+            } finally {
+                serializer.readerIndex(readerIndex)
+            }
+        }
+    }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {
         if (nbt == null) {
