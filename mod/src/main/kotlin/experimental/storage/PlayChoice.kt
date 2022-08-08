@@ -73,11 +73,11 @@ class PlayChoice(
                 storage.forEachIndexed { index, element ->
                     element.bundle = +carved top@{
                         size = buttonSize
-                        color = if (element.special) specialColor else normal
+                        color = if (element.special == true) specialColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (element.special) textSpecial else textNormal
+                            color = if (element.special == true) textSpecial else textNormal
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
