@@ -11,7 +11,6 @@ abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,
     @JvmField var title: String,
     @JvmField var description: String,
-    @JvmField var special: Boolean,
     var hoverText: String,
     open var icon: T,
     var hint: String? = null

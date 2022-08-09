@@ -58,10 +58,10 @@ class PlayChoice(
             origin = CENTER
             align = CENTER
             size = V3(UIEngine.overlayContext.size.x, 240.0)
-            val specialColor = Color(224, 118, 20, 0.28)
+            val centerColor = Color(224, 118, 20, 0.28)
             val normal = Color(42, 102, 189, 0.28)
             val textNormal = Color(74, 140, 236, 1.0)
-            val textSpecial = Color(255, 157, 66, 1.0)
+            val textCenter = Color(255, 157, 66, 1.0)
             val iconHover = Color(255, 255, 200, 1.0)
             +title
             +description
@@ -71,13 +71,14 @@ class PlayChoice(
                 flexSpacing = padding
                 scale = V3(scaling, scaling, scaling)
                 storage.forEachIndexed { index, element ->
+                    val centered = storage.size / 2 == index && storage.size % 2 == 1
                     element.bundle = +carved top@{
                         size = buttonSize
-                        color = if (element.special) specialColor else normal
+                        color = if (centered) centerColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (element.special) textSpecial else textNormal
+                            color = if (centered) textCenter else textNormal
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
