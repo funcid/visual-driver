@@ -36,7 +36,7 @@ val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.r
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
-const val VERSION = "01.08.2022"
+const val VERSION = "14.08.2022"
 
 object Anime {
 
