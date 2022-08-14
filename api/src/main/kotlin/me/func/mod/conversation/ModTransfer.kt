@@ -104,42 +104,23 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     fun send(channel: String?, player: Player?) {
         if (player == null) return
-        val readerIndex = serializer.readerIndex()
-        try {
-            (player as CraftPlayer).handle.playerConnection.sendPacket(
-                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer))
-            )
-        } finally {
-            serializer.readerIndex(readerIndex)
-        }
+
+        (player as CraftPlayer).handle.playerConnection.sendPacket(
+            PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
+        )
     }
 
     fun bulkSend(channel: String, vararg players: Player) {
-        bulkSend(channel, object : List<Player> { // TODO: Вынести
-            override val size: Int get() = players.size
-            override fun get(index: Int): Player = players[index]
-            override fun isEmpty(): Boolean = players.isEmpty()
+        bulkSend(channel, object : Iterable<Player> {
             override fun iterator(): Iterator<Player> = players.iterator()
-            override fun lastIndexOf(element: Player): Int = players.lastIndexOf(element)
-            override fun indexOf(element: Player): Int = players.indexOf(element)
-            override fun contains(element: Player): Boolean = players.contains(element)
-            override fun listIterator() = TODO("Not yet implemented")
-            override fun listIterator(index: Int) = TODO("Not yet implemented")
-            override fun subList(fromIndex: Int, toIndex: Int)= TODO("Not yet implemented")
-            override fun containsAll(elements: Collection<Player>) = TODO("Not yet implemented")
         })
     }
 
     fun bulkSend(channel: String, players: Iterable<Player>) {
-        val readerIndex = serializer.readerIndex()
-        val pk = PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer))
-
         players.forEach { player ->
-            try {
-                (player as CraftPlayer).handle.playerConnection.sendPacket(pk)
-            } finally {
-                serializer.readerIndex(readerIndex)
-            }
+            (player as CraftPlayer).handle.playerConnection.sendPacket(
+                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
+            )
         }
     }
 
