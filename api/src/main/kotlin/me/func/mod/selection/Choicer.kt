@@ -2,7 +2,7 @@ package me.func.mod.selection
 
 import me.func.mod.selection.MenuManager.open
 import org.bukkit.entity.Player
-import java.util.UUID
+import java.util.*
 
 class Choicer(
     override var uuid: UUID = UUID.randomUUID(),
@@ -11,6 +11,7 @@ class Choicer(
     override var storage: MutableList<Button> = mutableListOf()
 ) : Storage {
     var allowClosing: Boolean = true
+    var keepSingleColor: Boolean = false
 
     constructor(title: String, description: String, vararg storage: Button) :
             this(UUID.randomUUID(), title, description, storage.toMutableList())
@@ -18,5 +19,6 @@ class Choicer(
     override fun open(player: Player): Storage = open(player, "storage:choice") {
         string(description)
         boolean(allowClosing)
+        boolean(keepSingleColor)
     }
 }
