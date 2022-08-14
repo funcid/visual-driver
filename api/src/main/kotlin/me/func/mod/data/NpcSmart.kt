@@ -1,6 +1,7 @@
 package me.func.mod.data
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
+import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.protocol.npc.NpcData
 import net.minecraft.server.v1_12_R1.ItemStack
@@ -21,6 +22,7 @@ data class NpcSmart(
     var data: NpcData,
     var click: Consumer<PlayerUseUnknownEntityEvent>? = null,
     var worldUuid: UUID? = null,
+    var personalization: MutableSet<UUID> = hashSetOf(),
     private var leftArm: ItemStack? = null,
     private var rightArm: ItemStack? = null,
     private var head: ItemStack? = null,
@@ -39,6 +41,8 @@ data class NpcSmart(
             FEET -> feet = itemStack
         }
     }
+
+    fun personalization(vararg uuid: UUID) = apply { personalization.addAll(uuid) }
 
     fun setWorld(world: World) = apply { worldUuid = world.uid }
 
@@ -125,6 +129,8 @@ data class NpcSmart(
             .boolean(data.sleeping)
             .boolean(data.sitting)
             .send("npc:spawn", player)
+        if (personalization.isNotEmpty())
+            Anime.equipPersonalization(player, data.uuid, *personalization.toTypedArray())
         return this
     }
 
