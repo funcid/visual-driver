@@ -2,14 +2,10 @@ package experimental.storage
 
 import Main.Companion.externalManager
 import Main.Companion.menuStack
-import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.Experimental.Companion.acceptHover
-import experimental.Experimental.Companion.hoverCenter
 import experimental.Experimental.Companion.hoverContainer
-import experimental.Experimental.Companion.hoverText
-import experimental.Experimental.Companion.hoverTextScale
 import experimental.Experimental.Companion.itemPadding
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
@@ -180,10 +176,13 @@ class StorageMenu(
                         content = element.title
                         shadow = true
                         lineHeight = 8.0
+                        println("Size of title ${element.title} is ${size.x} ${size.y}")
                     }
                     element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         content = element.description
+                        println("Description ${element.description} has ${element.description.split("\n").toTypedArray().contentToString()} lines")
+                        println("Its size is ${size.x} ${size.y}")
                         shadow = true
                     }
                 }
