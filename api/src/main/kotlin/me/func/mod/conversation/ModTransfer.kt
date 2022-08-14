@@ -1,5 +1,6 @@
 package me.func.mod.conversation
 
+import com.google.common.collect.ImmutableList
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
@@ -102,15 +103,26 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String?, player: Player?) {
-        if (player == null)
-            return
-        serializer.a = serializer.retainedSlice()
-        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
+        if (player == null) return
+
+        (player as CraftPlayer).handle.playerConnection.sendPacket(
+            PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
+        )
     }
 
-    fun bulkSend(channel: String, vararg players: Player) { players.forEach { send(channel, it) } }
+    fun bulkSend(channel: String, vararg players: Player) {
+        bulkSend(channel, object : Iterable<Player> {
+            override fun iterator(): Iterator<Player> = players.iterator()
+        })
+    }
 
-    fun bulkSend(channel: String, list: Iterable<Player>) { bulkSend(channel, *list.toList().toTypedArray()) }
+    fun bulkSend(channel: String, players: Iterable<Player>) {
+        players.forEach { player ->
+            (player as CraftPlayer).handle.playerConnection.sendPacket(
+                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
+            )
+        }
+    }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {
         if (nbt == null) {
