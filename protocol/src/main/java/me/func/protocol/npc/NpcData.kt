@@ -15,6 +15,8 @@ class NpcData(
     var yaw: Float = 0f,
     var skinUrl: String? = null,
     var skinDigest: String? = null,
+    var skinValue: String? = null,
+    var skinSignature: String? = null,
     var slimArms: Boolean = false,
     var sneaking: Boolean = false,
     var sleeping: Boolean = false,

@@ -56,6 +56,20 @@ class NpcManager {
                         (if (data.skinDigest == null) data.skinUrl?.let { sha1Hex(it) } ?: "null" else data.skinDigest)
                     )
                 )
+
+                val skinValue = data.skinValue
+                val skinSignature = data.skinSignature
+
+                if (!skinValue.isNullOrEmpty() && !skinSignature.isNullOrEmpty()) {
+                    properties.put(
+                        "skin",
+                        Property(
+                            "skin",
+                            skinValue,
+                            skinSignature
+                        )
+                    )
+                }
             }.apply { spawned.gameProfile = this }
         ).apply { responseTime = -2 }
 

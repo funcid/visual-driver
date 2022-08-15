@@ -124,6 +124,8 @@ data class NpcSmart(
             .double(data.pitch.toDouble())
             .string(data.skinUrl ?: "")
             .string(data.skinDigest ?: "")
+            .string(data.skinValue ?: "")
+            .string(data.skinSignature ?: "")
             .boolean(data.slimArms)
             .boolean(data.sneaking)
             .boolean(data.sleeping)
