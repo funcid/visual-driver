@@ -62,9 +62,9 @@ class NpcManager {
 
                 if (!skinValue.isNullOrEmpty() && !skinSignature.isNullOrEmpty()) {
                     properties.put(
-                        "skin",
+                        "textures",
                         Property(
-                            "skin",
+                            "textures",
                             skinValue,
                             skinSignature
                         )
