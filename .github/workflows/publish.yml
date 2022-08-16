@@ -19,7 +19,7 @@ jobs:
       with:
         arguments: |
           --no-daemon
-          --no-parallel
+          --parallel
           --stacktrace
           :protocol:build
           :protocol-serialization:build
