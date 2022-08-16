@@ -18,17 +18,16 @@ mod {
     jarFileName = "animation-api-production.jar"
 }
 
-remotes {
-    webServer {
-        host = 'storage.c7x.ru'
-        user = 'func'
-        knownHosts = allowAnyHosts
-        identity = file(System.getenv("RSA_PATH") ?: "C://Users/func/.ssh/id_rsa")
-        passphrase = System.getenv("SSH_PASSPHRASE")
-    }
-}
-
 task upload() {
+    remotes {
+        webServer {
+            host = 'storage.c7x.ru'
+            user = 'func'
+            knownHosts = allowAnyHosts
+            identity = file(System.getenv("RSA_PATH") ?: "C://Users/func/.ssh/id_rsa")
+            passphrase = System.getenv("SSH_PASSPHRASE")
+        }
+    }
     doLast {
         ssh.run {
             session(remotes.webServer) {
