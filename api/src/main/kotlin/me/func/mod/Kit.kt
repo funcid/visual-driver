@@ -36,7 +36,7 @@ internal object StandardMods : Listener {
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
         if (node.isEmpty()) {
             warn("Standard mod storage not available ($STANDARD_MOD_URL)! Safe allocate...")
-            val path = javaClass.getResource(STANDARD_MOD_URL.fileLastName())
+            val path = Anime.javaClass.classLoader.getResource(STANDARD_MOD_URL.fileLastName())
             if (path != null) ModLoader.load(File(path.toURI()))
         } else {
             ModLoader.load(node)
