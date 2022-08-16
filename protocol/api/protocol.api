@@ -455,8 +455,8 @@ public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
 
 public final class me/func/protocol/npc/NpcData {
 	public fun <init> ()V
-	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZI)V
-	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZZI)V
+	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public final fun getActivationDistance ()I
 	public final fun getBehaviour ()Lme/func/protocol/npc/NpcBehaviour;
@@ -465,7 +465,9 @@ public final class me/func/protocol/npc/NpcData {
 	public final fun getPitch ()F
 	public final fun getSitting ()Z
 	public final fun getSkinDigest ()Ljava/lang/String;
+	public final fun getSkinSignature ()Ljava/lang/String;
 	public final fun getSkinUrl ()Ljava/lang/String;
+	public final fun getSkinValue ()Ljava/lang/String;
 	public final fun getSleeping ()Z
 	public final fun getSlimArms ()Z
 	public final fun getSneaking ()Z
@@ -482,7 +484,9 @@ public final class me/func/protocol/npc/NpcData {
 	public final fun setPitch (F)V
 	public final fun setSitting (Z)V
 	public final fun setSkinDigest (Ljava/lang/String;)V
+	public final fun setSkinSignature (Ljava/lang/String;)V
 	public final fun setSkinUrl (Ljava/lang/String;)V
+	public final fun setSkinValue (Ljava/lang/String;)V
 	public final fun setSleeping (Z)V
 	public final fun setSlimArms (Z)V
 	public final fun setSneaking (Z)V
