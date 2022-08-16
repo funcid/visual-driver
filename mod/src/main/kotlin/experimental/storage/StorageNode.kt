@@ -13,7 +13,8 @@ abstract class StorageNode<T : AbstractElement>(
     @JvmField var description: String,
     var hoverText: String,
     open var icon: T,
-    var hint: String? = null
+    var hint: String? = null,
+    var special: Boolean? = null
 ) {
 
     var bundle: CarvedRectangle? = null
@@ -25,7 +26,7 @@ abstract class StorageNode<T : AbstractElement>(
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
-        color = Color(74, 140, 236, 1.0)
+        color = if (special!!)  Color(224, 118, 20, 1.0) else Color(74, 140, 236, 1.0)
         color.alpha = 0.0
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }

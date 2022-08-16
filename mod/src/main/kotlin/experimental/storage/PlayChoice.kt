@@ -71,14 +71,13 @@ class PlayChoice(
                 flexSpacing = padding
                 scale = V3(scaling, scaling, scaling)
                 storage.forEachIndexed { index, element ->
-                    val centered = storage.size / 2 == index && storage.size % 2 == 1
                     element.bundle = +carved top@{
                         size = buttonSize
-                        color = if (centered) centerColor else normal
+                        color = if (element.special!!) centerColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (centered) textCenter else textNormal
+                            color = if (element.special!!) textCenter else textNormal
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
