@@ -13,8 +13,12 @@ jobs:
         java-version: 8
         distribution: zulu
         cache: gradle
-    - name: Build with Gradle
+    - name: Gradle Wrapper Validation
+      uses: gradle/wrapper-validation-action@v1.0.4
+    - name: Gradle Build Action
+      uses: gradle/gradle-build-action@v2.2.2
+      with:
+        arguments: build
       env: 
         CRI_REPO_LOGIN: ${{ secrets.CRI_REPO_LOGIN }}
         CRI_REPO_PASSWORD: ${{ secrets.CRI_REPO_PASSWORD }}
-      run: ./gradlew --no-daemon --parallel -Dorg.gradle.console=plain build
