@@ -43,3 +43,4 @@ task upload() {
 
 tasks.upload.dependsOn(tasks.build)
 tasks.publish.dependsOn(tasks.upload)
+tasks.build.dependsOn(':protocol:build')
