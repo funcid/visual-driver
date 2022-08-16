@@ -17,4 +17,4 @@ jobs:
       env: 
         CRI_REPO_LOGIN: ${{ secrets.CRI_REPO_LOGIN }}
         CRI_REPO_PASSWORD: ${{ secrets.CRI_REPO_PASSWORD }}
-      run: ./gradlew --no-daemon --no-parallel -Dorg.gradle.console=plain build publish
+      run: ./gradlew --no-daemon --parallel -Dorg.gradle.console=plain :build
