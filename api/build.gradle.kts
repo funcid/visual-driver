@@ -14,7 +14,7 @@ dependencies {
     api(project(":protocol-serialization"))
 }
 
-
+/*
 val bundle: Provider<Directory> = project(":mod").layout.buildDirectory.dir("bundle")
 val generatedVersionDir = "$buildDir/generated-version"
 
@@ -40,6 +40,7 @@ sourceSets {
         resources.srcDirs(bundle, generatedVersionDir)
     }
 }
+*/
 
 publishing {
     publications {
