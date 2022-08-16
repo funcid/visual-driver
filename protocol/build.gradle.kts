@@ -1,3 +1,11 @@
+tasks {
+    build {
+        doFirst {
+            println(" --> :protocol:build")
+        }
+    }
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
