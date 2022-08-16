@@ -70,12 +70,6 @@ subprojects {
     }
 }
 
-tasks {
-    register("workaroundBuild") {
-        dependsOn(subprojects.map { it.tasks.named("build") })
-    }
-}
-
 apiValidation {
     ignoredProjects.addAll(listOf("mod", "graffiti", "graffiti-service"))
 }

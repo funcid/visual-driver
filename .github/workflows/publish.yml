@@ -20,7 +20,26 @@ jobs:
       with:
         arguments: |
           --stacktrace
-          workaroundBuild
+          :api:build
+          :plugin:build
+          :mod:build
+          :protocol:build
+          :graffiti:build
+          :graffiti-protocol:build
+          :graffiti-service:build
+          :protocol-serialization:build
+          :protocol-mod:build
+          :backport-artifact:build
+          :api:publish
+          :plugin:publish
+          :mod:publish
+          :protocol:publish
+          :graffiti:publish
+          :graffiti-protocol:build
+          :graffiti-service:publish
+          :protocol-serialization:publish
+          :protocol-mod:publish
+          :backport-artifact:publish
       env: 
         CRI_REPO_LOGIN: ${{ secrets.CRI_REPO_LOGIN }}
         CRI_REPO_PASSWORD: ${{ secrets.CRI_REPO_PASSWORD }}
