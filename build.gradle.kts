@@ -12,6 +12,18 @@ plugins {
 
 allprojects {
     group = "me.func.animation-api"
+    /*
+        Именно тут находится версия animation-api,
+    которая будет указана как version.properties внутри JAR, maven версия,
+    директория в storage для получения нужного мода.
+
+    Если ваше изменение ломает обратную совместимость:
+        - Поднимите второй параметр на один и обнулите последний
+        - Не забудьте сделать apiDump, чтобы CI не сломался
+
+    Подробнее про семантическое версионирование:
+        https://semver.org/lang/ru/
+     */
     version = "2.0.0"
 }
 
@@ -61,7 +73,8 @@ subprojects {
                     }/"
                 )
                 credentials {
-                    username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME") ?: System.getenv("REPO_C7X_USERNAME")
+                    username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                            ?: System.getenv("REPO_C7X_USERNAME")
                     password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD") ?: System.getenv("REPO_C7X_PASSWORD")
                 }
             }
