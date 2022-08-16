@@ -8,7 +8,6 @@ plugins {
     `maven-publish`
     kotlin("jvm") apply false
     id("org.jetbrains.kotlinx.binary-compatibility-validator")
-    id("org.hidetake.ssh") version "2.10.1"
 }
 
 allprojects {
