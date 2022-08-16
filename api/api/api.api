@@ -31,8 +31,11 @@ public final class me/func/mod/Anime {
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;[Ljava/lang/Object;)V
 	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
 	public static final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
+	public final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public final fun getGraffitiClient ()Lme/func/mod/graffiti/GraffitiClient;
 	public final fun getProvided ()Lorg/bukkit/plugin/java/JavaPlugin;
+	public final fun getSTANDARD_MOD_URL ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
 	public static final fun graffiti (Lorg/bukkit/entity/Player;Lme/func/protocol/personalization/GraffitiPlaced;)V
 	public static final fun hideIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/Indicators;)V
 	public static final fun include ([Lme/func/mod/Kit;)V
@@ -84,7 +87,6 @@ public final class me/func/mod/Anime {
 }
 
 public final class me/func/mod/AnimeKt {
-	public static final field VERSION Ljava/lang/String;
 	public static final fun getMOD_LOCAL_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_LOCAL_TEST_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_STORAGE_URL ()Ljava/lang/String;
@@ -151,11 +153,6 @@ public class me/func/mod/Kit : java/lang/Enum, org/bukkit/event/Listener {
 	public final fun init ()V
 	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/Kit;
 	public static fun values ()[Lme/func/mod/Kit;
-}
-
-public final class me/func/mod/KitKt {
-	public static final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
-	public static final fun getSTANDARD_MOD_URL ()Ljava/lang/String;
 }
 
 public final class me/func/mod/MultiChat {
@@ -330,9 +327,15 @@ public final class me/func/mod/conversation/ModLoader {
 	public static synthetic fun download$default (Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun getMods ()Ljava/util/Map;
 	public static final fun isLoaded (Ljava/lang/String;)Z
+	public static final fun load (Ljava/io/File;)V
+	public static final fun load (Ljava/io/File;Z)V
 	public static final fun load (Ljava/lang/String;)V
+	public static final fun load (Ljava/lang/String;Ljava/io/InputStream;)V
+	public static final fun load (Ljava/lang/String;Ljava/io/InputStream;Z)V
 	public static final fun load (Ljava/lang/String;Z)V
 	public static final fun load (Ljava/nio/file/Path;)V
+	public static synthetic fun load$default (Ljava/io/File;ZILjava/lang/Object;)V
+	public static synthetic fun load$default (Ljava/lang/String;Ljava/io/InputStream;ZILjava/lang/Object;)V
 	public static synthetic fun load$default (Ljava/lang/String;ZILjava/lang/Object;)V
 	public static final fun loadAll (Ljava/lang/String;)[Ljava/io/File;
 	public static final fun loadAll (Ljava/nio/file/Path;)Ljava/nio/file/Path;
