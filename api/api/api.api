@@ -371,8 +371,7 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun putDouble (D)Lme/func/mod/conversation/ModTransfer;
 	public final fun putLong (J)Lme/func/mod/conversation/ModTransfer;
 	public final fun putString (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
-	public final fun send (Ljava/lang/String;Ljava/lang/Iterable;)Lme/func/mod/conversation/ModTransfer;
-	public final fun send (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/lang/String;Ljava/lang/Iterable;)V
 	public final fun send (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun short (S)Lme/func/mod/conversation/ModTransfer;
 	public final fun string (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
