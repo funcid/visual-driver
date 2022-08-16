@@ -19,6 +19,7 @@ mod {
 }
 
 task upload() {
+    if (!System.getenv("SSH_PASSPHRASE")) return
     remotes {
         webServer {
             host = 'storage.c7x.ru'
