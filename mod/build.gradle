@@ -41,4 +41,5 @@ task upload() {
     }
 }
 
-afterEvaluate { tasks.upload.dependsOn(tasks.build) }
+tasks.upload.dependsOn(tasks.build)
+tasks.publish.dependsOn(tasks.upload)
