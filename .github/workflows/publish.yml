@@ -11,7 +11,8 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: 8
-        distribution: adopt
+        distribution: zulu
+        cache: gradle
     - name: Build with Gradle
       env: 
         CRI_REPO_LOGIN: ${{ secrets.CRI_REPO_LOGIN }}
