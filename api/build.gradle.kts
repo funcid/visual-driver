@@ -14,29 +14,18 @@ dependencies {
     api(project(":protocol-serialization"))
 }
 
-val bundle: Provider<Directory> = project(":mod").layout.buildDirectory.dir("bundle")
-val generatedVersionDir = "$buildDir/generated-version"
-
 tasks {
-    jar {
-        inputs.dir(bundle)
-        dependsOn(":mod:proguardJar")
-    }
-
     val generateVersionProperties by registering {
-        val propertiesFile = file("$generatedVersionDir/version.properties")
+        val propertiesFile = file("$buildDir/generated-version/version.properties")
         propertiesFile.parentFile.mkdirs()
         val properties = Properties()
         properties.setProperty("version", "${project.version}")
         val out = FileOutputStream(propertiesFile)
         properties.store(out, null)
     }
-    processResources { dependsOn(generateVersionProperties) }
-}
-
-sourceSets {
-    main {
-        resources.srcDirs(bundle, generatedVersionDir)
+    jar {
+        from(generateVersionProperties)
+        from(project(":mod").tasks.named("proguardJar").get().outputs)
     }
 }
 

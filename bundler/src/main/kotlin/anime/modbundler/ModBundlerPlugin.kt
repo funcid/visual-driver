@@ -41,7 +41,7 @@ class ModBundlerPlugin : Plugin<Project> {
         tasks.register<ProguardTask>("proguardJar") {
             input.set(tasks.getByName<Jar>("jar").archiveFile)
             outputFile.set(
-                project.layout.buildDirectory.file("bundle/${ext.jarFileName ?: "${project.name}-bundle.jar"}")
+                project.layout.buildDirectory.file("libs/${ext.jarFileName ?: "${project.name}-bundle.jar"}")
             )
             mainClass.set(ext.main)
         }.let { tasks.getByName("jar").finalizedBy(it) }

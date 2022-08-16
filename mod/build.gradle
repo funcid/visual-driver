@@ -18,7 +18,10 @@ mod {
     jarFileName = "animation-api-production.jar"
 }
 
+def modJar = layout.buildDirectory.file("bundle/animation-api-production.jar")
+
 task upload() {
+    dependsOn(tasks.build)
     if (!System.getenv("SSH_PASSPHRASE")) return
     remotes {
         webServer {
@@ -33,14 +36,10 @@ task upload() {
         ssh.run {
             session(remotes.webServer) {
                 def dir = "/var/www/html/func/animation-api/v" + project.version + "/"
-                execute 'mkdir ' + dir
-                put from: project(":mod").projectDir.absolutePath + "/build/bundle/animation-api-production.jar",
+                execute 'mkdir -p ' + dir
+                put from: modJar.get().asFile,
                 into: dir
             }
         }
     }
 }
-
-tasks.upload.dependsOn(tasks.build)
-tasks.publish.dependsOn(tasks.upload)
-tasks.build.dependsOn(':protocol:build')
