@@ -23,7 +23,6 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import ru.cristalix.core.formatting.Formatting
-import java.io.File
 import java.util.EnumSet
 
 @PublishedApi
@@ -36,8 +35,9 @@ internal object StandardMods : Listener {
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
         if (node.isEmpty()) {
             warn("Standard mod storage not available ($STANDARD_MOD_URL)! Safe allocate...")
-            val path = Anime.javaClass.classLoader.getResource(STANDARD_MOD_URL.fileLastName())
-            if (path != null) ModLoader.load(File(path.toURI()))
+            val name = STANDARD_MOD_URL.fileLastName()
+            val stream = Anime.javaClass.classLoader.getResourceAsStream(name)
+            if (stream != null) ModLoader.load(name, stream)
         } else {
             ModLoader.load(node)
         }
