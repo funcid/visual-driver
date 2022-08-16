@@ -16,18 +16,15 @@ dependencies {
 
 
 val bundle: Provider<Directory> = project(":mod").layout.buildDirectory.dir("bundle")
+val generatedVersionDir = "$buildDir/generated-version"
 
 tasks {
     jar {
         inputs.dir(bundle)
         dependsOn(":mod:proguardJar")
     }
-}
 
-val generatedVersionDir = "$buildDir/generated-version"
-
-tasks.register("generateVersionProperties") {
-    doLast {
+    val generateVersionProperties by registering {
         val propertiesFile = file("$generatedVersionDir/version.properties")
         propertiesFile.parentFile.mkdirs()
         val properties = Properties()
@@ -35,18 +32,12 @@ tasks.register("generateVersionProperties") {
         val out = FileOutputStream(propertiesFile)
         properties.store(out, null)
     }
-}
-
-tasks.named("processResources") {
-    dependsOn("generateVersionProperties")
+    processResources { dependsOn(generateVersionProperties) }
 }
 
 sourceSets {
     main {
-        resources.srcDir(bundle)
-        kotlin {
-            output.dir(generatedVersionDir)
-        }
+        resources.srcDirs(bundle, generatedVersionDir)
     }
 }
 
