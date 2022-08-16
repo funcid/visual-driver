@@ -22,6 +22,7 @@ tasks {
         properties.setProperty("version", "${project.version}")
         val out = FileOutputStream(propertiesFile)
         properties.store(out, null)
+        outputs.file(propertiesFile)
     }
     jar {
         from(generateVersionProperties)
