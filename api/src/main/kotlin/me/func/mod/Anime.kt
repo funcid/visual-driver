@@ -36,15 +36,25 @@ val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.r
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
-const val VERSION = "14.08.2022"
-
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
     var graffitiClient: GraffitiClient? = null
+    val version = readVersion()
+
+    val STANDARD_MOD_URL = MOD_STORAGE_URL + "v$version/animation-api-production.jar"
+    val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
+
+    private fun readVersion(): String {
+        val stream = this.javaClass.classLoader.getResourceAsStream("version.properties")
+        val properties = Properties()
+        properties.load(stream)
+        return properties.getProperty("version", "error")
+    }
 
     init {
-        log("Enabling animation-api, version: $VERSION")
+        log("Enabling animation-api, version: $version")
+
         listener(StandardMods, Glow, AutoSendRegistry, MenuManager, QueueViewer)
         Debug // Инициализации команды и обработчика сообщений
     }

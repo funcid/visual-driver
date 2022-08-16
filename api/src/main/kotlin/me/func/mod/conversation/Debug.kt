@@ -1,11 +1,10 @@
 package me.func.mod.conversation
 
 import me.func.mod.Anime
+import me.func.mod.Anime.STANDARD_MOD_URL
 import me.func.mod.MOD_LOCAL_DIR_NAME
 import me.func.mod.MOD_LOCAL_TEST_DIR_NAME
-import me.func.mod.STANDARD_MOD_URL
 import me.func.mod.StandardMods
-import me.func.mod.VERSION
 import me.func.mod.util.consoleCommand
 import me.func.mod.util.fileLastName
 import me.func.mod.util.listFiles
@@ -41,7 +40,7 @@ object Debug {
 
         val listMod = listFiles(MOD_LOCAL_DIR_NAME)?.apply { listFiles(MOD_LOCAL_TEST_DIR_NAME)?.let { addAll(it) } }
         add("Animation-API успешно работает!")
-        add("API Version: $VERSION")
+        add("API Version: ${Anime.version}")
         add("Standards Mods: ${StandardMods.mods.joinToString(", ") { it.name }}")
         add("Custom Mods: ${ModLoader.mods.keys.filter { it != STANDARD_MOD_URL.fileLastName() }.joinToString(", ") { it }}")
         add("Storage Mods: ${(listMod?.sumOf { it.length() } ?: 0) / 1024}KB")
