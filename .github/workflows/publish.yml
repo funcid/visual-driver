@@ -1,4 +1,4 @@
-name: Java with Nexus Repository
+name: Publish Library
 
 on: [push]
 
