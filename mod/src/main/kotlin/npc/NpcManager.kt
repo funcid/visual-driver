@@ -48,6 +48,15 @@ class NpcManager {
         } as AbstractClientPlayer
         val info = clientApi.clientConnection().newPlayerInfo(
             GameProfile(data.uuid, data.name).apply {
+                properties.put("skinURL", Property("skinURL", data.skinUrl))
+                properties.put(
+                    "skinDigest",
+                    Property(
+                        "skinDigest",
+                        (if (data.skinDigest == null) data.skinUrl?.let { sha1Hex(it) } ?: "null" else data.skinDigest)
+                    )
+                )
+
                 val skinValue = data.skinValue
                 val skinSignature = data.skinSignature
                 if (!skinValue.isNullOrEmpty() && !skinSignature.isNullOrEmpty()) {
@@ -57,15 +66,6 @@ class NpcManager {
                             "textures",
                             skinValue,
                             skinSignature
-                        )
-                    )
-                } else {
-                    properties.put("skinURL", Property("skinURL", data.skinUrl))
-                    properties.put(
-                        "skinDigest",
-                        Property(
-                            "skinDigest",
-                            (if (data.skinDigest == null) data.skinUrl?.let { sha1Hex(it) } ?: "null" else data.skinDigest)
                         )
                     )
                 }
