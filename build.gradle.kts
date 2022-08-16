@@ -7,7 +7,7 @@ plugins {
     `java-library`
     `maven-publish`
     kotlin("jvm") apply false
-    // id("org.jetbrains.kotlinx.binary-compatibility-validator")
+    id("org.jetbrains.kotlinx.binary-compatibility-validator")
     id("org.hidetake.ssh") version "2.10.1"
 }
 
@@ -70,8 +70,12 @@ subprojects {
     }
 }
 
-/*
+tasks {
+    register("workaroundBuild") {
+        dependsOn(subprojects.map { it.tasks.named("build") })
+    }
+}
+
 apiValidation {
     ignoredProjects.addAll(listOf("mod", "graffiti", "graffiti-service"))
 }
-*/

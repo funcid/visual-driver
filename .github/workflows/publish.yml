@@ -18,7 +18,9 @@ jobs:
     - name: Gradle Build Action
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: --stacktrace build
+        arguments: |
+          --stacktrace
+          workaroundBuild
       env: 
         CRI_REPO_LOGIN: ${{ secrets.CRI_REPO_LOGIN }}
         CRI_REPO_PASSWORD: ${{ secrets.CRI_REPO_PASSWORD }}
