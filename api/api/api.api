@@ -357,8 +357,6 @@ public final class me/func/mod/conversation/ModTransfer {
 	public fun <init> (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;)V
 	public synthetic fun <init> (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> ([Ljava/lang/Object;)V
-	public final fun bulkSend (Ljava/lang/String;Ljava/lang/Iterable;)V
-	public final fun bulkSend (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun byte (B)Lme/func/mod/conversation/ModTransfer;
 	public final fun byteArray ([B)Lme/func/mod/conversation/ModTransfer;
 	public final fun getSerializer ()Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;
@@ -373,7 +371,9 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun putDouble (D)Lme/func/mod/conversation/ModTransfer;
 	public final fun putLong (J)Lme/func/mod/conversation/ModTransfer;
 	public final fun putString (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
+	public final fun send (Ljava/lang/String;Ljava/lang/Iterable;)Lme/func/mod/conversation/ModTransfer;
 	public final fun send (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun short (S)Lme/func/mod/conversation/ModTransfer;
 	public final fun string (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
 	public final fun varInt (I)Lme/func/mod/conversation/ModTransfer;
