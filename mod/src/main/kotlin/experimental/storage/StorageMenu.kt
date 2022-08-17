@@ -208,11 +208,11 @@ class StorageMenu(
                 onHover {
                     acceptHover(hovered, element)
 
-                    if (element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty()) return@onHover
+                    val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty())
 
                     animate(0.2, Easings.CUBIC_OUT) {
-                        hint.color.alpha = if (hovered) 0.95 else 0.0
-                        hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
+                        hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                        hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
                     }
                 }
                 onMouseUp {
