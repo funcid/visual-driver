@@ -4,6 +4,7 @@ import Main.Companion.externalManager
 import Main.Companion.menuStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
+import experimental.Experimental
 import experimental.Experimental.Companion.acceptHover
 import experimental.Experimental.Companion.hoverContainer
 import experimental.Experimental.Companion.itemPadding
@@ -216,6 +217,7 @@ class StorageMenu(
                     }
                 }
                 onMouseUp {
+                    if (Experimental.lockClick) return@onMouseUp
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                         NetUtil.writeUtf8(this, uuid.toString())
                         writeInt(storage.indexOf(element))

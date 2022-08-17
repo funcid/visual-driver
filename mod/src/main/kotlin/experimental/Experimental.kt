@@ -19,6 +19,7 @@ import java.util.*
 class Experimental {
     companion object {
 
+        var lockClick = false
         val itemPadding = 4.0
         val hoverTextScale = 0.5 + 0.25 + 0.125
 
@@ -172,6 +173,7 @@ class Experimental {
                         NetUtil.readUtf8(this).replace("&", "§"), // hint
                         readInt(), // rows
                         readInt(), // columns
+                        false,
                         readIcons(this)
                     )
                 )
@@ -183,6 +185,8 @@ class Experimental {
             if (menuStack.size > 20)
                 menuStack.clear()
             menuStack.push(gui)
+            lockClick = true
+            UIEngine.schedule(0.2) { lockClick = false }
             gui.open()
         }
     }

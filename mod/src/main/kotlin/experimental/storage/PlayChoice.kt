@@ -107,6 +107,7 @@ class PlayChoice(
                             }
                         }
                         onMouseUp {
+                            if (Experimental.lockClick) return@onMouseUp
                             UIEngine.clientApi.clientConnection()
                                 .sendPayload("storage:click", Unpooled.buffer().apply {
                                     NetUtil.writeUtf8(this, uuid.toString())

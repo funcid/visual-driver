@@ -50,8 +50,9 @@ abstract class StorageNode<T : AbstractElement>(
             val line = descriptionElement!!.content.split("\n").last()
             val new = line + word
             val color = line.split("§").last().first()
-            if (UIEngine.clientApi.fontRenderer().getStringWidth(new.drop(new.count { it == '§' } * 2)) > length)
-                descriptionElement!!.content += "\n§$color"
+            if (UIEngine.clientApi.fontRenderer()
+                    .getStringWidth(new.drop(new.count { it == '§' } * 2).replace("\n", "")) > length
+            ) descriptionElement!!.content += "\n§$color"
             descriptionElement!!.content += "$word "
         }
     }

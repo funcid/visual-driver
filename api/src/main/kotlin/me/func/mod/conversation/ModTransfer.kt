@@ -109,7 +109,7 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
         serializer.a = serializer.retainedSlice()
         val readerIndex = serializer.readerIndex()
 
-        (it as CraftPlayer?)?.handle?.playerConnection?.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
+        (it as CraftPlayer?)?.handle?.playerConnection?.networkManager?.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
 
         serializer.readerIndex(readerIndex)
     }
