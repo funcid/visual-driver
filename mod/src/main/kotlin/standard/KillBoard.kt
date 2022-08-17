@@ -80,7 +80,7 @@ class KillBoard {
                 totalOffset + current.size.y + 5
             }
 
-            UIEngine.schedule(10.0) {
+            UIEngine.schedule(5.0) {
                 notice.box.animate(0.5) {
                     this.offset.x = this.size.x
                 }
