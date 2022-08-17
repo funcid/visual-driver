@@ -84,7 +84,7 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     fun nbt(item: ItemStack) = nbt(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
     fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) =
-        nbt(item.tag ?: NBTTagCompound().apply { warn("Tag is null!") })
+        nbt(item.tag ?: NBTTagCompound().apply { RuntimeException("Warning: Tag is null!").printStackTrace() })
 
     fun integer(integer: Int) = apply { serializer.writeInt(integer) }
 
