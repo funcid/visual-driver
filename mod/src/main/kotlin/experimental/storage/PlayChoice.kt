@@ -3,9 +3,7 @@ package experimental.storage
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import experimental.Experimental
-import experimental.Experimental.Companion.hoverCenter
 import experimental.Experimental.Companion.hoverContainer
-import experimental.Experimental.Companion.hoverTextScale
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
@@ -73,11 +71,11 @@ class PlayChoice(
                 storage.forEachIndexed { index, element ->
                     element.bundle = +carved top@{
                         size = buttonSize
-                        color = if (element.special!!) centerColor else normal
+                        color = if (element.special) centerColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (element.special!!) textCenter else textNormal
+                            color = if (element.special) textCenter else textNormal
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
@@ -107,6 +105,7 @@ class PlayChoice(
                             }
                         }
                         onMouseUp {
+                            if (Experimental.isMenuClickBlocked()) return@onMouseUp
                             UIEngine.clientApi.clientConnection()
                                 .sendPayload("storage:click", Unpooled.buffer().apply {
                                     NetUtil.writeUtf8(this, uuid.toString())

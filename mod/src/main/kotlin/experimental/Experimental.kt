@@ -19,8 +19,12 @@ import java.util.*
 class Experimental {
     companion object {
 
+        var openTimeAndDelayMillis = 0L // Время последнего открытия меню
+        val beforeClickDelay = 200 // задержка перед кликом в миллисекундах
         val itemPadding = 4.0
         val hoverTextScale = 0.5 + 0.25 + 0.125
+
+        fun isMenuClickBlocked() = openTimeAndDelayMillis + beforeClickDelay > System.currentTimeMillis()
 
         val hoverText = text {
             shadow = true
@@ -138,6 +142,7 @@ class Experimental {
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
+                        buffer.readBoolean(), // special
                     )
                 } else { // texture
                     StorageItemTexture(
@@ -146,6 +151,7 @@ class Experimental {
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
+                        buffer.readBoolean(), // special
                     )
                 }
             }
@@ -183,6 +189,7 @@ class Experimental {
             if (menuStack.size > 20)
                 menuStack.clear()
             menuStack.push(gui)
+            openTimeAndDelayMillis = System.currentTimeMillis()
             gui.open()
         }
     }

@@ -11,12 +11,14 @@ class StorageItemStack(
     title: String,
     description: String,
     hover: String,
+    special: Boolean
 ) : StorageNode<ItemElement>(
     price,
     title,
     description,
     hover,
     item { stack = icon },
+    special
 ) {
     override fun scaling(scale: Double) = icon.apply {
         this.scale = V3(scale / 16.0, scale / 16.0, scale / 16.0)

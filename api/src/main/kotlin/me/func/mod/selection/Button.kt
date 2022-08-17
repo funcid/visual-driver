@@ -61,11 +61,7 @@ class Button {
             field = value
         }
 
-    var special: Boolean? = null
-        set(value) {
-            if (value != field) reactive { byte(6).boolean(value!!) }
-            field = value
-        }
+    var special: Boolean = false
 
     var price: Long = -1
     private var sale = 0
@@ -133,7 +129,7 @@ class Button {
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hover ?: "")
-        transfer.boolean(special ?: false)
+        transfer.boolean(special)
     }
 
     fun copy(): Button = Button().also {

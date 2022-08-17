@@ -575,7 +575,7 @@ public final class me/func/mod/selection/Button {
 	public final fun getOnMiddleClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getOnRightClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getPrice ()J
-	public final fun getSpecial ()Ljava/lang/Boolean;
+	public final fun getSpecial ()Z
 	public final fun getTexture ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Button;
@@ -601,7 +601,7 @@ public final class me/func/mod/selection/Button {
 	public final fun setOnMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setOnRightClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setPrice (J)V
-	public final fun setSpecial (Ljava/lang/Boolean;)V
+	public final fun setSpecial (Z)V
 	public final fun setTexture (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
 	public final fun special (Z)Lme/func/mod/selection/Button;
@@ -811,9 +811,6 @@ public final class me/func/mod/util/FilesKt {
 }
 
 public final class me/func/mod/util/LogKt {
-	public static final fun getANSI_GREEN ()Ljava/lang/String;
-	public static final fun getANSI_RESET ()Ljava/lang/String;
-	public static final fun getANSI_YELLOW ()Ljava/lang/String;
 	public static final fun log (Ljava/lang/String;)V
 	public static final fun warn (Ljava/lang/String;)V
 }
