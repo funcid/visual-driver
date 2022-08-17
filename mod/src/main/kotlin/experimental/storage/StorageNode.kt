@@ -6,6 +6,7 @@ import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
+import kotlin.properties.Delegates
 
 abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,
@@ -14,7 +15,7 @@ abstract class StorageNode<T : AbstractElement>(
     var hoverText: String,
     open var icon: T,
     var special: Boolean = false,
-    var hint: String? = null
+    hint: String? = null
 ) {
 
     var bundle: CarvedRectangle? = null
@@ -22,6 +23,10 @@ abstract class StorageNode<T : AbstractElement>(
     var descriptionElement: TextElement? = null
     var hintElement: TextElement? = null
     var hintContainer: CarvedRectangle? = null
+
+    var hint by Delegates.observable(hint) { _, _, _ ->
+        bundle?.let { it.onHover?.invoke(it) }
+    }
 
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
