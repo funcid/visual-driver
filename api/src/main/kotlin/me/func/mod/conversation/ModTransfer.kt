@@ -108,7 +108,7 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     fun send(channel: String, players: Iterable<Player?>): Unit = players.forEach {
         serializer.readerIndex(0)
         (it as CraftPlayer?)?.handle?.playerConnection?.networkManager?.sendPacket(
-            PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedDuplicate()))
+            PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
         )
     }
 
