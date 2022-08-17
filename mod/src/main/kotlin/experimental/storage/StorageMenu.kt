@@ -176,13 +176,10 @@ class StorageMenu(
                         content = element.title
                         shadow = true
                         lineHeight = 8.0
-                        println("Size of title ${element.title} is ${size.x} ${size.y}")
                     }
                     element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                         content = element.description
-                        println("Description ${element.description} has ${element.description.split("\n").toTypedArray().contentToString()} lines")
-                        println("Its size is ${size.x} ${size.y}")
                         shadow = true
                     }
                 }
