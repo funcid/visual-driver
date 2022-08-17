@@ -107,9 +107,9 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     fun send(channel: String, players: Iterable<Player?>): Unit =
         players.filterNotNull().filterIsInstance<CraftPlayer>().forEach {
-            serializer.a = serializer.retainedSlice()
+            serializer.readerIndex(0)
             it.handle.playerConnection.networkManager.sendPacket(
-                PacketPlayOutCustomPayload(channel, serializer)
+                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
             )
         }
 
