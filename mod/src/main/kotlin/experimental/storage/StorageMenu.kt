@@ -216,7 +216,7 @@ class StorageMenu(
                     }
                 }
                 onMouseUp {
-                    if (Experimental.lockClick) return@onMouseUp
+                    if (Experimental.isMenuClickBlocked()) return@onMouseUp
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                         NetUtil.writeUtf8(this, uuid.toString())
                         writeInt(storage.indexOf(element))

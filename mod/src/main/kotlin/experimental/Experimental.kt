@@ -19,9 +19,12 @@ import java.util.*
 class Experimental {
     companion object {
 
-        var lockClick = false
+        var openTimeAndDelayMillis = 0L // Время последнего открытия меню
+        val beforeClickDelay = 200 // задержка перед кликом в миллисекундах
         val itemPadding = 4.0
         val hoverTextScale = 0.5 + 0.25 + 0.125
+
+        fun isMenuClickBlocked() = openTimeAndDelayMillis + beforeClickDelay > System.currentTimeMillis()
 
         val hoverText = text {
             shadow = true
@@ -186,8 +189,7 @@ class Experimental {
             if (menuStack.size > 20)
                 menuStack.clear()
             menuStack.push(gui)
-            lockClick = true
-            UIEngine.schedule(0.2) { lockClick = false }
+            openTimeAndDelayMillis = System.currentTimeMillis()
             gui.open()
         }
     }
