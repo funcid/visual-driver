@@ -18,8 +18,8 @@ open class Selection(
 
     var tick: Consumer<Storage>? = null
 
-    constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
-            this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toMutableList())
+    constructor(title: String, money: String, vault: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
+            this(UUID.randomUUID(), title, money, vault, hint, rows, columns, storage.toMutableList())
 
     constructor(
         title: String,

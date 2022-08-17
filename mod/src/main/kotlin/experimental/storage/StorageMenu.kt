@@ -2,14 +2,10 @@ package experimental.storage
 
 import Main.Companion.externalManager
 import Main.Companion.menuStack
-import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.Experimental.Companion.acceptHover
-import experimental.Experimental.Companion.hoverCenter
 import experimental.Experimental.Companion.hoverContainer
-import experimental.Experimental.Companion.hoverText
-import experimental.Experimental.Companion.hoverTextScale
 import experimental.Experimental.Companion.itemPadding
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
@@ -29,6 +25,7 @@ class StorageMenu(
     @JvmField var hint: String,
     @JvmField var rows: Int,
     @JvmField var columns: Int,
+    @JvmField var special: Boolean,
     override var storage: MutableList<StorageNode<*>>,
 ) : Storable(uuid, title, storage) {
     lateinit var arrowLeft: CarvedRectangle
@@ -247,12 +244,21 @@ class StorageMenu(
         color = Color(42, 102, 189, 1.0)
         size = V3(backButtonSize, backButtonSize)
         val normalColor = Color(42, 102, 189, 0.83)
-        val hoveredColor = Color(74, 140, 236, 0.83)
-        color = normalColor
+        val hoveredNormalColor = Color(74, 140, 236, 0.83)
+        val specialColor = Color(224, 118, 20, 0.83)
+        val hoveredSpecialColor = Color(255, 157, 66, 0.83)
+        color = if (special) specialColor else normalColor
         onHover {
-            animate(0.08, Easings.QUINT_OUT) {
-                color = if (hovered) hoveredColor else normalColor
-                scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+            if (special) {
+                animate(0.08, Easings.QUINT_OUT) {
+                    color = if (hovered) hoveredSpecialColor else specialColor
+                    scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+                }
+            } else {
+                animate(0.08, Easings.QUINT_OUT) {
+                    color = if (hovered) hoveredNormalColor else normalColor
+                    scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+                }
             }
         }
         onMouseUp {
