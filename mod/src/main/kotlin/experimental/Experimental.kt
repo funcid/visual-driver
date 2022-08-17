@@ -159,11 +159,11 @@ class Experimental {
             mod.registerChannel("storage:choice") {
                 push(
                     PlayChoice(
-                        UUID.fromString(NetUtil.readUtf8(this)),
-                        NetUtil.readUtf8(this).replace("&", "§"), // title
-                        NetUtil.readUtf8(this).replace("&", "§"), // description
-                        readBoolean(), // allow closing this menu
-                        readIcons(this)
+                        uuid = UUID.fromString(NetUtil.readUtf8(this)),
+                        title = NetUtil.readUtf8(this).replace("&", "§"),
+                        description = NetUtil.readUtf8(this).replace("&", "§"),
+                        allowClosing = readBoolean(),
+                        storage = readIcons(this)
                     )
                 )
             }

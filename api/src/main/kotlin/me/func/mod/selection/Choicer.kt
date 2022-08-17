@@ -2,7 +2,7 @@ package me.func.mod.selection
 
 import me.func.mod.selection.MenuManager.open
 import org.bukkit.entity.Player
-import java.util.UUID
+import java.util.*
 
 class Choicer(
     override var uuid: UUID = UUID.randomUUID(),

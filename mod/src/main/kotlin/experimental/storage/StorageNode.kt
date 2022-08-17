@@ -45,18 +45,30 @@ abstract class StorageNode<T : AbstractElement>(
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
         val words = description.split(" ")
-        descriptionElement!!.content = "§f"
+
+        descriptionElement!!.content = lineStart
         words.forEach { word ->
             val line = descriptionElement!!.content.split("\n").last()
             val new = line + word
             val color = line.split("§").last().first()
-            if (UIEngine.clientApi.fontRenderer()
-                    .getStringWidth(new.drop(new.count { it == '§' } * 2).replace("\n", "")) > length
-            ) descriptionElement!!.content += "\n§$color"
+            if (line != lineStart && new.getRealWidth() > length) {
+                descriptionElement!!.content += "\n§$color"
+            }
             descriptionElement!!.content += "$word "
         }
     }
 
+    private fun String.getRealWidth(): Int {
+        val font = UIEngine.clientApi.fontRenderer()
+        val colorChars = count { it == '§' } * 2
+        val realString = drop(colorChars).replace("\n", "")
+
+        return font.getStringWidth(realString)
+    }
+
     abstract fun scaling(scale: Double): T
 
+    private companion object {
+        private const val lineStart = "§f"
+    }
 }
