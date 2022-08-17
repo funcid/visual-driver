@@ -157,7 +157,6 @@ class Experimental {
                         title = NetUtil.readUtf8(this).replace("&", "§"),
                         description = NetUtil.readUtf8(this).replace("&", "§"),
                         allowClosing = readBoolean(),
-                        keepSingleColor = readBoolean(),
                         storage = readIcons(this)
                     )
                 )

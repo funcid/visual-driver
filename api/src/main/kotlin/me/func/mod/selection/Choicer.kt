@@ -11,7 +11,6 @@ class Choicer(
     override var storage: MutableList<Button> = mutableListOf()
 ) : Storage {
     var allowClosing: Boolean = true
-    var keepSingleColor: Boolean = false
 
     constructor(title: String, description: String, vararg storage: Button) :
             this(UUID.randomUUID(), title, description, storage.toMutableList())
@@ -19,6 +18,5 @@ class Choicer(
     override fun open(player: Player): Storage = open(player, "storage:choice") {
         string(description)
         boolean(allowClosing)
-        boolean(keepSingleColor)
     }
 }

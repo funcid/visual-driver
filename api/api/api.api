@@ -626,7 +626,6 @@ public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage
 	public fun clear ()V
 	public final fun getAllowClosing ()Z
 	public final fun getDescription ()Ljava/lang/String;
-	public final fun getKeepSingleColor ()Z
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
@@ -634,7 +633,6 @@ public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage
 	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
 	public final fun setAllowClosing (Z)V
 	public final fun setDescription (Ljava/lang/String;)V
-	public final fun setKeepSingleColor (Z)V
 	public fun setStorage (Ljava/util/List;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
@@ -813,9 +811,9 @@ public final class me/func/mod/util/FilesKt {
 }
 
 public final class me/func/mod/util/LogKt {
-	public static final field ANSI_GREEN Ljava/lang/String;
-	public static final field ANSI_RESET Ljava/lang/String;
-	public static final field ANSI_YELLOW Ljava/lang/String;
+	public static final fun getANSI_GREEN ()Ljava/lang/String;
+	public static final fun getANSI_RESET ()Ljava/lang/String;
+	public static final fun getANSI_YELLOW ()Ljava/lang/String;
 	public static final fun log (Ljava/lang/String;)V
 	public static final fun warn (Ljava/lang/String;)V
 }
