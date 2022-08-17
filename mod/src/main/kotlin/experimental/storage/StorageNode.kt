@@ -13,8 +13,8 @@ abstract class StorageNode<T : AbstractElement>(
     @JvmField var description: String,
     var hoverText: String,
     open var icon: T,
-    var hint: String? = null,
-    var special: Boolean = false
+    var special: Boolean = false,
+    var hint: String? = null
 ) {
 
     var bundle: CarvedRectangle? = null

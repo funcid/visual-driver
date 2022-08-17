@@ -139,6 +139,7 @@ class Experimental {
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
+                        buffer.readBoolean(), // special
                     )
                 } else { // texture
                     StorageItemTexture(
@@ -147,6 +148,7 @@ class Experimental {
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
+                        buffer.readBoolean(), // special
                     )
                 }
             }

@@ -129,7 +129,7 @@ class Button {
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hover ?: "")
-        transfer.boolean(special ?: false)
+        transfer.boolean(special)
     }
 
     fun copy(): Button = Button().also {
