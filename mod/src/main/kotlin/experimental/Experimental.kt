@@ -173,7 +173,6 @@ class Experimental {
                         NetUtil.readUtf8(this).replace("&", "§"), // hint
                         readInt(), // rows
                         readInt(), // columns
-                        false,
                         readIcons(this)
                     )
                 )
