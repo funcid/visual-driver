@@ -719,8 +719,8 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 
 public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/selection/Button;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/selection/Button;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/selection/Button;)V
