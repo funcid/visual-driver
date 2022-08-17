@@ -1,5 +1,6 @@
 package standard
 
+import dev.xdark.clientapi.event.gui.ScreenDisplay
 import dev.xdark.clientapi.event.render.BlockLayerRender
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinMod
@@ -28,11 +29,11 @@ class ModelBlocker {
         locker!!.content = "Недоступно на\nданном режиме"
         UIEngine.overlayContext + locker!!
 
-        mod.registerHandler<BlockLayerRender> {
-            if (inModelMenu()) {
-                UIEngine.clientApi.minecraft().displayScreen(null)
-                locker!!.enabled = true
+        mod.registerHandler<ScreenDisplay> {
+            if (screen::class.java.simpleName == "aqW") {
                 isCancelled = true
+
+                locker!!.enabled = true
                 UIEngine.schedule(1.5) {
                     animate(0.5, Easings.BACK_BOTH) {
                         locker!!.scale.x = 0.6
@@ -56,13 +57,5 @@ class ModelBlocker {
         mod.registerChannel("func:return-ui") {
             locker = null
         }
-    }
-
-
-    private fun inModelMenu(): Boolean {
-        if (locker == null) return false
-        val minecraft = clientApi.minecraft()
-        val screen = minecraft.currentScreen()
-        return !minecraft.inGameHasFocus() && screen != null && screen::class.java.simpleName == "aqW"
     }
 }
