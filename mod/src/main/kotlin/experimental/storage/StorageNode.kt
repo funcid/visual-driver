@@ -26,7 +26,7 @@ abstract class StorageNode<T : AbstractElement>(
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
-        color = if (special) Color(255, 157, 66, 1.0) else Color(74, 140, 236, 1.0)
+        color = if (special) Color(255,157,66, 1.0) else Color(74, 140, 236, 1.0)
         color.alpha = 0.0
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }
