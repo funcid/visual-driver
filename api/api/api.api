@@ -811,9 +811,6 @@ public final class me/func/mod/util/FilesKt {
 }
 
 public final class me/func/mod/util/LogKt {
-	public static final field ANSI_GREEN Ljava/lang/String;
-	public static final field ANSI_RESET Ljava/lang/String;
-	public static final field ANSI_YELLOW Ljava/lang/String;
 	public static final fun log (Ljava/lang/String;)V
 	public static final fun warn (Ljava/lang/String;)V
 }
