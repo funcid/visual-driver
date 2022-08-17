@@ -30,8 +30,12 @@ public final class me/func/mod/Anime {
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;[Ljava/lang/Object;)V
 	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
+	public static final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
+	public final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public final fun getGraffitiClient ()Lme/func/mod/graffiti/GraffitiClient;
 	public final fun getProvided ()Lorg/bukkit/plugin/java/JavaPlugin;
+	public final fun getSTANDARD_MOD_URL ()Ljava/lang/String;
+	public final fun getVersion ()Ljava/lang/String;
 	public static final fun graffiti (Lorg/bukkit/entity/Player;Lme/func/protocol/personalization/GraffitiPlaced;)V
 	public static final fun hideIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/Indicators;)V
 	public static final fun include ([Lme/func/mod/Kit;)V
@@ -83,7 +87,6 @@ public final class me/func/mod/Anime {
 }
 
 public final class me/func/mod/AnimeKt {
-	public static final field VERSION Ljava/lang/String;
 	public static final fun getMOD_LOCAL_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_LOCAL_TEST_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_STORAGE_URL ()Ljava/lang/String;
@@ -150,11 +153,6 @@ public class me/func/mod/Kit : java/lang/Enum, org/bukkit/event/Listener {
 	public final fun init ()V
 	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/Kit;
 	public static fun values ()[Lme/func/mod/Kit;
-}
-
-public final class me/func/mod/KitKt {
-	public static final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
-	public static final fun getSTANDARD_MOD_URL ()Ljava/lang/String;
 }
 
 public final class me/func/mod/MultiChat {
@@ -329,9 +327,15 @@ public final class me/func/mod/conversation/ModLoader {
 	public static synthetic fun download$default (Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun getMods ()Ljava/util/Map;
 	public static final fun isLoaded (Ljava/lang/String;)Z
+	public static final fun load (Ljava/io/File;)V
+	public static final fun load (Ljava/io/File;Z)V
 	public static final fun load (Ljava/lang/String;)V
+	public static final fun load (Ljava/lang/String;Ljava/io/InputStream;)V
+	public static final fun load (Ljava/lang/String;Ljava/io/InputStream;Z)V
 	public static final fun load (Ljava/lang/String;Z)V
 	public static final fun load (Ljava/nio/file/Path;)V
+	public static synthetic fun load$default (Ljava/io/File;ZILjava/lang/Object;)V
+	public static synthetic fun load$default (Ljava/lang/String;Ljava/io/InputStream;ZILjava/lang/Object;)V
 	public static synthetic fun load$default (Ljava/lang/String;ZILjava/lang/Object;)V
 	public static final fun loadAll (Ljava/lang/String;)[Ljava/io/File;
 	public static final fun loadAll (Ljava/nio/file/Path;)Ljava/nio/file/Path;
@@ -353,8 +357,6 @@ public final class me/func/mod/conversation/ModTransfer {
 	public fun <init> (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;)V
 	public synthetic fun <init> (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> ([Ljava/lang/Object;)V
-	public final fun bulkSend (Ljava/lang/String;Ljava/lang/Iterable;)V
-	public final fun bulkSend (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun byte (B)Lme/func/mod/conversation/ModTransfer;
 	public final fun byteArray ([B)Lme/func/mod/conversation/ModTransfer;
 	public final fun getSerializer ()Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;
@@ -369,7 +371,8 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun putDouble (D)Lme/func/mod/conversation/ModTransfer;
 	public final fun putLong (J)Lme/func/mod/conversation/ModTransfer;
 	public final fun putString (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
-	public final fun send (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/lang/String;Ljava/lang/Iterable;)V
+	public final fun send (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun short (S)Lme/func/mod/conversation/ModTransfer;
 	public final fun string (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
 	public final fun varInt (I)Lme/func/mod/conversation/ModTransfer;
@@ -405,22 +408,26 @@ public class me/func/mod/data/LootDrop {
 }
 
 public final class me/func/mod/data/NpcSmart {
-	public fun <init> (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)V
-	public synthetic fun <init> (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)V
+	public synthetic fun <init> (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1 ()Lme/func/protocol/npc/NpcData;
 	public final fun component2 ()Ljava/util/function/Consumer;
 	public final fun component3 ()Ljava/util/UUID;
-	public final fun copy (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)Lme/func/mod/data/NpcSmart;
-	public static synthetic fun copy$default (Lme/func/mod/data/NpcSmart;Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILjava/lang/Object;)Lme/func/mod/data/NpcSmart;
+	public final fun component4 ()Ljava/util/Set;
+	public final fun copy (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)Lme/func/mod/data/NpcSmart;
+	public static synthetic fun copy$default (Lme/func/mod/data/NpcSmart;Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILjava/lang/Object;)Lme/func/mod/data/NpcSmart;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClick ()Ljava/util/function/Consumer;
 	public final fun getData ()Lme/func/protocol/npc/NpcData;
+	public final fun getPersonalization ()Ljava/util/Set;
 	public final fun getWorldUuid ()Ljava/util/UUID;
 	public fun hashCode ()I
 	public final fun hide (Lorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
 	public final fun kill ()Lme/func/mod/data/NpcSmart;
+	public final fun personalization ([Ljava/util/UUID;)Lme/func/mod/data/NpcSmart;
 	public final fun setClick (Ljava/util/function/Consumer;)V
 	public final fun setData (Lme/func/protocol/npc/NpcData;)V
+	public final fun setPersonalization (Ljava/util/Set;)V
 	public final fun setWorld (Ljava/util/UUID;)Lme/func/mod/data/NpcSmart;
 	public final fun setWorld (Lorg/bukkit/World;)Lme/func/mod/data/NpcSmart;
 	public final fun setWorldUuid (Ljava/util/UUID;)V
@@ -568,6 +575,7 @@ public final class me/func/mod/selection/Button {
 	public final fun getOnMiddleClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getOnRightClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getPrice ()J
+	public final fun getSpecial ()Ljava/lang/Boolean;
 	public final fun getTexture ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Button;
@@ -593,8 +601,10 @@ public final class me/func/mod/selection/Button {
 	public final fun setOnMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setOnRightClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setPrice (J)V
+	public final fun setSpecial (Ljava/lang/Boolean;)V
 	public final fun setTexture (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
+	public final fun special (Z)Lme/func/mod/selection/Button;
 	public final fun texture (Ljava/lang/String;)Lme/func/mod/selection/Button;
 	public final fun texture (Lme/func/mod/data/Sprites;)Lme/func/mod/selection/Button;
 	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Button;

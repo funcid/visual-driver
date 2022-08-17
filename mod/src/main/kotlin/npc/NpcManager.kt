@@ -48,14 +48,12 @@ class NpcManager {
         } as AbstractClientPlayer
         val info = clientApi.clientConnection().newPlayerInfo(
             GameProfile(data.uuid, data.name).apply {
-                properties.put("skinURL", Property("skinURL", data.skinUrl))
-                properties.put(
-                    "skinDigest",
-                    Property(
-                        "skinDigest",
-                        (if (data.skinDigest == null) data.skinUrl?.let { sha1Hex(it) } ?: "null" else data.skinDigest)
-                    )
-                )
+                if (data.skinValue?.isNotEmpty() == true && data.skinSignature?.isNotEmpty() == true) {
+                    properties.put("textures", Property("textures", data.skinValue, data.skinSignature))
+                } else {
+                    properties.put("skinURL", Property("skinURL", data.skinUrl))
+                    properties.put("skinDigest", Property("skinDigest", data.skinDigest ?: sha1Hex(data.skinUrl ?: "null")))
+                }
             }.apply { spawned.gameProfile = this }
         ).apply { responseTime = -2 }
 

@@ -116,6 +116,7 @@ class Banners {
 
                         sizes[uuid to line] = newScale
                         val element = pair.second.children[0] as RectangleElement
+
                         element.children[line * 2].animate(0.2) {
                             scale = V3(newScale, newScale, newScale)
                             offset.y = -(-3 - line * 12) * newScale

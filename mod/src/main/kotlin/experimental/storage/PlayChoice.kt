@@ -3,21 +3,32 @@ package experimental.storage
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import experimental.Experimental
+import experimental.Experimental.Companion.hoverCenter
 import experimental.Experimental.Companion.hoverContainer
+import experimental.Experimental.Companion.hoverTextScale
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
-import ru.cristalix.uiengine.utility.*
-import java.util.*
+import ru.cristalix.uiengine.utility.BOTTOM
+import ru.cristalix.uiengine.utility.CENTER
+import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.Easings
+import ru.cristalix.uiengine.utility.TOP
+import ru.cristalix.uiengine.utility.V3
+import ru.cristalix.uiengine.utility.WHITE
+import ru.cristalix.uiengine.utility.carved
+import ru.cristalix.uiengine.utility.flex
+import ru.cristalix.uiengine.utility.rectangle
+import ru.cristalix.uiengine.utility.text
+import java.util.UUID
 
 class PlayChoice(
     override var uuid: UUID,
     override var title: String,
     @JvmField var description: String,
     allowClosing: Boolean,
-    keepSingleColor: Boolean,
     override var storage: MutableList<StorageNode<*>>
 ) : Storable(uuid, title, storage) {
     init {
@@ -60,14 +71,13 @@ class PlayChoice(
                 flexSpacing = padding
                 scale = V3(scaling, scaling, scaling)
                 storage.forEachIndexed { index, element ->
-                    val centered = keepSingleColor || storage.size / 2 == index && storage.size % 2 == 1
                     element.bundle = +carved top@{
                         size = buttonSize
-                        color = if (centered) centerColor else normal
+                        color = if (element.special!!) centerColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (centered) textCenter else textNormal
+                            color = if (element.special!!) textCenter else textNormal
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding

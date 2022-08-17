@@ -1,5 +1,6 @@
 plugins {
     id 'anime.mod-bundler'
+    id 'org.hidetake.ssh'
 }
 
 dependencies {
@@ -14,5 +15,31 @@ mod {
     name = "Animation Api"
     main = "Main"
     author = "func"
-    jarFileName = "standard-hover-mod-bundle.jar"
+    jarFileName = "animation-api-production.jar"
+}
+
+def modJar = layout.buildDirectory.file("bundle/animation-api-production.jar")
+
+task upload() {
+    dependsOn(tasks.build)
+    if (!System.getenv("SSH_PASSPHRASE")) return
+    remotes {
+        webServer {
+            host = 'storage.c7x.ru'
+            user = 'func'
+            knownHosts = allowAnyHosts
+            identity = file(System.getenv("RSA_PATH") ?: "C://Users/func/.ssh/id_rsa")
+            passphrase = System.getenv("SSH_PASSPHRASE")
+        }
+    }
+    doLast {
+        ssh.run {
+            session(remotes.webServer) {
+                def dir = "/var/www/html/func/animation-api/v" + project.version + "/"
+                execute 'mkdir -p ' + dir
+                put from: modJar.get().asFile,
+                into: dir
+            }
+        }
+    }
 }

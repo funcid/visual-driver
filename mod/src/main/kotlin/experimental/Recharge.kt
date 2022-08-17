@@ -30,7 +30,7 @@ class Recharge {
 
             mod.registerChannel("func:recharge") {
                 if (cooldown == null) {
-                    cooldown = UIEngine.overlayContext + rectangle {
+                    cooldown = UIEngine.overlayContext + carved {
                         offset.y -= 65
                         origin = BOTTOM
                         align = BOTTOM

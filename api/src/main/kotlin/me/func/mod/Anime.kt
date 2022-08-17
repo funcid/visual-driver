@@ -13,11 +13,7 @@ import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.selection.MenuManager
 import me.func.mod.selection.queue.QueueViewer
-import me.func.mod.util.dir
-import me.func.mod.util.fileLastName
-import me.func.mod.util.listener
-import me.func.mod.util.log
-import me.func.mod.util.warn
+import me.func.mod.util.*
 import me.func.protocol.EndStatus
 import me.func.protocol.Indicators
 import me.func.protocol.Marker
@@ -30,23 +26,35 @@ import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
+import pw.lach.p13n.network.client.P13nChannels.ENABLE_DISABLE_MODELS
+import pw.lach.p13n.network.client.PacketEnableDisableModels
 import java.awt.Color
-import java.util.UUID
+import java.util.*
 import java.util.function.BiConsumer
 
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
-const val VERSION = "01.08.2022"
-
 object Anime {
 
     val provided: JavaPlugin = JavaPlugin.getProvidingPlugin(this.javaClass)
     var graffitiClient: GraffitiClient? = null
+    val version = readVersion()
+
+    val STANDARD_MOD_URL = MOD_STORAGE_URL + "v$version/animation-api-production.jar"
+    val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
+
+    private fun readVersion(): String {
+        val stream = this.javaClass.classLoader.getResourceAsStream("version.properties")
+        val properties = Properties()
+        properties.load(stream)
+        return properties.getProperty("version", "error")
+    }
 
     init {
-        log("Enabling animation-api, version: $VERSION")
+        log("Enabling animation-api, version: $version")
+
         listener(StandardMods, Glow, AutoSendRegistry, MenuManager, QueueViewer)
         Debug // Инициализации команды и обработчика сообщений
     }
@@ -497,5 +505,12 @@ object Anime {
     fun close(player: Player) {
         MenuManager.clearHistory(player)
         sendEmptyBuffer("func:close", player)
+    }
+
+    @JvmStatic
+    fun equipPersonalization(viewer: Player, stand: UUID, vararg personalization: UUID) {
+        ModTransfer()
+            .json(PacketEnableDisableModels(stand, personalization.toSet(), setOf()))
+            .send(ENABLE_DISABLE_MODELS, viewer)
     }
 }

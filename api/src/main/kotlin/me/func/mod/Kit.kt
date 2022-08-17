@@ -1,6 +1,8 @@
 package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
+import me.func.mod.Anime.GRAFFITI_MOD_URL
+import me.func.mod.Anime.STANDARD_MOD_URL
 import me.func.mod.Anime.graffitiClient
 import me.func.mod.Npc.npcs
 import me.func.mod.battlepass.BattlePass
@@ -8,10 +10,7 @@ import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
-import me.func.mod.util.after
-import me.func.mod.util.command
-import me.func.mod.util.fileLastName
-import me.func.mod.util.listener
+import me.func.mod.util.*
 import me.func.protocol.Mod
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
@@ -26,19 +25,23 @@ import org.bukkit.event.player.PlayerRespawnEvent
 import ru.cristalix.core.formatting.Formatting
 import java.util.EnumSet
 
-val STANDARD_MOD_URL = MOD_STORAGE_URL + "standard-hover-mod-bundle.jar"
-val GRAFFITI_MOD_URL = MOD_STORAGE_URL + "graffiti-bundle.jar"
-
 @PublishedApi
 internal object StandardMods : Listener {
     val mods: EnumSet<Mod> = EnumSet.noneOf(Mod::class.java)
 
     init {
+        val node = ModLoader.download(STANDARD_MOD_URL)
+
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
-        ModLoader.load(ModLoader.download(STANDARD_MOD_URL).ifEmpty {
-            Anime.provided.classLoader.getResource(STANDARD_MOD_URL.fileLastName())?.path
-                ?: STANDARD_MOD_URL.fileLastName()
-        })
+        if (node.isEmpty()) {
+            warn("Standard mod WEB storage not available! Get standard mod from JAR.")
+            val name = STANDARD_MOD_URL.fileLastName()
+            val stream = Anime.javaClass.classLoader.getResourceAsStream(name)
+            if (stream != null) ModLoader.load(name, stream)
+            else warn("JAR resources not contains standard mod! Contact with @funcid")
+        } else {
+            ModLoader.load(node)
+        }
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
