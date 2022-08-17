@@ -4,14 +4,12 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
-import me.func.mod.util.warn
 import net.minecraft.server.v1_12_R1.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import ru.cristalix.core.GlobalSerializers
-import sun.audio.AudioPlayer.player
 import java.io.DataOutput
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
@@ -103,15 +101,15 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
     fun send(channel: String, vararg players: Player?): Unit =
-        send(channel, object : Iterable<Player?> { override fun iterator() = players.iterator() })
+        send(channel, object : Iterable<Player?> {
+            override fun iterator() = players.iterator()
+        })
 
     fun send(channel: String, players: Iterable<Player?>): Unit = players.forEach {
-        serializer.a = serializer.retainedSlice()
-        val readerIndex = serializer.readerIndex()
-
-        (it as CraftPlayer?)?.handle?.playerConnection?.networkManager?.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
-
-        serializer.readerIndex(readerIndex)
+        serializer.readerIndex(0)
+        (it as CraftPlayer?)?.handle?.playerConnection?.networkManager?.sendPacket(
+            PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedDuplicate()))
+        )
     }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {
