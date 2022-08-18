@@ -117,9 +117,12 @@ class PlayChoice(
                         val hint = +element.createHint(size, "Играть")
                         onHover {
                             Experimental.acceptHover(hovered, element)
+
+                            val hasHoverEffect = hovered && !element.hint.isNullOrEmpty()
+
                             animate(0.2, Easings.CUBIC_OUT) {
-                                hint.color.alpha = if (hovered) 0.95 else 0.0
-                                element.hintElement?.color?.alpha = if (hovered) 1.0 else 0.0
+                                hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                                element.hintElement?.color?.alpha = if (hasHoverEffect) 1.0 else 0.0
                             }
                         }
                     }
