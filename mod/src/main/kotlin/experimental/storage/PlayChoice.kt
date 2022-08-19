@@ -135,7 +135,7 @@ class PlayChoice(
         if (menuStack.size > 0) {
             +carved {
                 carveSize = 1.0
-                align = BOTTOM
+                align = CENTER
                 origin = CENTER
                 offset.y = buttonSize.y * scaling
                 offset.x -= 75
