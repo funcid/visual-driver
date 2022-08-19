@@ -38,6 +38,7 @@ class PlayChoice(
         val scaling = 0.85
         val buttonSize = V3(100.0, 145.0, 1.0)
         val iconSize = 70.0
+        val backButtonSize = 20.0
 
         val title = text {
             origin = TOP
@@ -131,9 +132,38 @@ class PlayChoice(
                 }
             }
         }
-
+        if (menuStack.size > 0) {
+            +carved {
+                carveSize = 1.0
+                align = BOTTOM
+                origin = CENTER
+                offset.y = backButtonSize / 2 - padding
+                offset.x -= 65
+                size = V3(76.0, backButtonSize)
+                val normalColor = Color(42, 102, 189, 0.83)
+                val hoveredColor = Color(224, 118, 20, 0.83)
+                color = normalColor
+                onHover {
+                    animate(0.08, Easings.QUINT_OUT) {
+                        color = if (hovered) hoveredColor else normalColor
+                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+                    }
+                }
+                onMouseUp {
+                    menuStack.apply { pop() }.peek()?.open()
+                    UIEngine.clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
+                }
+                +text {
+                    align = CENTER
+                    origin = CENTER
+                    color = WHITE
+                    scale = V3(0.9, 0.9, 0.9)
+                    content = "Назад"
+                    shadow = true
+                }
+            }
+        }
         if (allowClosing) {
-            val backButtonSize = 20.0
             +carved {
                 carveSize = 1.0
                 align = CENTER
