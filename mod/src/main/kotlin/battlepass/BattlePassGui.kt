@@ -437,6 +437,7 @@ class BattlePassGui(
                 size = V3(guiSize.rewardBlockWidth, guiSize.totalHeightPart * 18.9)
                 offset.x += offsetX
                 offsetX += guiSize.rewardBetweenX + guiSize.rewardBlockWidth
+                carveSize = 2.0
 
                 +item {
                     origin = CENTER
@@ -450,6 +451,7 @@ class BattlePassGui(
                     origin = BOTTOM_LEFT
                     size = V3(this@rewardMain.size.x, guiSize.totalHeightPart * 0.87)
                     color = Color(currentRare.red, currentRare.green, currentRare.blue)
+                    carveSize = 2.0
                 }
 
                 onHover {
