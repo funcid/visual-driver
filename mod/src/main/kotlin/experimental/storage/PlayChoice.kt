@@ -137,7 +137,8 @@ class PlayChoice(
                 carveSize = 1.0
                 align = BOTTOM
                 origin = CENTER
-                offset.y = buttonSize.y * scaling / 2 - padding
+                offset.y = buttonSize.y * scaling
+                offset.x -= 75
                 size = V3(40.0, backButtonSize)
                 val normalColor = Color(42, 102, 189, 0.83)
                 val hoveredColor = Color(224, 118, 20, 0.83)
