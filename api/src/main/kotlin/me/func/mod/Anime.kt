@@ -14,10 +14,7 @@ import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.selection.MenuManager
 import me.func.mod.selection.queue.QueueViewer
 import me.func.mod.util.*
-import me.func.protocol.EndStatus
-import me.func.protocol.Indicators
-import me.func.protocol.Marker
-import me.func.protocol.RGB
+import me.func.protocol.*
 import me.func.protocol.dialog.Dialog
 import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
@@ -156,8 +153,17 @@ object Anime {
 
     @JvmStatic
     fun bottomRightMessage(player: Player, text: String) {
-        ModTransfer(text).send("func:bottom", player)
+        ModTransfer(text).send("anime:bottomright", player)
     }
+
+    @JvmStatic
+    fun overlayText(player: Player, text: String, positions: Positions) {
+        ModTransfer(text).send(positions.channel, player)
+    }
+
+    @JvmStatic
+    fun overlayText(player: Player, vararg text: String, positions: Positions) =
+        overlayText(player, text.joinToString("\n"), positions)
 
     @JvmStatic
     fun bottomRightMessage(player: Player, vararg text: String) = bottomRightMessage(player, text.joinToString("\n"))

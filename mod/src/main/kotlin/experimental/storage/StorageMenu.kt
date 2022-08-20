@@ -154,7 +154,7 @@ class StorageMenu(
                     (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows
                 carveSize = 2.0
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
-                color = if (element.special) Color(224, 118, 20, 0.62) else Color(21, 53, 98, 0.62)
+                color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
                 val image = +rectangle {
                     val iconSize = fieldHeight - itemPadding * 2
                     size = V3(iconSize, iconSize, iconSize)

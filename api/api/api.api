@@ -57,6 +57,8 @@ public final class me/func/mod/Anime {
 	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;I[Lme/func/mod/data/DailyReward;)V
 	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/data/LootDrop;)V
+	public static final fun overlayText (Lorg/bukkit/entity/Player;Ljava/lang/String;Lme/func/protocol/Positions;)V
+	public static final fun overlayText (Lorg/bukkit/entity/Player;[Ljava/lang/String;Lme/func/protocol/Positions;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;III)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/RGB;)V
