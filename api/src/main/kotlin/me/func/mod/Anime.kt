@@ -157,13 +157,13 @@ object Anime {
     }
 
     @JvmStatic
-    fun overlayText(player: Player, text: String, positions: Positions) {
+    fun overlayText(player: Player, positions: Positions, text: String) {
         ModTransfer(text).send(positions.channel, player)
     }
 
     @JvmStatic
-    fun overlayText(player: Player, vararg text: String, positions: Positions) =
-        overlayText(player, text.joinToString("\n"), positions)
+    fun overlayText(player: Player, positions: Positions, vararg text: String) =
+        overlayText(player, positions, text.joinToString("\n"))
 
     @JvmStatic
     fun bottomRightMessage(player: Player, vararg text: String) = bottomRightMessage(player, text.joinToString("\n"))
