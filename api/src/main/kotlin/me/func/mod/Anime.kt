@@ -154,7 +154,7 @@ object Anime {
     @JvmStatic
     @Deprecated("Устаревший метод, новый - overlayText")
     fun bottomRightMessage(player: Player, text: String) {
-        ModTransfer(text).send("anime:bottomright", player)
+        ModTransfer().integer(Position.BOTTOM_RIGHT.ordinal).string(text).send("anime:overlay", player)
     }
 
     @JvmStatic
