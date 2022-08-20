@@ -574,6 +574,25 @@ MultiChat.removeChats(player, "system") //Удаляем у игрока чат
 `Glow.clearPlaces(vararg players: Player)` очистить указанным игрокам места и удалить все места их глобального
 списка<br>
 
+<h3>Оверлей Бустеров (модуль EXPERIMENTAL) </h3>
+
+<img src="https://user-images.githubusercontent.com/63064550/181641989-22a7f776-1137-472d-8e55-5a8e468f82d7.png" width="500">
+
+Показывает текущее состояние бустера игрока.
+
+Пример для языка Kotlin:
+
+```kotlin
+val boosterBar = boosterBar {
+    segments = listOf()
+    title = ""
+    subtitle = ""
+    isShowBackground = false
+    progress = 1.0
+}
+
+boosterBar.open(player)
+```
 <h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
 
 <img src ="https://user-images.githubusercontent.com/63064550/149799259-9129ba80-b2a8-4553-9638-666b5ba950ab.png" width="500">

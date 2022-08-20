@@ -1,4 +1,4 @@
-public final class App : org/bukkit/plugin/java/JavaPlugin {
+public final class App : org/bukkit/plugin/java/JavaPlugin, org/bukkit/event/Listener {
 	public fun <init> ()V
 	public fun onEnable ()V
 }
