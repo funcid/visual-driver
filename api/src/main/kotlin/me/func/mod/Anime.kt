@@ -158,11 +158,12 @@ object Anime {
     }
 
     @JvmStatic
-    fun overlayText(player: Player, positions: Position, vararg texts: String) {
-        for (text in texts.joinToString("\n")) {
-            ModTransfer().integer(positions.ordinal).string(text.toString()).send("anime:overlay", player)
-        }
+    fun overlayText(player: Player, positions: Position, text: String) {
+        ModTransfer().integer(positions.ordinal).string(text).send("anime:overlay", player)
     }
+
+    @JvmStatic
+    fun overlayText(player: Player, positions: Position, vararg text: String) = overlayText(player, positions, text.joinToString("\n"))
 
     @JvmStatic
     @Deprecated("Устаревший метод, новый - overlayText")
