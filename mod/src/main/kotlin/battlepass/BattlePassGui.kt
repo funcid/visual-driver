@@ -229,7 +229,6 @@ class BattlePassGui(
                 align = CENTER
                 origin = CENTER
                 size = V3(guiSize.totalWidth, guiSize.totalHeightPart * 22.2)
-                carveSize = 2.0
 
                 offset.y -= guiSize.totalHeightPart * 10.8
 
@@ -393,6 +392,7 @@ class BattlePassGui(
         color = firstBlockColor
         offset.y += offsetY
         size = V3(guiSize.rewardSizeX, guiSize.rewardSizeY)
+        carveSize = 2.0
 
         +rectangle {
             size.x = guiSize.totalWidthPart * 3.18
