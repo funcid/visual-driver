@@ -1,6 +1,7 @@
 package standard
 
 import dev.xdark.feder.NetUtil
+import me.func.protocol.Position
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.*
@@ -42,17 +43,13 @@ class OverlayText {
     init {
         UIEngine.overlayContext.addChild(bottomRight, bottomLeft, topRight, topLeft)
 
-        mod.registerChannel("anime:bottomright") {
-            bottomRight.content = NetUtil.readUtf8(this)
-        }
-        mod.registerChannel("anime:bottomleft") {
-            bottomLeft.content = NetUtil.readUtf8(this)
-        }
-        mod.registerChannel("anime:topright") {
-            topRight.content = NetUtil.readUtf8(this)
-        }
-        mod.registerChannel("anime:topleft") {
-            topLeft.content = NetUtil.readUtf8(this)
+        mod.registerChannel("anime:overlay") {
+            when (Position.values()[readInt()]) {
+                Position.BOTTOM_RIGHT -> bottomRight.content = NetUtil.readUtf8(this)
+                Position.BOTTOM_LEFT -> bottomLeft.content = NetUtil.readUtf8(this)
+                Position.TOP_RIGHT -> topRight.content = NetUtil.readUtf8(this)
+                Position.TOP_LEFT -> topLeft.content = NetUtil.readUtf8(this)
+            }
         }
     }
 }

@@ -160,7 +160,7 @@ object Anime {
     @JvmStatic
     fun overlayText(player: Player, positions: Position, vararg texts: String) {
         for (text in texts.joinToString("\n")) {
-            ModTransfer(text).send(positions.channel, player)
+            ModTransfer().integer(positions.ordinal).string(text.toString()).send("anime:overlay", player)
         }
     }
 
