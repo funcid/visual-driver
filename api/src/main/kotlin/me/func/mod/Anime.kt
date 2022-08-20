@@ -152,20 +152,20 @@ object Anime {
     fun timer(player: Player, duration: Int) = timer(player, "До конца осталось", duration)
 
     @JvmStatic
+    @Deprecated("Устаревший метод, новый - overlayText")
     fun bottomRightMessage(player: Player, text: String) {
         ModTransfer(text).send("anime:bottomright", player)
     }
 
     @JvmStatic
-    fun overlayText(player: Player, positions: Positions, text: String) {
-        ModTransfer(text).send(positions.channel, player)
+    fun overlayText(player: Player, positions: Position, vararg texts: String) {
+        for (text in texts.joinToString("\n")) {
+            ModTransfer(text).send(positions.channel, player)
+        }
     }
 
     @JvmStatic
-    fun overlayText(player: Player, positions: Positions, vararg text: String) =
-        overlayText(player, positions, text.joinToString("\n"))
-
-    @JvmStatic
+    @Deprecated("Устаревший метод, новый - overlayText")
     fun bottomRightMessage(player: Player, vararg text: String) = bottomRightMessage(player, text.joinToString("\n"))
 
     @JvmStatic

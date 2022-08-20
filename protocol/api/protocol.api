@@ -146,6 +146,16 @@ public final class me/func/protocol/ModChat {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/func/protocol/Position : java/lang/Enum {
+	public static final field BOTTOM_LEFT Lme/func/protocol/Position;
+	public static final field BOTTOM_RIGHT Lme/func/protocol/Position;
+	public static final field TOP_LEFT Lme/func/protocol/Position;
+	public static final field TOP_RIGHT Lme/func/protocol/Position;
+	public final fun getChannel ()Ljava/lang/String;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/Position;
+	public static fun values ()[Lme/func/protocol/Position;
+}
+
 public abstract interface class me/func/protocol/RGB {
 	public abstract fun getBlue ()I
 	public abstract fun getGreen ()I
@@ -243,7 +253,21 @@ public final class me/func/protocol/battlepass/BattlePassUserData {
 	public final fun setExp (I)V
 }
 
+public final class me/func/protocol/booster/bar/CloseBoosterRequest {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/func/protocol/booster/bar/CloseBoosterRequest;
+	public static synthetic fun copy$default (Lme/func/protocol/booster/bar/CloseBoosterRequest;ZILjava/lang/Object;)Lme/func/protocol/booster/bar/CloseBoosterRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun isShowBackground ()Z
+	public final fun setShowBackground (Z)V
+	public fun toString ()Ljava/lang/String;
+}
+
 public final class me/func/protocol/booster/bar/OpenBoosterRequest {
+	public fun <init> ()V
 	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)V
 	public final fun component1 ()Ljava/util/List;
 	public final fun component2 ()Ljava/lang/String;
@@ -259,6 +283,11 @@ public final class me/func/protocol/booster/bar/OpenBoosterRequest {
 	public final fun getTitle ()Ljava/lang/String;
 	public fun hashCode ()I
 	public final fun isShowBackground ()Z
+	public final fun setProgress (D)V
+	public final fun setSegments (Ljava/util/List;)V
+	public final fun setShowBackground (Z)V
+	public final fun setSubtitle (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
 	public fun toString ()Ljava/lang/String;
 }
 
