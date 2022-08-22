@@ -40,6 +40,26 @@ open class Selection(
         storage = storage.toMutableList()
     )
 
+    companion object {
+
+        @JvmStatic
+        fun builder() = Builder()
+    }
+
+    class Builder {
+        private val selection: Selection = Selection()
+
+        fun title(title: String) = apply { selection.title = title }
+        fun money(money: String) = apply { selection.money = money }
+        fun hint(hint: String) = apply { selection.hint = hint }
+        fun rows(rows: Int) = apply { selection.rows = rows }
+        fun uuid(uuid: UUID) = apply { selection.uuid = uuid }
+        fun storage(storage: MutableList<Button>) = apply { selection.storage = storage }
+        fun storage(vararg storage: Button) = apply { selection.storage = storage.toMutableList() }
+        fun vault(vault: String) = apply { selection.vault = vault }
+        fun build() = selection
+    }
+
     override fun open(player: Player): Storage = open(player, "storage:open") {
         string(vault).string(money).string(hint).integer(rows).integer(columns)
     }
