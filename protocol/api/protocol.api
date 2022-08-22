@@ -501,10 +501,12 @@ public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
 }
 
 public final class me/func/protocol/npc/NpcData {
+	public static final field Companion Lme/func/protocol/npc/NpcData$Companion;
 	public fun <init> ()V
 	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZZI)V
 	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public static final fun builder ()Lme/func/protocol/npc/NpcData$Builder;
 	public final fun getActivationDistance ()I
 	public final fun getBehaviour ()Lme/func/protocol/npc/NpcBehaviour;
 	public final fun getId ()I
@@ -538,9 +540,36 @@ public final class me/func/protocol/npc/NpcData {
 	public final fun setSlimArms (Z)V
 	public final fun setSneaking (Z)V
 	public final fun setType (I)V
+	public final fun setUuid (Ljava/util/UUID;)V
 	public final fun setX (D)V
 	public final fun setY (D)V
 	public final fun setYaw (F)V
 	public final fun setZ (D)V
+}
+
+public final class me/func/protocol/npc/NpcData$Builder {
+	public fun <init> ()V
+	public final fun activationDistance (I)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun behaviour (Lme/func/protocol/npc/NpcBehaviour;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun build ()Lme/func/protocol/npc/NpcData;
+	public final fun id (I)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun name (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun pitch (F)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun sitting (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun skinSignature (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun skinUrl (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun skinValue (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun sleeping (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun slimArms (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun sneaking (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun type (I)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun x (D)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun y (D)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun z (D)Lme/func/protocol/npc/NpcData$Builder;
+}
+
+public final class me/func/protocol/npc/NpcData$Companion {
+	public final fun builder ()Lme/func/protocol/npc/NpcData$Builder;
 }
 

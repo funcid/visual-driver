@@ -642,11 +642,13 @@ public abstract interface class me/func/mod/selection/ButtonClickHandler {
 }
 
 public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage {
+	public static final field Companion Lme/func/mod/selection/Choicer$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lme/func/mod/selection/Button;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/selection/Button;)V
+	public static final fun builder ()Lme/func/mod/selection/Choicer$Builder;
 	public fun buttons ([Lme/func/mod/selection/Button;)V
 	public fun clear ()V
 	public final fun getAllowClosing ()Z
@@ -661,6 +663,20 @@ public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage
 	public fun setStorage (Ljava/util/List;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
+}
+
+public final class me/func/mod/selection/Choicer$Builder {
+	public fun <init> ()V
+	public final fun build ()Lme/func/mod/selection/Choicer;
+	public final fun description (Ljava/lang/String;)Lme/func/mod/selection/Choicer$Builder;
+	public final fun storage (Ljava/util/List;)Lme/func/mod/selection/Choicer$Builder;
+	public final fun storage ([Lme/func/mod/selection/Button;)Lme/func/mod/selection/Choicer$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Choicer$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/selection/Choicer$Builder;
+}
+
+public final class me/func/mod/selection/Choicer$Companion {
+	public final fun builder ()Lme/func/mod/selection/Choicer$Builder;
 }
 
 public final class me/func/mod/selection/Confirmation : me/func/mod/selection/Openable {
@@ -743,12 +759,14 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 }
 
 public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
+	public static final field Companion Lme/func/mod/selection/Selection$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/selection/Button;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/selection/Button;)V
+	public static final fun builder ()Lme/func/mod/selection/Selection$Builder;
 	public fun buttons ([Lme/func/mod/selection/Button;)V
 	public fun clear ()V
 	public fun getColumns ()I
@@ -771,6 +789,23 @@ public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
 	public fun setVault (Ljava/lang/String;)V
+}
+
+public final class me/func/mod/selection/Selection$Builder {
+	public fun <init> ()V
+	public final fun build ()Lme/func/mod/selection/Selection;
+	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
+	public final fun money (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
+	public final fun rows (I)Lme/func/mod/selection/Selection$Builder;
+	public final fun storage (Ljava/util/List;)Lme/func/mod/selection/Selection$Builder;
+	public final fun storage ([Lme/func/mod/selection/Button;)Lme/func/mod/selection/Selection$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/selection/Selection$Builder;
+	public final fun vault (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
+}
+
+public final class me/func/mod/selection/Selection$Companion {
+	public final fun builder ()Lme/func/mod/selection/Selection$Builder;
 }
 
 public abstract interface class me/func/mod/selection/Storage : me/func/mod/selection/Openable {
