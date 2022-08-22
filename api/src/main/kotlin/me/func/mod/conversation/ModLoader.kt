@@ -17,13 +17,9 @@ import ru.cristalix.core.display.DisplayChannels.MOD_CHANNEL
 import ru.cristalix.core.util.UtilNetty
 import java.io.File
 import java.io.FileInputStream
+import java.io.InputStream
 import java.net.URL
-import java.nio.file.FileVisitResult
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-import java.nio.file.SimpleFileVisitor
-import java.nio.file.StandardCopyOption
+import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
 import kotlin.io.path.absolutePathString
 
@@ -66,37 +62,42 @@ object ModLoader {
         fileUrls.forEach { loadFromWeb(it, saveDir) }
 
     @JvmStatic
-    private fun readMod(buffer: ByteBuf, file: File) {
-        FileInputStream(file).use { stream ->
-            val data = ByteArray(stream.available())
-            IOUtils.readFully(stream, data)
-            val tmp = Unpooled.buffer(data.size + 4)
-            UtilNetty.writeByteArray(tmp, data)
-            buffer.writeBytes(ByteBufUtil.getBytes(tmp, 0, tmp.writerIndex(), false))
-        }
+    private fun readModStream(buffer: ByteBuf, stream: InputStream) {
+        val data = ByteArray(stream.available())
+        IOUtils.readFully(stream, data)
+        val tmp = Unpooled.buffer(data.size + 4)
+        UtilNetty.writeByteArray(tmp, data)
+        buffer.writeBytes(ByteBufUtil.getBytes(tmp, 0, tmp.writerIndex(), false))
     }
+
+    @JvmStatic
+    private fun readMod(buffer: ByteBuf, file: File) = readModStream(buffer, FileInputStream(file))
 
     @JvmStatic
     fun load(path: Path) = load(path.absolutePathString())
 
     @JvmStatic
     @JvmOverloads
-    fun load(filePath: String?, overload: Boolean = false) {
-        if (filePath.isNullOrEmpty())
-            return
+    fun load(name: String, stream: InputStream, overload: Boolean = false) {
         try {
-            val key = filePath.split('/').last()
-
-            if (mods.containsKey(key) && !overload) {
-                warn("Mod loading abort! Mod `$key` already loaded!")
+            if (mods.containsKey(name) && !overload) {
+                warn("Mod loading abort! Mod `$name` already loaded!")
                 return
             }
 
-            mods[key] = Unpooled.buffer().also { readMod(it, File(filePath)) }
+            mods[name] = Unpooled.buffer().also { readModStream(it, stream) }
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
     }
+
+    @JvmStatic
+    @JvmOverloads
+    fun load(file: File, overload: Boolean = false) = load(file.path.fileLastName(), file.inputStream(), overload)
+
+    @JvmStatic
+    @JvmOverloads
+    fun load(filePath: String, overload: Boolean = false) = load(File(filePath), overload)
 
     @JvmStatic
     fun loadAll(path: Path) = Files.walkFileTree(path, object :

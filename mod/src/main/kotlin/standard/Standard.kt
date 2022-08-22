@@ -18,7 +18,7 @@ class Standard {
         CorpseManager()
         ScreenAlert()
         CursorAlert()
-        RightBottom()
+        OverlayText()
         Ending()
         BigAlert()
         Boosters()

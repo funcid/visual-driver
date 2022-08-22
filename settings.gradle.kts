@@ -20,6 +20,7 @@ pluginManagement {
         kotlin("plugin.serialization") version "1.6.21"
         id("org.jetbrains.kotlinx.binary-compatibility-validator") version "0.10.1"
         id("com.github.johnrengelman.shadow") version "7.1.2"
+        id("org.hidetake.ssh") version "2.10.1"
     }
 }
 

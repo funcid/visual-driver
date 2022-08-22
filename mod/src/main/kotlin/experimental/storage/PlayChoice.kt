@@ -3,9 +3,7 @@ package experimental.storage
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import experimental.Experimental
-import experimental.Experimental.Companion.hoverCenter
 import experimental.Experimental.Companion.hoverContainer
-import experimental.Experimental.Companion.hoverTextScale
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
@@ -40,6 +38,7 @@ class PlayChoice(
         val scaling = 0.85
         val buttonSize = V3(100.0, 145.0, 1.0)
         val iconSize = 70.0
+        val backButtonSize = 20.0
 
         val title = text {
             origin = TOP
@@ -71,14 +70,13 @@ class PlayChoice(
                 flexSpacing = padding
                 scale = V3(scaling, scaling, scaling)
                 storage.forEachIndexed { index, element ->
-                    val centered = storage.size / 2 == index && storage.size % 2 == 1
                     element.bundle = +carved top@{
                         size = buttonSize
-                        color = if (centered) centerColor else normal
+                        color = if (element.special) centerColor else normal
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (centered) textCenter else textNormal
+                            color = if (element.special) textCenter else textNormal
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
@@ -108,6 +106,7 @@ class PlayChoice(
                             }
                         }
                         onMouseUp {
+                            if (Experimental.isMenuClickBlocked()) return@onMouseUp
                             UIEngine.clientApi.clientConnection()
                                 .sendPayload("storage:click", Unpooled.buffer().apply {
                                     NetUtil.writeUtf8(this, uuid.toString())
@@ -119,9 +118,12 @@ class PlayChoice(
                         val hint = +element.createHint(size, "Играть")
                         onHover {
                             Experimental.acceptHover(hovered, element)
+
+                            val hasHoverEffect = hovered && !element.hint.isNullOrEmpty()
+
                             animate(0.2, Easings.CUBIC_OUT) {
-                                hint.color.alpha = if (hovered) 0.95 else 0.0
-                                element.hintElement?.color?.alpha = if (hovered) 1.0 else 0.0
+                                hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                                element.hintElement?.color?.alpha = if (hasHoverEffect) 1.0 else 0.0
                             }
                         }
                     }
@@ -130,9 +132,38 @@ class PlayChoice(
                 }
             }
         }
-
+        if (menuStack.size > 0) {
+            +carved {
+                carveSize = 1.0
+                align = CENTER
+                origin = CENTER
+                offset.y = buttonSize.y * scaling
+                offset.x -= 65
+                size = V3(40.0, backButtonSize)
+                val normalColor = Color(42, 102, 189, 0.83)
+                val hoveredColor = Color(224, 118, 20, 0.83)
+                color = normalColor
+                onHover {
+                    animate(0.08, Easings.QUINT_OUT) {
+                        color = if (hovered) hoveredColor else normalColor
+                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+                    }
+                }
+                onMouseUp {
+                    menuStack.apply { pop() }.peek()?.open()
+                    UIEngine.clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
+                }
+                +text {
+                    align = CENTER
+                    origin = CENTER
+                    color = WHITE
+                    scale = V3(0.9, 0.9, 0.9)
+                    content = "Назад"
+                    shadow = true
+                }
+            }
+        }
         if (allowClosing) {
-            val backButtonSize = 20.0
             +carved {
                 carveSize = 1.0
                 align = CENTER

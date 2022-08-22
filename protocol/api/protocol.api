@@ -146,6 +146,15 @@ public final class me/func/protocol/ModChat {
 	public fun toString ()Ljava/lang/String;
 }
 
+public final class me/func/protocol/Position : java/lang/Enum {
+	public static final field BOTTOM_LEFT Lme/func/protocol/Position;
+	public static final field BOTTOM_RIGHT Lme/func/protocol/Position;
+	public static final field TOP_LEFT Lme/func/protocol/Position;
+	public static final field TOP_RIGHT Lme/func/protocol/Position;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/Position;
+	public static fun values ()[Lme/func/protocol/Position;
+}
+
 public abstract interface class me/func/protocol/RGB {
 	public abstract fun getBlue ()I
 	public abstract fun getGreen ()I
@@ -241,6 +250,44 @@ public final class me/func/protocol/battlepass/BattlePassUserData {
 	public final fun getExp ()I
 	public final fun setAdvanced (Z)V
 	public final fun setExp (I)V
+}
+
+public final class me/func/protocol/booster/bar/CloseBoosterRequest {
+	public fun <init> ()V
+	public fun <init> (Z)V
+	public final fun component1 ()Z
+	public final fun copy (Z)Lme/func/protocol/booster/bar/CloseBoosterRequest;
+	public static synthetic fun copy$default (Lme/func/protocol/booster/bar/CloseBoosterRequest;ZILjava/lang/Object;)Lme/func/protocol/booster/bar/CloseBoosterRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public fun hashCode ()I
+	public final fun isShowBackground ()Z
+	public final fun setShowBackground (Z)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/func/protocol/booster/bar/OpenBoosterRequest {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)V
+	public final fun component1 ()Ljava/util/List;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Z
+	public final fun component5 ()D
+	public final fun copy (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)Lme/func/protocol/booster/bar/OpenBoosterRequest;
+	public static synthetic fun copy$default (Lme/func/protocol/booster/bar/OpenBoosterRequest;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZDILjava/lang/Object;)Lme/func/protocol/booster/bar/OpenBoosterRequest;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getProgress ()D
+	public final fun getSegments ()Ljava/util/List;
+	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun isShowBackground ()Z
+	public final fun setProgress (D)V
+	public final fun setSegments (Ljava/util/List;)V
+	public final fun setShowBackground (Z)V
+	public final fun setSubtitle (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/func/protocol/dialog/Action {
@@ -454,10 +501,12 @@ public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
 }
 
 public final class me/func/protocol/npc/NpcData {
+	public static final field Companion Lme/func/protocol/npc/NpcData$Companion;
 	public fun <init> ()V
-	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZI)V
-	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;ZZZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZZI)V
+	public synthetic fun <init> (ILjava/util/UUID;DDDILjava/lang/String;Lme/func/protocol/npc/NpcBehaviour;FFLjava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZZZIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public static final fun builder ()Lme/func/protocol/npc/NpcData$Builder;
 	public final fun getActivationDistance ()I
 	public final fun getBehaviour ()Lme/func/protocol/npc/NpcBehaviour;
 	public final fun getId ()I
@@ -465,7 +514,9 @@ public final class me/func/protocol/npc/NpcData {
 	public final fun getPitch ()F
 	public final fun getSitting ()Z
 	public final fun getSkinDigest ()Ljava/lang/String;
+	public final fun getSkinSignature ()Ljava/lang/String;
 	public final fun getSkinUrl ()Ljava/lang/String;
+	public final fun getSkinValue ()Ljava/lang/String;
 	public final fun getSleeping ()Z
 	public final fun getSlimArms ()Z
 	public final fun getSneaking ()Z
@@ -482,14 +533,43 @@ public final class me/func/protocol/npc/NpcData {
 	public final fun setPitch (F)V
 	public final fun setSitting (Z)V
 	public final fun setSkinDigest (Ljava/lang/String;)V
+	public final fun setSkinSignature (Ljava/lang/String;)V
 	public final fun setSkinUrl (Ljava/lang/String;)V
+	public final fun setSkinValue (Ljava/lang/String;)V
 	public final fun setSleeping (Z)V
 	public final fun setSlimArms (Z)V
 	public final fun setSneaking (Z)V
 	public final fun setType (I)V
+	public final fun setUuid (Ljava/util/UUID;)V
 	public final fun setX (D)V
 	public final fun setY (D)V
 	public final fun setYaw (F)V
 	public final fun setZ (D)V
+}
+
+public final class me/func/protocol/npc/NpcData$Builder {
+	public fun <init> ()V
+	public final fun activationDistance (I)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun behaviour (Lme/func/protocol/npc/NpcBehaviour;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun build ()Lme/func/protocol/npc/NpcData;
+	public final fun id (I)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun name (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun pitch (F)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun sitting (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun skinSignature (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun skinUrl (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun skinValue (Ljava/lang/String;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun sleeping (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun slimArms (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun sneaking (Z)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun type (I)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun x (D)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun y (D)Lme/func/protocol/npc/NpcData$Builder;
+	public final fun z (D)Lme/func/protocol/npc/NpcData$Builder;
+}
+
+public final class me/func/protocol/npc/NpcData$Companion {
+	public final fun builder ()Lme/func/protocol/npc/NpcData$Builder;
 }
 

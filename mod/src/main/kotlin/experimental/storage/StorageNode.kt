@@ -6,6 +6,7 @@ import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
+import kotlin.properties.Delegates
 
 abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,
@@ -13,7 +14,8 @@ abstract class StorageNode<T : AbstractElement>(
     @JvmField var description: String,
     var hoverText: String,
     open var icon: T,
-    var hint: String? = null
+    var special: Boolean = false,
+    hint: String? = null
 ) {
 
     var bundle: CarvedRectangle? = null
@@ -22,10 +24,14 @@ abstract class StorageNode<T : AbstractElement>(
     var hintElement: TextElement? = null
     var hintContainer: CarvedRectangle? = null
 
+    var hint by Delegates.observable(hint) { _, _, _ ->
+        bundle?.let { it.onHover?.invoke(it) }
+    }
+
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
-        color = Color(74, 140, 236, 1.0)
+        color = if (special) Color(255,157,66, 1.0) else Color(74, 140, 236, 1.0)
         color.alpha = 0.0
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }
@@ -44,17 +50,30 @@ abstract class StorageNode<T : AbstractElement>(
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
         val words = description.split(" ")
-        descriptionElement!!.content = "§f"
+
+        descriptionElement!!.content = lineStart
         words.forEach { word ->
             val line = descriptionElement!!.content.split("\n").last()
             val new = line + word
             val color = line.split("§").last().first()
-            if (UIEngine.clientApi.fontRenderer().getStringWidth(new.drop(new.count { it == '§' } * 2)) > length)
+            if (line != lineStart && new.getRealWidth() > length) {
                 descriptionElement!!.content += "\n§$color"
+            }
             descriptionElement!!.content += "$word "
         }
     }
 
+    private fun String.getRealWidth(): Int {
+        val font = UIEngine.clientApi.fontRenderer()
+        val colorChars = count { it == '§' } * 2
+        val realString = drop(colorChars).replace("\n", "")
+
+        return font.getStringWidth(realString)
+    }
+
     abstract fun scaling(scale: Double): T
 
+    private companion object {
+        private const val lineStart = "§f"
+    }
 }

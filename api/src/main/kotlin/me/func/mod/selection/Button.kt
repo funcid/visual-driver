@@ -61,6 +61,8 @@ class Button {
             field = value
         }
 
+    var special: Boolean = false
+
     var price: Long = -1
     private var sale = 0
 
@@ -77,6 +79,8 @@ class Button {
     }
 
     fun title(title: String) = apply { this.title = title }
+
+    fun special(special: Boolean) = apply { this.special = special }
 
     fun withSale() = ((100.0 - sale) / 100.0 * price).toInt()
 
@@ -125,6 +129,7 @@ class Button {
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hover ?: "")
+        transfer.boolean(special)
     }
 
     fun copy(): Button = Button().also {
@@ -140,5 +145,6 @@ class Button {
         it.hint = hint
         it.price = price
         it.sale = sale
+        it.special = special
     }
 }

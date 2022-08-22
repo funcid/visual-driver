@@ -2,14 +2,11 @@ package experimental.storage
 
 import Main.Companion.externalManager
 import Main.Companion.menuStack
-import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
+import experimental.Experimental
 import experimental.Experimental.Companion.acceptHover
-import experimental.Experimental.Companion.hoverCenter
 import experimental.Experimental.Companion.hoverContainer
-import experimental.Experimental.Companion.hoverText
-import experimental.Experimental.Companion.hoverTextScale
 import experimental.Experimental.Companion.itemPadding
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
@@ -157,7 +154,7 @@ class StorageMenu(
                     (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows
                 carveSize = 2.0
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
-                color = Color(21, 53, 98, 0.62)
+                color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
                 val image = +rectangle {
                     val iconSize = fieldHeight - itemPadding * 2
                     size = V3(iconSize, iconSize, iconSize)
@@ -211,14 +208,15 @@ class StorageMenu(
                 onHover {
                     acceptHover(hovered, element)
 
-                    if (element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty()) return@onHover
+                    val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty())
 
                     animate(0.2, Easings.CUBIC_OUT) {
-                        hint.color.alpha = if (hovered) 0.95 else 0.0
-                        hint.children[3].color.alpha = if (hovered) 1.0 else 0.0
+                        hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                        hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
                     }
                 }
                 onMouseUp {
+                    if (Experimental.isMenuClickBlocked()) return@onMouseUp
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                         NetUtil.writeUtf8(this, uuid.toString())
                         writeInt(storage.indexOf(element))

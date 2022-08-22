@@ -8,12 +8,11 @@ import io.netty.buffer.Unpooled
 import me.func.protocol.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.writeUtf8
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
-import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import java.util.*
@@ -39,10 +38,10 @@ class BattlePassGui(
 
     private val guiSize = BattlePassGuiSize()
 
-    private var battlepass: RectangleElement? = null
-    private var moveLeftButton: RectangleElement? = null
-    private var moveRightButton: RectangleElement? = null
-    private var rewards: RectangleElement? = null
+    private var battlepass: CarvedRectangle? = null
+    private var moveLeftButton: CarvedRectangle? = null
+    private var moveRightButton: CarvedRectangle? = null
+    private var rewards: CarvedRectangle? = null
 
     init {
         color = Color(0, 0, 0, 0.86)
@@ -70,16 +69,18 @@ class BattlePassGui(
         }
 
         guiSize.calculate()
-        battlepass = +rectangle main@{
+        battlepass = +carved main@{
             align = CENTER
             origin = CENTER
             size = V3(guiSize.totalWidth, guiSize.totalHeight)
+            carveSize = 2.0
 
-            +rectangle {
+            +carved {
                 align = TOP
                 origin = TOP
                 size = V3(guiSize.totalWidth, guiSize.totalHeightPart * 22.2)
                 color = Color(226, 145, 25, 0.28)
+                carveSize = 2.0
 
                 val buyButtonNeed = !isAdvanced
                 val skipButtonNeed = skipPrice != 0 && level < pages.size * REWARDS_COUNT
@@ -87,12 +88,13 @@ class BattlePassGui(
                 if (buyButtonNeed) {
                     var approve = false
 
-                    +rectangle buy@{
+                    +carved buy@{
                         origin = LEFT
                         align = LEFT
                         size = V3(guiSize.buyButtonWidth, guiSize.buyButtonHeight)
                         color = Color(226, 145, 25, 1.0)
                         offset.x += guiSize.buyButtonOffsetX
+                        carveSize = 2.0
 
                         val buyText = +text {
                             align = CENTER
@@ -147,10 +149,11 @@ class BattlePassGui(
                 if (skipButtonNeed) {
                     var approve = false
 
-                    +rectangle button@{
+                    +carved button@{
                         origin = LEFT
                         align = LEFT
                         size = V3(guiSize.buyButtonWidth, guiSize.buyButtonHeight)
+                        carveSize = 2.0
 
                         color = Color(226, 145, 25, 1.0)
                         offset.x += if (buyButtonNeed) guiSize.totalWidthPart * 30 else guiSize.buyButtonOffsetX
@@ -222,7 +225,7 @@ class BattlePassGui(
                 }
             }
 
-            +rectangle {
+            +carved {
                 align = CENTER
                 origin = CENTER
                 size = V3(guiSize.totalWidth, guiSize.totalHeightPart * 22.2)
@@ -238,14 +241,14 @@ class BattlePassGui(
                 }
 
                 val progressLineOffsetX = guiSize.totalWidthPart * 11.9
-                +rectangle progress@{
+                +carved progress@{
                     color = Color(24, 57, 105)
 
                     size = V3(guiSize.totalWidthPart * 88.24, guiSize.totalHeightPart * 3.8)
                     offset.x += progressLineOffsetX
                     offset.y += 1.0
 
-                    +rectangle {
+                    +carved {
                         val progress = if (requiredExp != 0) exp.toDouble() / requiredExp.toDouble() else 1.0
                         size = V3(this@progress.size.x * progress, this@progress.size.y)
                         color = Color(42, 102, 189, 1.0)
@@ -302,13 +305,14 @@ class BattlePassGui(
         moveRightButton!!.enabled = page < pages.size - 1
     }
 
-    private fun addMoveButton(isToLeft: Boolean): RectangleElement = rectangle buttonMain@{
+    private fun addMoveButton(isToLeft: Boolean): CarvedRectangle = carved buttonMain@{
         size = V3(guiSize.totalWidthPart * 3.0, guiSize.rewardSizeY * 2.1)
         origin = if (isToLeft) TOP_LEFT else TOP_RIGHT
         align = if (isToLeft) TOP_LEFT else TOP_RIGHT
         offset.x = if (isToLeft) guiSize.totalWidthPart * -4 else guiSize.totalWidthPart * 4
         offset.y += guiSize.advancedOffsetY * 2.42
         color = Color(42, 102, 189, 0.28)
+        carveSize = 2.0
 
         +text {
             offset.y -= 1
@@ -330,15 +334,21 @@ class BattlePassGui(
                 updateMoveButtonsVisibility()
             }
         }
+        val normalColor = Color(42, 102, 189, 0.28)
+        val hoveredColor = Color(74, 140, 236, 0.28)
+        onHover {
+            color = if (hovered) hoveredColor else normalColor
+        }
     }.also { battlepass!!.addChild(it) }
 
     private var page = 0
 
-    private fun addRewardRows(): RectangleElement = rectangle rewardMain@{
+    private fun addRewardRows(): CarvedRectangle = carved rewardMain@{
         align = CENTER
         origin = CENTER
         size = V3(guiSize.totalWidth, guiSize.totalHeightPart * 45.5)
         offset.y += guiSize.totalHeightPart * 22
+        carveSize = 2.0
 
         +addRewardRow(
             false,
@@ -356,11 +366,12 @@ class BattlePassGui(
         val betweenX = guiSize.rewardBetweenX
         var offsetX = (guiSize.totalWidthPart * 11.45) + betweenX
         repeat(REWARDS_COUNT) {
-            +rectangle {
+            +carved {
                 size = V3(guiSize.totalWidthPart * 8.27, guiSize.totalHeightPart * 7.3)
                 offset.x += offsetX
                 offsetX += betweenX + (guiSize.totalWidthPart * 8.3)
                 offset.y -= guiSize.totalHeightPart * 6.2
+                carveSize = 2.0
 
                 +text {
                     origin = CENTER
@@ -377,10 +388,11 @@ class BattlePassGui(
         firstBlockColor: Color,
         rewardBlockColor: Color,
         offsetY: Double
-    ): RectangleElement = rectangle main@{
+    ): CarvedRectangle = carved main@{
         color = firstBlockColor
         offset.y += offsetY
         size = V3(guiSize.rewardSizeX, guiSize.rewardSizeY)
+        carveSize = 2.0
 
         +rectangle {
             size.x = guiSize.totalWidthPart * 3.18
@@ -419,12 +431,13 @@ class BattlePassGui(
 
             val canTake = index + page * REWARDS_COUNT < level && !taken && (!advanced || isAdvanced)
 
-            +rectangle rewardMain@{
+            +carved rewardMain@{
                 color =
                     if (taken) Color(235, 66, 66, 0.28) else if (canTake) Color(59, 193, 80, 0.28) else rewardBlockColor
                 size = V3(guiSize.rewardBlockWidth, guiSize.totalHeightPart * 18.9)
                 offset.x += offsetX
                 offsetX += guiSize.rewardBetweenX + guiSize.rewardBlockWidth
+                carveSize = 2.0
 
                 +item {
                     origin = CENTER
@@ -433,11 +446,12 @@ class BattlePassGui(
                     scale =
                         V3(guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34, guiSize.totalWidthPart * 0.34)
                 }
-                +rectangle {
+                +carved {
                     align = BOTTOM_LEFT
                     origin = BOTTOM_LEFT
                     size = V3(this@rewardMain.size.x, guiSize.totalHeightPart * 0.87)
                     color = Color(currentRare.red, currentRare.green, currentRare.blue)
+                    carveSize = 2.0
                 }
 
                 onHover {

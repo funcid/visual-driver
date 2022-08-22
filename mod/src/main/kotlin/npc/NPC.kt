@@ -38,6 +38,8 @@ class NPC {
                 readDouble().toFloat(),
                 NetUtil.readUtf8(this),
                 NetUtil.readUtf8(this),
+                NetUtil.readUtf8(this),
+                NetUtil.readUtf8(this),
                 readBoolean(),
                 readBoolean(),
                 readBoolean(),

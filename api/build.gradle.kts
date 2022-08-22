@@ -1,3 +1,6 @@
+import java.io.FileOutputStream
+import java.util.Properties
+
 dependencies {
     compileOnly("cristalix:bukkit-core:21.01.30")
     compileOnly("cristalix:dark-paper:21.02.03")
@@ -11,18 +14,19 @@ dependencies {
     api(project(":protocol-serialization"))
 }
 
-val bundle: Provider<Directory> = project(":mod").layout.buildDirectory.dir("bundle")
-
 tasks {
-    jar {
-        inputs.dir(bundle)
-        dependsOn(":mod:proguardJar")
+    val generateVersionProperties by registering {
+        val propertiesFile = file("$buildDir/generated-version/version.properties")
+        propertiesFile.parentFile.mkdirs()
+        val properties = Properties()
+        properties.setProperty("version", "${project.version}")
+        val out = FileOutputStream(propertiesFile)
+        properties.store(out, null)
+        outputs.file(propertiesFile)
     }
-}
-
-sourceSets {
-    main {
-        resources.srcDir(bundle)
+    jar {
+        from(generateVersionProperties)
+        from(project(":mod").tasks.named("proguardJar").get().outputs)
     }
 }
 
@@ -30,7 +34,6 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             artifactId = "animation-api"
-
             from(components["java"])
         }
     }

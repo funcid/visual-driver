@@ -42,8 +42,6 @@ object Banners {
     @JvmStatic
     fun content(player: Player, uuid: UUID, content: String) {
         if (banners.containsKey(uuid)) {
-            if (banners[uuid]?.content == content)
-                return
             banners[uuid]?.content = content
         }
         ModTransfer(uuid.toString(), content).send("banner:change-content", player)

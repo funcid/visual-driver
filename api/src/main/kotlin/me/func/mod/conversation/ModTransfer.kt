@@ -4,7 +4,6 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
-import me.func.mod.util.warn
 import net.minecraft.server.v1_12_R1.*
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
@@ -84,7 +83,7 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     fun nbt(item: ItemStack) = nbt(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
     fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) =
-        nbt(item.tag ?: NBTTagCompound().apply { warn("Tag is null!") })
+        nbt(item.tag ?: NBTTagCompound().apply { RuntimeException("Warning: Tag is null!").printStackTrace() })
 
     fun integer(integer: Int) = apply { serializer.writeInt(integer) }
 
@@ -101,16 +100,17 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     @JvmName("putBoolean")
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
-    fun send(channel: String?, player: Player?) {
-        if (player == null)
-            return
-        serializer.a = serializer.retainedSlice()
-        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
-    }
+    fun send(channel: String, vararg players: Player?): Unit =
+        send(channel, object : Iterable<Player?> {
+            override fun iterator() = players.iterator()
+        })
 
-    fun bulkSend(channel: String, vararg players: Player) { players.forEach { send(channel, it) } }
-
-    fun bulkSend(channel: String, list: Iterable<Player>) { bulkSend(channel, *list.toList().toTypedArray()) }
+    fun send(channel: String, players: Iterable<Player?>): Unit =
+        players.filterNotNull().filterIsInstance<CraftPlayer>().forEach {
+            it.handle.playerConnection.networkManager.sendPacket(
+                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
+            )
+        }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {
         if (nbt == null) {
