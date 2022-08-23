@@ -29,6 +29,14 @@ import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
 
+data class Booster(
+    var name: String = "name",
+    var multiplier: Double = 0.0,
+    var iconResource: String = "default"
+)
+
+fun booster(booster: Booster.() -> Unit) = Booster().also(booster)
+
 val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
@@ -515,9 +523,20 @@ object Anime {
     }
 
     @JvmStatic
+    fun startBoosters(player: Player, vararg boosters: Booster) = ModTransfer()
+        .integer(boosters.size)
+        .apply {
+            boosters.forEach {
+                string(it.name)
+                double(it.multiplier)
+                string(it.iconResource)
+            }
+        }.send("mid:boost", player)
+
     fun equipPersonalization(viewer: Player, stand: UUID, vararg personalization: UUID) {
         ModTransfer()
             .json(PacketEnableDisableModels(stand, personalization.toSet(), setOf()))
             .send(ENABLE_DISABLE_MODELS, viewer)
     }
+
 }

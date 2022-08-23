@@ -21,5 +21,6 @@ class Standard {
         OverlayText()
         Ending()
         BigAlert()
+        Boosters()
     }
 }

@@ -1,6 +1,5 @@
 package standard
 
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
