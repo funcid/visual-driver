@@ -24,7 +24,8 @@ allprojects {
      * Подробнее про семантическое версионирование:
      *     https://semver.org/lang/ru/
      */
-    version = "2.5.2"
+
+    version = "2.5.3"
 }
 
 subprojects {
