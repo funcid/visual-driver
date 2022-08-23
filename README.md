@@ -593,6 +593,17 @@ val boosterBar = boosterBar {
 
 boosterBar.open(player)
 ```
+
+<h3>Индикатор бустеров</h3>
+
+<img src="https://raw.githubusercontent.com/Transiented/src/main/kjhqDxG6wwA.jpg" width="500">
+
+Показывает текущее состояние бустера игрока.
+
+Метод:<br>
+
+`Anime.startBoosters(player: Player, vararg boosters: Booster)` показать индикатор<br>
+
 <h3>Перезарядка над ActionBar (модуль EXPERIMENTAL)</h3>
 
 <img src ="https://user-images.githubusercontent.com/63064550/149799259-9129ba80-b2a8-4553-9638-666b5ba950ab.png" width="500">
@@ -718,7 +729,7 @@ npc {
 new Dialog(new Entrypoint(
     "id",
     "название",
-    new Screen(
+    new Screen(а
         "Первая видимая строка",
         "Вторая видимая строка"
     ).buttons(
