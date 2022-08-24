@@ -29,7 +29,7 @@ class QueueStatus {
         private val box = rectangle {
             scale = V3(1.5, 1.5, 1.0)
             enabled = false
-
+            
             align = TOP
             origin = TOP
             offset.y += -width + 15

@@ -12,27 +12,6 @@ import java.util.concurrent.CompletableFuture
 
 class CoreGraffitiClient : GraffitiClient {
 
-    init {
-        socketClient.registerCapabilities(
-            Capability.builder()
-                .className(GraffitiBuyPackage::class.java.name)
-                .notification(true)
-                .build(),
-            Capability.builder()
-                .className(GraffitiUsePackage::class.java.name)
-                .notification(true)
-                .build(),
-            Capability.builder()
-                .className(GraffitiLoadUserPackage::class.java.name)
-                .notification(true)
-                .build(),
-            Capability.builder()
-                .className(StickersAvailablePackage::class.java.name)
-                .notification(true)
-                .build()
-        )
-    }
-
     override fun loadUser(uuid: UUID): CompletableFuture<FeatureUserData?> =
         socketClient
             .writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid))
