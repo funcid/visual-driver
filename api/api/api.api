@@ -30,7 +30,7 @@ public final class me/func/mod/Anime {
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;[Ljava/lang/Object;)V
 	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
-	public static final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
+	public final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
 	public final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public final fun getGraffitiClient ()Lme/func/mod/graffiti/GraffitiClient;
 	public final fun getProvided ()Lorg/bukkit/plugin/java/JavaPlugin;
@@ -76,6 +76,7 @@ public final class me/func/mod/Anime {
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;DDD)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;D)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;DDD)V
+	public static final fun startBoosters (Lorg/bukkit/entity/Player;[Lme/func/mod/Booster;)V
 	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDD)V
 	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;)V
 	public static final fun timer (Lorg/bukkit/entity/Player;I)V
@@ -89,6 +90,7 @@ public final class me/func/mod/Anime {
 }
 
 public final class me/func/mod/AnimeKt {
+	public static final fun booster (Lkotlin/jvm/functions/Function1;)Lme/func/mod/Booster;
 	public static final fun getMOD_LOCAL_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_LOCAL_TEST_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_STORAGE_URL ()Ljava/lang/String;
@@ -114,6 +116,26 @@ public final class me/func/mod/Banners {
 	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/element/Banner;)V
 	public final fun target (Lme/func/protocol/element/Banner;Lorg/bukkit/entity/LivingEntity;DDD)V
 	public static synthetic fun target$default (Lme/func/mod/Banners;Lme/func/protocol/element/Banner;Lorg/bukkit/entity/LivingEntity;DDDILjava/lang/Object;)V
+}
+
+public final class me/func/mod/Booster {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;DLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;DLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()D
+	public final fun component3 ()Ljava/lang/String;
+	public final fun copy (Ljava/lang/String;DLjava/lang/String;)Lme/func/mod/Booster;
+	public static synthetic fun copy$default (Lme/func/mod/Booster;Ljava/lang/String;DLjava/lang/String;ILjava/lang/Object;)Lme/func/mod/Booster;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getIconResource ()Ljava/lang/String;
+	public final fun getMultiplier ()D
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun setIconResource (Ljava/lang/String;)V
+	public final fun setMultiplier (D)V
+	public final fun setName (Ljava/lang/String;)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/func/mod/Glow : org/bukkit/event/Listener {
