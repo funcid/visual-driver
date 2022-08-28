@@ -9,13 +9,8 @@ import org.bukkit.Bukkit
 import org.bukkit.World
 import org.bukkit.entity.Player
 import org.bukkit.inventory.EquipmentSlot
-import org.bukkit.inventory.EquipmentSlot.CHEST
-import org.bukkit.inventory.EquipmentSlot.FEET
-import org.bukkit.inventory.EquipmentSlot.HAND
-import org.bukkit.inventory.EquipmentSlot.HEAD
-import org.bukkit.inventory.EquipmentSlot.LEGS
-import org.bukkit.inventory.EquipmentSlot.OFF_HAND
-import java.util.UUID
+import org.bukkit.inventory.EquipmentSlot.*
+import java.util.*
 import java.util.function.Consumer
 
 data class NpcSmart(
@@ -61,17 +56,21 @@ data class NpcSmart(
     }
 
     private fun updateEquipment(slot: EquipmentSlot, player: Player): NpcSmart {
-        ModTransfer().string(data.uuid.toString()).integer(slot.ordinal).item(
-            when (slot) {
-                OFF_HAND -> leftArm
-                HAND -> rightArm
-                HEAD -> head
-                CHEST -> chest
-                LEGS -> legs
-                FEET -> feet
-            }!!
-        ).send("npc:slot", player)
+        ModTransfer()
+            .string(data.uuid.toString())
+            .integer(slot.ordinal)
+            .item(getItemBySlot(slot)!!)
+            .send("npc:slot", player)
         return this
+    }
+
+    private fun getItemBySlot(slot: EquipmentSlot) = when (slot) {
+        OFF_HAND -> leftArm
+        HAND -> rightArm
+        HEAD -> head
+        CHEST -> chest
+        LEGS -> legs
+        FEET -> feet
     }
 
     fun kill(): NpcSmart {
@@ -131,6 +130,11 @@ data class NpcSmart(
             .boolean(data.sleeping)
             .boolean(data.sitting)
             .send("npc:spawn", player)
+
+        for (slot in VALUES) {
+            getItemBySlot(slot)?.let { updateEquipment(slot, player) }
+        }
+
         if (personalization.isNotEmpty())
             Anime.equipPersonalization(player, data.uuid, *personalization.toTypedArray())
         return this
