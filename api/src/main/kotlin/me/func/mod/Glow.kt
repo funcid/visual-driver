@@ -117,8 +117,7 @@ object Glow : Listener {
 
     @JvmStatic
     fun removePlace(place: GlowingPlace, vararg players: Player): GlowingPlace {
-        if (glowingPlaces.containsKey(place.uuid)) {
-            glowingPlaces.remove(place.uuid)
+        if (glowingPlaces.remove(place.uuid) != null) {
             playerAccepter.remove(place.uuid)
 
             val current = ModTransfer().string(place.uuid.toString())
