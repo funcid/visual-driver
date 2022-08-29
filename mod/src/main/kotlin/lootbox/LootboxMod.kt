@@ -116,7 +116,6 @@ class LootboxMod {
         }
 
         mod.registerHandler<WindowResize> {
-            crateScreen.background.size = UIEngine.overlayContext.size
             crateScreen.vignette.size = UIEngine.overlayContext.size
         }
     }
