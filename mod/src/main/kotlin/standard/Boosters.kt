@@ -86,10 +86,12 @@ class Boosters {
             boosters = +flex {
                 flexSpacing = 5.0
             }
+            enabled = false
         }
 
         mod.registerChannel("mid:boost") {
             val count = readInt()
+            boosters.enabled = readBoolean()
 
             boosters.children.forEach {
                 boosters.removeChild(it)

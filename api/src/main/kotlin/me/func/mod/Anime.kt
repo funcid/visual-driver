@@ -523,8 +523,9 @@ object Anime {
     }
 
     @JvmStatic
-    fun startBoosters(player: Player, vararg boosters: Booster) = ModTransfer()
+    fun startBoosters(player: Player, enable: Boolean, vararg boosters: Booster) = ModTransfer()
         .integer(boosters.size)
+        .boolean(enable)
         .apply {
             boosters.forEach {
                 string(it.name)
