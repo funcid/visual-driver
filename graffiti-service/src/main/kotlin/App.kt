@@ -60,7 +60,7 @@ fun main() {
         // Загрузка профиля игрока
         scope.launch {
             loadProfile(packet.playerUuid) { data ->
-                var update = false
+                var update: Boolean
 
                 // Если данные уже есть - обновляем набор паков, если нет - создаем новые
                 packet.data = data?.let {
@@ -95,7 +95,7 @@ fun main() {
                 if (update) scope.launch { mongoAdapter.save(syncProfile(packet.playerUuid, packet.data)) }
 
                 // Ответ серверу
-                ISocketClient.get().forward(realm, packet)
+                ISocketClient.get().write(packet)
                 println("Wrote graffiti load to ${data?.uuid} from ${realm.realmName}.")
             }
         }
@@ -107,7 +107,7 @@ fun main() {
             loadProfile(pckg.playerUUID) { userData ->
                 // Покупка граффити
                 if (userData == null) {
-                    ISocketClient.get().forward(realm, pckg)
+                    ISocketClient.get().write(pckg)
                     println("Cannot buy pack! UserData is null, player uuid: ${pckg.playerUUID}.")
                 } else {
                     // Если данные игрока успешно загружены
@@ -150,7 +150,7 @@ fun main() {
                     }
 
                     // Отправка пакета назад
-                    ISocketClient.get().forward(realm, pckg)
+                    ISocketClient.get().write(pckg)
                 }
             }
         }
@@ -178,7 +178,7 @@ fun main() {
                 }
 
                 // Ответ серверу об игроке
-                ISocketClient.get().forward(realm, pckg)
+                ISocketClient.get().write(pckg)
             }
         }
     }
