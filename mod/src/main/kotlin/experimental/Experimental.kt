@@ -1,6 +1,7 @@
 package experimental
 
 import Main.Companion.menuStack
+import dev.xdark.clientapi.event.gui.ScreenDisplay
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation
@@ -205,7 +206,7 @@ class Experimental {
                 )
             }
 
-            UIEngine.overlayContext.afterRender {
+            UIEngine.postOverlayContext.afterRender {
                 oldHoverText?.apply {
                     val resolution = UIEngine.clientApi.resolution()
                     val scaleFactor = resolution.scaleFactor
@@ -216,6 +217,10 @@ class Experimental {
                     val screen = UIEngine.clientApi.minecraft().currentScreen()
                     screen?.drawHoveringText(this, x, y)
                 }
+            }
+
+            mod.registerHandler<ScreenDisplay> {
+                oldHoverText = null
             }
 
             return null
