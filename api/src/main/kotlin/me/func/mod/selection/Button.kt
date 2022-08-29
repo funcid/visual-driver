@@ -3,13 +3,12 @@ package me.func.mod.selection
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.Sprites
 import me.func.mod.selection.MenuManager.reactive
-import me.func.mod.util.MouseButton
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.Collections
+import java.util.*
 
 fun interface ButtonClickHandler {
     fun handle(player: Player, index: Int, button: Button)
