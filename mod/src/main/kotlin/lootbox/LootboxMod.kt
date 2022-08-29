@@ -10,7 +10,6 @@ import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
@@ -29,7 +28,7 @@ class LootboxMod {
 
             if (crateScreen.opened && Mouse.isButtonDown(0)) {
                 crateScreen.opened = false
-                crateScreen.close()
+                crateScreen.acceptClose()
                 return@registerHandler
             }
 
@@ -50,7 +49,7 @@ class LootboxMod {
                     else {
                         pressed = false
                         ready = false
-                        open()
+                        acceptOpen()
                         if (hasNextItem()) {
                             UIEngine.schedule(0.5) {
                                 pressed = false
@@ -86,12 +85,12 @@ class LootboxMod {
                 }
 
                 clientApi.minecraft().setIngameNotInFocus()
-                crateScreen.close()
+                crateScreen.acceptClose()
                 crateScreen.setup(loot)
                 crateScreen.prepareToOpen()
                 ready = true
             } else if (channel == "lootbox:close") {
-                crateScreen.close()
+                crateScreen.acceptClose()
                 ready = false
             }
         }
