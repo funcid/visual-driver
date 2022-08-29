@@ -26,6 +26,10 @@ data class NpcSmart(
     private var feet: ItemStack? = null,
 ) {
 
+    companion object {
+        private val Values = EquipmentSlot.values()
+    }
+
     private fun setSlot(slot: EquipmentSlot, itemStack: ItemStack) {
         when (slot) {
             OFF_HAND -> leftArm = itemStack
@@ -131,7 +135,7 @@ data class NpcSmart(
             .boolean(data.sitting)
             .send("npc:spawn", player)
 
-        for (slot in VALUES) {
+        for (slot in Values) {
             getItemBySlot(slot)?.let { updateEquipment(slot, player) }
         }
 
