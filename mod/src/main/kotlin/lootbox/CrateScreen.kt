@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.util.glu.GLU
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
+import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.BOTTOM
@@ -155,7 +156,6 @@ class CrateScreen {
         textureSize = V3(64.0, 64.0)
 
         addChild(cube {
-
             align = V3(0.5, 0.0, 0.0)
             origin = V3(0.5, 0.0, 1.0)
             offset.y = 3.0

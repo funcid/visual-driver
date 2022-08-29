@@ -419,7 +419,7 @@ class DialogMod {
             .forEach { buttons.add(parseButton(it)) }
         if (buttons.isEmpty()) return null
         return Screen((json["text"] ?: return null).asJsonArray
-            .mapNotNull { it.asString.toString() }).buttons(*buttons.toTypedArray())
+            .mapNotNull { it.asString.toString() }).buttons(*buttons.filterNotNull().toTypedArray())
     }
 
     private fun parseButton(json: JsonObject): Button? {
