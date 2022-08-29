@@ -11,7 +11,6 @@ class StorageItemTexture(
     title: String,
     description: String,
     hover: String,
-    oldHover: Boolean,
     special: Boolean
 ) :
     StorageNode<RectangleElement>(
@@ -19,7 +18,6 @@ class StorageItemTexture(
         title,
         description,
         hover,
-        oldHover,
         rectangle { textureLocation = externalManager.load(icon) },
         special
     ) {

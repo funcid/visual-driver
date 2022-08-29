@@ -3,7 +3,6 @@ package experimental.storage
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import experimental.Experimental
-import experimental.Experimental.Companion.hoverContainer
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
@@ -194,6 +193,5 @@ class PlayChoice(
             }
             onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
         }
-        +hoverContainer
     }
 }

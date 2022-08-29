@@ -22,12 +22,6 @@ class Button {
             field = value
         }
 
-    var oldHover: Boolean = false
-        set(value) {
-            if (value != field) reactive { byte(6).boolean(value) }
-            field = value
-        }
-
     var texture: String? = null
         set(value) {
             if (value != field) reactive { byte(0).string(value!!) }
@@ -103,8 +97,6 @@ class Button {
 
     fun hover(vararg text: String) = apply { hover = text.joinToString("\n") }
 
-    fun oldHover(value: Boolean) = apply { oldHover = value }
-
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
 
     fun onLeftClick(click: ButtonClickHandler) = apply { onLeftClick = click }
@@ -136,13 +128,11 @@ class Button {
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hover ?: "")
-        transfer.boolean(oldHover)
         transfer.boolean(special)
     }
 
     fun copy(): Button = Button().also {
         it.hover = hover
-        it.oldHover = oldHover
         it.texture = texture
         it.title = title
         it.description = description

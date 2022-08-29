@@ -617,7 +617,6 @@ public final class me/func/mod/selection/Button {
 	public final fun getHint ()Ljava/lang/String;
 	public final fun getHover ()Ljava/lang/String;
 	public final fun getItem ()Lorg/bukkit/inventory/ItemStack;
-	public final fun getOldHover ()Z
 	public final fun getOnClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getOnLeftClick ()Lme/func/mod/selection/ButtonClickHandler;
 	public final fun getOnMiddleClick ()Lme/func/mod/selection/ButtonClickHandler;
@@ -634,7 +633,6 @@ public final class me/func/mod/selection/Button {
 	public final fun item (Lorg/bukkit/inventory/ItemStack;Z)Lme/func/mod/selection/Button;
 	public static synthetic fun item$default (Lme/func/mod/selection/Button;Lorg/bukkit/inventory/ItemStack;ZILjava/lang/Object;)Lme/func/mod/selection/Button;
 	public final fun material (Lorg/bukkit/Material;)Lme/func/mod/selection/Button;
-	public final fun oldHover (Z)Lme/func/mod/selection/Button;
 	public final fun onClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
 	public final fun onLeftClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
 	public final fun onMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
@@ -645,7 +643,6 @@ public final class me/func/mod/selection/Button {
 	public final fun setHint (Ljava/lang/String;)V
 	public final fun setHover (Ljava/lang/String;)V
 	public final fun setItem (Lorg/bukkit/inventory/ItemStack;)V
-	public final fun setOldHover (Z)V
 	public final fun setOnClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setOnLeftClick (Lme/func/mod/selection/ButtonClickHandler;)V
 	public final fun setOnMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)V
