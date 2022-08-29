@@ -89,12 +89,9 @@ class Boosters {
             enabled = false
         }
 
-        mod.registerChannel("mid:boostenable") {
-            boosters.enabled = readBoolean()
-        }
-
         mod.registerChannel("mid:boost") {
             val count = readInt()
+            boosters.enabled = readBoolean()
 
             boosters.children.forEach {
                 boosters.removeChild(it)
