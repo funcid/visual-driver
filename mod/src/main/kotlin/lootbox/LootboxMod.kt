@@ -1,5 +1,6 @@
 package lootbox
 
+import dev.xdark.clientapi.event.input.KeyPress
 import dev.xdark.clientapi.event.input.MousePress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.network.PluginMessage
@@ -62,6 +63,7 @@ class LootboxMod {
         }
 
         mod.registerHandler<MousePress> { isCancelled = ready }
+        mod.registerHandler<KeyPress> { isCancelled = isCancelled || crateScreen.opened }
 
         mod.registerHandler<PluginMessage> {
             if (channel == "lootbox") {
@@ -116,6 +118,7 @@ class LootboxMod {
         }
 
         mod.registerHandler<WindowResize> {
+            crateScreen.background.size = UIEngine.overlayContext.size
             crateScreen.vignette.size = UIEngine.overlayContext.size
         }
     }

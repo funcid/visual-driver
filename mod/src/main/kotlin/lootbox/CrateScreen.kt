@@ -26,11 +26,21 @@ import ru.cristalix.uiengine.utility.item
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-class CrateScreen : ContextGui() {
+class CrateScreen {
     @JvmField var opened = false
 
     @JvmField val rotationIntensity = rectangle {
         color.alpha = 0.6
+    }
+
+    @JvmField val background = rectangle {
+        size = UIEngine.overlayContext.size
+        color = Color(0, 0, 0, 0.86)
+        enabled = false
+        beforeRender = {
+            //GL11.glDepthMask(false)
+            GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT)
+        }
     }
 
     private val text = text {
@@ -235,7 +245,9 @@ class CrateScreen : ContextGui() {
         }
         align = CENTER
 
-        addChild(body2, text, this, vignette, rarityText, nameText)
+        addChild(body2)
+
+        UIEngine.overlayContext.addChild(background, text, this, vignette, rarityText, nameText)
     }
 
     private lateinit var loot: List<Loot>
@@ -272,6 +284,7 @@ class CrateScreen : ContextGui() {
     }
 
     fun prepareToOpen() {
+        background.enabled = true
         text.content = "Нажмите [ЛКМ], чтобы открыть лутбокс"
         text.color.alpha = 1.0
         rotationIntensity.color.alpha = 0.75
@@ -301,7 +314,7 @@ class CrateScreen : ContextGui() {
     }
 
     fun acceptClose() {
-        close()
+        background.enabled = false
         text.color.alpha = 0.0
         perspective.enabled = false
         itemRect.enabled = false
@@ -318,7 +331,6 @@ class CrateScreen : ContextGui() {
     }
 
     fun acceptOpen() {
-        open()
         setupNextItem()
         text.color.alpha = 0.0
         itemRect.enabled = true
@@ -359,9 +371,5 @@ class CrateScreen : ContextGui() {
                 opened = true
             }
         }
-    }
-
-    init {
-        color = Color(0, 0, 0, 0.86)
     }
 }
