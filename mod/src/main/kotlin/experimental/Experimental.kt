@@ -55,22 +55,31 @@ class Experimental {
             }
         }
 
+        var oldHoverText: List<String>? = null
+
         fun <T> acceptHover(hovered: Boolean, element: StorageNode<T>) where T : AbstractElement {
             if (hovered && element.hoverText.isNotEmpty()) {
-                if (!hoverContainer.enabled) {
-                    hoverText.content = element.hoverText
-                    hoverContainer.enabled = true
-                }
                 val lines = element.hoverText.split("\n")
+                if (element.oldHover) {
+                    if (oldHoverText == null) {
+                        oldHoverText = lines
+                    }
+                } else {
+                    if (!hoverContainer.enabled) {
+                        hoverText.content = element.hoverText
+                        hoverContainer.enabled = true
+                    }
 
-                hoverContainer.size.x =
-                    UIEngine.clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length } ?: "")
-                        .toDouble() * hoverTextScale
-                hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + itemPadding
-                hoverCenter.size.x = hoverContainer.size.x - 2
-                hoverCenter.size.y = hoverContainer.size.y - 2
+                    hoverContainer.size.x =
+                        UIEngine.clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { it.length } ?: "")
+                            .toDouble() * hoverTextScale
+                    hoverContainer.size.y = hoverText.lineHeight * lines.count() * hoverTextScale + itemPadding
+                    hoverCenter.size.x = hoverContainer.size.x - 2
+                    hoverCenter.size.y = hoverContainer.size.y - 2
+                }
             } else {
                 hoverContainer.enabled = false
+                oldHoverText = null
             }
         }
 
@@ -107,29 +116,40 @@ class Experimental {
                         (node as StorageItemTexture).icon.textureLocation =
                             ResourceLocation.of(parts.first(), parts.last())
                     }
+
                     1 -> {
                         if (!inited) return@registerChannel
                         (node as StorageItemStack).icon.stack = ItemTools.read(this)
                     }
+
                     2 -> {
                         node.title = NetUtil.readUtf8(this).replace("&", "§")
                         if (!inited) return@registerChannel
                         node.titleElement?.content = node.title
                     }
+
                     3 -> {
                         node.description = NetUtil.readUtf8(this).replace("&", "§")
                         if (last is PlayChoice || !inited) return@registerChannel
                         node.optimizeSpace()
                     }
+
                     4 -> {
                         node.hint = NetUtil.readUtf8(this).replace("&", "§")
                         if (!inited) return@registerChannel
                         node.hintElement?.content = node.hint!!
                     }
+
                     5 -> {
                         if (!inited) return@registerChannel
                         node.hoverText = NetUtil.readUtf8(this).replace("&", "§")
                     }
+
+                    6 -> {
+                        if (inited) return@registerChannel
+                        node.oldHover = readBoolean()
+                    }
+
                     else -> return@registerChannel
                 }
             }
@@ -142,6 +162,7 @@ class Experimental {
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
+                        buffer.readBoolean(), // item hover type
                         buffer.readBoolean(), // special
                     )
                 } else { // texture
@@ -151,6 +172,7 @@ class Experimental {
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                         NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
+                        buffer.readBoolean(), // item hover type
                         buffer.readBoolean(), // special
                     )
                 }
@@ -182,6 +204,20 @@ class Experimental {
                     )
                 )
             }
+
+            UIEngine.overlayContext.afterRender {
+                oldHoverText?.apply {
+                    val resolution = UIEngine.clientApi.resolution()
+                    val scaleFactor = resolution.scaleFactor
+
+                    val x = Mouse.getX() / scaleFactor
+                    val y = resolution.scaledHeight - Mouse.getY() / scaleFactor
+
+                    val screen = UIEngine.clientApi.minecraft().currentScreen()
+                    screen?.drawHoveringText(this, x, y)
+                }
+            }
+
             return null
         }
 

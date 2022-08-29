@@ -3,13 +3,12 @@ package me.func.mod.selection
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.Sprites
 import me.func.mod.selection.MenuManager.reactive
-import me.func.mod.util.MouseButton
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
-import java.util.Collections
+import java.util.*
 
 fun interface ButtonClickHandler {
     fun handle(player: Player, index: Int, button: Button)
@@ -20,6 +19,12 @@ class Button {
     var hover: String? = null
         set(value) {
             if (value != field) reactive { byte(5).string(value!!) }
+            field = value
+        }
+
+    var oldHover: Boolean = false
+        set(value) {
+            if (value != field) reactive { byte(6).boolean(value) }
             field = value
         }
 
@@ -98,6 +103,8 @@ class Button {
 
     fun hover(vararg text: String) = apply { hover = text.joinToString("\n") }
 
+    fun oldHover(value: Boolean) = apply { oldHover = value }
+
     fun onClick(click: ButtonClickHandler) = apply { onClick = click }
 
     fun onLeftClick(click: ButtonClickHandler) = apply { onLeftClick = click }
@@ -129,11 +136,13 @@ class Button {
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hover ?: "")
+        transfer.boolean(oldHover)
         transfer.boolean(special)
     }
 
     fun copy(): Button = Button().also {
         it.hover = hover
+        it.oldHover = oldHover
         it.texture = texture
         it.title = title
         it.description = description

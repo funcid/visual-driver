@@ -13,6 +13,7 @@ abstract class StorageNode<T : AbstractElement>(
     @JvmField var title: String,
     @JvmField var description: String,
     var hoverText: String,
+    var oldHover: Boolean,
     open var icon: T,
     var special: Boolean = false,
     hint: String? = null
