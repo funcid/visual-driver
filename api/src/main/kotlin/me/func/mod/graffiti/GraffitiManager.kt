@@ -9,21 +9,25 @@ import me.func.protocol.graffiti.packet.GraffitiUsePackage
 import me.func.protocol.personalization.FeatureUserData
 import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import ru.cristalix.core.formatting.Formatting
 import java.util.UUID
 import java.util.concurrent.CompletableFuture
+import java.util.function.Predicate
 import kotlin.math.abs
 
 object GraffitiManager {
 
-    private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 3
-    private const val MAX_GRAFFITI_IN_WORLD = 250
-    private const val MAX_GRAFFITI_PER_PLAYER = 20
+    private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
+    private const val MAX_GRAFFITI_IN_WORLD = 50
+    private const val MAX_GRAFFITI_PER_PLAYER = 5
     private const val MAX_PLACE_DISTANCE = 10
 
     private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
     private val placed: MutableList<GraffitiPlaced> = mutableListOf()
+
+    var isCanPlace: Predicate<Location> = Predicate { true }
 
     fun sendGraffitiBulk(player: Player) {
         // Загрузка всех активных граффити за раз, в мире игрока
@@ -129,6 +133,12 @@ object GraffitiManager {
             // Если игрок далеко от этих координат
             if (abs(player.location.x - x) > MAX_PLACE_DISTANCE || abs(player.location.z - z) > MAX_PLACE_DISTANCE)
                 return@createReader
+
+            // Проверяем, разрешил ли сервер использовать граффити
+            if (!isCanPlace.test(Location(player.world, x, y, z))) {
+                player.sendMessage(Formatting.error("Данный сервер запретил вам ставить тут граффити."))
+                return@createReader
+            }
 
             // Мы прошли все проверки теперь можно тратить граффити!
             socketClient.writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(player.uniqueId, packUuid, graffitiUuid)).thenAccept { pckg ->

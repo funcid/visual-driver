@@ -49,6 +49,7 @@ public final class me/func/mod/Anime {
 	public static final fun lockPersonalization (Lorg/bukkit/entity/Player;)V
 	public static final fun marker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)Lme/func/protocol/Marker;
 	public static final fun markers (Lorg/bukkit/entity/Player;[Lme/func/protocol/Marker;)V
+	public static final fun modifyGraffitiPlaceCondition (Ljava/util/function/Predicate;)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;D)V
@@ -608,7 +609,9 @@ public abstract interface class me/func/mod/graffiti/GraffitiClient {
 public final class me/func/mod/graffiti/GraffitiManager {
 	public static final field INSTANCE Lme/func/mod/graffiti/GraffitiManager;
 	public final fun clear (Lorg/bukkit/entity/Player;)V
+	public final fun isCanPlace ()Ljava/util/function/Predicate;
 	public final fun sendGraffitiBulk (Lorg/bukkit/entity/Player;)V
+	public final fun setCanPlace (Ljava/util/function/Predicate;)V
 	public final fun tryPutData (Ljava/util/UUID;)Ljava/util/concurrent/CompletableFuture;
 }
 

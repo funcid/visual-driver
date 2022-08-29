@@ -11,6 +11,8 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
+import me.func.mod.graffiti.GraffitiManager
+import me.func.mod.graffiti.GraffitiManager.isCanPlace
 import me.func.mod.selection.MenuManager
 import me.func.mod.selection.queue.QueueViewer
 import me.func.mod.util.*
@@ -28,6 +30,7 @@ import pw.lach.p13n.network.client.PacketEnableDisableModels
 import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
+import java.util.function.Predicate
 
 data class Booster(
     var name: String = "name",
@@ -66,16 +69,28 @@ object Anime {
 
     @JvmStatic
     fun include(vararg kits: Kit) {
+        // Если в списке есть модуль DEBUG - устанавливаем тестовую папку
         if (kits.contains(Kit.DEBUG)) {
             warn("Running in debug mode!")
             ModLoader.loadAll(ModWatcher.testingPath)
         }
 
-        kits.filter { it != Kit.DEBUG }.forEach {
-            it.fromUrl?.let { url -> ModLoader.loadFromWeb(url) }
-            it.init()
+        // Метод для загрузки модулей
+        fun load(kit: Kit) {
+            kit.fromUrl?.let { url -> ModLoader.loadFromWeb(url) }
+            kit.init()
         }
+
+        // Загружаем все киты
+        kits.filter { it != Kit.DEBUG && it != Kit.GRAFFITI}.forEach(::load)
+
+        // Загружаем модуль граффити
+        load(Kit.GRAFFITI)
     }
+
+    // Метод для изменения правила установки граффити
+    @JvmStatic
+    fun modifyGraffitiPlaceCondition(canPlace: Predicate<Location>) { isCanPlace = canPlace }
 
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) = ModTransfer().send(channel, player)
