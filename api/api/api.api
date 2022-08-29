@@ -30,6 +30,7 @@ public final class me/func/mod/Anime {
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;[Ljava/lang/Object;)V
 	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
+	public static final fun enableBoosterButton (Lorg/bukkit/entity/Player;Z)V
 	public final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
 	public final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public final fun getGraffitiClient ()Lme/func/mod/graffiti/GraffitiClient;

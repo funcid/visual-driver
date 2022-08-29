@@ -86,6 +86,11 @@ class Boosters {
             boosters = +flex {
                 flexSpacing = 5.0
             }
+            enabled = false
+        }
+
+        mod.registerChannel("mid:boostenable") {
+            boosters.enabled = readBoolean()
         }
 
         mod.registerChannel("mid:boost") {

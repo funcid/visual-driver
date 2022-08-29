@@ -523,6 +523,11 @@ object Anime {
     }
 
     @JvmStatic
+    fun enableBoosterButton(player: Player, enable: Boolean) {
+        ModTransfer().boolean(enable).send("mid:boostenable", player)
+    }
+
+    @JvmStatic
     fun startBoosters(player: Player, vararg boosters: Booster) = ModTransfer()
         .integer(boosters.size)
         .apply {
