@@ -26,7 +26,7 @@ import ru.cristalix.uiengine.utility.item
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-class CrateScreen {
+class CrateScreen : ContextGui() {
     @JvmField var opened = false
 
     @JvmField val rotationIntensity = rectangle {
@@ -247,7 +247,7 @@ class CrateScreen {
 
         addChild(body2)
 
-        UIEngine.overlayContext.addChild(background, text, this, vignette, rarityText, nameText)
+        this@CrateScreen.addChild(background, text, this, vignette, rarityText, nameText)
     }
 
     private lateinit var loot: List<Loot>

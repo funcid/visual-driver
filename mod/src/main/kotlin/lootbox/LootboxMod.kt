@@ -63,7 +63,6 @@ class LootboxMod {
         }
 
         mod.registerHandler<MousePress> { isCancelled = ready }
-        mod.registerHandler<KeyPress> { isCancelled = isCancelled || crateScreen.opened }
 
         mod.registerHandler<PluginMessage> {
             if (channel == "lootbox") {
@@ -86,13 +85,14 @@ class LootboxMod {
                     loot.add(Loot(item, name, rarity))
                 }
 
-                clientApi.minecraft().setIngameNotInFocus()
                 crateScreen.acceptClose()
+                crateScreen.open()
                 crateScreen.setup(loot)
                 crateScreen.prepareToOpen()
                 ready = true
             } else if (channel == "lootbox:close") {
                 crateScreen.acceptClose()
+                crateScreen.close()
                 ready = false
             }
         }
