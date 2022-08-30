@@ -30,6 +30,8 @@ class LootboxMod {
             if (crateScreen.opened && Mouse.isButtonDown(0)) {
                 crateScreen.opened = false
                 crateScreen.acceptClose()
+                crateScreen.close()
+                UIEngine.clientApi.minecraft().setIngameFocus()
                 return@registerHandler
             }
 
