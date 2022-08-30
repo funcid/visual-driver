@@ -92,8 +92,9 @@ class LootboxMod {
                 ready = true
             } else if (channel == "lootbox:close") {
                 crateScreen.acceptClose()
-                crateScreen.close()
                 ready = false
+                crateScreen.close()
+                UIEngine.clientApi.minecraft().setIngameFocus()
             }
         }
 
