@@ -296,11 +296,14 @@ public final class me/func/protocol/dialog/Action {
 	public fun <init> (Lme/func/protocol/dialog/Actions;)V
 	public static final fun command (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
 	public final fun command1 (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
+	public final fun custom (Ljava/lang/Runnable;)V
 	public final fun getCommand ()Ljava/lang/String;
+	public final fun getCustom ()Ljava/lang/Runnable;
 	public final fun getScreen ()Lme/func/protocol/dialog/Screen;
 	public final fun getType ()Ljava/lang/String;
 	public final fun screen (Lme/func/protocol/dialog/Screen;)Lme/func/protocol/dialog/Action;
 	public final fun setCommand (Ljava/lang/String;)V
+	public final fun setCustom (Ljava/lang/Runnable;)V
 	public final fun setScreen (Lme/func/protocol/dialog/Screen;)V
 	public final fun setType (Ljava/lang/String;)V
 }

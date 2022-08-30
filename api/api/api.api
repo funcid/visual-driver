@@ -29,7 +29,6 @@ public final class me/func/mod/Anime {
 	public static final fun createReader (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;[Ljava/lang/Object;)V
-	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
 	public final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
 	public final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public final fun getGraffitiClient ()Lme/func/mod/graffiti/GraffitiClient;
@@ -56,7 +55,6 @@ public final class me/func/mod/Anime {
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
 	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;I[Lme/func/mod/data/DailyReward;)V
-	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/data/LootDrop;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/Position;Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/Position;[Ljava/lang/String;)V
@@ -67,7 +65,6 @@ public final class me/func/mod/Anime {
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)V
 	public static final fun removeSphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun safeReadUUID (Lio/netty/buffer/ByteBuf;)Ljava/util/UUID;
-	public static final fun sendDialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;)V
 	public static final fun sendEmptyBuffer (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
 	public final fun setGraffitiClient (Lme/func/mod/graffiti/GraffitiClient;)V
 	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/EndStatus;Ljava/lang/String;Ljava/lang/String;)V
@@ -506,6 +503,14 @@ public final class me/func/mod/data/Sprites : java/lang/Enum {
 
 public abstract interface class me/func/mod/debug/Subscriber {
 	public abstract fun accept ()V
+}
+
+public final class me/func/mod/dialog/Dialog : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/dialog/Dialog;
+	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
+	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
+	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun sendDialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;)V
 }
 
 public final class me/func/mod/emotion/Emotions : java/lang/Enum {

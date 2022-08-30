@@ -25,7 +25,7 @@ allprojects {
      *     https://semver.org/lang/ru/
      */
 
-    version = "2.6.13"
+    version = "2.6.14"
 }
 
 subprojects {
