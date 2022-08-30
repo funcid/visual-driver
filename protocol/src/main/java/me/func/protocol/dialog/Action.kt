@@ -15,10 +15,10 @@ class Action(var type: String) {
         return this
     }
 
-    @JvmName("custom")
-    fun custom(custom: Runnable) {
+    @JvmName("custom1")
+    fun custom(custom: Runnable): Action {
         this.custom = custom
-        command("anime:dialog-callback " + UUID.randomUUID())
+        return command("anime:dialog-callback " + UUID.randomUUID())
     }
 
     @JvmName("command1")
@@ -29,8 +29,9 @@ class Action(var type: String) {
 
     companion object {
         @JvmStatic
-        fun command(command: String): Action {
-            return Action(Actions.COMMAND).command(command)
-        }
+        fun command(command: String) = Action(Actions.COMMAND).command(command)
+
+        @JvmStatic
+        fun custom(custom: Runnable) = Action(Actions.COMMAND).custom(custom)
     }
 }

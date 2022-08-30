@@ -296,7 +296,8 @@ public final class me/func/protocol/dialog/Action {
 	public fun <init> (Lme/func/protocol/dialog/Actions;)V
 	public static final fun command (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
 	public final fun command1 (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
-	public final fun custom (Ljava/lang/Runnable;)V
+	public static final fun custom (Ljava/lang/Runnable;)Lme/func/protocol/dialog/Action;
+	public final fun custom1 (Ljava/lang/Runnable;)Lme/func/protocol/dialog/Action;
 	public final fun getCommand ()Ljava/lang/String;
 	public final fun getCustom ()Ljava/lang/Runnable;
 	public final fun getScreen ()Lme/func/protocol/dialog/Screen;
@@ -310,6 +311,7 @@ public final class me/func/protocol/dialog/Action {
 
 public final class me/func/protocol/dialog/Action$Companion {
 	public final fun command (Ljava/lang/String;)Lme/func/protocol/dialog/Action;
+	public final fun custom (Ljava/lang/Runnable;)Lme/func/protocol/dialog/Action;
 }
 
 public final class me/func/protocol/dialog/Actions : java/lang/Enum {
