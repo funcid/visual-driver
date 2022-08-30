@@ -63,7 +63,7 @@ object Anime {
     init {
         log("Enabling animation-api, version: $version")
 
-        listener(StandardMods, Glow, AutoSendRegistry, MenuManager, QueueViewer)
+        listener(StandardMods, Glow, AutoSendRegistry, MenuManager, QueueViewer, me.func.mod.dialog.Dialog)
         Debug // Инициализации команды и обработчика сообщений
     }
 
@@ -103,24 +103,6 @@ object Anime {
                 .string(it.customRare ?: it.rare.name)
         }
     }.send("lootbox", player)
-
-    @JvmStatic
-    fun dialog(player: Player, dialog: Dialog, openEntrypoint: String) {
-        sendDialog(player, dialog)
-        openDialog(player, openEntrypoint)
-    }
-
-    @JvmStatic
-    fun sendDialog(player: Player, dialog: Dialog) = ModTransfer()
-        .string("load")
-        .json(dialog)
-        .send("rise:dialog-screen", player)
-
-    @JvmStatic
-    fun openDialog(player: Player, dialogId: String) = ModTransfer()
-        .string("open")
-        .string(dialogId)
-        .send("rise:dialog-screen", player)
 
     @JvmStatic
     fun alert(player: Player, title: String, description: String, seconds: Double) = ModTransfer()

@@ -716,9 +716,9 @@ npc {
 <img src="https://user-images.githubusercontent.com/42806772/144916818-ff974368-878c-483d-a34b-79e3f2e576c8.png" width="500">
 
 Методы взаимодействия с клинтом:<br>
-`Anime.sendDialog(player: Player, dialog: Dialog)` отправляет игру ветку диалогов<br>
-`Anime.openDialog(player: Player, dialogId: String)` показывает игроку диалог по ID ветки<br>
-`Anime.dialog(player: Player, dialog: Dialog, openEntrypoint: String)` отправляет и показывает игроку диалог по ID
+`Dialog.sendDialog(player: Player, dialog: Dialog)` отправляет игру ветку диалогов<br>
+`Dialog.openDialog(player: Player, dialogId: String)` показывает игроку диалог по ID ветки<br>
+`Dialog.dialog(player: Player, dialog: Dialog, openEntrypoint: String)` отправляет и показывает игроку диалог по ID
 ветки<br>
 
 Структура диалога:
