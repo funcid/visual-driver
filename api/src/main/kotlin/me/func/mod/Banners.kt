@@ -9,7 +9,7 @@ import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.lang.StrictMath.pow
-import java.util.UUID
+import java.util.*
 import kotlin.math.sqrt
 
 object Banners {
@@ -41,9 +41,7 @@ object Banners {
 
     @JvmStatic
     fun content(player: Player, uuid: UUID, content: String) {
-        if (banners.containsKey(uuid)) {
-            banners[uuid]?.content = content
-        }
+        banners[uuid]?.content = content
         ModTransfer(uuid.toString(), content).send("banner:change-content", player)
     }
 
@@ -91,6 +89,11 @@ object Banners {
             sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
             sizeTransfer.send("banner:size-text", player)
         }
+    }
+
+    @JvmStatic
+    fun showAll(player: Player){
+        show(player, *banners.values.toTypedArray())
     }
 
     @JvmStatic

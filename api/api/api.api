@@ -112,6 +112,7 @@ public final class me/func/mod/Banners {
 	public final fun shineBlocks (Lme/func/protocol/element/Banner;Z)V
 	public static final fun show (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/element/Banner;)V
+	public static final fun showAll (Lorg/bukkit/entity/Player;)V
 	public final fun target (Lme/func/protocol/element/Banner;Lorg/bukkit/entity/LivingEntity;DDD)V
 	public static synthetic fun target$default (Lme/func/mod/Banners;Lme/func/protocol/element/Banner;Lorg/bukkit/entity/LivingEntity;DDDILjava/lang/Object;)V
 }
