@@ -8,18 +8,8 @@ import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
-import ru.cristalix.uiengine.utility.BOTTOM
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Easings
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.carved
-import ru.cristalix.uiengine.utility.flex
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
-import java.util.UUID
+import ru.cristalix.uiengine.utility.*
+import java.util.*
 
 class PlayChoice(
     override var uuid: UUID,
@@ -116,8 +106,6 @@ class PlayChoice(
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
                         onHover {
-                            Experimental.acceptHover(hovered, element)
-
                             val hasHoverEffect = hovered && !element.hint.isNullOrEmpty()
 
                             animate(0.2, Easings.CUBIC_OUT) {

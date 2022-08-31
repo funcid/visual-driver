@@ -206,8 +206,6 @@ class StorageMenu(
 
                 val hint = +element.createHint(this@a.size, hint)
                 onHover {
-                    acceptHover(hovered, element)
-
                     val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty())
 
                     animate(0.2, Easings.CUBIC_OUT) {
@@ -215,6 +213,7 @@ class StorageMenu(
                         hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
                     }
                 }
+
                 onMouseUp {
                     if (Experimental.isMenuClickBlocked()) return@onMouseUp
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {

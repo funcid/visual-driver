@@ -1,7 +1,6 @@
 package experimental
 
 import Main.Companion.menuStack
-import dev.xdark.clientapi.event.gui.ScreenDisplay
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
@@ -10,7 +9,6 @@ import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.element.AbstractElement
 import java.util.*
 
 // не пытайтесь это "оптимизировать", иначе вы все сломаете
@@ -22,18 +20,6 @@ class Experimental {
         val itemPadding = 4.0
 
         fun isMenuClickBlocked() = openTimeAndDelayMillis + beforeClickDelay > System.currentTimeMillis()
-
-        var hoveringText: List<String>? = null
-
-        fun <T> acceptHover(hovered: Boolean, element: StorageNode<T>) where T : AbstractElement {
-            if (hovered && element.hoverText.isNotEmpty()) {
-                if (hoveringText == null) {
-                    hoveringText = element.hoverText.split("\n")
-                }
-            } else {
-                hoveringText = null
-            }
-        }
 
         fun bruh(): Class<*>? {
             Banners()
@@ -150,21 +136,42 @@ class Experimental {
                 )
             }
 
+            var mouseX = 0
+            var mouseY = 0
+            var lastText: String? = null
             UIEngine.postOverlayContext.afterRender {
-                hoveringText?.apply {
-                    val resolution = UIEngine.clientApi.resolution()
-                    val scaleFactor = resolution.scaleFactor
-
-                    val x = Mouse.getX() / scaleFactor
-                    val y = resolution.scaledHeight - Mouse.getY() / scaleFactor
-
-                    val screen = UIEngine.clientApi.minecraft().currentScreen()
-                    screen?.drawHoveringText(this, x, y)
+                if (menuStack.isEmpty()) {
+                    return@afterRender
                 }
-            }
 
-            mod.registerHandler<ScreenDisplay> {
-                hoveringText = null
+                val currentMouseX = Mouse.getX()
+                val currentMouseY = Mouse.getY()
+                if (mouseX != currentMouseX || mouseY != currentMouseY) {
+                    mouseX = currentMouseX
+                    mouseY = currentMouseY
+
+                    lastText = null
+                    val stack = menuStack.peek() ?: return@afterRender
+                    for (node in stack.storage) {
+                        if (node.bundle?.hovered == true) {
+                            lastText = node.hoverText
+                            break
+                        }
+                    }
+                }
+
+                if (lastText.isNullOrEmpty()) {
+                    return@afterRender
+                }
+
+                val resolution = UIEngine.clientApi.resolution()
+                val scaleFactor = resolution.scaleFactor
+
+                val x = mouseX / scaleFactor
+                val y = resolution.scaledHeight - mouseY / scaleFactor
+
+                val screen = UIEngine.clientApi.minecraft().currentScreen()
+                screen?.drawHoveringText(lastText!!.split("\n"), x, y)
             }
 
             return null

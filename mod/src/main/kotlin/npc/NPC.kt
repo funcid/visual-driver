@@ -10,9 +10,9 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.npc.NpcBehaviour
 import me.func.protocol.npc.NpcData
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import java.util.UUID
+import ru.cristalix.uiengine.UIEngine
+import java.util.*
 import kotlin.math.atan
 import kotlin.math.atan2
 import kotlin.math.pow
@@ -36,7 +36,12 @@ class NPC {
                 NpcBehaviour.values()[readInt()],
                 readDouble().toFloat(),
                 readDouble().toFloat(),
-                NetUtil.readUtf8(this),
+                NetUtil.readUtf8(this).run {
+                    if (this == "self") {
+                        return@run "https://webdata.c7x.dev/textures/skin/${UIEngine.clientApi.minecraft().player.uniqueID}"
+                    }
+                    return@run this
+                },
                 NetUtil.readUtf8(this),
                 NetUtil.readUtf8(this),
                 NetUtil.readUtf8(this),
@@ -142,7 +147,9 @@ class NPC {
                     var dy: Double = player.y - entity.y
                     val dz: Double = player.z - entity.z
 
-                    val active = if(data.data.activationDistance == -1) true else dx * dx + dy * dy + dz * dz < data.data.activationDistance.toDouble().pow(2)
+                    val active =
+                        if (data.data.activationDistance == -1) true else dx * dx + dy * dy + dz * dz < data.data.activationDistance.toDouble()
+                            .pow(2)
 
                     dy /= sqrt(dx * dx + dz * dz)
                     val yaw = if (active) (atan2(-dx, dz) / Math.PI * 180).toFloat() else data.data.yaw
