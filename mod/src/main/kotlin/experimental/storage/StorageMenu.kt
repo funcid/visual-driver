@@ -5,8 +5,6 @@ import Main.Companion.menuStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import experimental.Experimental
-import experimental.Experimental.Companion.acceptHover
-import experimental.Experimental.Companion.hoveringText
 import experimental.Experimental.Companion.itemPadding
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
@@ -142,7 +140,6 @@ class StorageMenu(
     fun redrawGrid() {
         val elements = getElementsOnPage(page)
         grid.children.clear()
-        hoveringText = null
 
         elements.forEach { element ->
             element.bundle?.let {
