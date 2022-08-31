@@ -56,6 +56,7 @@ class Healthbar {
             val entity = entity as EntityLivingBase
             val part = entity.health / entity.maxHealth
             if (part == 1f) return@a
+            if (entity.isSneaking) return@a
 
             val partialTicks = UIEngine.clientApi.minecraft().timer.renderPartialTicks
             context.offset = V3(
