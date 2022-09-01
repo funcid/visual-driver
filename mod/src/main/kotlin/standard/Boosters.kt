@@ -2,7 +2,9 @@ package standard
 
 import Main.Companion.externalManager
 import dev.xdark.clientapi.event.gui.ScreenDisplay
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.gui.ingame.ChatScreen
+import org.lwjgl.input.Keyboard
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
@@ -36,11 +38,11 @@ class Boosters {
             origin = CENTER
             align = CENTER
             offset.y = 2.5
-            offset.x -= 7.0 - (.7 * name.length)
+            offset.x -= 12.0 - (.7 * name.length)
         }
 
         +carved {
-            size = V3(24.0, 18.0)
+            size = V3(28.0, 18.0)
             color = Color(40, 180, 0, .62)
             carveSize = 2.0
             origin = RIGHT
@@ -54,7 +56,7 @@ class Boosters {
                 align = CENTER
                 shadow = true
                 offset.y = 2.5
-                offset.x = 0.5
+                offset.x = 0.0
             }
         }
     }
@@ -63,10 +65,10 @@ class Boosters {
         val container = flex {
             origin = TOP_RIGHT
             align = TOP_RIGHT
-            flexSpacing = 5.0
-            size = V3(100.0, 100.0)
-            offset.y = 2.0
-            offset.x -= 2.0
+            flexSpacing = 4.0
+            size = V3(90.0, 90.0)
+            offset.y = 12.0
+            offset.x -= 12.0
 
             +carved {
                 size = V3(18.0, 18.0)
@@ -86,7 +88,7 @@ class Boosters {
             }
 
             boosters = +flex {
-                flexSpacing = 5.0
+                flexSpacing = 4.0
             }
             enabled = false
         }
@@ -97,6 +99,14 @@ class Boosters {
             } else if (screen !is ChatScreen && boosters.children.isNotEmpty() && !container.enabled) {
                 container.enabled = true
             }
+        }
+
+        mod.registerHandler<GameLoop> {
+           if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && container.enabled) {
+               container.enabled = false
+           } else if (!Keyboard.isKeyDown(Keyboard.KEY_TAB) && !container.enabled) {
+               container.enabled = true
+           }
         }
 
         mod.registerChannel("mid:boost") {
