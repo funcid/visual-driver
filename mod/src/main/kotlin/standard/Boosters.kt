@@ -1,6 +1,8 @@
 package standard
 
 import Main.Companion.externalManager
+import dev.xdark.clientapi.event.gui.ScreenDisplay
+import dev.xdark.clientapi.gui.ingame.ChatScreen
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
@@ -87,6 +89,14 @@ class Boosters {
                 flexSpacing = 5.0
             }
             enabled = false
+        }
+
+        mod.registerHandler<ScreenDisplay> {
+            if (screen is ChatScreen && container.enabled) {
+                container.enabled = false
+            } else if (screen !is ChatScreen && boosters.children.isNotEmpty() && !container.enabled) {
+                container.enabled = true
+            }
         }
 
         mod.registerChannel("mid:boost") {
