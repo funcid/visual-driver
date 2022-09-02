@@ -34,8 +34,7 @@ import java.util.function.Predicate
 
 data class Booster(
     var name: String = "name",
-    var multiplier: Double = 0.0,
-    var iconResource: String = "default"
+    var multiplier: Double = 0.0
 )
 
 fun booster(booster: Booster.() -> Unit) = Booster().also(booster)
@@ -527,7 +526,6 @@ object Anime {
             boosters.forEach {
                 string(it.name)
                 double(it.multiplier)
-                string(it.iconResource)
             }
         }.send("mid:boost", player)
 
