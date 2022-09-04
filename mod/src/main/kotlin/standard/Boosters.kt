@@ -1,6 +1,10 @@
 package standard
 
 import Main.Companion.externalManager
+import dev.xdark.clientapi.event.gui.ScreenDisplay
+import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.gui.ingame.ChatScreen
+import org.lwjgl.input.Keyboard
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
@@ -12,19 +16,10 @@ class Boosters {
 
     private var boosters: Flex by notNull()
 
-    private fun booster(name: String, factor: Double, iconResource: String) = carved {
-        size = V3(68.0 * 1.04.pow(name.length.toDouble()), 18.0)
+    private fun booster(name: String, factor: Double) = carved {
+        size = V3(62.5 * 1.055.pow(name.length.toDouble()), 18.0)
         color = Color(0, 0, 0, .62)
         carveSize = 2.0
-
-        +rectangle {
-            textureLocation = externalManager.load("runtime:$iconResource")
-            color = WHITE
-            origin = CENTER
-            align = CENTER
-            offset.x -= (this@carved.size.x / 2) - 8.0
-            size = V3(8.0, 8.0, 8.0)
-        }
 
         +text {
             content = name
@@ -33,26 +28,25 @@ class Boosters {
             shadow = true
             origin = CENTER
             align = CENTER
-            offset.y = 2.5
-            offset.x -= 7.0 - (.7 * name.length)
+            offset.y = 3.5
+            offset.x -= 12.0 - (-.3 * name.length)
         }
 
         +carved {
-            size = V3(24.0, 18.0)
+            size = V3(32.0, 18.0)
             color = Color(40, 180, 0, .62)
             carveSize = 2.0
             origin = RIGHT
             align = RIGHT
 
             +text {
-                content = "x$factor"
+                content = "x$factor".replace(".0", "")
                 size = V3(16.0, 16.0)
                 color = WHITE
                 origin = CENTER
                 align = CENTER
                 shadow = true
-                offset.y = 2.5
-                offset.x = 0.5
+                offset.y = 3.5
             }
         }
     }
@@ -61,10 +55,10 @@ class Boosters {
         val container = flex {
             origin = TOP_RIGHT
             align = TOP_RIGHT
-            flexSpacing = 5.0
-            size = V3(100.0, 100.0)
-            offset.y = 2.0
-            offset.x -= 2.0
+            flexSpacing = 4.0
+            size = V3(80.0, 80.0)
+            offset.y = 12.0
+            offset.x -= 12.0
 
             +carved {
                 size = V3(18.0, 18.0)
@@ -84,9 +78,25 @@ class Boosters {
             }
 
             boosters = +flex {
-                flexSpacing = 5.0
+                flexSpacing = 4.0
             }
             enabled = false
+        }
+
+        mod.registerHandler<ScreenDisplay> {
+            if (screen is ChatScreen && container.enabled) {
+                container.enabled = false
+            } else if (screen !is ChatScreen && boosters.children.isNotEmpty() && !container.enabled) {
+                container.enabled = true
+            }
+        }
+
+        mod.registerHandler<GameLoop> {
+           if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && container.enabled) {
+               container.enabled = false
+           } else if (!Keyboard.isKeyDown(Keyboard.KEY_TAB) && !container.enabled) {
+               container.enabled = true
+           }
         }
 
         mod.registerChannel("mid:boost") {
@@ -98,7 +108,7 @@ class Boosters {
             }
 
             repeat(count) {
-                boosters.addChild(booster(readUtf8(), readDouble(), readUtf8()))
+                boosters.addChild(booster(readUtf8(), readDouble()))
             }
         }
 

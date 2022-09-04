@@ -2,11 +2,13 @@ package experimental.storage
 
 import Main.Companion.externalManager
 import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.gui.ingame.ChatScreen
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
-import ru.cristalix.clientapi.JavaMod.clientApi
+import org.lwjgl.input.Keyboard
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
@@ -17,151 +19,152 @@ private const val width = 140.0
 
 class QueueStatus {
     companion object {
+
+        private var buttonText: TextElement? = null
+        private var button: CarvedRectangle? = null
+        private var icon: CarvedRectangle? = null
+        private var png: RectangleElement? = null
+        private var title: TextElement? = null
+        private var desc: TextElement? = null
+        private var time: TextElement? = null
+        private var pattern: RectangleElement? = null
+        private const val width = 140.0
         private var counter = 0
-
-        private lateinit var icon: RectangleElement
-        private lateinit var title: TextElement
-        private lateinit var online: TextElement
-        private lateinit var time: TextElement
-        private lateinit var background: RectangleElement
-        private lateinit var cancel: RectangleElement
-
-        private val box = rectangle {
-            scale = V3(1.5, 1.5, 1.0)
+        private var enabled = false
+        private val container = UIEngine.overlayContext + carved {
             enabled = false
-            
+            color = Color(0, 0, 0, 0.50)
+            size = V3(382.0 / 2.0, 100.0 / 2)
             align = TOP
             origin = TOP
             offset.y += -width + 15
-
-            val base = width / 4.0 * 1.2857142857
-
-            size = V3(width, base, 1.0)
-
-            icon = +rectangle {
-                size = V3(width / 4.0, base)
-                color = WHITE
-                align = TOP_LEFT
-                origin = TOP_LEFT
-
-                time = +text {
-                    align = TOP
-                    origin = TOP
-                    color = WHITE
-                    shadow = true
-                    scale = V3(0.9, 0.9)
-                    offset.y += margin
+            carveSize = 3.0
+            icon = +carved {
+                size = V3(100 / 2.0, 100.0 / 2)
+                align = LEFT
+                origin = LEFT
+                carveSize = 3.0
+                pattern = +rectangle {//Линия цвета
+                    size = V3(20.0, 50.0)
+                    offset.x = +30.0
                 }
-            }
-
-            background = +rectangle {
-                size = V3(width - width / 4.0, width / 4.0, 1.0)
-                color = Color(0, 0, 0, 0.62)
-                align = TOP_RIGHT
-                origin = TOP_RIGHT
-                title = +text {
+                png = +rectangle { //Иконка
+                    size = V3(90 / 2.0, 90.0 / 2)
+                    align = CENTER
+                    origin = CENTER
+                    color = WHITE
+                }
+                title = +text {//Название
                     align = TOP_LEFT
                     origin = TOP_LEFT
-                    offset.x += margin + 0.2
-                    offset.y += margin
-                    scale = V3(0.9, 0.9)
-                    content = "Загрузка..."
-                    color = WHITE
+                    offset.x = +55.0
+                    offset.y = +5.0
+                    content = "Загрузка"
                     shadow = true
                 }
-                online = +text {
+                desc = +text {//Описание
                     align = TOP_LEFT
                     origin = TOP_LEFT
-                    offset.x += margin + 0.2
-                    offset.y += margin + 13
-                    scale = V3(0.9, 0.9)
-                    content = "Загрузка..."
-                    color = WHITE
+                    offset.x = +55.0
+                    offset.y = +15.0
+                    content = "Загрузка"
+                    shadow = true
+                }
+                time = +text {//Время
+                    align = BOTTOM_LEFT
+                    origin = BOTTOM_LEFT
+                    offset.x = +55.0
+                    offset.y = -5.0
+                    content = "⏰ 0:00"
                     shadow = true
                 }
             }
-
-            cancel = +rectangle {
-                align = BOTTOM_RIGHT
-                origin = BOTTOM_RIGHT
-                size = V3(width / 4 * 3, base - width / 4, 1.0)
-                color = Color(255, 0, 0, 0.62)
-                offset.y -= 1
-
-                onClick { leave() }
-
-                +text {
-                    align = LEFT
-                    origin = LEFT
-                    color = WHITE
-                    scale = V3(0.9, 0.9)
-                    offset.x += margin + 0.2
-                    content = "Покинуть очередь"
+            button = +carved {
+                align = RIGHT
+                origin = RIGHT
+                offset.x -= 10
+                size = V3(42.0 / 2, 68.0 / 2)
+                color = Color(160, 29, 40, 0.83)
+                carveSize = 2.0
+                buttonText = +text {
+                    align = CENTER
+                    origin = CENTER
+                    shadow = true
+                    content = "X"
                 }
-
-                +text {
-                    align = RIGHT
-                    origin = RIGHT
-                    color = WHITE
-                    scale = V3(0.9, 0.9)
-                    offset.x -= margin
-                    content = ">"
+                onLeftClick {
+                    leave()
+                    hide()
+                }
+                val normalColor = Color(160, 29, 40, 0.83)
+                val hoveredColor = Color(231, 61, 75, 0.83)
+                color = normalColor
+                onHover {
+                    animate(0.08) {
+                        color = if (hovered) hoveredColor else normalColor
+                    }
                 }
             }
         }
 
-        private fun leave() = clientApi.clientConnection().sendPayload("queue:leave", Unpooled.EMPTY_BUFFER)
+        fun leave() = UIEngine.clientApi.clientConnection().sendPayload("queue:leave", Unpooled.EMPTY_BUFFER)
 
         init {
-            UIEngine.overlayContext + box
-
+            UIEngine.overlayContext + container
             var before = System.currentTimeMillis()
 
             mod.registerHandler<GameLoop> {
-                if (!box.enabled)
+                if (!enabled)
                     return@registerHandler
                 val now = System.currentTimeMillis()
-
                 if (now - before > 1000) {
                     before = now
                     counter++
-                    time.content = "⏰ ${counter / 60}:${(counter % 60).toString().padStart(2, '0')}"
+                    time?.content = "⏰ ${counter / 60}:${(counter % 60).toString().padStart(2, '0')}"
                 }
-                if (counter >= 300) leave()
             }
 
             mod.registerChannel("queue:init") {
-                if (!box.enabled) {
-                    box.animate(0.4, Easings.BACK_OUT) {
+                val address = NetUtil.readUtf8(this) // texture
+                val name = NetUtil.readUtf8(this) // title
+                val description = NetUtil.readUtf8(this) // description
+                if (!enabled) {
+                    container.animate(0.4, Easings.BACK_OUT) {
                         offset.y = 15.0
                     }
                 }
 
-                before = System.currentTimeMillis()
-
-                val address = NetUtil.readUtf8(this) // texture
-                val name = NetUtil.readUtf8(this) // title
-                val description = NetUtil.readUtf8(this) // description
-
-                icon.textureLocation = externalManager.load(address)
-                title.content = name
-                online.content = description
-                box.enabled = true
+                png?.textureLocation = externalManager.load(address)
+                title?.content = name
+                desc?.content = description
+                container.enabled = true
+                enabled = true
+                mod.registerHandler<GameLoop> {
+                    if (UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen) {
+                        container.enabled = enabled && !Keyboard.isKeyDown(Keyboard.KEY_TAB)
+                    }
+                }
             }
 
             mod.registerChannel("queue:update") {
-                online.content = NetUtil.readUtf8(this) // description
+                desc?.content = NetUtil.readUtf8(this) // description
             }
 
             mod.registerChannel("queue:stop") {
-                box.animate(0.25, Easings.QUART_IN) {
-                    offset.y = -width + 15
-                }
-                UIEngine.schedule(0.26) {
-                    counter = 0
-                    box.enabled = false
-                }
                 leave()
+                hide()
+            }
+        }
+
+        private fun hide() {
+            container.animate(0.25, Easings.QUART_IN) {
+                offset.y = -width + 15.0
+            }
+
+            UIEngine.schedule(0.26) {
+                counter = 0
+                container.enabled = false
+                enabled = false
             }
         }
     }
