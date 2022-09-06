@@ -12,10 +12,10 @@ abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,
     @JvmField var title: String,
     @JvmField var description: String,
+    var hint: String? = null,
     var hoverText: String,
     open var icon: T,
-    var special: Boolean = false,
-    hint: String? = null
+    var special: Boolean = false
 ) {
 
     var bundle: CarvedRectangle? = null
@@ -23,10 +23,6 @@ abstract class StorageNode<T : AbstractElement>(
     var descriptionElement: TextElement? = null
     var hintElement: TextElement? = null
     var hintContainer: CarvedRectangle? = null
-
-    var hint by Delegates.observable(hint) { _, _, _ ->
-        bundle?.let { it.onHover?.invoke(it) }
-    }
 
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0

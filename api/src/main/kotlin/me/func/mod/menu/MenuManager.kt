@@ -70,7 +70,9 @@ object MenuManager : Listener {
 
         // Многостраничное меню
         handler<Paginated>("func:page-request") { menu, player, buffer ->
-            val index = buffer.readInt()
+            val page = buffer.readInt()
+            if (!menu.isPageExists(page)) return@handler
+            menu.sendPage(page, player)
         }
 
         // Меню подтверждения - принятие / отказ
@@ -130,10 +132,6 @@ object MenuManager : Listener {
             .integer((customStorage ?: storage).size)
             .apply { (customStorage ?: storage).forEach { it.write(this) } }
             .send(channel, player)
-    }.apply {
-        // Отдельно обновляем текст при наведении на кнопки
-        (customStorage ?: storage).filter { it.hint != null }
-            .forEach { it.reactive { byte(4).string(it.hint!!) } }
     }
 
     @Suppress("UNCHECKED_CAST")

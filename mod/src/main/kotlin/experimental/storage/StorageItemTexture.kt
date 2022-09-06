@@ -10,6 +10,7 @@ class StorageItemTexture(
     price: Long,
     title: String,
     description: String,
+    hint: String,
     hover: String,
     special: Boolean
 ) :
@@ -17,6 +18,7 @@ class StorageItemTexture(
         price,
         title,
         description,
+        hint,
         hover,
         rectangle { textureLocation = externalManager.load(icon) },
         special

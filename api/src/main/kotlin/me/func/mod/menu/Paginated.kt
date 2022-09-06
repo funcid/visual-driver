@@ -21,9 +21,12 @@ interface Paginated : Storage {
     // Количество страниц
     fun getPageCount() = ceil(storage.size * 1.0 / getPageCapacity()).toInt()
 
+    // Проверить, существует ли данная страница
+    fun isPageExists(page: Int) = page in 0..getPageCount()
+
     // Отправить страницу
     fun sendPage(page: Int, player: Player) {
-        if (page !in 0..getPageCount()) return
+        if (!isPageExists(page)) return
         val content = getContentByPage(page)
 
         ModTransfer()

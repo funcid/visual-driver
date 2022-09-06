@@ -127,6 +127,7 @@ class Button {
         transfer.long(price)
         transfer.string(title ?: "")
         transfer.string(description ?: "")
+        transfer.string(hint ?: "")
         transfer.string(hover ?: "")
         transfer.boolean(special)
     }

@@ -10,12 +10,14 @@ class StorageItemStack(
     price: Long,
     title: String,
     description: String,
+    hint: String,
     hover: String,
     special: Boolean
 ) : StorageNode<ItemElement>(
     price,
     title,
     description,
+    hint,
     hover,
     item { stack = icon },
     special
