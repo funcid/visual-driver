@@ -1,4 +1,4 @@
-package me.func.mod.selection.queue
+package me.func.mod.menu.queue
 
 import me.func.mod.Anime
 import org.bukkit.entity.Player

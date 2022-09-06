@@ -1,10 +1,14 @@
-package me.func.mod.selection
+package me.func.mod.menu
 
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.Anime.provided
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.menu.choicer.Choicer
+import me.func.mod.menu.confirmation.Confirmation
+import me.func.mod.menu.recconnct.Reconnect
+import me.func.mod.menu.selection.Selection
 import me.func.mod.util.MouseButton
 import me.func.mod.util.warn
 import org.bukkit.Bukkit
@@ -64,14 +68,15 @@ object MenuManager : Listener {
             button.onClick?.handle(player, index, button)
         }
 
-        // Меню подтверждения - принятие
-        handler<Confirmation>("func:accept") { menu, player, _ ->
-            menu.onAccept.accept(player)
+        // Многостраничное меню
+        handler<Paginated>("func:page-request") { menu, player, buffer ->
+            val index = buffer.readInt()
         }
 
-        // Меню подтверждения - отказ
-        handler<Confirmation>("func:deny") { menu, player, _ ->
-            menu.onDeny?.accept(player)
+        // Меню подтверждения - принятие / отказ
+        handler<Confirmation>("func:yesno") { menu, player, buffer ->
+            if (buffer.readBoolean()) menu.onAccept.accept(player)
+            else menu.onDeny?.accept(player)
         }
 
         // Обработка нажатия на кнопку в меню реконнекта

@@ -1,7 +1,8 @@
-package me.func.mod.selection
+package me.func.mod.menu.selection
 
 import me.func.mod.Anime.provided
-import me.func.mod.selection.MenuManager.open
+import me.func.mod.menu.Button
+import me.func.mod.menu.MenuManager.open
 import me.func.mod.service.Services.getBalanceData
 import me.func.mod.service.Services.getDiscount
 import org.bukkit.Bukkit

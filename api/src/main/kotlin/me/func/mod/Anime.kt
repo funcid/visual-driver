@@ -11,13 +11,11 @@ import me.func.mod.data.DailyReward
 import me.func.mod.data.LootDrop
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
-import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
-import me.func.mod.selection.MenuManager
-import me.func.mod.selection.queue.QueueViewer
+import me.func.mod.menu.MenuManager
+import me.func.mod.menu.queue.QueueViewer
 import me.func.mod.util.*
 import me.func.protocol.*
-import me.func.protocol.dialog.Dialog
 import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
 import org.bukkit.Location

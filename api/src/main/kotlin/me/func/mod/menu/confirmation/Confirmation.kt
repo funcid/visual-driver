@@ -1,6 +1,7 @@
-package me.func.mod.selection
+package me.func.mod.menu.confirmation
 
-import me.func.mod.selection.MenuManager.bind
+import me.func.mod.menu.MenuManager.bind
+import me.func.mod.menu.Openable
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.function.Consumer

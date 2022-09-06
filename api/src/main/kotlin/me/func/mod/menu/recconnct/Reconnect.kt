@@ -1,6 +1,8 @@
-package me.func.mod.selection
+package me.func.mod.menu.recconnct
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.menu.MenuManager
+import me.func.mod.menu.Openable
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.function.Consumer

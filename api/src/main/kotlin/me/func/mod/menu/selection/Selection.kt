@@ -1,6 +1,9 @@
-package me.func.mod.selection
+package me.func.mod.menu.selection
 
-import me.func.mod.selection.MenuManager.open
+import me.func.mod.menu.Button
+import me.func.mod.menu.MenuManager.open
+import me.func.mod.menu.Paginated
+import me.func.mod.menu.Storage
 import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.function.Consumer
@@ -11,10 +14,10 @@ open class Selection(
     open var money: String = "",
     open var vault: String = "coin",
     open var hint: String = "Купить",
-    open var rows: Int = 3,
-    open var columns: Int = 4,
+    override var rows: Int = 3,
+    override var columns: Int = 4,
     override var storage: MutableList<Button> = mutableListOf()
-) : Storage {
+) : Paginated {
 
     var tick: Consumer<Storage>? = null
 
@@ -63,4 +66,6 @@ open class Selection(
     override fun open(player: Player): Storage = open(player, "storage:open") {
         string(vault).string(money).string(hint).integer(rows).integer(columns)
     }
+
+
 }

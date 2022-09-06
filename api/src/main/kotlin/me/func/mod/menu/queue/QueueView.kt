@@ -1,7 +1,7 @@
-package me.func.mod.selection.queue
+package me.func.mod.menu.queue
 
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.selection.Openable
+import me.func.mod.menu.Openable
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.UUID

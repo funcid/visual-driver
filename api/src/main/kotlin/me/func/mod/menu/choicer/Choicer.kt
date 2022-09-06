@@ -1,6 +1,8 @@
-package me.func.mod.selection
+package me.func.mod.menu.choicer
 
-import me.func.mod.selection.MenuManager.open
+import me.func.mod.menu.Button
+import me.func.mod.menu.MenuManager.open
+import me.func.mod.menu.Storage
 import org.bukkit.entity.Player
 import java.util.*
 

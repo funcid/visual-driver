@@ -1,8 +1,8 @@
-package me.func.mod.selection
+package me.func.mod.menu
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.Sprites
-import me.func.mod.selection.MenuManager.reactive
+import me.func.mod.menu.MenuManager.reactive
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
 import org.bukkit.Material

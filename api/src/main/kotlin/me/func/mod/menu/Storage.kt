@@ -1,4 +1,4 @@
-package me.func.mod.selection
+package me.func.mod.menu
 
 interface Storage : Openable {
     var title: String
@@ -9,5 +9,6 @@ interface Storage : Openable {
     fun clear() { storage.clear() }
 
     fun buttons(vararg button: Button) { storage = button.toMutableList() }
+
 }
 

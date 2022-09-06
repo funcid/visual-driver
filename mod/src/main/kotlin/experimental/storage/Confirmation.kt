@@ -8,16 +8,8 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
-import ru.cristalix.uiengine.utility.BOTTOM
-import ru.cristalix.uiengine.utility.CENTER
-import ru.cristalix.uiengine.utility.Color
-import ru.cristalix.uiengine.utility.Easings
-import ru.cristalix.uiengine.utility.TOP
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.carved
-import ru.cristalix.uiengine.utility.text
-import java.util.UUID
+import ru.cristalix.uiengine.utility.*
+import java.util.*
 
 class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
 
@@ -28,6 +20,14 @@ class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
     lateinit var message: TextElement
     lateinit var agree: CarvedRectangle
     lateinit var disagree: CarvedRectangle
+
+    private fun answer(answer: Boolean) {
+        clientApi.clientConnection().sendPayload("func:yesno", Unpooled.buffer().apply {
+            NetUtil.writeUtf8(this, uuid.toString())
+            writeBoolean(answer)
+        })
+        close()
+    }
 
     val container = +carved {
         color = Color(42, 102, 189, 0.28)
@@ -47,7 +47,7 @@ class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
             message.lineHeight * message.content.split("\n").size + buttonHeight + padding * 3
         )
 
-        fun button(offsetX: Double, title: String, normal: Color, hover: Color) = carved {
+        fun button(offsetX: Double, title: String, normal: Color, hover: Color, answer: Boolean) = carved {
             align = BOTTOM
             origin = BOTTOM
             size = V3(buttonWidth, buttonHeight)
@@ -70,29 +70,23 @@ class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
                 content = title
                 shadow = true
             }
+            onMouseUp { answer(answer) }
         }
+
         agree = +button(
             -(buttonWidth / 2 + padding / 4),
             "Подтвердить",
             Color(34, 174, 73, 1.0),
-            Color(73, 223, 115, 1.0)
-        ).apply {
-            onMouseUp {
-                clientApi.clientConnection().sendPayload("func:accept", Unpooled.buffer().apply {
-                    NetUtil.writeUtf8(this, uuid.toString())
-                })
-                close()
-            }
-        }
-        disagree =
-            +button(buttonWidth / 2 + padding / 4, "Закрыть", Color(160, 29, 40, 1.0), Color(231, 61, 75, 1.0)).apply {
-                onMouseUp {
-                    clientApi.clientConnection().sendPayload("func:deny", Unpooled.buffer().apply {
-                        NetUtil.writeUtf8(this, uuid.toString())
-                    })
-                    close()
-                }
-            }
+            Color(73, 223, 115, 1.0),
+            true
+        )
+        disagree = +button(
+            buttonWidth / 2 + padding / 4,
+            "Закрыть",
+            Color(160, 29, 40, 1.0),
+            Color(231, 61, 75, 1.0),
+            false
+        )
     }
 
     init {
