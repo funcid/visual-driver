@@ -1,4 +1,4 @@
-package experimental.storage
+package experimental.storage.menu
 
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled

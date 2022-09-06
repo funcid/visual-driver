@@ -1,4 +1,4 @@
-package experimental.storage
+package experimental.storage.menu
 
 import Main.Companion.externalManager
 import dev.xdark.clientapi.event.lifecycle.GameLoop

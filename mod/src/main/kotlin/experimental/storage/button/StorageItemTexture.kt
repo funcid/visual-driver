@@ -1,4 +1,4 @@
-package experimental.storage
+package experimental.storage.button
 
 import Main.Companion.externalManager
 import ru.cristalix.uiengine.element.RectangleElement

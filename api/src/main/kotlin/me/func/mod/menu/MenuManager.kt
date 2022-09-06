@@ -119,23 +119,8 @@ object MenuManager : Listener {
         return ModTransfer().string(uuid.toString())
     }
 
-    @JvmStatic
-    fun <T : Storage> T.open(
-        player: Player,
-        channel: String,
-        customStorage: List<Button>? = null,
-        transfer: ModTransfer.() -> Unit
-    ): T = push(player, this).apply {
-        bind(player)
-            .string(title)
-            .also(transfer)
-            .integer((customStorage ?: storage).size)
-            .apply { (customStorage ?: storage).forEach { it.write(this) } }
-            .send(channel, player)
-    }
-
     @Suppress("UNCHECKED_CAST")
-    private fun <T : Storage> push(player: Player, storage: T) = (menuStacks[player.uniqueId] ?: Stack()).apply {
+    fun <T : Storage> push(player: Player, storage: T) = (menuStacks[player.uniqueId] ?: Stack()).apply {
         if (size > 10) {
             warn("Menu history stack is huge! Emergency clearing, player: ${player.name}")
             clearHistory(player)

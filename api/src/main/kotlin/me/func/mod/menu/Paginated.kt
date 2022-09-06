@@ -30,9 +30,10 @@ interface Paginated : Storage {
         val content = getContentByPage(page)
 
         ModTransfer()
-            .string(uuid.toString())
-            .integer(content.size)
-            .apply { content.forEach { it.write(this) } }
+            .string(uuid.toString()) // uuid меню
+            .integer(page) // данная страница
+            .integer(content.size) // количество кнопок
+            .apply { content.forEach { it.write(this) } } // контент
             .send("func:page-response", player)
     }
 

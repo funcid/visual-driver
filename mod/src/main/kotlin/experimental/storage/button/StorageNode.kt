@@ -1,4 +1,4 @@
-package experimental.storage
+package experimental.storage.button
 
 import dev.xdark.clientapi.opengl.GlStateManager
 import ru.cristalix.uiengine.UIEngine
@@ -6,7 +6,6 @@ import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
-import kotlin.properties.Delegates
 
 abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,

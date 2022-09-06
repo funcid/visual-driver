@@ -1,11 +1,13 @@
 package me.func.mod.menu.selection
 
 import me.func.mod.menu.Button
-import me.func.mod.menu.MenuManager.open
+import me.func.mod.menu.MenuManager
+import me.func.mod.menu.MenuManager.bind
 import me.func.mod.menu.Paginated
 import me.func.mod.menu.Storage
+import me.func.mod.util.after
 import org.bukkit.entity.Player
-import java.util.UUID
+import java.util.*
 import java.util.function.Consumer
 
 open class Selection(
@@ -63,9 +65,23 @@ open class Selection(
         fun build() = selection
     }
 
-    override fun open(player: Player): Storage = open(player, "storage:open") {
-        string(vault).string(money).string(hint).integer(rows).integer(columns)
+    override fun open(player: Player): Paginated {
+        val selection = MenuManager.push(player, this)
+
+        // Отправляем данные о меню
+        bind(player)
+            .string(title)
+            .string(vault)
+            .string(money)
+            .string(hint)
+            .integer(rows)
+            .integer(columns)
+            .integer(getPageCount())
+            .send("storage:open", player)
+
+        // Отправляем первую страницу
+        after { selection.sendPage(0, player) }
+
+        return selection
     }
-
-
 }

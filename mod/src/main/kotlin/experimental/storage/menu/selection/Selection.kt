@@ -1,11 +1,13 @@
-package experimental.storage
+package experimental.storage.menu.selection
 
 import Main.Companion.externalManager
 import Main.Companion.menuStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import experimental.Experimental
-import experimental.Experimental.Companion.itemPadding
+import experimental.Experimental.Companion.menuManager
+import experimental.storage.AbstractMenu
+import experimental.storage.TextedIcon
+import experimental.storage.button.StorageNode
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -16,7 +18,7 @@ import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import java.util.*
 
-class StorageMenu(
+class Selection(
     override var uuid: UUID,
     override var title: String,
     vault: String,
@@ -24,12 +26,15 @@ class StorageMenu(
     @JvmField var hint: String,
     @JvmField var rows: Int,
     @JvmField var columns: Int,
-    override var storage: MutableList<StorageNode<*>>,
-) : Storable(uuid, title, storage) {
+    var pageCount: Int,
+    var pageCapability: Int = rows * columns,
+    var pages: MutableList<Page> = MutableList(pageCount) { Page(it) },
+    override var storage: MutableList<StorageNode<*>> = mutableListOf(),
+    @JvmField var currentPage: Int = 0,
+) : AbstractMenu(uuid, title, storage) {
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
 
-    private var page = 0
     private val coinLocation: ResourceLocation = externalManager.load("runtime:$vault")
     private val width = 460.0
     private val height = 230.0
@@ -138,7 +143,7 @@ class StorageMenu(
     private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
 
     fun redrawGrid() {
-        val elements = getElementsOnPage(page)
+        val elements = getElementsOnPage(currentPage)
         grid.children.clear()
 
         elements.forEach { element ->
@@ -153,19 +158,19 @@ class StorageMenu(
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
                 color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
                 val image = +rectangle {
-                    val iconSize = fieldHeight - itemPadding * 2
+                    val iconSize = fieldHeight - menuManager.itemPadding * 2
                     size = V3(iconSize, iconSize, iconSize)
                     origin = LEFT
                     align = LEFT
-                    offset.x += itemPadding / 2 + 2
+                    offset.x += menuManager.itemPadding / 2 + 2
                     +element.scaling(iconSize).apply { color = WHITE }
                 }
-                val xOffset = image.size.x + itemPadding * 2
+                val xOffset = image.size.x + menuManager.itemPadding * 2
                 +flex {
                     origin = TOP_LEFT
                     align = TOP_LEFT
                     offset.x = xOffset
-                    offset.y = itemPadding + 1
+                    offset.y = menuManager.itemPadding + 1
                     flexDirection = FlexDirection.DOWN
                     flexSpacing = 0.0
                     element.titleElement = +text {
@@ -195,7 +200,7 @@ class StorageMenu(
                         origin = BOTTOM_LEFT
                         align = BOTTOM_LEFT
                         title.shadow = true
-                        offset.y -= itemPadding
+                        offset.y -= menuManager.itemPadding
                         offset.x = xOffset
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                     }
@@ -203,7 +208,7 @@ class StorageMenu(
 
                 val hint = +element.createHint(this@a.size, hint)
                 onHover {
-                    val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@StorageMenu.hint.isEmpty())
+                    val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@Selection.hint.isEmpty())
 
                     animate(0.2, Easings.CUBIC_OUT) {
                         hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
@@ -212,7 +217,7 @@ class StorageMenu(
                 }
 
                 onMouseUp {
-                    if (Experimental.isMenuClickBlocked()) return@onMouseUp
+                    if (menuManager.isMenuClickBlocked()) return@onMouseUp
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                         NetUtil.writeUtf8(this, uuid.toString())
                         writeInt(storage.indexOf(element))
@@ -224,13 +229,11 @@ class StorageMenu(
                 element.optimizeSpace()
             }
         }
-        arrowRight.enabled = page < storage.size / getPageSize() - (if (storage.size % getPageSize() == 0) 1 else 0)
-        arrowLeft.enabled = page > 0
+        arrowRight.enabled = currentPage < pageCount - 1
+        arrowLeft.enabled = currentPage > 0
     }
 
-    private fun getPageSize() = rows * columns
-
-    private fun getElementsOnPage(pageIndex: Int) = storage.drop(getPageSize() * pageIndex).take(getPageSize())
+    private fun getElementsOnPage(pageIndex: Int) = pages[pageIndex].content ?: listOf()
 
     private fun drawChanger(left: Boolean, text: String) = carved {
         carveSize = 1.0
@@ -250,8 +253,8 @@ class StorageMenu(
             }
         }
         onMouseUp {
-            page += if (left) -1 else 1
-            redrawGrid()
+            currentPage += if (left) -1 else 1
+            pages[currentPage].load(uuid) // пробуем загрузить страницу
         }
         +text {
             align = CENTER

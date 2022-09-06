@@ -1,8 +1,10 @@
-package experimental.storage
+package experimental.storage.menu
 
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import experimental.Experimental
+import experimental.storage.AbstractMenu
+import experimental.storage.button.StorageNode
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
@@ -17,7 +19,7 @@ class PlayChoice(
     @JvmField var description: String,
     allowClosing: Boolean,
     override var storage: MutableList<StorageNode<*>>
-) : Storable(uuid, title, storage) {
+) : AbstractMenu(uuid, title, storage) {
     init {
         if (!allowClosing) {
             keyTypedHandlers.removeFirstOrNull() // удаление листенера ESC перед регистрацией наших листенеров

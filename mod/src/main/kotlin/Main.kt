@@ -8,7 +8,7 @@ import dev.xdark.clientapi.opengl.OpenGlHelper
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
-import experimental.storage.Storable
+import experimental.storage.AbstractMenu
 import healthbar.Healthbar
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod
@@ -24,7 +24,7 @@ import java.util.Stack
 class Main : KotlinMod() {
     companion object {
         lateinit var externalManager: ExternalManager
-        var menuStack: Stack<Storable> = Stack()
+        var menuStack: Stack<AbstractMenu> = Stack()
     }
 
     override fun onEnable() {
@@ -34,7 +34,7 @@ class Main : KotlinMod() {
             repeat(readInt() /* Count */) {
                 when (Mod.values()[readInt() /* Mod Ordinal */]) {
                     Mod.STANDARD -> Standard()
-                    Mod.EXPERIMENTAL -> Experimental.bruh()
+                    Mod.EXPERIMENTAL -> Experimental.load()
                     Mod.NPC -> NPC()
                     Mod.HEALTHBAR -> Healthbar()
                     Mod.BATTLEPASS -> BattlePass()

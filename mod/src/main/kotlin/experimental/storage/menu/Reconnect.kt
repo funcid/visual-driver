@@ -1,11 +1,9 @@
-package experimental.storage
+package experimental.storage.menu
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle

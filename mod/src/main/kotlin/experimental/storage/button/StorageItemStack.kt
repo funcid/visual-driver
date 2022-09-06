@@ -1,4 +1,4 @@
-package experimental.storage
+package experimental.storage.button
 
 import dev.xdark.clientapi.item.ItemStack
 import ru.cristalix.uiengine.element.ItemElement

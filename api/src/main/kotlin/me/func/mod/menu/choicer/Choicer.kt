@@ -1,7 +1,8 @@
 package me.func.mod.menu.choicer
 
 import me.func.mod.menu.Button
-import me.func.mod.menu.MenuManager.open
+import me.func.mod.menu.MenuManager
+import me.func.mod.menu.MenuManager.bind
 import me.func.mod.menu.Storage
 import org.bukkit.entity.Player
 import java.util.*
@@ -34,8 +35,13 @@ class Choicer(
         fun build() = choicer
     }
 
-    override fun open(player: Player): Storage = open(player, "storage:choice") {
-        string(description)
-        boolean(allowClosing)
+    override fun open(player: Player): Storage = MenuManager.push(player, this).apply {
+        bind(player)
+            .string(title)
+            .string(description)
+            .boolean(allowClosing)
+            .integer(storage.size)
+            .apply { storage.forEach { it.write(this) } }
+            .send("storage:choice", player)
     }
 }
