@@ -1,7 +1,5 @@
 package standard
 
-import Main.Companion.externalManager
-import dev.xdark.clientapi.event.gui.ScreenDisplay
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.gui.ingame.ChatScreen
 import org.lwjgl.input.Keyboard
@@ -15,6 +13,7 @@ import kotlin.properties.Delegates.notNull
 class Boosters {
 
     private var boosters: Flex by notNull()
+    private var enabled = false
 
     private fun booster(name: String, factor: Double) = carved {
         size = V3(62.5 * 1.055.pow(name.length.toDouble()), 18.0)
@@ -83,25 +82,24 @@ class Boosters {
             enabled = false
         }
 
-        mod.registerHandler<ScreenDisplay> {
+        /*        mod.registerHandler<ScreenDisplay> {
             if (screen is ChatScreen && container.enabled) {
                 container.enabled = false
             } else if (screen !is ChatScreen && boosters.children.isNotEmpty() && !container.enabled) {
                 container.enabled = true
             }
-        }
+        }*/
 
         mod.registerHandler<GameLoop> {
-           if (Keyboard.isKeyDown(Keyboard.KEY_TAB) && container.enabled) {
-               container.enabled = false
-           } else if (!Keyboard.isKeyDown(Keyboard.KEY_TAB) && !container.enabled) {
-               container.enabled = true
-           }
+            if (UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen) {
+                container.enabled = enabled && !Keyboard.isKeyDown(Keyboard.KEY_TAB)
+            }
         }
 
         mod.registerChannel("mid:boost") {
             val count = readInt()
-            boosters.enabled = readBoolean()
+            enabled = readBoolean()
+            container.enabled = enabled
 
             boosters.children.forEach {
                 boosters.removeChild(it)
