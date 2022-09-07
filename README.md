@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:2.4.13'
+    implementation 'me.func:animation-api:2.7.4'
 }
 ```
 
