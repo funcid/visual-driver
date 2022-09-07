@@ -180,8 +180,8 @@ object Anime {
     }
 
     @JvmStatic
-    fun killboardMessage(player: Player, text: String) {
-        killboardMessage(player, text, 15)
+    fun systemMessage(player: Player, message: Message, text: String) {
+        ModTransfer().integer(message.ordinal).string(text).send("anime:message", player)
     }
 
     @JvmStatic

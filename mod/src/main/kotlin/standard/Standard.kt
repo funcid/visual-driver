@@ -22,5 +22,6 @@ class Standard {
         Ending()
         BigAlert()
         Boosters()
+        SystemMessage()
     }
 }
