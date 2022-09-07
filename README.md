@@ -974,6 +974,11 @@ ARROW_LEFT("mcpatcher/cit/others/badges/arrow_left.png")
 `Anime.timer(player: Player, text: String, duration: Int)` начать отсчет сверху с сообщением и продолжительностью<br>
 `Anime.timer(player: Player, duration: Int)` начать отсчет с сообщением по умолчанию<br>
 
+<img src="https://i.imgur.com/sp1U6Rv.png" width="500">
+
+Есть 3 типа сообщений: FINE, WARN, ERROR. Каждое сообщение имеет свой цвет и символ в начале
+`Anime.systemMessage(player: Player, messageStatus: MessageStatus, text)` отправить игроку системное сообщение
+
 <h3>Прочее STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/144923420-56720196-99c3-4bc1-8fa1-597971e05a3c.png" width="500">

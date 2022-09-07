@@ -117,12 +117,12 @@ public final class me/func/protocol/MarkerSign : java/lang/Enum {
 	public static fun values ()[Lme/func/protocol/MarkerSign;
 }
 
-public final class me/func/protocol/Message : java/lang/Enum {
-	public static final field BLUE Lme/func/protocol/Message;
-	public static final field ORANGE Lme/func/protocol/Message;
-	public static final field RED Lme/func/protocol/Message;
-	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/Message;
-	public static fun values ()[Lme/func/protocol/Message;
+public final class me/func/protocol/MessageStatus : java/lang/Enum {
+	public static final field ERROR Lme/func/protocol/MessageStatus;
+	public static final field FINE Lme/func/protocol/MessageStatus;
+	public static final field WARN Lme/func/protocol/MessageStatus;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/MessageStatus;
+	public static fun values ()[Lme/func/protocol/MessageStatus;
 }
 
 public final class me/func/protocol/Mod : java/lang/Enum {
