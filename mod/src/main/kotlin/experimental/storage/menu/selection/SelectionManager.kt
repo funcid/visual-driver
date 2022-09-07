@@ -43,6 +43,8 @@ class SelectionManager {
                 println("Read icons on page $page")
 
                 val data = MenuManager.readIcons(this)
+                // Добавляем хинт кнопкам
+                data.forEach { it.hint = if (it.hint == null || it.hint?.isEmpty() == true) menu.hint else it.hint }
                 currentPage.content = data
                 menu.storage.addAll(data)
                 menu.redrawGrid()

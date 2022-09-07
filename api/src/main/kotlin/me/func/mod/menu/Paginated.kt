@@ -36,5 +36,4 @@ interface Paginated : Storage {
             .apply { content.forEach { it.write(this) } } // контент
             .send("func:page-response", player)
     }
-
 }
