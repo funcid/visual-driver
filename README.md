@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 2.4.13)
+# Cristalix Animation API DOCS (актуальная версия 2.7.2)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -977,7 +977,7 @@ ARROW_LEFT("mcpatcher/cit/others/badges/arrow_left.png")
 <img src="https://i.imgur.com/sp1U6Rv.png" width="500">
 
 Есть 3 типа сообщений: FINE, WARN, ERROR. Каждое сообщение имеет свой цвет и символ в начале
-`Anime.systemMessage(player: Player, messageStatus: MessageStatus, text)` отправить игроку системное сообщение
+`Anime.systemMessage(player: Player, messageStatus: MessageStatus, text: String)` отправить игроку системное сообщение
 
 <h3>Прочее STANDARD</h3>
 
