@@ -80,7 +80,7 @@ open class Selection(
             .send("storage:open", player)
 
         // Отправляем первую страницу
-        after { selection.sendPage(0, player) }
+        selection.sendPage(0, player)
 
         return selection
     }

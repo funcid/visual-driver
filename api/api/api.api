@@ -618,78 +618,141 @@ public final class me/func/mod/graffiti/GraffitiManager {
 	public final fun tryPutData (Ljava/util/UUID;)Ljava/util/concurrent/CompletableFuture;
 }
 
-public final class me/func/mod/selection/Button {
+public final class me/func/mod/menu/Button {
 	public fun <init> ()V
-	public final fun copy ()Lme/func/mod/selection/Button;
-	public final fun description (Ljava/util/List;)Lme/func/mod/selection/Button;
-	public final fun description ([Ljava/lang/String;)Lme/func/mod/selection/Button;
+	public final fun copy ()Lme/func/mod/menu/Button;
+	public final fun description (Ljava/util/List;)Lme/func/mod/menu/Button;
+	public final fun description ([Ljava/lang/String;)Lme/func/mod/menu/Button;
 	public final fun getDescription ()Ljava/lang/String;
 	public final fun getHint ()Ljava/lang/String;
 	public final fun getHover ()Ljava/lang/String;
 	public final fun getItem ()Lorg/bukkit/inventory/ItemStack;
-	public final fun getOnClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getOnLeftClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getOnMiddleClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getOnRightClick ()Lme/func/mod/selection/ButtonClickHandler;
+	public final fun getOnClick ()Lme/func/mod/menu/ButtonClickHandler;
+	public final fun getOnLeftClick ()Lme/func/mod/menu/ButtonClickHandler;
+	public final fun getOnMiddleClick ()Lme/func/mod/menu/ButtonClickHandler;
+	public final fun getOnRightClick ()Lme/func/mod/menu/ButtonClickHandler;
 	public final fun getPrice ()J
 	public final fun getSpecial ()Z
 	public final fun getTexture ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
-	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun hover (Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun hover (Ljava/util/Collection;)Lme/func/mod/selection/Button;
-	public final fun hover ([Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun item (Lorg/bukkit/inventory/ItemStack;)Lme/func/mod/selection/Button;
-	public final fun item (Lorg/bukkit/inventory/ItemStack;Z)Lme/func/mod/selection/Button;
-	public static synthetic fun item$default (Lme/func/mod/selection/Button;Lorg/bukkit/inventory/ItemStack;ZILjava/lang/Object;)Lme/func/mod/selection/Button;
-	public final fun material (Lorg/bukkit/Material;)Lme/func/mod/selection/Button;
-	public final fun onClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun onLeftClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun onMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun onRightClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun price (J)Lme/func/mod/selection/Button;
-	public final fun sale (I)Lme/func/mod/selection/Button;
+	public final fun hint (Ljava/lang/String;)Lme/func/mod/menu/Button;
+	public final fun hover (Ljava/lang/String;)Lme/func/mod/menu/Button;
+	public final fun hover (Ljava/util/Collection;)Lme/func/mod/menu/Button;
+	public final fun hover ([Ljava/lang/String;)Lme/func/mod/menu/Button;
+	public final fun item (Lorg/bukkit/inventory/ItemStack;)Lme/func/mod/menu/Button;
+	public final fun item (Lorg/bukkit/inventory/ItemStack;Z)Lme/func/mod/menu/Button;
+	public static synthetic fun item$default (Lme/func/mod/menu/Button;Lorg/bukkit/inventory/ItemStack;ZILjava/lang/Object;)Lme/func/mod/menu/Button;
+	public final fun material (Lorg/bukkit/Material;)Lme/func/mod/menu/Button;
+	public final fun onClick (Lme/func/mod/menu/ButtonClickHandler;)Lme/func/mod/menu/Button;
+	public final fun onLeftClick (Lme/func/mod/menu/ButtonClickHandler;)Lme/func/mod/menu/Button;
+	public final fun onMiddleClick (Lme/func/mod/menu/ButtonClickHandler;)Lme/func/mod/menu/Button;
+	public final fun onRightClick (Lme/func/mod/menu/ButtonClickHandler;)Lme/func/mod/menu/Button;
+	public final fun price (J)Lme/func/mod/menu/Button;
+	public final fun sale (I)Lme/func/mod/menu/Button;
 	public final fun setDescription (Ljava/lang/String;)V
 	public final fun setHint (Ljava/lang/String;)V
 	public final fun setHover (Ljava/lang/String;)V
 	public final fun setItem (Lorg/bukkit/inventory/ItemStack;)V
-	public final fun setOnClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setOnLeftClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setOnMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setOnRightClick (Lme/func/mod/selection/ButtonClickHandler;)V
+	public final fun setOnClick (Lme/func/mod/menu/ButtonClickHandler;)V
+	public final fun setOnLeftClick (Lme/func/mod/menu/ButtonClickHandler;)V
+	public final fun setOnMiddleClick (Lme/func/mod/menu/ButtonClickHandler;)V
+	public final fun setOnRightClick (Lme/func/mod/menu/ButtonClickHandler;)V
 	public final fun setPrice (J)V
 	public final fun setSpecial (Z)V
 	public final fun setTexture (Ljava/lang/String;)V
 	public final fun setTitle (Ljava/lang/String;)V
-	public final fun special (Z)Lme/func/mod/selection/Button;
-	public final fun texture (Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun texture (Lme/func/mod/data/Sprites;)Lme/func/mod/selection/Button;
-	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Button;
+	public final fun special (Z)Lme/func/mod/menu/Button;
+	public final fun texture (Ljava/lang/String;)Lme/func/mod/menu/Button;
+	public final fun texture (Lme/func/mod/data/Sprites;)Lme/func/mod/menu/Button;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/menu/Button;
 	public final fun withSale ()I
 	public final fun write (Lme/func/mod/conversation/ModTransfer;)V
 }
 
-public abstract interface class me/func/mod/selection/ButtonClickHandler {
-	public abstract fun handle (Lorg/bukkit/entity/Player;ILme/func/mod/selection/Button;)V
+public abstract interface class me/func/mod/menu/ButtonClickHandler {
+	public abstract fun handle (Lorg/bukkit/entity/Player;ILme/func/mod/menu/Button;)V
 }
 
-public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage {
-	public static final field Companion Lme/func/mod/selection/Choicer$Companion;
+public final class me/func/mod/menu/MenuManager : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/menu/MenuManager;
+	public static final fun bind (Lme/func/mod/menu/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
+	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
+	public final fun getHandleMap ()Ljava/util/HashMap;
+	public final fun getMenuStacks ()Ljava/util/HashMap;
+	public final fun getReconnectMap ()Ljava/util/HashMap;
+	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
+	public final fun push (Lorg/bukkit/entity/Player;Lme/func/mod/menu/Storage;)Lme/func/mod/menu/Storage;
+	public final fun reactive (Lme/func/mod/menu/Button;Lkotlin/jvm/functions/Function1;)V
+}
+
+public final class me/func/mod/menu/MenuManagerKt {
+	public static final fun button (Lkotlin/jvm/functions/Function1;)Lme/func/mod/menu/Button;
+	public static final fun choicer (Lkotlin/jvm/functions/Function1;)Lme/func/mod/menu/choicer/Choicer;
+	public static final fun selection (Lkotlin/jvm/functions/Function1;)Lme/func/mod/menu/selection/Selection;
+}
+
+public abstract interface class me/func/mod/menu/Openable {
+	public abstract fun getUuid ()Ljava/util/UUID;
+	public abstract fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Openable;
+	public abstract fun setUuid (Ljava/util/UUID;)V
+}
+
+public abstract interface class me/func/mod/menu/Paginated : me/func/mod/menu/Storage {
+	public abstract fun getColumns ()I
+	public abstract fun getContentByPage (I)Ljava/util/List;
+	public abstract fun getPageCapacity ()I
+	public abstract fun getPageCount ()I
+	public abstract fun getRows ()I
+	public abstract fun isPageExists (I)Z
+	public abstract fun sendPage (ILorg/bukkit/entity/Player;)V
+	public abstract fun setColumns (I)V
+	public abstract fun setRows (I)V
+}
+
+public final class me/func/mod/menu/Paginated$DefaultImpls {
+	public static fun add (Lme/func/mod/menu/Paginated;Lme/func/mod/menu/Button;)V
+	public static fun buttons (Lme/func/mod/menu/Paginated;[Lme/func/mod/menu/Button;)V
+	public static fun clear (Lme/func/mod/menu/Paginated;)V
+	public static fun getContentByPage (Lme/func/mod/menu/Paginated;I)Ljava/util/List;
+	public static fun getPageCapacity (Lme/func/mod/menu/Paginated;)I
+	public static fun getPageCount (Lme/func/mod/menu/Paginated;)I
+	public static fun isPageExists (Lme/func/mod/menu/Paginated;I)Z
+	public static fun sendPage (Lme/func/mod/menu/Paginated;ILorg/bukkit/entity/Player;)V
+}
+
+public abstract interface class me/func/mod/menu/Storage : me/func/mod/menu/Openable {
+	public abstract fun add (Lme/func/mod/menu/Button;)V
+	public abstract fun buttons ([Lme/func/mod/menu/Button;)V
+	public abstract fun clear ()V
+	public abstract fun getStorage ()Ljava/util/List;
+	public abstract fun getTitle ()Ljava/lang/String;
+	public abstract fun setStorage (Ljava/util/List;)V
+	public abstract fun setTitle (Ljava/lang/String;)V
+}
+
+public final class me/func/mod/menu/Storage$DefaultImpls {
+	public static fun add (Lme/func/mod/menu/Storage;Lme/func/mod/menu/Button;)V
+	public static fun buttons (Lme/func/mod/menu/Storage;[Lme/func/mod/menu/Button;)V
+	public static fun clear (Lme/func/mod/menu/Storage;)V
+}
+
+public final class me/func/mod/menu/choicer/Choicer : me/func/mod/menu/Storage {
+	public static final field Companion Lme/func/mod/menu/choicer/Choicer$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lme/func/mod/selection/Button;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lme/func/mod/menu/Button;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun add (Lme/func/mod/selection/Button;)V
-	public static final fun builder ()Lme/func/mod/selection/Choicer$Builder;
-	public fun buttons ([Lme/func/mod/selection/Button;)V
+	public fun add (Lme/func/mod/menu/Button;)V
+	public static final fun builder ()Lme/func/mod/menu/choicer/Choicer$Builder;
+	public fun buttons ([Lme/func/mod/menu/Button;)V
 	public fun clear ()V
 	public final fun getAllowClosing ()Z
 	public final fun getDescription ()Ljava/lang/String;
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Storage;
 	public final fun setAllowClosing (Z)V
 	public final fun setDescription (Ljava/lang/String;)V
 	public fun setStorage (Ljava/util/List;)V
@@ -697,82 +760,69 @@ public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public final class me/func/mod/selection/Choicer$Builder {
+public final class me/func/mod/menu/choicer/Choicer$Builder {
 	public fun <init> ()V
-	public final fun build ()Lme/func/mod/selection/Choicer;
-	public final fun description (Ljava/lang/String;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun storage (Ljava/util/List;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun storage ([Lme/func/mod/selection/Button;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/selection/Choicer$Builder;
+	public final fun build ()Lme/func/mod/menu/choicer/Choicer;
+	public final fun description (Ljava/lang/String;)Lme/func/mod/menu/choicer/Choicer$Builder;
+	public final fun storage (Ljava/util/List;)Lme/func/mod/menu/choicer/Choicer$Builder;
+	public final fun storage ([Lme/func/mod/menu/Button;)Lme/func/mod/menu/choicer/Choicer$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/menu/choicer/Choicer$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/menu/choicer/Choicer$Builder;
 }
 
-public final class me/func/mod/selection/Choicer$Companion {
-	public final fun builder ()Lme/func/mod/selection/Choicer$Builder;
+public final class me/func/mod/menu/choicer/Choicer$Companion {
+	public final fun builder ()Lme/func/mod/menu/choicer/Choicer$Builder;
 }
 
-public final class me/func/mod/selection/Confirmation : me/func/mod/selection/Openable {
+public final class me/func/mod/menu/confirmation/Confirmation : me/func/mod/menu/Openable {
 	public fun <init> (Ljava/util/List;Ljava/util/function/Consumer;)V
 	public fun <init> ([Ljava/lang/String;Ljava/util/function/Consumer;)V
 	public final fun getOnAccept ()Ljava/util/function/Consumer;
 	public final fun getOnDeny ()Ljava/util/function/Consumer;
 	public final fun getText ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Confirmation;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/confirmation/Confirmation;
 	public final fun setOnAccept (Ljava/util/function/Consumer;)V
 	public final fun setOnDeny (Ljava/util/function/Consumer;)V
 	public final fun setText (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public class me/func/mod/selection/DonateSelection : me/func/mod/selection/Selection {
+public final class me/func/mod/menu/queue/QueueView : me/func/mod/menu/Openable {
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Z)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZI)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZII)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZIILjava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZIILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getMoney ()Ljava/lang/String;
-	public final fun getVault ()Ljava/lang/String;
-	public final fun getWithGlobalSale ()Z
-	public final fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/DonateSelection;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
-	public final fun setMoney (Ljava/lang/String;)V
-	public final fun setVault (Ljava/lang/String;)V
-	public final synthetic fun setWithGlobalSale (Z)V
-	public final fun withGlobalSale (Z)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun close (Lorg/bukkit/entity/Player;)V
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getIcon ()Ljava/lang/String;
+	public final fun getOnLeave ()Ljava/util/function/Consumer;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun onLeave (Ljava/util/function/Consumer;)V
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/queue/QueueView;
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setIcon (Ljava/lang/String;)V
+	public final fun setOnLeave (Ljava/util/function/Consumer;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public fun setUuid (Ljava/util/UUID;)V
+	public final fun update (Ljava/lang/String;)Lme/func/mod/menu/queue/QueueView;
+	public final fun update (Lorg/bukkit/entity/Player;Ljava/lang/String;)Lme/func/mod/menu/queue/QueueView;
 }
 
-public final class me/func/mod/selection/MenuManager : org/bukkit/event/Listener {
-	public static final field INSTANCE Lme/func/mod/selection/MenuManager;
-	public static final fun bind (Lme/func/mod/selection/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
-	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
-	public final fun getHandleMap ()Ljava/util/HashMap;
-	public final fun getMenuStacks ()Ljava/util/HashMap;
-	public final fun getReconnectMap ()Ljava/util/HashMap;
+public final class me/func/mod/menu/queue/QueueViewer : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/menu/queue/QueueViewer;
+	public final fun getViews ()Ljava/util/HashMap;
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
-	public static final fun open (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Storage;
-	public static synthetic fun open$default (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/func/mod/selection/Storage;
-	public final fun reactive (Lme/func/mod/selection/Button;Lkotlin/jvm/functions/Function1;)V
+	public final fun stop ([Lorg/bukkit/entity/Player;)V
 }
 
-public final class me/func/mod/selection/MenuManagerKt {
-	public static final fun button (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Button;
-	public static final fun choicer (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Choicer;
-	public static final fun selection (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Selection;
+public final class me/func/mod/menu/queue/QueueViewerKt {
+	public static final fun queueView (Lkotlin/jvm/functions/Function1;)Lme/func/mod/menu/queue/QueueView;
 }
 
-public abstract interface class me/func/mod/selection/Openable {
-	public abstract fun getUuid ()Ljava/util/UUID;
-	public abstract fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public abstract fun setUuid (Ljava/util/UUID;)V
-}
-
-public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Openable {
+public final class me/func/mod/menu/recconnct/Reconnect : me/func/mod/menu/Openable {
 	public fun <init> (ILjava/util/function/Consumer;)V
 	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/util/function/Consumer;)V
 	public fun <init> (Ljava/util/function/Consumer;)V
@@ -781,8 +831,8 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 	public final fun getSecondsLeft ()I
 	public final fun getText ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Reconnect;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/recconnct/Reconnect;
 	public final fun setHint (Ljava/lang/String;)V
 	public final fun setOnClick (Ljava/util/function/Consumer;)V
 	public final fun setSecondsLeft (I)V
@@ -790,28 +840,33 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
-	public static final field Companion Lme/func/mod/selection/Selection$Companion;
+public class me/func/mod/menu/selection/Selection : me/func/mod/menu/Paginated {
+	public static final field Companion Lme/func/mod/menu/selection/Selection$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/selection/Button;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/menu/Button;)V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun add (Lme/func/mod/selection/Button;)V
-	public static final fun builder ()Lme/func/mod/selection/Selection$Builder;
-	public fun buttons ([Lme/func/mod/selection/Button;)V
+	public fun add (Lme/func/mod/menu/Button;)V
+	public static final fun builder ()Lme/func/mod/menu/selection/Selection$Builder;
+	public fun buttons ([Lme/func/mod/menu/Button;)V
 	public fun clear ()V
 	public fun getColumns ()I
+	public fun getContentByPage (I)Ljava/util/List;
 	public fun getHint ()Ljava/lang/String;
 	public fun getMoney ()Ljava/lang/String;
+	public fun getPageCapacity ()I
+	public fun getPageCount ()I
 	public fun getRows ()I
 	public fun getStorage ()Ljava/util/List;
 	public final fun getTick ()Ljava/util/function/Consumer;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
 	public fun getVault ()Ljava/lang/String;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
+	public fun isPageExists (I)Z
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/menu/Paginated;
+	public fun sendPage (ILorg/bukkit/entity/Player;)V
 	public fun setColumns (I)V
 	public fun setHint (Ljava/lang/String;)V
 	public fun setMoney (Ljava/lang/String;)V
@@ -823,70 +878,21 @@ public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun setVault (Ljava/lang/String;)V
 }
 
-public final class me/func/mod/selection/Selection$Builder {
+public final class me/func/mod/menu/selection/Selection$Builder {
 	public fun <init> ()V
-	public final fun build ()Lme/func/mod/selection/Selection;
-	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
-	public final fun money (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
-	public final fun rows (I)Lme/func/mod/selection/Selection$Builder;
-	public final fun storage (Ljava/util/List;)Lme/func/mod/selection/Selection$Builder;
-	public final fun storage ([Lme/func/mod/selection/Button;)Lme/func/mod/selection/Selection$Builder;
-	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
-	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/selection/Selection$Builder;
-	public final fun vault (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
+	public final fun build ()Lme/func/mod/menu/selection/Selection;
+	public final fun hint (Ljava/lang/String;)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun money (Ljava/lang/String;)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun rows (I)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun storage (Ljava/util/List;)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun storage ([Lme/func/mod/menu/Button;)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/menu/selection/Selection$Builder;
+	public final fun vault (Ljava/lang/String;)Lme/func/mod/menu/selection/Selection$Builder;
 }
 
-public final class me/func/mod/selection/Selection$Companion {
-	public final fun builder ()Lme/func/mod/selection/Selection$Builder;
-}
-
-public abstract interface class me/func/mod/selection/Storage : me/func/mod/selection/Openable {
-	public abstract fun add (Lme/func/mod/selection/Button;)V
-	public abstract fun buttons ([Lme/func/mod/selection/Button;)V
-	public abstract fun clear ()V
-	public abstract fun getStorage ()Ljava/util/List;
-	public abstract fun getTitle ()Ljava/lang/String;
-	public abstract fun setStorage (Ljava/util/List;)V
-	public abstract fun setTitle (Ljava/lang/String;)V
-}
-
-public final class me/func/mod/selection/Storage$DefaultImpls {
-	public static fun add (Lme/func/mod/selection/Storage;Lme/func/mod/selection/Button;)V
-	public static fun buttons (Lme/func/mod/selection/Storage;[Lme/func/mod/selection/Button;)V
-	public static fun clear (Lme/func/mod/selection/Storage;)V
-}
-
-public final class me/func/mod/selection/queue/QueueView : me/func/mod/selection/Openable {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun close (Lorg/bukkit/entity/Player;)V
-	public final fun getDescription ()Ljava/lang/String;
-	public final fun getIcon ()Ljava/lang/String;
-	public final fun getOnLeave ()Ljava/util/function/Consumer;
-	public final fun getTitle ()Ljava/lang/String;
-	public fun getUuid ()Ljava/util/UUID;
-	public final fun onLeave (Ljava/util/function/Consumer;)V
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/queue/QueueView;
-	public final fun setDescription (Ljava/lang/String;)V
-	public final fun setIcon (Ljava/lang/String;)V
-	public final fun setOnLeave (Ljava/util/function/Consumer;)V
-	public final fun setTitle (Ljava/lang/String;)V
-	public fun setUuid (Ljava/util/UUID;)V
-	public final fun update (Ljava/lang/String;)Lme/func/mod/selection/queue/QueueView;
-	public final fun update (Lorg/bukkit/entity/Player;Ljava/lang/String;)Lme/func/mod/selection/queue/QueueView;
-}
-
-public final class me/func/mod/selection/queue/QueueViewer : org/bukkit/event/Listener {
-	public static final field INSTANCE Lme/func/mod/selection/queue/QueueViewer;
-	public final fun getViews ()Ljava/util/HashMap;
-	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
-	public final fun stop ([Lorg/bukkit/entity/Player;)V
-}
-
-public final class me/func/mod/selection/queue/QueueViewerKt {
-	public static final fun queueView (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/queue/QueueView;
+public final class me/func/mod/menu/selection/Selection$Companion {
+	public final fun builder ()Lme/func/mod/menu/selection/Selection$Builder;
 }
 
 public final class me/func/mod/service/Services {

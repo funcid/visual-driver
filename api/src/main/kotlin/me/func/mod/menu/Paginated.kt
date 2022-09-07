@@ -15,7 +15,7 @@ interface Paginated : Storage {
     // Получить кнопки на странице
     fun getContentByPage(page: Int): List<Button> {
         val capacity = getPageCapacity()
-        return storage.drop(capacity * (page - 1)).take(capacity)
+        return storage.drop(capacity * maxOf(0, page)).take(capacity)
     }
 
     // Количество страниц

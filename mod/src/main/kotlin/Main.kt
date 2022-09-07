@@ -9,6 +9,7 @@ import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
 import experimental.storage.AbstractMenu
+import experimental.storage.menu.MenuManager
 import healthbar.Healthbar
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod

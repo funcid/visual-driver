@@ -51,7 +51,7 @@ object MenuManager : Listener {
                 // Вызываем обработчик данного меню
                 accept(menu, player, buffer)
             } catch (exception: Throwable) {
-                warn("Player ${player.name} wrote wrong selection uuid!")
+                warn("Player ${player.name} wrote wrong selection uuid! " + exception.stackTraceToString())
             }
         }
 

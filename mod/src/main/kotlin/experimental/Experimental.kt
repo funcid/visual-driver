@@ -8,9 +8,11 @@ import experimental.storage.menu.Reconnect
 class Experimental {
     companion object {
 
-        var menuManager = MenuManager()
-
         fun load(): Class<*>? {
+            println("Experimental module loaded successfully!")
+
+            MenuManager()
+            MenuManager.Companion
             Banners()
             Banners.Companion
             GlowPlaces()

@@ -27,6 +27,7 @@ class CursorAlert {
                 scale = V3(1.0, 1.0, 1.0)
                 addChild(text {
                     offset.x -= 20
+                    shadow = true
                     scale = V3(1.0, 1.0, 1.0)
                     content = NetUtil.readUtf8(this@registerChannel)
                     color = Color(255, 255, 255, 1.0)

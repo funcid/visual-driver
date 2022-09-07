@@ -4,10 +4,10 @@ import Main.Companion.externalManager
 import Main.Companion.menuStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import experimental.Experimental.Companion.menuManager
 import experimental.storage.AbstractMenu
 import experimental.storage.TextedIcon
 import experimental.storage.button.StorageNode
+import experimental.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine.clientApi
@@ -27,7 +27,6 @@ class Selection(
     @JvmField var rows: Int,
     @JvmField var columns: Int,
     var pageCount: Int,
-    var pageCapability: Int = rows * columns,
     var pages: MutableList<Page> = MutableList(pageCount) { Page(it) },
     override var storage: MutableList<StorageNode<*>> = mutableListOf(),
     @JvmField var currentPage: Int = 0,
@@ -158,19 +157,19 @@ class Selection(
                 size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
                 color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
                 val image = +rectangle {
-                    val iconSize = fieldHeight - menuManager.itemPadding * 2
+                    val iconSize = fieldHeight - MenuManager.itemPadding * 2
                     size = V3(iconSize, iconSize, iconSize)
                     origin = LEFT
                     align = LEFT
-                    offset.x += menuManager.itemPadding / 2 + 2
+                    offset.x += MenuManager.itemPadding / 2 + 2
                     +element.scaling(iconSize).apply { color = WHITE }
                 }
-                val xOffset = image.size.x + menuManager.itemPadding * 2
+                val xOffset = image.size.x + MenuManager.itemPadding * 2
                 +flex {
                     origin = TOP_LEFT
                     align = TOP_LEFT
                     offset.x = xOffset
-                    offset.y = menuManager.itemPadding + 1
+                    offset.y = MenuManager.itemPadding + 1
                     flexDirection = FlexDirection.DOWN
                     flexSpacing = 0.0
                     element.titleElement = +text {
@@ -200,7 +199,7 @@ class Selection(
                         origin = BOTTOM_LEFT
                         align = BOTTOM_LEFT
                         title.shadow = true
-                        offset.y -= menuManager.itemPadding
+                        offset.y -= MenuManager.itemPadding
                         offset.x = xOffset
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
                     }
@@ -217,7 +216,7 @@ class Selection(
                 }
 
                 onMouseUp {
-                    if (menuManager.isMenuClickBlocked()) return@onMouseUp
+                    if (MenuManager.isMenuClickBlocked()) return@onMouseUp
                     clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                         NetUtil.writeUtf8(this, uuid.toString())
                         writeInt(storage.indexOf(element))
@@ -254,7 +253,9 @@ class Selection(
         }
         onMouseUp {
             currentPage += if (left) -1 else 1
-            pages[currentPage].load(uuid) // пробуем загрузить страницу
+            val page = pages[currentPage]
+            if (!page.isLoaded()) page.load(uuid) // пробуем загрузить страницу
+            else redrawGrid()
         }
         +text {
             align = CENTER
