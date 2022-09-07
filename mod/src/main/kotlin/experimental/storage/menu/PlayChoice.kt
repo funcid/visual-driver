@@ -55,13 +55,15 @@ class PlayChoice(
             val iconHover = Color(255, 255, 200, 1.0)
             +title
             +description
-            +flex {
+            val flex = +flex {
                 origin = CENTER
                 align = CENTER
                 flexSpacing = padding
                 scale = V3(scaling, scaling, scaling)
                 storage.forEachIndexed { index, element ->
                     element.bundle = +carved top@{
+                        origin = CENTER
+                        align = CENTER
                         size = buttonSize
                         color = if (element.special) centerColor else normal
                         element.titleElement = +text {
@@ -107,15 +109,18 @@ class PlayChoice(
                         }
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
-                        val maxScale = V3(1.25, 1.25, 1.25)
-                        val defaultScale = V3(1.0, 1.0, 1.0)
-                        onHover {
-                            val hasHoverEffect = hovered && !element.hint.isNullOrEmpty()
+                        var hasHoverEffect = false
 
-                            animate(0.2, Easings.CUBIC_OUT) {
-                                hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
-                                this@top.scale = if (hasHoverEffect) maxScale else defaultScale
-                                element.hintElement?.color?.alpha = if (hasHoverEffect) 1.0 else 0.0
+                        onHover {
+                            val nowHovered = hovered && !element.hint.isNullOrEmpty()
+
+                            if (nowHovered != hasHoverEffect) {
+                                hasHoverEffect = nowHovered
+
+                                animate(0.2, Easings.CUBIC_OUT) {
+                                    hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                                    element.hintElement?.color?.alpha = if (hasHoverEffect) 1.0 else 0.0
+                                }
                             }
                         }
                     }
