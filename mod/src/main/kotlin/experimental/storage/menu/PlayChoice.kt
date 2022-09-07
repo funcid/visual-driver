@@ -107,11 +107,14 @@ class PlayChoice(
                         }
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
+                        val maxScale = V3(1.25, 1.25, 1.25)
+                        val defaultScale = V3(1.0, 1.0, 1.0)
                         onHover {
                             val hasHoverEffect = hovered && !element.hint.isNullOrEmpty()
 
                             animate(0.2, Easings.CUBIC_OUT) {
                                 hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                                this@top.scale = if (hasHoverEffect) maxScale else defaultScale
                                 element.hintElement?.color?.alpha = if (hasHoverEffect) 1.0 else 0.0
                             }
                         }
