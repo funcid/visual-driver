@@ -397,6 +397,7 @@ public final class me/func/protocol/element/Banner {
 	public final fun setOpacity (D)V
 	public final fun setRed (I)V
 	public final fun setTexture (Ljava/lang/String;)V
+	public final fun setUuid (Ljava/util/UUID;)V
 	public final fun setWatchingOnPlayer (Z)V
 	public final fun setWeight (I)V
 	public final fun setX (D)V

@@ -3,7 +3,7 @@ package me.func.protocol.element
 import java.util.UUID
 
 class Banner(
-    val uuid: UUID = UUID.randomUUID(),
+    var uuid: UUID = UUID.randomUUID(),
     var motionType: MotionType = MotionType.CONSTANT,
     var watchingOnPlayer: Boolean = false,
     var motionSettings: MutableMap<String, Any> = mutableMapOf(
