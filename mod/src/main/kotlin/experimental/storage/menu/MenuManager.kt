@@ -93,7 +93,7 @@ class MenuManager {
                     2 -> {
                         node.title = NetUtil.readUtf8(this).replace("&", "§")
                         if (!inited) return@registerChannel
-                        node.titleElement?.content = node.title
+                        node.titleElement?.content = node.title ?: return@registerChannel
                     }
 
                     3 -> {

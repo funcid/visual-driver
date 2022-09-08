@@ -15,8 +15,8 @@ import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
     override var price: Long = -1,
-    override var title: String,
-    override var description: String,
+    override var title: String?,
+    override var description: String?,
     override var hint: String? = null,
     var hoverText: String,
     open var icon: T,
@@ -64,10 +64,10 @@ abstract class StorageNode<T : AbstractElement>(
 
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
-        val words = description.split(" ")
+        val words = description?.split(" ")
 
         descriptionElement!!.content = lineStart
-        words.forEach { word ->
+        words?.forEach { word ->
             val line = descriptionElement!!.content.split("\n").last()
             val new = line + word
             val color = line.split("§").last().first()

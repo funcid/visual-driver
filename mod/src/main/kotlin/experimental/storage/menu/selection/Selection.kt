@@ -178,13 +178,13 @@ class Selection(
                     element.titleElement = +text {
                         color = Color(255, 202, 66, 1.0)
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.title
+                        content = element.title ?: ""
                         shadow = true
                         lineHeight = 8.0
                     }
                     element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.description
+                        content = element.description ?: ""
                         shadow = true
                     }
                 }
