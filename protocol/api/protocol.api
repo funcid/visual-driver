@@ -508,6 +508,8 @@ public class me/func/protocol/gui/StoragePosition {
 
 public class me/func/protocol/menu/Button {
 	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZJLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZJLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun getCommand ()Ljava/lang/String;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getHint ()Ljava/lang/String;
@@ -517,8 +519,13 @@ public class me/func/protocol/menu/Button {
 	public fun getTexture ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
 	public fun setCommand (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setHint (Ljava/lang/String;)V
+	public fun setHover (Ljava/lang/String;)V
 	public fun setPrice (J)V
 	public fun setSpecial (Z)V
+	public fun setTexture (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
 }
 
 public abstract interface class me/func/protocol/menu/Page {
