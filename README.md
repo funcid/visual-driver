@@ -1,6 +1,6 @@
 # Наш Trello
 
-<a href="https://trello.com/invite/b/5YPXbUWx/ac9ba1a9988c918d4f8c87c0edd76d73/animation-api">Присоедениться</a>
+<a href="https://trello.com/invite/b/5YPXbUWx/ac9ba1a9988c918d4f8c87c0edd76d73/animation-api">Присоединиться</a>
 
 # Cristalix Animation API DOCS (актуальная версия 2.7.4)
 
