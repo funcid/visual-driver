@@ -3,24 +3,27 @@ package experimental.storage.menu.selection
 import Main.Companion.externalManager
 import Main.Companion.menuStack
 import dev.xdark.clientapi.resource.ResourceLocation
-import dev.xdark.feder.NetUtil
 import experimental.storage.AbstractMenu
 import experimental.storage.TextedIcon
+import experimental.storage.button.StorageItemTexture
 import experimental.storage.button.StorageNode
 import experimental.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
+import me.func.protocol.menu.SelectionModel
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
+import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import java.util.*
+import kotlin.math.ceil
 
 class Selection(
     override var uuid: UUID,
-    override var title: String,
+    var title: String,
     vault: String,
     @JvmField var money: String,
     @JvmField var hint: String,
@@ -30,7 +33,7 @@ class Selection(
     var pages: MutableList<Page> = MutableList(pageCount) { Page(it) },
     override var storage: MutableList<StorageNode<*>> = mutableListOf(),
     @JvmField var currentPage: Int = 0,
-) : AbstractMenu(uuid, title, storage) {
+) : AbstractMenu, ContextGui() {
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
 
@@ -214,15 +217,7 @@ class Selection(
                         hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
                     }
                 }
-
-                onMouseUp {
-                    if (MenuManager.isMenuClickBlocked()) return@onMouseUp
-                    clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
-                        NetUtil.writeUtf8(this, uuid.toString())
-                        writeInt(storage.indexOf(element))
-                        writeInt(button.ordinal)
-                    })
-                }
+                onMouseUp { element.click(this@Selection, this) }
             }.apply {
                 element.bundle = this
                 element.optimizeSpace()
@@ -265,7 +260,34 @@ class Selection(
         }
     }
 
+    constructor(model: SelectionModel) : this(
+        UUID.randomUUID(),
+        model.title ?: "Название",
+        model.vault ?: "coin",
+        model.money ?: "",
+        model.hint ?: "Купить",
+        model.rows,
+        model.columns,
+        ceil(model.rows * model.columns * 1.0 / model.storage.size).toInt(),
+    ) {
+        val data = model.storage.map {
+            StorageItemTexture(
+                it.texture ?: "",
+                it.price,
+                it.title ?: "Ошибка",
+                it.description ?: "",
+                it.hint ?: "",
+                it.hover ?: "Купить",
+                it.special
+            )
+        }.chunked(rows * columns)
+
+        pages.forEachIndexed { index, page -> page.content = data[index] }
+    }
+
     init {
+        color = Color(0, 0, 0, .86)
         redrawGrid()
     }
+
 }

@@ -8,7 +8,7 @@ import java.util.*
 
 class Page(
     var index: Int,
-    var content: MutableList<StorageNode<*>>? = null
+    var content: List<StorageNode<*>>? = null
 ) {
     fun isLoaded() = content != null
 

@@ -22,7 +22,7 @@ inline fun selection(setup: Selection.() -> Unit) = Selection().also(setup)
 
 inline fun choicer(setup: Choicer.() -> Unit) = Choicer().also(setup)
 
-inline fun button(setup: Button.() -> Unit) = Button().also(setup)
+inline fun button(setup: ReactiveButton.() -> Unit) = ReactiveButton().also(setup)
 
 object MenuManager : Listener {
 
@@ -134,7 +134,7 @@ object MenuManager : Listener {
         menuStacks[player.uniqueId]?.clear()
     }
 
-    fun Button.reactive(setup: ModTransfer.() -> Unit) =
+    fun ReactiveButton.reactive(setup: ModTransfer.() -> Unit) =
         menuStacks.filter { !it.value.empty() && it.value.peek().storage.contains(this) }.forEach { (uuid, stack) ->
             ModTransfer().integer(stack.peek().storage.indexOf(this)).also(setup)
                 .send("button:update", Bukkit.getPlayer(uuid) ?: return@forEach)

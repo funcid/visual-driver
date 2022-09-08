@@ -1,11 +1,11 @@
 package me.func.mod.menu.selection
 
-import me.func.mod.menu.Button
+import me.func.mod.menu.ReactiveButton
 import me.func.mod.menu.MenuManager
 import me.func.mod.menu.MenuManager.bind
 import me.func.mod.menu.Paginated
 import me.func.mod.menu.Storage
-import me.func.mod.util.after
+import me.func.protocol.menu.SelectionModel
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
@@ -13,17 +13,17 @@ import java.util.function.Consumer
 open class Selection(
     override var uuid: UUID = UUID.randomUUID(),
     override var title: String = "Меню",
-    open var money: String = "",
-    open var vault: String = "coin",
-    open var hint: String = "Купить",
+    override var money: String = "",
+    override var vault: String = "coin",
+    override var hint: String = "Купить",
     override var rows: Int = 3,
     override var columns: Int = 4,
-    override var storage: MutableList<Button> = mutableListOf()
-) : Paginated {
+    override var storage: MutableList<ReactiveButton> = mutableListOf()
+) : Paginated, SelectionModel(storage, rows, columns) {
 
     var tick: Consumer<Storage>? = null
 
-    constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: Button) :
+    constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: ReactiveButton) :
             this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toMutableList())
 
     constructor(
@@ -33,7 +33,7 @@ open class Selection(
         hint: String,
         rows: Int,
         columns: Int,
-        storage: List<Button>
+        storage: List<ReactiveButton>
     ) : this(
         uuid = UUID.randomUUID(),
         title = title,
@@ -59,8 +59,8 @@ open class Selection(
         fun hint(hint: String) = apply { selection.hint = hint }
         fun rows(rows: Int) = apply { selection.rows = rows }
         fun uuid(uuid: UUID) = apply { selection.uuid = uuid }
-        fun storage(storage: MutableList<Button>) = apply { selection.storage = storage }
-        fun storage(vararg storage: Button) = apply { selection.storage = storage.toMutableList() }
+        fun storage(storage: MutableList<ReactiveButton>) = apply { selection.storage = storage }
+        fun storage(vararg storage: ReactiveButton) = apply { selection.storage = storage.toMutableList() }
         fun vault(vault: String) = apply { selection.vault = vault }
         fun build() = selection
     }

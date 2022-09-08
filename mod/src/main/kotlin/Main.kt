@@ -1,5 +1,6 @@
 import battlepass.BattlePass
 import chat.MultiChat
+import com.google.gson.Gson
 import dev.xdark.clientapi.event.chat.ChatSend
 import dev.xdark.clientapi.event.network.PluginMessage
 import dev.xdark.clientapi.gui.ingame.AdvancementsScreen
@@ -11,6 +12,7 @@ import experimental.Experimental
 import experimental.storage.AbstractMenu
 import experimental.storage.menu.MenuManager
 import healthbar.Healthbar
+import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod
 import me.func.protocol.Mod
@@ -20,12 +22,15 @@ import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import standard.ExternalManager
 import standard.Standard
+import java.io.Serializable
+import java.nio.charset.StandardCharsets
 import java.util.Stack
 
 class Main : KotlinMod() {
     companion object {
         lateinit var externalManager: ExternalManager
         var menuStack: Stack<AbstractMenu> = Stack()
+        val gson = Gson()
     }
 
     override fun onEnable() {

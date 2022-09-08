@@ -506,6 +506,39 @@ public class me/func/protocol/gui/StoragePosition {
 	public fun setTitle (Ljava/lang/String;)V
 }
 
+public class me/func/protocol/menu/Button {
+	public fun <init> ()V
+	public fun getCommand ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getHint ()Ljava/lang/String;
+	public fun getHover ()Ljava/lang/String;
+	public fun getPrice ()J
+	public fun getSpecial ()Z
+	public fun getTexture ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun setCommand (Ljava/lang/String;)V
+	public fun setPrice (J)V
+	public fun setSpecial (Z)V
+}
+
+public abstract interface class me/func/protocol/menu/Page {
+	public abstract fun getColumns ()I
+	public abstract fun getRows ()I
+}
+
+public class me/func/protocol/menu/SelectionModel : me/func/protocol/menu/Page {
+	public fun <init> (Ljava/util/List;IILjava/util/UUID;)V
+	public synthetic fun <init> (Ljava/util/List;IILjava/util/UUID;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun getColumns ()I
+	public fun getHint ()Ljava/lang/String;
+	public final fun getLocalUuid ()Ljava/util/UUID;
+	public fun getMoney ()Ljava/lang/String;
+	public fun getRows ()I
+	public fun getStorage ()Ljava/util/List;
+	public fun getTitle ()Ljava/lang/String;
+	public fun getVault ()Ljava/lang/String;
+}
+
 public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
 	public static final field NONE Lme/func/protocol/npc/NpcBehaviour;
 	public static final field STARE_AND_LOOK_AROUND Lme/func/protocol/npc/NpcBehaviour;

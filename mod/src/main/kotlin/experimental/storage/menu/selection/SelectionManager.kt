@@ -3,6 +3,8 @@ package experimental.storage.menu.selection
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import experimental.storage.menu.MenuManager
+import me.func.protocol.menu.SelectionModel
+import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.*
 
@@ -12,10 +14,19 @@ class SelectionManager {
         fun run() {
             println("Selection manager loaded!")
 
-            mod.registerChannel("storage:open") {
-                println("Open new selection menu.")
+            fun push(selection: Selection) {
+                MenuManager.push(selection)
+            }
 
-                MenuManager.push(
+            mod.registerChannel("storage:open-json") {
+                println("Open new selection menu from json.")
+                val model = readJson<SelectionModel>()
+                push(Selection(model))
+            }
+
+            mod.registerChannel("storage:open") {
+                println("Open new selection menu from data.")
+                push(
                     Selection(
                         UUID.fromString(NetUtil.readUtf8(this)),
                         NetUtil.readUtf8(this).replace("&", "§"), // title

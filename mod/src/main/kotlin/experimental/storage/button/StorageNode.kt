@@ -1,6 +1,12 @@
 package experimental.storage.button
 
 import dev.xdark.clientapi.opengl.GlStateManager
+import dev.xdark.feder.NetUtil
+import experimental.storage.AbstractMenu
+import experimental.storage.menu.MenuManager
+import io.netty.buffer.Unpooled
+import me.func.protocol.menu.Button
+import ru.cristalix.uiengine.ClickEvent
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
@@ -8,14 +14,14 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
-    @JvmField var price: Long = -1,
-    @JvmField var title: String,
-    @JvmField var description: String,
-    var hint: String? = null,
+    override var price: Long = -1,
+    override var title: String,
+    override var description: String,
+    override var hint: String? = null,
     var hoverText: String,
     open var icon: T,
-    var special: Boolean = false
-) {
+    override var special: Boolean = false
+) : Button() {
 
     var bundle: CarvedRectangle? = null
     var titleElement: TextElement? = null
@@ -26,7 +32,7 @@ abstract class StorageNode<T : AbstractElement>(
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
-        color = if (special) Color(255,157,66, 1.0) else Color(74, 140, 236, 1.0)
+        color = if (special) Color(255, 157, 66, 1.0) else Color(74, 140, 236, 1.0)
         color.alpha = 0.0
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }
@@ -41,6 +47,20 @@ abstract class StorageNode<T : AbstractElement>(
             scale = V3(1.5, 1.5, 1.5)
         }
     }.apply { hintContainer = this }
+
+    fun click(menu: AbstractMenu, event: ClickEvent) {
+        if (MenuManager.isMenuClickBlocked()) return
+        val key = menu.storage.indexOf(this@StorageNode)
+        if (command.isNullOrEmpty()) {
+            UIEngine.clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
+                NetUtil.writeUtf8(this, menu.uuid.toString())
+                writeInt(key)
+                writeInt(event.button.ordinal)
+            })
+            return
+        }
+        UIEngine.clientApi.chat().sendChatMessage("$command $key")
+    }
 
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
