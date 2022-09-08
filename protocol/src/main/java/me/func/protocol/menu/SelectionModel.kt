@@ -1,15 +1,14 @@
 package me.func.protocol.menu
 
-import java.util.*
-
 open class SelectionModel(
     open val storage: MutableList<out Button>,
-    override val rows: Int,
-    override val columns: Int,
-    val localUuid: UUID = UUID.randomUUID()
+    override var rows: Int,
+    override var columns: Int,
 ): Page {
-    open val title: String? = ""
-    open val vault: String? = ""
-    open val hint: String? = ""
-    open val money: String? = ""
+    open var title: String = ""
+    open var vault: String = "coin"
+    open var hint: String = ""
+    open var money: String = ""
+
+    constructor() : this(arrayListOf<Button>(), 3, 4)
 }

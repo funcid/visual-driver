@@ -30,7 +30,6 @@ class Main : KotlinMod() {
     companion object {
         lateinit var externalManager: ExternalManager
         var menuStack: Stack<AbstractMenu> = Stack()
-        val gson = Gson()
     }
 
     override fun onEnable() {

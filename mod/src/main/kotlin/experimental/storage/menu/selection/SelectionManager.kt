@@ -1,12 +1,16 @@
 package experimental.storage.menu.selection
 
 import Main.Companion.menuStack
+import com.google.gson.Gson
 import dev.xdark.feder.NetUtil
+import experimental.storage.button.StorageItemTexture
 import experimental.storage.menu.MenuManager
 import me.func.protocol.menu.SelectionModel
 import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import java.nio.charset.StandardCharsets
 import java.util.*
+import kotlin.math.ceil
 
 class SelectionManager {
 
@@ -14,19 +18,39 @@ class SelectionManager {
         fun run() {
             println("Selection manager loaded!")
 
-            fun push(selection: Selection) {
-                MenuManager.push(selection)
-            }
-
             mod.registerChannel("storage:open-json") {
-                println("Open new selection menu from json.")
                 val model = readJson<SelectionModel>()
-                push(Selection(model))
+                val pageSize = model.columns * model.rows
+
+                val localStorage = model.storage.map {
+                    StorageItemTexture(
+                        it.texture ?: "",
+                        it.price,
+                        it.title,
+                        it.description,
+                        it.hint ?: "",
+                        it.hover ?: "Купить",
+                        it.special
+                    ).apply { command = it.command }
+                }
+
+                val pageCount = ceil(localStorage.size * 1.0 / pageSize).toInt()
+
+                val pages = MutableList(pageCount) {
+                    Page(it, localStorage.drop(it * pageSize).take(pageSize))
+                }
+
+                val selection = Selection(model, pages).apply {
+                    storage.addAll(localStorage)
+                }
+
+                MenuManager.push(selection)
+                selection.open()
             }
 
             mod.registerChannel("storage:open") {
                 println("Open new selection menu from data.")
-                push(
+                MenuManager.push(
                     Selection(
                         UUID.fromString(NetUtil.readUtf8(this)),
                         NetUtil.readUtf8(this).replace("&", "§"), // title

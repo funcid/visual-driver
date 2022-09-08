@@ -534,16 +534,21 @@ public abstract interface class me/func/protocol/menu/Page {
 }
 
 public class me/func/protocol/menu/SelectionModel : me/func/protocol/menu/Page {
-	public fun <init> (Ljava/util/List;IILjava/util/UUID;)V
-	public synthetic fun <init> (Ljava/util/List;IILjava/util/UUID;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;II)V
 	public fun getColumns ()I
 	public fun getHint ()Ljava/lang/String;
-	public final fun getLocalUuid ()Ljava/util/UUID;
 	public fun getMoney ()Ljava/lang/String;
 	public fun getRows ()I
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getVault ()Ljava/lang/String;
+	public fun setColumns (I)V
+	public fun setHint (Ljava/lang/String;)V
+	public fun setMoney (Ljava/lang/String;)V
+	public fun setRows (I)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setVault (Ljava/lang/String;)V
 }
 
 public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {

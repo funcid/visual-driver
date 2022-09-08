@@ -11,4 +11,6 @@ interface AbstractMenu {
 
     fun open()
 
+    fun close()
+
 }

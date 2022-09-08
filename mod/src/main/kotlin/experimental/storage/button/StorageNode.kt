@@ -1,5 +1,6 @@
 package experimental.storage.button
 
+import Main.Companion.menuStack
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
 import experimental.storage.AbstractMenu
@@ -15,8 +16,8 @@ import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
     override var price: Long = -1,
-    override var title: String?,
-    override var description: String?,
+    override var title: String,
+    override var description: String,
     override var hint: String? = null,
     var hoverText: String,
     open var icon: T,
@@ -49,6 +50,7 @@ abstract class StorageNode<T : AbstractElement>(
     }.apply { hintContainer = this }
 
     fun click(menu: AbstractMenu, event: ClickEvent) {
+        println(1)
         if (MenuManager.isMenuClickBlocked()) return
         val key = menu.storage.indexOf(this@StorageNode)
         if (command.isNullOrEmpty()) {
@@ -59,15 +61,22 @@ abstract class StorageNode<T : AbstractElement>(
             })
             return
         }
+        menu.close()
+        // Если через пол секунды, откроется другое меню - то не чистим стэк
+        UIEngine.schedule(0.5) {
+            if (menuStack.peek() != menu)
+                return@schedule
+            menuStack.clear()
+        }
         UIEngine.clientApi.chat().sendChatMessage("$command $key")
     }
 
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
-        val words = description?.split(" ")
+        val words = description.split(" ")
 
         descriptionElement!!.content = lineStart
-        words?.forEach { word ->
+        words.forEach { word ->
             val line = descriptionElement!!.content.split("\n").last()
             val new = line + word
             val color = line.split("§").last().first()

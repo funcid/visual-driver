@@ -18,7 +18,7 @@ open class Selection(
     override var hint: String = "Купить",
     override var rows: Int = 3,
     override var columns: Int = 4,
-    override var storage: MutableList<ReactiveButton> = mutableListOf()
+    override var storage: MutableList<ReactiveButton> = arrayListOf()
 ) : Paginated, SelectionModel(storage, rows, columns) {
 
     var tick: Consumer<Storage>? = null

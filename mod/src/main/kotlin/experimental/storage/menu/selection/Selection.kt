@@ -260,30 +260,17 @@ class Selection(
         }
     }
 
-    constructor(model: SelectionModel) : this(
+    constructor(model: SelectionModel, pages: MutableList<Page>) : this(
         UUID.randomUUID(),
-        model.title ?: "Название",
-        model.vault ?: "coin",
-        model.money ?: "",
-        model.hint ?: "Купить",
+        model.title,
+        model.vault,
+        model.money,
+        model.hint,
         model.rows,
         model.columns,
-        ceil(model.rows * model.columns * 1.0 / model.storage.size).toInt(),
-    ) {
-        val data = model.storage.map {
-            StorageItemTexture(
-                it.texture ?: "",
-                it.price,
-                it.title ?: "Ошибка",
-                it.description ?: "",
-                it.hint ?: "",
-                it.hover ?: "Купить",
-                it.special
-            )
-        }.chunked(rows * columns)
-
-        pages.forEachIndexed { index, page -> page.content = data[index] }
-    }
+        ceil(model.storage.size * 1.0 / model.rows * model.columns).toInt(),
+        pages,
+    )
 
     init {
         color = Color(0, 0, 0, .86)

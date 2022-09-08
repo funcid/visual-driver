@@ -29,15 +29,15 @@ class ReactiveButton : Button() {
             field = value
         }
 
-    override var title: String? = null
+    override var title: String = ""
         set(value) {
-            if (value != field) reactive { byte(2).string(value!!) }
+            if (value != field) reactive { byte(2).string(value) }
             field = value
         }
 
-    override var description: String? = null
+    override var description: String = ""
         set(value) {
-            if (value != field) reactive { byte(3).string(value!!) }
+            if (value != field) reactive { byte(3).string(value) }
             field = value
         }
 
