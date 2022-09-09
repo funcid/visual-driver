@@ -8,6 +8,7 @@ import ru.cristalix.uiengine.utility.rectangle
 class StorageItemTexture(
     icon: String,
     price: Long,
+    vault: String,
     title: String,
     description: String,
     hint: String,
@@ -16,6 +17,7 @@ class StorageItemTexture(
 ) :
     StorageNode<RectangleElement>(
         price,
+        vault,
         title,
         description,
         hint,

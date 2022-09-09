@@ -12,6 +12,7 @@ import experimental.storage.menu.selection.SelectionManager
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import java.util.*
 
@@ -29,6 +30,7 @@ class MenuManager {
                 StorageItemStack(
                     ItemTools.read(buffer), // item
                     buffer.readLong(), // price
+                    NetUtil.readUtf8(buffer),
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item hint
@@ -39,6 +41,7 @@ class MenuManager {
                 StorageItemTexture(
                     NetUtil.readUtf8(buffer), // texture
                     buffer.readLong(), // price
+                    NetUtil.readUtf8(buffer),
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item title
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item description
                     NetUtil.readUtf8(buffer).replace("&", "§"), // item hint

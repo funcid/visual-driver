@@ -1,6 +1,8 @@
 package experimental.storage.button
 
+import Main.Companion.externalManager
 import dev.xdark.clientapi.opengl.GlStateManager
+import dev.xdark.clientapi.resource.ResourceLocation
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
@@ -9,6 +11,7 @@ import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
     @JvmField var price: Long = -1,
+    @JvmField var vault: String,
     @JvmField var title: String,
     @JvmField var description: String,
     var hint: String? = null,
@@ -17,6 +20,7 @@ abstract class StorageNode<T : AbstractElement>(
     var special: Boolean = false
 ) {
 
+    val coinLocation: ResourceLocation = externalManager.load("runtime:$vault")
     var bundle: CarvedRectangle? = null
     var titleElement: TextElement? = null
     var descriptionElement: TextElement? = null
@@ -26,7 +30,7 @@ abstract class StorageNode<T : AbstractElement>(
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
-        color = if (special) Color(255,157,66, 1.0) else Color(74, 140, 236, 1.0)
+        color = if (special) Color(255, 157, 66, 1.0) else Color(74, 140, 236, 1.0)
         color.alpha = 0.0
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }

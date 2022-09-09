@@ -8,6 +8,7 @@ import ru.cristalix.uiengine.utility.item
 class StorageItemStack(
     icon: ItemStack,
     price: Long,
+    vault: String,
     title: String,
     description: String,
     hint: String,
@@ -15,6 +16,7 @@ class StorageItemStack(
     special: Boolean
 ) : StorageNode<ItemElement>(
     price,
+    vault,
     title,
     description,
     hint,

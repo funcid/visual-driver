@@ -63,6 +63,7 @@ class Button {
     var special: Boolean = false
 
     var price: Long = -1
+    var vault: String = "coin"
     private var sale = 0
 
     fun sale(percent: Int) = apply {
@@ -117,6 +118,8 @@ class Button {
 
     fun price(price: Long) = apply { this.price = price }
 
+    fun vault(vault: String) = apply { this.vault = vault }
+
     fun write(transfer: ModTransfer) {
         val isItem = item != null
         transfer.boolean(isItem)
@@ -125,6 +128,7 @@ class Button {
         else transfer.string(texture ?: "")
 
         transfer.long(price)
+        transfer.string(vault)
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hint ?: "")
@@ -146,5 +150,6 @@ class Button {
         it.price = price
         it.sale = sale
         it.special = special
+        it.vault = vault
     }
 }

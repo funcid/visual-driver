@@ -139,7 +139,11 @@ class Selection(
         onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
     }
 
-    private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
+    private fun textWithMoney(
+        text: String,
+        coinLocation: ResourceLocation = this.coinLocation,
+        textLeft: Boolean = true
+    ) = TextedIcon(text, coinLocation, textLeft)
 
     fun redrawGrid() {
         val elements = getElementsOnPage(currentPage)
@@ -194,6 +198,7 @@ class Selection(
 
                     +textWithMoney(
                         if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
+                        element.coinLocation,
                         false
                     ).apply {
                         origin = BOTTOM_LEFT
