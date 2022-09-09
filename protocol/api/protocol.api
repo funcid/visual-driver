@@ -506,6 +506,96 @@ public class me/func/protocol/gui/StoragePosition {
 	public fun setTitle (Ljava/lang/String;)V
 }
 
+public class me/func/protocol/menu/Button {
+	public static final field Companion Lme/func/protocol/menu/Button$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZJLjava/lang/String;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZJLjava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final fun builder ()Lme/func/protocol/menu/Button$Builder;
+	public fun getCommand ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getHint ()Ljava/lang/String;
+	public fun getHover ()Ljava/lang/String;
+	public fun getPrice ()J
+	public fun getSpecial ()Z
+	public fun getTexture ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun setCommand (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setHint (Ljava/lang/String;)V
+	public fun setHover (Ljava/lang/String;)V
+	public fun setPrice (J)V
+	public fun setSpecial (Z)V
+	public fun setTexture (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/menu/Button$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/protocol/menu/Button;)V
+	public synthetic fun <init> (Lme/func/protocol/menu/Button;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/protocol/menu/Button;
+	public final fun command (Ljava/lang/String;)Lme/func/protocol/menu/Button$Builder;
+	public final fun description (Ljava/lang/String;)Lme/func/protocol/menu/Button$Builder;
+	public final fun getButton ()Lme/func/protocol/menu/Button;
+	public final fun hint (Ljava/lang/String;)Lme/func/protocol/menu/Button$Builder;
+	public final fun hover (Ljava/lang/String;)Lme/func/protocol/menu/Button$Builder;
+	public final fun price (J)Lme/func/protocol/menu/Button$Builder;
+	public final fun special (Z)Lme/func/protocol/menu/Button$Builder;
+	public final fun texture (Ljava/lang/String;)Lme/func/protocol/menu/Button$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/protocol/menu/Button$Builder;
+}
+
+public final class me/func/protocol/menu/Button$Companion {
+	public final fun builder ()Lme/func/protocol/menu/Button$Builder;
+}
+
+public abstract interface class me/func/protocol/menu/Page {
+	public abstract fun getColumns ()I
+	public abstract fun getRows ()I
+}
+
+public class me/func/protocol/menu/SelectionModel : me/func/protocol/menu/Page {
+	public static final field Companion Lme/func/protocol/menu/SelectionModel$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;II)V
+	public synthetic fun <init> (Ljava/util/List;IIILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final fun builder ()Lme/func/protocol/menu/SelectionModel$Builder;
+	public fun getColumns ()I
+	public fun getData ()Ljava/util/List;
+	public fun getHint ()Ljava/lang/String;
+	public fun getMoney ()Ljava/lang/String;
+	public fun getRows ()I
+	public fun getTitle ()Ljava/lang/String;
+	public fun getVault ()Ljava/lang/String;
+	public fun setColumns (I)V
+	public fun setData (Ljava/util/List;)V
+	public fun setHint (Ljava/lang/String;)V
+	public fun setMoney (Ljava/lang/String;)V
+	public fun setRows (I)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setVault (Ljava/lang/String;)V
+}
+
+public final class me/func/protocol/menu/SelectionModel$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/protocol/menu/SelectionModel;)V
+	public synthetic fun <init> (Lme/func/protocol/menu/SelectionModel;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/protocol/menu/SelectionModel;
+	public final fun columns (I)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun getModel ()Lme/func/protocol/menu/SelectionModel;
+	public final fun hint (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun money (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun rows (I)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun storage ([Lme/func/protocol/menu/Button;)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun vault (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
+}
+
+public final class me/func/protocol/menu/SelectionModel$Companion {
+	public final fun builder ()Lme/func/protocol/menu/SelectionModel$Builder;
+}
+
 public final class me/func/protocol/npc/NpcBehaviour : java/lang/Enum {
 	public static final field NONE Lme/func/protocol/npc/NpcBehaviour;
 	public static final field STARE_AND_LOOK_AROUND Lme/func/protocol/npc/NpcBehaviour;

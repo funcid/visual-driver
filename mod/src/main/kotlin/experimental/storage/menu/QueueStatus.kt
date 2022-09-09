@@ -14,24 +14,21 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
-private const val margin = 3
-private const val width = 140.0
-
 class QueueStatus {
     companion object {
-
-        private var buttonText: TextElement? = null
-        private var button: CarvedRectangle? = null
-        private var icon: CarvedRectangle? = null
-        private var png: RectangleElement? = null
-        private var title: TextElement? = null
-        private var desc: TextElement? = null
-        private var time: TextElement? = null
-        private var pattern: RectangleElement? = null
+        private lateinit var buttonText: TextElement
+        private lateinit var button: CarvedRectangle
+        private lateinit var icon: CarvedRectangle
+        private lateinit var png: RectangleElement
+        private lateinit var title: TextElement
+        private lateinit var desc: TextElement
+        private lateinit var time: TextElement
+        private lateinit var pattern: RectangleElement
         private const val width = 140.0
         private var counter = 0
         private var enabled = false
-        private val container = UIEngine.overlayContext + carved {
+
+        private val container = UIEngine.overlayContext +carved {
             enabled = false
             color = Color(0, 0, 0, 0.50)
             size = V3(382.0 / 2.0, 100.0 / 2)
@@ -107,7 +104,7 @@ class QueueStatus {
             }
         }
 
-        fun leave() = UIEngine.clientApi.clientConnection().sendPayload("queue:leave", Unpooled.EMPTY_BUFFER)
+        private fun leave() = UIEngine.clientApi.clientConnection().sendPayload("queue:leave", Unpooled.EMPTY_BUFFER)
 
         init {
             UIEngine.overlayContext + container
@@ -120,7 +117,7 @@ class QueueStatus {
                 if (now - before > 1000) {
                     before = now
                     counter++
-                    time?.content = "⏰ ${counter / 60}:${(counter % 60).toString().padStart(2, '0')}"
+                    time.content = "⏰ ${counter / 60}:${(counter % 60).toString().padStart(2, '0')}"
                 }
             }
 
@@ -134,9 +131,9 @@ class QueueStatus {
                     }
                 }
 
-                png?.textureLocation = externalManager.load(address)
-                title?.content = name
-                desc?.content = description
+                png.textureLocation = externalManager.load(address)
+                title.content = name
+                desc.content = description
                 container.enabled = true
                 enabled = true
                 mod.registerHandler<GameLoop> {
@@ -147,7 +144,7 @@ class QueueStatus {
             }
 
             mod.registerChannel("queue:update") {
-                desc?.content = NetUtil.readUtf8(this) // description
+                desc.content = NetUtil.readUtf8(this) // description
             }
 
             mod.registerChannel("queue:stop") {

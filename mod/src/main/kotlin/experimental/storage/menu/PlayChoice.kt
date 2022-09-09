@@ -2,12 +2,12 @@ package experimental.storage.menu
 
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
-import experimental.Experimental
 import experimental.storage.AbstractMenu
 import experimental.storage.button.StorageNode
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
@@ -15,11 +15,11 @@ import java.util.*
 
 class PlayChoice(
     override var uuid: UUID,
-    override var title: String,
+    var title: String,
     @JvmField var description: String,
     allowClosing: Boolean,
     override var storage: MutableList<StorageNode<*>>
-) : AbstractMenu(uuid, title, storage) {
+) : AbstractMenu, ContextGui() {
     init {
         if (!allowClosing) {
             keyTypedHandlers.removeFirstOrNull() // удаление листенера ESC перед регистрацией наших листенеров
@@ -70,7 +70,7 @@ class PlayChoice(
                             align = TOP
                             origin = TOP
                             color = if (element.special) textCenter else textNormal
-                            content = element.title
+                            content = element.title ?: ""
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
                             ) 0.75 else 1.0
@@ -95,18 +95,10 @@ class PlayChoice(
                                 align = CENTER
                                 origin = CENTER
                                 lineHeight += padding / 2
-                                content = element.description
+                                content = element.description ?: ""
                             }
                         }
-                        onMouseUp {
-                            if (MenuManager.isMenuClickBlocked()) return@onMouseUp
-                            UIEngine.clientApi.clientConnection()
-                                .sendPayload("storage:click", Unpooled.buffer().apply {
-                                    NetUtil.writeUtf8(this, uuid.toString())
-                                    writeInt(storage.indexOf(element))
-                                    writeInt(button.ordinal)
-                                })
-                        }
+                        onMouseUp { element.click(this@PlayChoice, this) }
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
                         var hasHoverEffect = false
@@ -191,5 +183,9 @@ class PlayChoice(
             }
             onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
         }
+    }
+
+    init {
+        color = Color(0, 0, 0, .86)
     }
 }

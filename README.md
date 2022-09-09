@@ -1,3 +1,7 @@
+# Наш Trello
+
+<a href="https://trello.com/invite/b/5YPXbUWx/ac9ba1a9988c918d4f8c87c0edd76d73/animation-api">Присоединиться</a>
+
 # Cristalix Animation API DOCS (актуальная версия 2.7.4)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)

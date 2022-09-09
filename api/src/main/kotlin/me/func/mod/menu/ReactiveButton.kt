@@ -5,38 +5,39 @@ import me.func.mod.data.Sprites
 import me.func.mod.menu.MenuManager.reactive
 import me.func.mod.util.nbt
 import me.func.mod.util.warn
+import me.func.protocol.menu.Button
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import java.util.*
 
 fun interface ButtonClickHandler {
-    fun handle(player: Player, index: Int, button: Button)
+    fun handle(player: Player, index: Int, button: ReactiveButton)
 }
 
-class Button {
+class ReactiveButton : Button() {
 
-    var hover: String? = null
+    override var hover: String? = null
         set(value) {
             if (value != field) reactive { byte(5).string(value!!) }
             field = value
         }
 
-    var texture: String? = null
+    override var texture: String? = null
         set(value) {
             if (value != field) reactive { byte(0).string(value!!) }
             field = value
         }
 
-    var title: String? = null
+    override var title: String = ""
         set(value) {
-            if (value != field) reactive { byte(2).string(value!!) }
+            if (value != field) reactive { byte(2).string(value) }
             field = value
         }
 
-    var description: String? = null
+    override var description: String = ""
         set(value) {
-            if (value != field) reactive { byte(3).string(value!!) }
+            if (value != field) reactive { byte(3).string(value) }
             field = value
         }
 
@@ -54,16 +55,15 @@ class Button {
             field = value
         }
 
-    var hint: String? = null
+    override var hint: String? = null
         set(value) {
             if (value != field) reactive { byte(4).string(value!!) }
             field = value
         }
 
-    var special: Boolean = false
+    override var special: Boolean = false
 
-    var price: Long = -1
-    var vault: String = "coin"
+    override var price: Long = -1
     private var sale = 0
 
     fun sale(percent: Int) = apply {
@@ -118,8 +118,6 @@ class Button {
 
     fun price(price: Long) = apply { this.price = price }
 
-    fun vault(vault: String) = apply { this.vault = vault }
-
     fun write(transfer: ModTransfer) {
         val isItem = item != null
         transfer.boolean(isItem)
@@ -128,7 +126,6 @@ class Button {
         else transfer.string(texture ?: "")
 
         transfer.long(price)
-        transfer.string(vault)
         transfer.string(title ?: "")
         transfer.string(description ?: "")
         transfer.string(hint ?: "")
@@ -136,7 +133,7 @@ class Button {
         transfer.boolean(special)
     }
 
-    fun copy(): Button = Button().also {
+    fun copy(): ReactiveButton = ReactiveButton().also {
         it.hover = hover
         it.texture = texture
         it.title = title
@@ -150,6 +147,5 @@ class Button {
         it.price = price
         it.sale = sale
         it.special = special
-        it.vault = vault
     }
 }

@@ -1,6 +1,6 @@
 package me.func.mod.menu.choicer
 
-import me.func.mod.menu.Button
+import me.func.mod.menu.ReactiveButton
 import me.func.mod.menu.MenuManager
 import me.func.mod.menu.MenuManager.bind
 import me.func.mod.menu.Storage
@@ -11,11 +11,11 @@ class Choicer(
     override var uuid: UUID = UUID.randomUUID(),
     override var title: String = "Игра",
     var description: String = "Выбери нужный под-режим!",
-    override var storage: MutableList<Button> = mutableListOf()
+    override var storage: MutableList<ReactiveButton> = mutableListOf()
 ) : Storage {
     var allowClosing: Boolean = true
 
-    constructor(title: String, description: String, vararg storage: Button) :
+    constructor(title: String, description: String, vararg storage: ReactiveButton) :
             this(UUID.randomUUID(), title, description, storage.toMutableList())
 
     companion object {
@@ -30,8 +30,8 @@ class Choicer(
         fun uuid(uuid: UUID) = apply { choicer.uuid = uuid }
         fun title(title: String) = apply { choicer.title = title }
         fun description(description: String) = apply { choicer.description = description }
-        fun storage(storage: MutableList<Button>) = apply { choicer.storage = storage }
-        fun storage(vararg storage: Button) = apply { choicer.storage = storage.toMutableList() }
+        fun storage(storage: MutableList<ReactiveButton>) = apply { choicer.storage = storage }
+        fun storage(vararg storage: ReactiveButton) = apply { choicer.storage = storage.toMutableList() }
         fun build() = choicer
     }
 

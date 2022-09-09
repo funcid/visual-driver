@@ -1,19 +1,17 @@
 package me.func.mod.menu
 
 import me.func.mod.conversation.ModTransfer
+import me.func.protocol.menu.Page
 import org.bukkit.entity.Player
 import kotlin.math.ceil
 
-interface Paginated : Storage {
-
-    var rows: Int
-    var columns: Int
+interface Paginated : Storage, Page {
 
     // Вместимость страницы
     fun getPageCapacity() = rows * columns
 
     // Получить кнопки на странице
-    fun getContentByPage(page: Int): List<Button> {
+    fun getContentByPage(page: Int): List<ReactiveButton> {
         val capacity = getPageCapacity()
         return storage.drop(capacity * maxOf(0, page)).take(capacity)
     }
