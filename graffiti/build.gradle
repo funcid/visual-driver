@@ -3,13 +3,13 @@ plugins {
 }
 
 dependencies {
-    implementation project(':protocol')
-    implementation project(':protocol-mod')
-
     compileOnly 'ru.cristalix:client-api:foranelfer-SNAPSHOT'
 
     implementation 'ru.cristalix:uiengine:foranelfer-SNAPSHOT'
     implementation 'ru.cristalix:client-sdk:foranelfer-SNAPSHOT'
+
+    implementation project(':protocol')
+    implementation project(':protocol-mod')
 }
 
 mod {

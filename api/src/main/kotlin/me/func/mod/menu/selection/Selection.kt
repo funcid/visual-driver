@@ -14,7 +14,7 @@ open class Selection(
     override var uuid: UUID = UUID.randomUUID(),
     override var title: String = "Меню",
     override var money: String = "",
-    override var vault: String = "coin",
+    override var vault: String = "\uE03C",
     override var hint: String = "Купить",
     override var rows: Int = 3,
     override var columns: Int = 4,
@@ -24,7 +24,7 @@ open class Selection(
     var tick: Consumer<Storage>? = null
 
     constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: ReactiveButton) :
-            this(UUID.randomUUID(), title, money, "coin", hint, rows, columns, storage.toMutableList())
+            this(UUID.randomUUID(), title, money, "\uE03C", hint, rows, columns, storage.toMutableList())
 
     constructor(
         title: String,
@@ -59,8 +59,8 @@ open class Selection(
         fun hint(hint: String) = apply { selection.hint = hint }
         fun rows(rows: Int) = apply { selection.rows = rows }
         fun uuid(uuid: UUID) = apply { selection.uuid = uuid }
-        fun storage(storage: MutableList<ReactiveButton>) = apply { selection.storage = storage }
-        fun storage(vararg storage: ReactiveButton) = apply { selection.storage = storage.toMutableList() }
+        fun storage(storage: MutableList<ReactiveButton>) = apply { selection.data = storage }
+        fun storage(vararg storage: ReactiveButton) = apply { selection.data = storage.toMutableList() }
         fun vault(vault: String) = apply { selection.vault = vault }
         fun build() = selection
     }

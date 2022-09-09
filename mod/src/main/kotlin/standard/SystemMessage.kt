@@ -11,7 +11,15 @@ class SystemMessage {
     private val offsetX = 10.0
     private val buttonY = 5.0
     private var buttonX = 70.0
-    private var symbol: TextElement? = null
+    private val symbol: TextElement by lazy {
+        text {
+            content = "Загрузка..."
+            scale = V3(2.0, 2.0)
+            align = LEFT
+            origin = LEFT
+            offset.x += offsetX
+        }
+    }
     private var description: TextElement? = null
 
     private val message = UIEngine.overlayContext + carved {
@@ -22,13 +30,7 @@ class SystemMessage {
         size = V3(buttonX, buttonY + 2 * offsetX)
         color = Color(203, 65, 84, 0.60)
 
-        symbol = +text {
-            content = "Загрузка..."
-            scale = V3(2.0, 2.0)
-            align = LEFT
-            origin = LEFT
-            offset.x += offsetX
-        }
+        +symbol
 
         description = +text {
             content = "Загрузка"
@@ -46,17 +48,17 @@ class SystemMessage {
         mod.registerChannel("anime:message") {
             when (MessageStatus.values()[readInt()]) {
                 MessageStatus.FINE -> {
-                    symbol!!.content = "?"
+                    symbol.content = "?"
                     message.color = Color(74, 140, 236, 0.60)
                 }
 
                 MessageStatus.WARN -> {
-                    symbol!!.content = "X"
+                    symbol.content = "X"
                     message.color = Color(203, 65, 84, 0.60)
                 }
 
                 MessageStatus.ERROR -> {
-                    symbol!!.content = "!"
+                    symbol.content = "!"
                     message.color = Color(255, 157, 66, 0.60)
                 }
             }

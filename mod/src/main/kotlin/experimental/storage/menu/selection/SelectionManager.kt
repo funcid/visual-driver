@@ -1,14 +1,12 @@
 package experimental.storage.menu.selection
 
 import Main.Companion.menuStack
-import com.google.gson.Gson
 import dev.xdark.feder.NetUtil
 import experimental.storage.button.StorageItemTexture
 import experimental.storage.menu.MenuManager
 import me.func.protocol.menu.SelectionModel
 import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import java.nio.charset.StandardCharsets
 import java.util.*
 import kotlin.math.ceil
 
@@ -22,7 +20,12 @@ class SelectionManager {
                 val model = readJson<SelectionModel>()
                 val pageSize = model.columns * model.rows
 
-                val localStorage = model.storage.map {
+                if (pageSize < 1) {
+                    println("Menu page size below one!")
+                    return@registerChannel
+                }
+
+                val localStorage = model.data.map {
                     StorageItemTexture(
                         it.texture ?: "",
                         it.price,

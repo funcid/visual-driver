@@ -10,4 +10,4 @@ fun ByteBuf.readString(): String {
     return String(buffer, StandardCharsets.UTF_8)
 }
 
-inline fun <reified T> ByteBuf.readJson() = gson.fromJson(readString(), T::class.java)
+inline fun <reified T> ByteBuf.readJson(): T = gson.fromJson(readString(), T::class.java)

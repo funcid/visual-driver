@@ -184,4 +184,8 @@ class PlayChoice(
             onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
         }
     }
+
+    init {
+        color = Color(0, 0, 0, .86)
+    }
 }

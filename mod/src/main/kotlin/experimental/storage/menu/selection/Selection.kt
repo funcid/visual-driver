@@ -1,11 +1,8 @@
 package experimental.storage.menu.selection
 
-import Main.Companion.externalManager
 import Main.Companion.menuStack
-import dev.xdark.clientapi.resource.ResourceLocation
 import experimental.storage.AbstractMenu
 import experimental.storage.TextedIcon
-import experimental.storage.button.StorageItemTexture
 import experimental.storage.button.StorageNode
 import experimental.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
@@ -24,7 +21,7 @@ import kotlin.math.ceil
 class Selection(
     override var uuid: UUID,
     var title: String,
-    vault: String,
+    var vault: String,
     @JvmField var money: String,
     @JvmField var hint: String,
     @JvmField var rows: Int,
@@ -37,7 +34,6 @@ class Selection(
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
 
-    private val coinLocation: ResourceLocation = externalManager.load("runtime:$vault")
     private val width = 460.0
     private val height = 230.0
     private val padding = height / 12.0
@@ -66,7 +62,7 @@ class Selection(
         +menuTitle
 
         if (money.isNotEmpty()) {
-            +textWithMoney(money).apply {
+            +textWithMoney(money, vault).apply {
                 origin = TOP_RIGHT
                 align = TOP_RIGHT
                 title.shadow = true
@@ -142,7 +138,7 @@ class Selection(
         onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
     }
 
-    private fun textWithMoney(text: String, textLeft: Boolean = true) = TextedIcon(text, coinLocation, textLeft)
+    private fun textWithMoney(text: String, vault: String, textLeft: Boolean = true) = TextedIcon(text, vault, textLeft)
 
     fun redrawGrid() {
         val elements = getElementsOnPage(currentPage)
@@ -178,13 +174,13 @@ class Selection(
                     element.titleElement = +text {
                         color = Color(255, 202, 66, 1.0)
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.title ?: ""
+                        content = element.title
                         shadow = true
                         lineHeight = 8.0
                     }
                     element.descriptionElement = +text {
                         scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.description ?: ""
+                        content = element.description
                         shadow = true
                     }
                 }
@@ -197,6 +193,7 @@ class Selection(
 
                     +textWithMoney(
                         if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
+                        vault,
                         false
                     ).apply {
                         origin = BOTTOM_LEFT
@@ -268,7 +265,7 @@ class Selection(
         model.hint,
         model.rows,
         model.columns,
-        ceil(model.storage.size * 1.0 / model.rows * model.columns).toInt(),
+        ceil(model.data.size * 1.0 / model.rows * model.columns).toInt(),
         pages,
     )
 

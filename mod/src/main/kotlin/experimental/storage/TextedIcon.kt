@@ -1,26 +1,30 @@
 package experimental.storage
 
-import dev.xdark.clientapi.resource.ResourceLocation
+import Main.Companion.externalManager
+import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.RectangleElement
-import ru.cristalix.uiengine.utility.LEFT
-import ru.cristalix.uiengine.utility.RIGHT
-import ru.cristalix.uiengine.utility.V3
-import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.rectangle
-import ru.cristalix.uiengine.utility.text
+import ru.cristalix.uiengine.utility.*
 
-class TextedIcon(text: String, icon: ResourceLocation, textLeft: Boolean = true) : RectangleElement() {
-    @JvmField val title = +text {
+class TextedIcon(text: String, icon: String, textLeft: Boolean = true) : RectangleElement() {
+    @JvmField
+    val title = +text {
         origin = if (textLeft) LEFT else RIGHT
         align = if (textLeft) LEFT else RIGHT
         content = text
         color = WHITE
     }
-    private val image = +rectangle {
-        textureLocation = icon
+
+    private val preIcon: AbstractElement = if (icon.contains(":")) rectangle {
+        size = V3(title.lineHeight - 2, title.lineHeight - 2)
+        textureLocation = externalManager.load(icon)
+    } else text {
+        content = icon
+        scale = title.scale
+    }
+
+    private val image = +preIcon.apply {
         origin = if (textLeft) RIGHT else LEFT
         align = if (textLeft) RIGHT else LEFT
-        size = V3(title.lineHeight - 2, title.lineHeight - 2)
         color = WHITE
     }
 
