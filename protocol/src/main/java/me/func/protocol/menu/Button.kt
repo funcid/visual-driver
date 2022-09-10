@@ -8,7 +8,8 @@ open class Button(
     open var hint: String? = "",
     open var special: Boolean = false,
     open var price: Long = -1,
-    open var command: String? = ""
+    open var command: String? = "",
+    open var vault: String? = "",
 ) {
     companion object {
         @JvmStatic
@@ -17,6 +18,7 @@ open class Button(
 
     class Builder(val button: Button = Button()) {
         fun hover(hover: String) = apply { button.hover = hover }
+        fun vault(vault: String) = apply { button.vault = vault }
         fun texture(texture: String) = apply { button.texture = texture }
         fun title(title: String) = apply { button.title = title }
         fun description(description: String) = apply { button.description = description }

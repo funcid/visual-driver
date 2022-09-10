@@ -690,6 +690,7 @@ public final class me/func/mod/menu/ReactiveButton : me/func/protocol/menu/Butto
 	public fun getSpecial ()Z
 	public fun getTexture ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
+	public fun getVault ()Ljava/lang/String;
 	public final fun hint (Ljava/lang/String;)Lme/func/mod/menu/ReactiveButton;
 	public final fun hover (Ljava/lang/String;)Lme/func/mod/menu/ReactiveButton;
 	public final fun hover (Ljava/util/Collection;)Lme/func/mod/menu/ReactiveButton;
@@ -716,10 +717,12 @@ public final class me/func/mod/menu/ReactiveButton : me/func/protocol/menu/Butto
 	public fun setSpecial (Z)V
 	public fun setTexture (Ljava/lang/String;)V
 	public fun setTitle (Ljava/lang/String;)V
+	public fun setVault (Ljava/lang/String;)V
 	public final fun special (Z)Lme/func/mod/menu/ReactiveButton;
 	public final fun texture (Ljava/lang/String;)Lme/func/mod/menu/ReactiveButton;
 	public final fun texture (Lme/func/mod/data/Sprites;)Lme/func/mod/menu/ReactiveButton;
 	public final fun title (Ljava/lang/String;)Lme/func/mod/menu/ReactiveButton;
+	public final fun vault (Ljava/lang/String;)Lme/func/mod/menu/ReactiveButton;
 	public final fun withSale ()I
 	public final fun write (Lme/func/mod/conversation/ModTransfer;)V
 }

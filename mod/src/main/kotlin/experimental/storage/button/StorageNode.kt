@@ -22,7 +22,8 @@ abstract class StorageNode<T : AbstractElement>(
     override var hint: String? = null,
     var hoverText: String = "",
     override var command: String? = null,
-    override var special: Boolean = false
+    override var special: Boolean = false,
+    override var vault: String? = null
 ) : Button() {
 
     var bundle: CarvedRectangle? = null
@@ -51,7 +52,6 @@ abstract class StorageNode<T : AbstractElement>(
     }.apply { hintContainer = this }
 
     fun click(menu: AbstractMenu, event: ClickEvent) {
-        println(1)
         if (MenuManager.isMenuClickBlocked()) return
         val key = menu.storage.indexOf(this@StorageNode)
         if (command.isNullOrEmpty()) {

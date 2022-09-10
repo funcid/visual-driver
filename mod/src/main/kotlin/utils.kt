@@ -1,4 +1,5 @@
 import com.google.gson.Gson
+import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import java.nio.charset.StandardCharsets
 
@@ -11,3 +12,5 @@ fun ByteBuf.readString(): String {
 }
 
 inline fun <reified T> ByteBuf.readJson(): T = gson.fromJson(readString(), T::class.java)
+
+fun ByteBuf.readColoredUtf8() = NetUtil.readUtf8(this).replace("&", "§")

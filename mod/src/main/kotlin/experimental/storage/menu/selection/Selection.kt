@@ -193,7 +193,7 @@ class Selection(
 
                     +textWithMoney(
                         if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
-                        vault,
+                        if (element.vault?.isEmpty() == true) vault else element.vault!!,
                         false
                     ).apply {
                         origin = BOTTOM_LEFT

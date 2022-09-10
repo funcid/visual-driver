@@ -63,6 +63,8 @@ class ReactiveButton : Button() {
 
     override var special: Boolean = false
 
+    override var vault: String? = ""
+
     override var price: Long = -1
     private var sale = 0
 
@@ -111,6 +113,8 @@ class ReactiveButton : Button() {
     fun texture(texture: String) = apply { this.texture = texture }
 
     fun texture(sprite: Sprites) = apply { this.texture = sprite.path() }
+
+    fun vault(vault: String) = apply { this.vault = vault }
 
     fun description(vararg desc: String) = apply { this.description = desc.joinToString("\n") }
 
