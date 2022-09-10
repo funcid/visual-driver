@@ -5,12 +5,12 @@ import java.nio.charset.StandardCharsets
 
 val gson = Gson()
 
-fun ByteBuf.readString(): String {
+fun ByteBuf.readFullAsString(): String {
     val buffer = ByteArray(readableBytes())
     readBytes(buffer)
     return String(buffer, StandardCharsets.UTF_8)
 }
 
-inline fun <reified T> ByteBuf.readJson(): T = gson.fromJson(readString(), T::class.java)
+inline fun <reified T> ByteBuf.readJson(): T = gson.fromJson(readFullAsString(), T::class.java)
 
 fun ByteBuf.readColoredUtf8() = NetUtil.readUtf8(this).replace("&", "§")

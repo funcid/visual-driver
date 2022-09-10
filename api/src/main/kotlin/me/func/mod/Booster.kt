@@ -2,23 +2,34 @@ package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
 import org.bukkit.entity.Player
+import java.util.*
 
-fun booster(booster: Booster.Booster.() -> Unit) = Booster.Booster().also(booster)
+fun booster(booster: Booster.() -> Unit) = Booster().also(booster)
 
-object Booster {
-    data class Booster(
-        var name: String = "name",
-        var multiplier: Double = 0.0
-    )
+data class Booster(
+    var uuid: UUID = UUID.randomUUID(),
+    var enabled: Boolean = true,
+    var name: String = "name",
+    var multiplier: Double = 0.0
+)
+
+object Boosters {
 
     @JvmStatic
-    fun startBoosters(player: Player, enable: Boolean, vararg boosters: Booster) = ModTransfer()
+    fun send(player: Player, vararg boosters: Booster) = ModTransfer()
         .integer(boosters.size)
-        .boolean(enable)
         .apply {
             boosters.forEach {
+                uuid(it.uuid)
+                boolean(it.enabled)
                 string(it.name)
                 double(it.multiplier)
             }
-        }.send("mid:boost", player)
+        }
+        .send("mid:boosters", player)
+
+    @JvmStatic
+    fun mode(player: Player, enabled: Boolean) = ModTransfer()
+        .boolean(enabled)
+        .send("mid:boosters-mode", player)
 }
