@@ -5,24 +5,8 @@ import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.rectangle
 
-class StorageItemTexture(
-    icon: String,
-    price: Long,
-    title: String,
-    description: String,
-    hint: String,
-    hover: String,
-    special: Boolean
-) :
-    StorageNode<RectangleElement>(
-        price,
-        title,
-        description,
-        hint,
-        hover,
-        rectangle { textureLocation = externalManager.load(icon) },
-        special
-    ) {
+class StorageItemTexture(icon: String) :
+    StorageNode<RectangleElement>(rectangle { textureLocation = externalManager.load(icon) }) {
     override fun scaling(scale: Double) = icon.apply {
         size = V3(scale, scale, scale)
     }

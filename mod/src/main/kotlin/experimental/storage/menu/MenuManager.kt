@@ -25,27 +25,19 @@ class MenuManager {
         fun isMenuClickBlocked() = openTimeAndDelayMillis + beforeClickDelay > System.currentTimeMillis()
 
         fun readIcons(buffer: ByteBuf): MutableList<StorageNode<*>> = MutableList(buffer.readInt()) {
-            if (buffer.readBoolean()) { // real item
-                StorageItemStack(
-                    ItemTools.read(buffer), // item
-                    buffer.readLong(), // price
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item title
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item description
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hint
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
-                    buffer.readBoolean(), // special
-                )
-            } else { // texture
-                StorageItemTexture(
-                    NetUtil.readUtf8(buffer), // texture
-                    buffer.readLong(), // price
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item title
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item description
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hint
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
-                    buffer.readBoolean(), // special
-                )
+            val item = if (buffer.readBoolean()) { // real item
+                StorageItemStack(ItemTools.read(buffer)) // item
+            } else {
+                StorageItemTexture(NetUtil.readUtf8(buffer)) // texture
             }
+            item.price = buffer.readLong() // price
+            item.title = NetUtil.readUtf8(buffer).replace("&", "§") // item title
+            item.description = NetUtil.readUtf8(buffer).replace("&", "§") // item description
+            item.hint = NetUtil.readUtf8(buffer).replace("&", "§") // item hint
+            item.hover = NetUtil.readUtf8(buffer).replace("&", "§") // item hover desc
+            item.command = NetUtil.readUtf8(buffer).replace("&", "§") // command
+            item.special = buffer.readBoolean() // special
+            item
         }
 
         fun push(gui: AbstractMenu) {

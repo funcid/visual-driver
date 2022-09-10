@@ -15,12 +15,13 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
-    override var price: Long = -1,
-    override var title: String,
-    override var description: String,
-    override var hint: String? = null,
-    var hoverText: String,
     open var icon: T,
+    override var price: Long = -1,
+    override var title: String = "",
+    override var description: String = "",
+    override var hint: String? = null,
+    var hoverText: String = "",
+    override var command: String? = null,
     override var special: Boolean = false
 ) : Button() {
 

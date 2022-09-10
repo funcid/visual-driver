@@ -21,6 +21,7 @@ open class SelectionModel(
 
     class Builder(val model: SelectionModel = SelectionModel(arrayListOf(), 4, 3)) {
         fun storage(vararg data: Button) = apply { model.data = data.toMutableList() }
+        fun storage(data: Iterable<Button>) = apply { model.data = data.toMutableList() }
         fun title(title: String) = apply { model.title = title }
         fun vault(vault: String) = apply { model.vault = vault }
         fun hint(hint: String) = apply { model.hint = hint }

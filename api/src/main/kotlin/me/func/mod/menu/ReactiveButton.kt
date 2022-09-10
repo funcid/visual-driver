@@ -126,10 +126,11 @@ class ReactiveButton : Button() {
         else transfer.string(texture ?: "")
 
         transfer.long(price)
-        transfer.string(title ?: "")
-        transfer.string(description ?: "")
+        transfer.string(title)
+        transfer.string(description)
         transfer.string(hint ?: "")
         transfer.string(hover ?: "")
+        transfer.string(command ?: "")
         transfer.boolean(special)
     }
 

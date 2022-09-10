@@ -587,6 +587,7 @@ public final class me/func/protocol/menu/SelectionModel$Builder {
 	public final fun hint (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
 	public final fun money (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
 	public final fun rows (I)Lme/func/protocol/menu/SelectionModel$Builder;
+	public final fun storage (Ljava/lang/Iterable;)Lme/func/protocol/menu/SelectionModel$Builder;
 	public final fun storage ([Lme/func/protocol/menu/Button;)Lme/func/protocol/menu/SelectionModel$Builder;
 	public final fun title (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
 	public final fun vault (Ljava/lang/String;)Lme/func/protocol/menu/SelectionModel$Builder;
