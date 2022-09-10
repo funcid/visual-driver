@@ -18,11 +18,6 @@ object Dialog : Listener {
         opened.remove(player.uniqueId)
     }
 
-    private fun pushAndSend(player: Player, dialog: Dialog, transfer: ModTransfer) {
-        opened[player.uniqueId] = dialog
-        transfer.send("rise:dialog-screen")
-    }
-
     init {
         command("dialog-callback") { player, args ->
             if (!opened.containsKey(player.uniqueId)) return@command
@@ -46,11 +41,13 @@ object Dialog : Listener {
     }
 
     @JvmStatic
-    fun sendDialog(player: Player, dialog: Dialog) = pushAndSend(
-        player, dialog, ModTransfer()
+    fun sendDialog(player: Player, dialog: Dialog) {
+        opened[player.uniqueId] = dialog
+        ModTransfer()
             .string("load")
             .json(dialog)
-    )
+            .send("rise:dialog-screen", player)
+    }
 
     @JvmStatic
     fun openDialog(player: Player, dialogId: String) = ModTransfer()
