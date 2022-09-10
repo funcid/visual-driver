@@ -15,13 +15,15 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
 
 abstract class StorageNode<T : AbstractElement>(
-    override var price: Long = -1,
-    override var title: String,
-    override var description: String,
-    override var hint: String? = null,
-    var hoverText: String,
     open var icon: T,
-    override var special: Boolean = false
+    override var price: Long = -1,
+    override var title: String = "",
+    override var description: String = "",
+    override var hint: String? = null,
+    var hoverText: String = "",
+    override var command: String? = null,
+    override var special: Boolean = false,
+    override var vault: String? = null
 ) : Button() {
 
     var bundle: CarvedRectangle? = null
@@ -50,7 +52,6 @@ abstract class StorageNode<T : AbstractElement>(
     }.apply { hintContainer = this }
 
     fun click(menu: AbstractMenu, event: ClickEvent) {
-        println(1)
         if (MenuManager.isMenuClickBlocked()) return
         val key = menu.storage.indexOf(this@StorageNode)
         if (command.isNullOrEmpty()) {
@@ -61,13 +62,7 @@ abstract class StorageNode<T : AbstractElement>(
             })
             return
         }
-        menu.close()
-        // Если через пол секунды, откроется другое меню - то не чистим стэк
-        UIEngine.schedule(0.5) {
-            if (menuStack.peek() != menu)
-                return@schedule
-            menuStack.clear()
-        }
+        val command = "/" + if (command?.startsWith("/") == true) command?.drop(1) else command
         UIEngine.clientApi.chat().sendChatMessage("$command $key")
     }
 

@@ -5,6 +5,7 @@ import dev.xdark.feder.NetUtil
 import experimental.storage.button.StorageItemTexture
 import experimental.storage.menu.MenuManager
 import me.func.protocol.menu.SelectionModel
+import readColoredUtf8
 import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.*
@@ -26,15 +27,16 @@ class SelectionManager {
                 }
 
                 val localStorage = model.data.map {
-                    StorageItemTexture(
-                        it.texture ?: "",
-                        it.price,
-                        it.title,
-                        it.description,
-                        it.hint ?: "",
-                        it.hover ?: "Купить",
-                        it.special
-                    ).apply { command = it.command }
+                    StorageItemTexture(it.texture ?: "").apply {
+                        price = it.price
+                        command = it.command
+                        title = it.title
+                        description = it.description
+                        hint = it.hint ?: ""
+                        hover = it.hover
+                        vault = it.vault
+                        special = it.special
+                    }
                 }
 
                 val pageCount = ceil(localStorage.size * 1.0 / pageSize).toInt()
@@ -56,10 +58,10 @@ class SelectionManager {
                 MenuManager.push(
                     Selection(
                         UUID.fromString(NetUtil.readUtf8(this)),
-                        NetUtil.readUtf8(this).replace("&", "§"), // title
+                        readColoredUtf8(), // title
                         NetUtil.readUtf8(this), // vault
-                        NetUtil.readUtf8(this).replace("&", "§"), // money title
-                        NetUtil.readUtf8(this).replace("&", "§"), // hint
+                        readColoredUtf8(), // money title
+                        readColoredUtf8(), // hint
                         readInt(), // rows
                         readInt(), // columns
                         readInt(), // page count

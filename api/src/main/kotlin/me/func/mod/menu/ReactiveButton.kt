@@ -1,5 +1,6 @@
 package me.func.mod.menu
 
+import dev.xdark.feder.NetUtil
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.Sprites
 import me.func.mod.menu.MenuManager.reactive
@@ -63,6 +64,8 @@ class ReactiveButton : Button() {
 
     override var special: Boolean = false
 
+    override var vault: String? = ""
+
     override var price: Long = -1
     private var sale = 0
 
@@ -112,6 +115,8 @@ class ReactiveButton : Button() {
 
     fun texture(sprite: Sprites) = apply { this.texture = sprite.path() }
 
+    fun vault(vault: String) = apply { this.vault = vault }
+
     fun description(vararg desc: String) = apply { this.description = desc.joinToString("\n") }
 
     fun description(desc: List<String>) = description(*desc.toTypedArray())
@@ -126,10 +131,12 @@ class ReactiveButton : Button() {
         else transfer.string(texture ?: "")
 
         transfer.long(price)
-        transfer.string(title ?: "")
-        transfer.string(description ?: "")
+        transfer.string(title)
+        transfer.string(description)
         transfer.string(hint ?: "")
         transfer.string(hover ?: "")
+        transfer.string(command ?: "")
+        transfer.string(vault ?: "")
         transfer.boolean(special)
     }
 
@@ -147,5 +154,7 @@ class ReactiveButton : Button() {
         it.price = price
         it.sale = sale
         it.special = special
+        it.command = command
+        it.vault = vault
     }
 }

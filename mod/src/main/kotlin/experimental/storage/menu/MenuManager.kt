@@ -7,12 +7,11 @@ import dev.xdark.feder.NetUtil
 import experimental.storage.AbstractMenu
 import experimental.storage.button.StorageItemStack
 import experimental.storage.button.StorageItemTexture
-import experimental.storage.button.StorageNode
 import experimental.storage.menu.selection.SelectionManager
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
+import readColoredUtf8
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import java.util.*
 
@@ -25,29 +24,19 @@ class MenuManager {
 
         fun isMenuClickBlocked() = openTimeAndDelayMillis + beforeClickDelay > System.currentTimeMillis()
 
-        fun readIcons(buffer: ByteBuf): MutableList<StorageNode<*>> = MutableList(buffer.readInt()) {
-            if (buffer.readBoolean()) { // real item
-                StorageItemStack(
-                    ItemTools.read(buffer), // item
-                    buffer.readLong(), // price
-                    NetUtil.readUtf8(buffer),
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item title
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item description
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hint
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
-                    buffer.readBoolean(), // special
-                )
-            } else { // texture
-                StorageItemTexture(
-                    NetUtil.readUtf8(buffer), // texture
-                    buffer.readLong(), // price
-                    NetUtil.readUtf8(buffer),
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item title
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item description
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hint
-                    NetUtil.readUtf8(buffer).replace("&", "§"), // item hover desc
-                    buffer.readBoolean(), // special
-                )
+        fun readIcons(buffer: ByteBuf) = MutableList(buffer.readInt()) {
+            val data = if (buffer.readBoolean()) StorageItemStack(ItemTools.read(buffer)) // item
+            else StorageItemTexture(NetUtil.readUtf8(buffer)) // texture
+
+            data.apply {
+                price = buffer.readLong() // price
+                title = buffer.readColoredUtf8() // item title
+                description = buffer.readColoredUtf8() // item description
+                hint = buffer.readColoredUtf8() // item hint
+                hover = buffer.readColoredUtf8() // item hover desc
+                command = buffer.readColoredUtf8() // command
+                vault = buffer.readColoredUtf8() // vault
+                special = buffer.readBoolean() // special
             }
         }
 
