@@ -28,7 +28,7 @@ class MenuManager {
             val data = if (buffer.readBoolean()) StorageItemStack(ItemTools.read(buffer)) // item
             else StorageItemTexture(NetUtil.readUtf8(buffer)) // texture
 
-            data.apply {  // texture
+            data.apply {
                 price = buffer.readLong() // price
                 title = buffer.readColoredUtf8() // item title
                 description = buffer.readColoredUtf8() // item description

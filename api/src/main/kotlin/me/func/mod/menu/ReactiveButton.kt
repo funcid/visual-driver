@@ -1,5 +1,6 @@
 package me.func.mod.menu
 
+import dev.xdark.feder.NetUtil
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.data.Sprites
 import me.func.mod.menu.MenuManager.reactive
@@ -135,6 +136,7 @@ class ReactiveButton : Button() {
         transfer.string(hint ?: "")
         transfer.string(hover ?: "")
         transfer.string(command ?: "")
+        transfer.string(vault ?: "")
         transfer.boolean(special)
     }
 
@@ -152,5 +154,7 @@ class ReactiveButton : Button() {
         it.price = price
         it.sale = sale
         it.special = special
+        it.command = command
+        it.vault = vault
     }
 }
