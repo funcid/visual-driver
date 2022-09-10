@@ -62,13 +62,7 @@ abstract class StorageNode<T : AbstractElement>(
             })
             return
         }
-        menu.close()
-        // Если через пол секунды, откроется другое меню - то не чистим стэк
-        UIEngine.schedule(0.5) {
-            if (menuStack.peek() != menu)
-                return@schedule
-            menuStack.clear()
-        }
+        val command = "/" + if (command?.startsWith("/") == true) command?.drop(1) else command
         UIEngine.clientApi.chat().sendChatMessage("$command $key")
     }
 
