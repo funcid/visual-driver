@@ -13,6 +13,7 @@ import ru.cristalix.uiengine.UIEngine
 import java.util.UUID
 
 class CorpseManager {
+
     private val corpses: MutableList<AbstractClientPlayer> = arrayListOf()
 
     init {

@@ -1,6 +1,6 @@
-package experimental.storage
+package standard.storage
 
-import experimental.storage.button.StorageNode
+import standard.storage.button.StorageNode
 import java.util.*
 
 interface AbstractMenu {

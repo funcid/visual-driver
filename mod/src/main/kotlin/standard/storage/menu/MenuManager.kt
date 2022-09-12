@@ -1,13 +1,13 @@
-package experimental.storage.menu
+package standard.storage.menu
 
 import Main.Companion.menuStack
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import experimental.storage.AbstractMenu
-import experimental.storage.button.StorageItemStack
-import experimental.storage.button.StorageItemTexture
-import experimental.storage.menu.selection.SelectionManager
+import standard.storage.AbstractMenu
+import standard.storage.button.StorageItemStack
+import standard.storage.button.StorageItemTexture
+import standard.storage.menu.selection.SelectionManager
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import readColoredUtf8

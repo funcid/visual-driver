@@ -2,7 +2,7 @@ package standard.ui
 
 import dev.xdark.feder.NetUtil
 import lazyText
-import me.func.protocol.Position
+import me.func.protocol.math.Position
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement

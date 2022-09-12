@@ -1,4 +1,4 @@
-package experimental.storage.menu
+package standard.storage.menu
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil

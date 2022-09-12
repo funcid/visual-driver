@@ -1,7 +1,7 @@
-package experimental.storage.menu.selection
+package standard.storage.menu.selection
 
 import dev.xdark.feder.NetUtil
-import experimental.storage.button.StorageNode
+import standard.storage.button.StorageNode
 import io.netty.buffer.Unpooled
 import ru.cristalix.uiengine.UIEngine
 import java.util.*

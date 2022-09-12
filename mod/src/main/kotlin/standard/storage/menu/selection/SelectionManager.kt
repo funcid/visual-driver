@@ -1,9 +1,9 @@
-package experimental.storage.menu.selection
+package standard.storage.menu.selection
 
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
-import experimental.storage.button.StorageItemTexture
-import experimental.storage.menu.MenuManager
+import standard.storage.button.StorageItemTexture
+import standard.storage.menu.MenuManager
 import me.func.protocol.menu.SelectionModel
 import readColoredUtf8
 import readJson

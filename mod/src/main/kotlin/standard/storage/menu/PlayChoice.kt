@@ -1,9 +1,9 @@
-package experimental.storage.menu
+package standard.storage.menu
 
 import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
-import experimental.storage.AbstractMenu
-import experimental.storage.button.StorageNode
+import standard.storage.AbstractMenu
+import standard.storage.button.StorageNode
 import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine

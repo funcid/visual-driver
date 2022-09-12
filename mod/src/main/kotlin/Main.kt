@@ -8,7 +8,7 @@ import dev.xdark.clientapi.opengl.OpenGlHelper
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
-import experimental.storage.AbstractMenu
+import standard.storage.AbstractMenu
 import healthbar.Healthbar
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod

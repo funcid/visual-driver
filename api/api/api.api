@@ -56,8 +56,8 @@ public final class me/func/mod/Anime {
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
 	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;I[Lme/func/mod/data/DailyReward;)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/data/LootDrop;)V
-	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/Position;Ljava/lang/String;)V
-	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/Position;[Ljava/lang/String;)V
+	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
+	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;III)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/RGB;)V
@@ -100,7 +100,7 @@ public final class me/func/mod/Banners {
 	public static final fun content (Lorg/bukkit/entity/Player;Lme/func/protocol/element/Banner;Ljava/lang/String;)V
 	public final fun eyeLocation (Lme/func/protocol/element/Banner;Lorg/bukkit/Location;)V
 	public final fun getBanners ()Ljava/util/Map;
-	public final fun harmonicVibrations (Lme/func/protocol/element/Banner;Lme/func/protocol/Dimension;DDD)V
+	public final fun harmonicVibrations (Lme/func/protocol/element/Banner;Lme/func/protocol/math/Dimension;DDD)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/element/Banner;)V
 	public final fun location (Lme/func/protocol/element/Banner;Lorg/bukkit/Location;)V
@@ -429,6 +429,7 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun putDouble (D)Lme/func/mod/conversation/ModTransfer;
 	public final fun putLong (J)Lme/func/mod/conversation/ModTransfer;
 	public final fun putString (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
+	public final fun rgb (Lme/func/protocol/RGB;)Lme/func/mod/conversation/ModTransfer;
 	public final fun send (Ljava/lang/String;Ljava/lang/Iterable;)V
 	public final fun send (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun short (S)Lme/func/mod/conversation/ModTransfer;

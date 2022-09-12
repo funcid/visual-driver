@@ -1,10 +1,10 @@
-package experimental.storage.menu.selection
+package standard.storage.menu.selection
 
 import Main.Companion.menuStack
-import experimental.storage.AbstractMenu
-import experimental.storage.TextedIcon
-import experimental.storage.button.StorageNode
-import experimental.storage.menu.MenuManager
+import standard.storage.AbstractMenu
+import standard.storage.TextedIcon
+import standard.storage.button.StorageNode
+import standard.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
 import me.func.protocol.menu.SelectionModel
 import org.lwjgl.input.Keyboard

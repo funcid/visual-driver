@@ -2,7 +2,7 @@ package me.func.mod
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
-import me.func.protocol.Dimension
+import me.func.protocol.math.Dimension
 import me.func.protocol.element.Banner
 import me.func.protocol.element.MotionType
 import org.bukkit.Location

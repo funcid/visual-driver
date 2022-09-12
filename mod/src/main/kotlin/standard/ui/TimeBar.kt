@@ -12,12 +12,6 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
 class TimeBar {
-    private val line: CarvedRectangle by lazyCarved {
-        origin = LEFT
-        align = LEFT
-        size = V3(180.0, 5.0, 0.0)
-        color = Color(42, 102, 189, 1.0)
-    }
     private val content: TextElement by lazyText {
         origin = TOP
         align = TOP
@@ -25,6 +19,13 @@ class TimeBar {
         shadow = true
         content = "Загрузка..."
         offset.y -= 15
+    }
+
+    private val line: CarvedRectangle by lazyCarved {
+        origin = LEFT
+        align = LEFT
+        size = V3(180.0, 5.0, 0.0)
+        color = Color(42, 102, 189, 1.0)
     }
 
     private val cooldown: CarvedRectangle by lazyCarved {

@@ -1,4 +1,4 @@
-package me.func.protocol
+package me.func.protocol.math
 
 enum class Dimension {
     X,
