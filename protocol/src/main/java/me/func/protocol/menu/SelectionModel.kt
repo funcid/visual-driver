@@ -14,6 +14,8 @@ open class SelectionModel(
     open var hint: String = ""
     open var money: String = ""
 
+    fun pageSize() = rows * columns
+
     companion object {
         @JvmStatic
         fun builder() = Builder()

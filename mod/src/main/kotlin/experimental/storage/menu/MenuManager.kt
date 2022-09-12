@@ -33,7 +33,7 @@ class MenuManager {
                 title = buffer.readColoredUtf8() // item title
                 description = buffer.readColoredUtf8() // item description
                 hint = buffer.readColoredUtf8() // item hint
-                hover = buffer.readColoredUtf8() // item hover desc
+                hoverText = buffer.readColoredUtf8() // item hover desc
                 command = buffer.readColoredUtf8() // command
                 vault = buffer.readColoredUtf8() // vault
                 special = buffer.readBoolean() // special

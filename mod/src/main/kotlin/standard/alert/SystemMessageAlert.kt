@@ -1,5 +1,6 @@
-package standard
+package standard.alert
 
+import lazyText
 import me.func.protocol.MessageStatus
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
@@ -7,27 +8,23 @@ import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
 
-class SystemMessage {
+class SystemMessageAlert {
     private val offsetX = 10.0
     private val buttonY = 5.0
     private var buttonX = 70.0
-    private val symbol: TextElement by lazy {
-        text {
-            content = "Загрузка..."
-            scale = V3(2.0, 2.0)
-            align = LEFT
-            origin = LEFT
-            offset.x += offsetX
-        }
+    private val symbol: TextElement by lazyText {
+        content = "Загрузка..."
+        scale = V3(2.0, 2.0)
+        align = LEFT
+        origin = LEFT
+        offset.x += offsetX
     }
-    private val description: TextElement by lazy {
-        text {
-            content = "Загрузка"
-            shadow = true
-            origin = LEFT
-            align = LEFT
-            offset.x += 30
-        }
+    private val description: TextElement by lazyText {
+        content = "Загрузка"
+        shadow = true
+        origin = LEFT
+        align = LEFT
+        offset.x += 30
     }
 
     private val message = UIEngine.overlayContext + carved {
@@ -41,11 +38,10 @@ class SystemMessage {
         +symbol
         +description
         enabled = false
+        UIEngine.overlayContext + this
     }
 
     init {
-        UIEngine.overlayContext.addChild(message)
-
         mod.registerChannel("anime:message") {
             when (MessageStatus.values()[readInt()]) {
                 MessageStatus.FINE -> {

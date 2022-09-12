@@ -1,11 +1,13 @@
-package standard
+package standard.alert
 
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
+import lazyText
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.BOTTOM
 import ru.cristalix.uiengine.utility.Easings
@@ -13,29 +15,30 @@ import ru.cristalix.uiengine.utility.TOP
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.text
 
-class ItemTitle {
-    init {
-        val title = text {
-            content = ""
-            beforeRender = {
-                GlStateManager.disableDepth()
-            }
-            align = V3(0.5, 0.6)
-            origin = BOTTOM
-            scale = V3(0.0, 0.0, 0.0)
-            shadow = true
-        }
-        val subtitle = text {
-            content = ""
-            align = V3(0.5, 0.6)
-            afterRender = {
-                GlStateManager.enableDepth()
-            }
-            offset.y = 1.0
-            origin = TOP
-            shadow = true
-        }
+class ItemTitleAlert {
 
+    private val title: TextElement by lazyText {
+        content = ""
+        beforeRender {
+            GlStateManager.disableDepth()
+        }
+        align = V3(0.5, 0.6)
+        origin = BOTTOM
+        scale = V3(0.0, 0.0, 0.0)
+        shadow = true
+    }
+    private val subtitle: TextElement by lazyText {
+        content = ""
+        align = V3(0.5, 0.6)
+        afterRender {
+            GlStateManager.enableDepth()
+        }
+        offset.y = 1.0
+        origin = TOP
+        shadow = true
+    }
+
+    init {
         UIEngine.overlayContext.addChild(title, subtitle)
 
         mod.registerChannel("func:drop-item") {

@@ -1,8 +1,11 @@
-package standard
+package standard.alert
 
 import Main.Companion.externalManager
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil.readUtf8
+import lazyCarved
+import lazyRectangle
+import lazyText
 import me.func.protocol.EndStatus
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
@@ -14,64 +17,65 @@ import ru.cristalix.uiengine.eventloop.thenAnimate
 import ru.cristalix.uiengine.eventloop.thenWait
 import ru.cristalix.uiengine.utility.*
 
-class Ending {
-    private lateinit var text: TextElement
-    private lateinit var cup: RectangleElement
-    private val information: CarvedRectangle by lazy {
-        carved {
-            align = CENTER
-            origin = CENTER
-            size = V3(225.0, 103.0)
-            offset = V3(20.0, 0.0, -50.0)
-            color = Color(16, 19, 19, 0.86)
-            key = +text {
-                align = LEFT
-                origin = LEFT
-                size = V3(20.0, 20.0)
-                color = WHITE
-                offset.x += 25
-            }
-            value = +text {
-                align = RIGHT
-                origin = RIGHT
-                size = V3(20.0, 20.0)
-                color = WHITE
-                offset.x -= 25
-            }
-        }
+class EndingAlert {
+    private val text: TextElement by lazyText {
+        align = CENTER
+        origin = CENTER
+        color = WHITE
+        scale = V3(2.0, 2.0)
+        offset.x += 5
     }
-    private lateinit var key: TextElement
-    private lateinit var value: TextElement
 
-    private val filler by lazy {
-        carved {
-            align = CENTER
-            origin = CENTER
-            size = V3(185.0, 103.0)
-            color = Color(255, 255, 255, 1.0)
-            offset = V3(0.0, 130.0)
-            cup = +rectangle {
-                align = CENTER
-                origin = CENTER
-                size = V3(63.5, 104.0)
-                color = WHITE
-            }
-            text = +text {
-                align = CENTER
-                origin = CENTER
-                color = WHITE
-                scale = V3(2.0, 2.0)
-                offset.x += 5
-            }
-        }
+    private val cup: RectangleElement by lazyRectangle {
+        align = CENTER
+        origin = CENTER
+        size = V3(63.5, 104.0)
+        color = WHITE
+    }
+
+    private val information: CarvedRectangle by lazyCarved {
+        align = CENTER
+        origin = CENTER
+        size = V3(225.0, 103.0)
+        offset = V3(20.0, 0.0, -50.0)
+        color = Color(16, 19, 19, 0.86)
+    }
+
+    private val key: TextElement by lazyText {
+        align = LEFT
+        origin = LEFT
+        size = V3(20.0, 20.0)
+        color = WHITE
+        offset.x += 25
+    }
+
+    private val value: TextElement by lazyText {
+        align = RIGHT
+        origin = RIGHT
+        size = V3(20.0, 20.0)
+        color = WHITE
+        offset.x -= 25
+    }
+
+    private val filler: CarvedRectangle by lazyCarved {
+        align = CENTER
+        origin = CENTER
+        size = V3(185.0, 103.0)
+        color = Color(255, 255, 255, 1.0)
+        offset = V3(0.0, 130.0)
+        +cup
+        +text
     }
 
     init {
+        val url = "https://storage.c7x.dev/func/animation-api/"
+
         externalManager.loadPaths(
-            "https://i.imgur.com/mF7DWoV.png",
-            "https://i.imgur.com/vxyu2tZ.png",
-            "https://i.imgur.com/zUxhQ7y.png"
+            "$url/win.png",
+            "$url/lose.png",
+            "$url/draw.png"
         )
+
         mod.registerChannel("crazy:ending") {
             val endStatus = EndStatus.values()[readInt()]
             key.content = readUtf8(this)

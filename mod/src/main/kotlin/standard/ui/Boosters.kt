@@ -1,4 +1,4 @@
-package standard
+package standard.ui
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.gui.ingame.ChatScreen
@@ -14,6 +14,35 @@ class Boosters {
 
     private var boosters: Flex by notNull()
     private var enabled = false
+
+    private val container = flex {
+        origin = TOP_RIGHT
+        align = TOP_RIGHT
+        flexSpacing = 4.0
+        size = V3(80.0, 80.0)
+        offset.y = 12.0
+        offset.x -= 12.0
+
+        +carved {
+            size = V3(18.0, 18.0)
+            color = Color(0, 0, 0, .62)
+            carveSize = 2.0
+
+            +text {
+                content = "+"
+                size = V3(16.0, 16.0)
+                color = WHITE
+                shadow = true
+                origin = CENTER
+                align = CENTER
+                offset.y = 3.5
+                offset.x = 0.5
+            }
+        }
+
+        boosters = +flex { flexSpacing = 4.0 }
+        enabled = false
+    }
 
     private fun booster(name: String, factor: Double) = carved {
         size = V3(62.5 * 1.055.pow(name.length.toDouble()), 18.0)
@@ -51,45 +80,6 @@ class Boosters {
     }
 
     init {
-        val container = flex {
-            origin = TOP_RIGHT
-            align = TOP_RIGHT
-            flexSpacing = 4.0
-            size = V3(80.0, 80.0)
-            offset.y = 12.0
-            offset.x -= 12.0
-
-            +carved {
-                size = V3(18.0, 18.0)
-                color = Color(0, 0, 0, .62)
-                carveSize = 2.0
-
-                +text {
-                    content = "+"
-                    size = V3(16.0, 16.0)
-                    color = WHITE
-                    shadow = true
-                    origin = CENTER
-                    align = CENTER
-                    offset.y = 3.5
-                    offset.x = 0.5
-                }
-            }
-
-            boosters = +flex {
-                flexSpacing = 4.0
-            }
-            enabled = false
-        }
-
-        /*        mod.registerHandler<ScreenDisplay> {
-            if (screen is ChatScreen && container.enabled) {
-                container.enabled = false
-            } else if (screen !is ChatScreen && boosters.children.isNotEmpty() && !container.enabled) {
-                container.enabled = true
-            }
-        }*/
-
         mod.registerHandler<GameLoop> {
             if (UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen) {
                 container.enabled = enabled && !Keyboard.isKeyDown(Keyboard.KEY_TAB)
@@ -110,6 +100,6 @@ class Boosters {
             }
         }
 
-        UIEngine.overlayContext.addChild(container)
+        UIEngine.overlayContext + container
     }
 }

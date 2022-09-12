@@ -1,4 +1,4 @@
-package standard
+package standard.ui
 
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.resource.ResourceLocation

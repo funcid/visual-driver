@@ -1,4 +1,4 @@
-package standard
+package standard.world
 
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
@@ -7,6 +7,7 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.sphere
+import standard.util.ClientApiAllowedLock
 import java.util.UUID
 
 class SphereManager {

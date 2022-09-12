@@ -184,12 +184,12 @@ object Anime {
 
     @JvmStatic
     fun lockPersonalization(player: Player) {
-        sendEmptyBuffer("func:break-ui", player)
+        ModTransfer(true).send("func:break-ui", player)
     }
 
     @JvmStatic
     fun unlockPersonalization(player: Player) {
-        sendEmptyBuffer("func:return-ui", player)
+        ModTransfer(false).send("func:break-ui", player)
     }
 
     @JvmStatic

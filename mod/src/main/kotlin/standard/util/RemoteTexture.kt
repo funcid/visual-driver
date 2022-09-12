@@ -1,7 +1,8 @@
-package standard
+package standard.util
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import ru.cristalix.uiengine.UIEngine
+import standard.NAMESPACE
 import java.io.ByteArrayInputStream
 import java.io.IOException
 import java.net.URL

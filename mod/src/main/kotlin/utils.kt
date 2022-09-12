@@ -1,6 +1,10 @@
 import com.google.gson.Gson
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
+import model.LazyElement
+import ru.cristalix.uiengine.element.CarvedRectangle
+import ru.cristalix.uiengine.element.RectangleElement
+import ru.cristalix.uiengine.element.TextElement
 import java.nio.charset.StandardCharsets
 
 val gson = Gson()
@@ -14,3 +18,9 @@ fun ByteBuf.readString(): String {
 inline fun <reified T> ByteBuf.readJson(): T = gson.fromJson(readString(), T::class.java)
 
 fun ByteBuf.readColoredUtf8() = NetUtil.readUtf8(this).replace("&", "§")
+
+fun lazyRectangle(element: RectangleElement.() -> Unit) = LazyElement { RectangleElement().also(element) }
+
+fun lazyText(element: TextElement.() -> Unit) = LazyElement { TextElement().also(element) }
+
+fun lazyCarved(element: CarvedRectangle.() -> Unit) = LazyElement { CarvedRectangle().also(element) }

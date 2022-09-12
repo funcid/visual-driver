@@ -1,4 +1,4 @@
-package standard
+package standard.alert
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil

@@ -1,5 +1,13 @@
 package standard
 
+import standard.alert.*
+import standard.daily.RewardManager
+import standard.ui.*
+import standard.util.ModelBlocker
+import standard.world.CorpseManager
+import standard.world.MarkerManager
+import standard.world.SphereManager
+
 const val NAMESPACE = "cache/animation"
 
 class Standard {
@@ -14,14 +22,14 @@ class Standard {
         TimeBar()
         GlowEffect()
         RewardManager()
-        ItemTitle()
+        ItemTitleAlert()
         CorpseManager()
         ScreenAlert()
         CursorAlert()
         OverlayText()
-        Ending()
+        EndingAlert()
         BigAlert()
         Boosters()
-        SystemMessage()
+        SystemMessageAlert()
     }
 }

@@ -1,4 +1,4 @@
-package standard
+package standard.daily
 
 import dev.xdark.clientapi.item.ItemStack
 import ru.cristalix.uiengine.element.CarvedRectangle

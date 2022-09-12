@@ -1,7 +1,9 @@
-package standard
+package standard.ui
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
+import lazyCarved
+import lazyText
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle
@@ -10,33 +12,34 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
 class TimeBar {
-    private lateinit var line: CarvedRectangle
-    private lateinit var content: TextElement
+    private val line: CarvedRectangle by lazyCarved {
+        origin = LEFT
+        align = LEFT
+        size = V3(180.0, 5.0, 0.0)
+        color = Color(42, 102, 189, 1.0)
+    }
+    private val content: TextElement by lazyText {
+        origin = TOP
+        align = TOP
+        color = WHITE
+        shadow = true
+        content = "Загрузка..."
+        offset.y -= 15
+    }
+
+    private val cooldown: CarvedRectangle by lazyCarved {
+        offset.y += 30
+        origin = TOP
+        align = TOP
+        size = V3(180.0, 5.0, 0.0)
+        color = Color(0, 0, 0, 0.62)
+        +line
+        +content
+        enabled = false
+        UIEngine.overlayContext + this
+    }
 
     init {
-        val cooldown = carved {
-            offset.y += 30
-            origin = TOP
-            align = TOP
-            size = V3(180.0, 5.0, 0.0)
-            color = Color(0, 0, 0, 0.62)
-            line = +carved {
-                origin = LEFT
-                align = LEFT
-                size = V3(180.0, 5.0, 0.0)
-                color = Color(42, 102, 189, 1.0)
-            }
-            content = +text {
-                origin = TOP
-                align = TOP
-                color = WHITE
-                shadow = true
-                content = "Загрузка..."
-                offset.y -= 15
-            }
-            enabled = false
-        }
-
         var time = 0
         var currentTime = System.currentTimeMillis()
 
@@ -107,7 +110,5 @@ class TimeBar {
             UIEngine.schedule((secondsTotal - 1.0) / 3 * 2) { dropNumber(1.toString(), 5.5, Color(170, 10, 10)) }
             UIEngine.schedule((secondsTotal - 1.0) / 3 * 3) { dropNumber("§lGO!", 2.2, Color(100, 255, 100)) }
         }
-
-        UIEngine.overlayContext + cooldown
     }
 }

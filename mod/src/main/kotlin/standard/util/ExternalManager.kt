@@ -1,11 +1,9 @@
-package standard
+package standard.util
 
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
 import ru.cristalix.clientapi.JavaMod.loadTextureFromJar
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 

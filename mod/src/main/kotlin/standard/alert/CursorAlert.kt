@@ -1,4 +1,4 @@
-package standard
+package standard.alert
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
@@ -25,13 +25,13 @@ class CursorAlert {
                 offset = Relative.CENTER
                 align = Relative.CENTER
                 scale = V3(1.0, 1.0, 1.0)
-                addChild(text {
+                +text {
                     offset.x -= 20
                     shadow = true
                     scale = V3(1.0, 1.0, 1.0)
                     content = NetUtil.readUtf8(this@registerChannel)
                     color = Color(255, 255, 255, 1.0)
-                })
+                }
             }
             UIEngine.overlayContext + hint
 
@@ -40,20 +40,18 @@ class CursorAlert {
                 offset.y += 70 * Math.random()
             }
 
-            hints.add(Pair(System.currentTimeMillis(), hint))
+            hints.add(System.currentTimeMillis() to hint)
         }
 
         mod.registerHandler<GameLoop> {
-            if (hints.isEmpty())
-                return@registerHandler
+            if (hints.isEmpty()) return@registerHandler
 
             val time = System.currentTimeMillis()
 
             hints.removeIf {
                 val remove = time - it.first > timeLife
 
-                if (remove)
-                    UIEngine.overlayContext.removeChild(it.second)
+                if (remove) UIEngine.overlayContext.removeChild(it.second)
 
                 return@removeIf remove
             }

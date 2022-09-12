@@ -1,5 +1,7 @@
-package standard
+package standard.alert
 
+import lazyCarved
+import lazyText
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
@@ -11,11 +13,34 @@ import ru.cristalix.uiengine.utility.*
 private const val VECTOR = 65
 
 class Alert {
-    private lateinit var dayTitle: TextElement
-    private lateinit var lore: TextElement
-    private lateinit var loreBox: CarvedRectangle
 
-    private val dayTitleBox = carved {
+    private val dayTitle: TextElement by lazyText {
+        align = CENTER
+        origin = CENTER
+        scale = V3(1.5, 1.5)
+        color = WHITE
+        shadow = true
+        content = "Название игры"
+    }
+
+    private val lore: TextElement by lazyText {
+        align = CENTER
+        origin = CENTER
+        scale = V3(0.75, 0.75)
+        color = WHITE
+        content = "Первая строка описания\nВторая строка описания"
+    }
+
+    private val loreBox: CarvedRectangle by lazyCarved {
+        align = BOTTOM
+        origin = BOTTOM
+        size = V3(180.0, 18.0)
+        offset.y += size.y
+        color = Color(0, 0, 0, 0.62)
+        +lore
+    }
+
+    private val dayTitleBox: CarvedRectangle by lazyCarved {
         align = TOP
         origin = TOP
 
@@ -24,29 +49,8 @@ class Alert {
         color = Color(42, 102, 189, 0.86)
         size = V3(160.0, 32.0)
 
-        dayTitle = +text {
-            align = CENTER
-            origin = CENTER
-            scale = V3(1.5, 1.5)
-            color = WHITE
-            shadow = true
-            content = "Название игры"
-        }
-        loreBox = +carved {
-            align = BOTTOM
-            origin = BOTTOM
-            size = V3(180.0, 18.0)
-            offset.y += size.y
-            color = Color(0, 0, 0, 0.62)
-
-            lore = +text {
-                align = CENTER
-                origin = CENTER
-                scale = V3(0.75, 0.75)
-                color = WHITE
-                content = "Первая строка описания\nВторая строка описания"
-            }
-        }
+        +dayTitle
+        +loreBox
     }
 
     init {

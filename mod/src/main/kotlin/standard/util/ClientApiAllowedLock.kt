@@ -1,4 +1,4 @@
-package standard
+package standard.util
 
 class ClientApiAllowedLock {
     @Volatile

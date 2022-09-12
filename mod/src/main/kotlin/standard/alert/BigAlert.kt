@@ -1,14 +1,16 @@
-package standard
+package standard.alert
 
 import dev.xdark.feder.NetUtil
+import lazyText
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.BOTTOM
 import ru.cristalix.uiengine.utility.text
 
 class BigAlert {
-    private val title = text {
+    private val title: TextElement by lazyText {
         origin = BOTTOM
         align = BOTTOM
         offset.y -= 60

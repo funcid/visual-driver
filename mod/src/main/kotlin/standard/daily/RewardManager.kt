@@ -1,13 +1,13 @@
-package standard
+package standard.daily
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
-import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
+import lazyRectangle
+import lazyText
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.ContextGui
@@ -23,39 +23,49 @@ import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
 class RewardManager {
-    lateinit var hintText: TextElement
+
+    private val gui = ContextGui().apply {
+        color = Color(0, 0, 0, 0.86)
+    }
+
     private var currentDay = 0
-    private var hint: RectangleElement? = null
+
+    private val hintText: TextElement by lazyText {
+        content = "???"
+        offset.x = 2.0
+        offset.y = 2.0
+    }
+
+    private val hint: RectangleElement by lazyRectangle {
+        color = Color(0, 0, 0, 0.7)
+        size.x = 100.0
+        size.y = 14.0
+        offset.z += 10
+        enabled = false
+        +hintText
+        gui + this
+    }
+
+    private val topText: TextElement by lazyText {
+        origin = CENTER
+        align = CENTER
+        color = WHITE
+        shadow = true
+        scale = V3(1.5, 1.5)
+        offset.y -= 110.0
+        content = "Ваша ежедневная награда / $currentDay день"
+        gui + topText
+    }
 
     init {
-        val box = rectangle {
-            size = V3(2000.0, 2000.0)
-            color = Color(0, 0, 0, 0.86)
-            origin = CENTER
-            align = CENTER
-            enabled = false
-        }
         val week = arrayListOf<Day>()
-        val gui = ContextGui()
 
         mod.registerChannel("func:weekly-reward") {
             gui.children.clear()
 
-            gui + box
-
             currentDay = readInt()
 
-            val topText = text {
-                origin = CENTER
-                align = CENTER
-                color = WHITE
-                shadow = true
-                scale = V3(1.5, 1.5)
-                offset.y -= 110.0
-                content = "Ваша ежедневная награда / $currentDay день"
-            }
-
-            gui + topText
+            topText.content = "Ваша ежедневная награда / $currentDay день"
 
             for (i in 0..6) {
                 val dayBox = Day(
@@ -74,13 +84,6 @@ class RewardManager {
                         topElement.content = "§lУРА!\nнаграда"
                         dayBox.color = Color(224, 118, 20, 0.3)
                         dayBox.onMouseUp {
-                            gui.removeChild(
-                                box,
-                                topElement,
-                                hint!!,
-                                *week.toTypedArray(),
-                                topText
-                            )
                             clientApi.chat().sendChatMessage("/lootboxsound")
                             gui.close()
                         }
@@ -90,8 +93,8 @@ class RewardManager {
                 dayBox.onHover {
                     if (hovered) {
                         hintText.content = dayBox.name
-                        hint?.enabled = true
-                        hint?.size?.x = hintText.size.x + 4
+                        hint.enabled = true
+                        hint.size.x = hintText.size.x + 4
                         week.forEach {
                             if (it != this) {
                                 it.normalize()
@@ -111,7 +114,7 @@ class RewardManager {
                             size.y = 175.0
                         }
                     } else {
-                        hint?.enabled = false
+                        hint.enabled = false
                         week.forEach {
                             if (it != dayBox) {
                                 it.normalize()
@@ -126,27 +129,13 @@ class RewardManager {
                 week.add(dayBox)
                 gui + dayBox
             }
-            box.enabled = true
             gui.open()
         }
 
         mod.registerHandler<GameLoop> {
             val scale = clientApi.resolution().scaleFactor
-            hint?.offset?.x = (Mouse.getX() / scale).toDouble()
-            hint?.offset?.y = ((Display.getHeight() - Mouse.getY()) / scale).toDouble()
-        }
-
-        hint = gui + rectangle {
-            color = Color(0, 0, 0, 0.7)
-            size.x = 100.0
-            size.y = 14.0
-            offset.z += 10
-            enabled = false
-            hintText = +text {
-                content = "???"
-                offset.x = 2.0
-                offset.y = 2.0
-            }
+            hint.offset.x = (Mouse.getX() / scale).toDouble()
+            hint.offset.y = ((Display.getHeight() - Mouse.getY()) / scale).toDouble()
         }
     }
 }

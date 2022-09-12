@@ -1,4 +1,4 @@
-package standard
+package standard.world
 
 import com.mojang.authlib.GameProfile
 import com.mojang.authlib.properties.Property
@@ -8,7 +8,6 @@ import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import java.util.UUID

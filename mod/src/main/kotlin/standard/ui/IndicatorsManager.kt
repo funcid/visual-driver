@@ -1,4 +1,4 @@
-package standard
+package standard.ui
 
 import dev.xdark.clientapi.event.Cancellable
 import dev.xdark.clientapi.event.Event
@@ -14,10 +14,7 @@ import dev.xdark.clientapi.event.render.PlayerListRender
 import dev.xdark.clientapi.event.render.PotionsRender
 import dev.xdark.clientapi.event.render.VehicleHealthRender
 import me.func.protocol.Indicators
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.uiengine.UIEngine.listener
 
 class IndicatorsManager {
 
