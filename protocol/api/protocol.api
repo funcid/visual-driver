@@ -571,6 +571,7 @@ public class me/func/protocol/menu/SelectionModel : me/func/protocol/menu/Page {
 	public fun getRows ()I
 	public fun getTitle ()Ljava/lang/String;
 	public fun getVault ()Ljava/lang/String;
+	public final fun pageSize ()I
 	public fun setColumns (I)V
 	public fun setData (Ljava/util/List;)V
 	public fun setHint (Ljava/lang/String;)V
