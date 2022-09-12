@@ -44,6 +44,7 @@ class ProgressController {
 
             progressMap[readId()]?.let { progress ->
                 progress.content.content = readColoredUtf8()
+                progress.model.progress = readDouble()
                 progress.progress.animate(0.1) { size.x = PROGRESS_WIDTH * progress.model.progress }
             }
         }
