@@ -14,6 +14,7 @@ import java.io.DataOutput
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
+import java.util.*
 
 val LOOKUP: MethodHandles.Lookup = MethodHandles.publicLookup()
 val WRITE_ITEM: MethodHandle = try {
@@ -100,13 +101,12 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     @JvmName("putBoolean")
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
-    fun send(channel: String, vararg players: Player?): Unit =
-        send(channel, object : Iterable<Player?> {
-            override fun iterator() = players.iterator()
-        })
+    fun uuid(uuid: UUID) = apply { serializer.writeUuid(uuid) }
+
+    fun send(channel: String, vararg players: Player?): Unit = send(channel, players.asIterable())
 
     fun send(channel: String, players: Iterable<Player?>): Unit =
-        players.filterNotNull().filterIsInstance<CraftPlayer>().forEach {
+        players.filterIsInstance<CraftPlayer>().forEach {
             it.handle.playerConnection.networkManager.sendPacket(
                 PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
             )
