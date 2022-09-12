@@ -919,14 +919,15 @@ public final class me/func/mod/progress/ReactiveProgress : me/func/protocol/prog
 	public final fun delete (Ljava/util/Set;)V
 	public static synthetic fun delete$default (Lme/func/mod/progress/ReactiveProgress;Ljava/util/Set;ILjava/lang/Object;)V
 	public final fun getLastUpdate ()J
-	public final fun getUpdater ()Ljava/util/function/Consumer;
+	public fun getProgress ()D
+	public fun getText ()Ljava/lang/String;
 	public final fun send (Ljava/util/List;)V
 	public final fun send ([Lorg/bukkit/entity/Player;)V
 	public final fun setLastUpdate (J)V
-	public final fun setUpdater (Ljava/util/function/Consumer;)V
+	public fun setProgress (D)V
+	public fun setText (Ljava/lang/String;)V
 	public final fun unsubscribe (Ljava/lang/Iterable;)Z
 	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
-	public final fun update ()V
 }
 
 public final class me/func/mod/progress/ReactiveProgress$Builder {
@@ -942,7 +943,6 @@ public final class me/func/mod/progress/ReactiveProgress$Builder {
 	public final fun position (Lme/func/protocol/math/Position;)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun progress (D)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun text (Ljava/lang/String;)Lme/func/mod/progress/ReactiveProgress$Builder;
-	public final fun updater (Ljava/util/function/Consumer;)Lme/func/mod/progress/ReactiveProgress$Builder;
 }
 
 public final class me/func/mod/progress/ReactiveProgress$Companion {

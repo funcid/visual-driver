@@ -40,7 +40,6 @@ class UIProgress(
         color = Color(0, 0, 0, 0.62)
         +progress
         +content
-        enabled = false
         UIEngine.overlayContext + this
     }
 }

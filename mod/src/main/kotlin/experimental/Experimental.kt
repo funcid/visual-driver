@@ -1,5 +1,6 @@
 package experimental
 
+import experimental.progress.ProgressController
 import experimental.progress.UIProgress
 
 // не пытайтесь это "оптимизировать", иначе вы все сломаете
@@ -14,6 +15,8 @@ class Experimental {
             Disguise()
             Disguise.Companion
             UIProgress()
+            ProgressController()
+            ProgressController.Companion
             return null
         }
     }

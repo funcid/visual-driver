@@ -5,11 +5,8 @@ import me.func.protocol.RGB
 import me.func.protocol.math.Position
 import me.func.protocol.progress.Progress
 import org.bukkit.entity.Player
-import java.util.function.Consumer
 
 class ReactiveProgress : Progress() {
-
-    var updater: Consumer<Progress>? = null
 
     var lastUpdate = -1L
 
@@ -37,26 +34,35 @@ class ReactiveProgress : Progress() {
             .send("progress-ui:create", *players)
     }
 
-    fun update() {
-
-        // Обновить прогресс у всех игроков
-        lastUpdate = System.currentTimeMillis()
-        updater?.accept(this)
-
-        subscribed.removeIf { !it.player.isOnline }
-
-        starter()
-            .string(text)
-            .double(progress)
-            .send("progress-ui:update", subscribed)
-    }
-
     @JvmOverloads
     fun delete(players: Set<Player> = subscribed) {
 
         // Удалить данный прогресс бар
         starter().send("progress-ui:remove", players)
         subscribed.removeAll(players)
+    }
+
+
+    override var progress: Double = super.progress
+        set(value) {
+            update(starter().integer(0).double(value))
+            field = value
+        }
+
+    override var text: String = super.text
+        set(value) {
+            update(starter().integer(1).string(value))
+            field = value
+        }
+
+    private fun update(transfer: ModTransfer) {
+
+        // Обновить прогресс у всех игроков
+        lastUpdate = System.currentTimeMillis()
+
+        subscribed.removeIf { !it.player.isOnline }
+
+        transfer.send("progress-ui:update", subscribed)
     }
 
     private fun starter() = ModTransfer().uuid(uuid)
@@ -68,7 +74,6 @@ class ReactiveProgress : Progress() {
 
     class Builder(val model: ReactiveProgress = ReactiveProgress()) {
 
-        fun updater(updater: Consumer<Progress>) = apply { model.updater = updater }
         fun position(position: Position) = apply { model.position = position }
         fun color(lineColor: RGB) = apply { model.lineColor = lineColor }
         fun text(text: String) = apply { model.text = text }

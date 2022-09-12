@@ -41,11 +41,38 @@ class ProgressController {
         }
 
         mod.registerChannel("progress-ui:update") {
+            progressMap[readId()]?.let { bar ->
+                when (readInt()) { // код изменения
+                    0 -> { // прогресс
+                        val progress = readDouble()
+                        if (progress !in 0.0..1.0)
+                            return@registerChannel
+                        bar.model.progress = progress
 
-            progressMap[readId()]?.let { progress ->
-                progress.content.content = readColoredUtf8()
-                progress.model.progress = readDouble()
-                progress.progress.animate(0.1) { size.x = PROGRESS_WIDTH * progress.model.progress }
+                        bar.progress.animate(0.1, Easings.QUART_OUT) {
+                            size.x = PROGRESS_WIDTH * progress
+                        }
+                    }
+                    1 -> bar.content.content = readColoredUtf8() // текст
+                }
+            }
+        }
+
+        mod.registerChannel("progress-ui:update") {
+
+            progressMap[readId()]?.let { bar ->
+                bar.content.content = readColoredUtf8()
+
+                val progress = readDouble()
+
+                if (progress !in 0.0..1.0)
+                    return@registerChannel
+
+                bar.model.progress = progress
+
+                bar.progress.animate(0.1, Easings.QUART_OUT) {
+                    size.x = PROGRESS_WIDTH * progress
+                }
             }
         }
 
@@ -73,7 +100,7 @@ class ProgressController {
 
             progress.enabled = true
             progress.content.content = progress.model.text // текст
-            progress.container.color = Color(
+            progress.progress.color = Color(
                 progress.model.lineColor.red,
                 progress.model.lineColor.green,
                 progress.model.lineColor.blue
