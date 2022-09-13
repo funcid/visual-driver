@@ -1,4 +1,4 @@
-import me.func.protocol.DropRare
+import me.func.protocol.data.rare.DropRare
 import me.func.protocol.personalization.Graffiti
 import me.func.protocol.personalization.GraffitiPack
 import java.util.UUID

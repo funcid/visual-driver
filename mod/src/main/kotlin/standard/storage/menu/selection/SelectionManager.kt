@@ -4,7 +4,7 @@ import Main.Companion.menuStack
 import dev.xdark.feder.NetUtil
 import standard.storage.button.StorageItemTexture
 import standard.storage.menu.MenuManager
-import me.func.protocol.menu.SelectionModel
+import me.func.protocol.ui.menu.SelectionModel
 import readColoredUtf8
 import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod

@@ -3,11 +3,10 @@ package experimental.progress
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.event.render.ScaleChange
 import dev.xdark.clientapi.event.window.WindowResize
-import dev.xdark.clientapi.render.ScaledResolution
 import experimental.progress.impl.UIProgress
 import experimental.progress.impl.WorldProgress
 import me.func.protocol.math.Position
-import me.func.protocol.progress.Progress
+import me.func.protocol.ui.progress.Progress
 import org.lwjgl.input.Keyboard
 import readColoredUtf8
 import readRgb

@@ -6,7 +6,7 @@ import dev.xdark.feder.NetUtil.readUtf8
 import lazyCarved
 import lazyRectangle
 import lazyText
-import me.func.protocol.EndStatus
+import me.func.protocol.data.status.EndStatus
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle

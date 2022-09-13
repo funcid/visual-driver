@@ -1,7 +1,7 @@
 package standard.alert
 
 import lazyText
-import me.func.protocol.MessageStatus
+import me.func.protocol.data.status.MessageStatus
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine

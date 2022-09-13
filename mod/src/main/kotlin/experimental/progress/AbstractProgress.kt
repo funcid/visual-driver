@@ -3,7 +3,7 @@ package experimental.progress
 import experimental.progress.ProgressController.Companion.PROGRESS_WIDTH
 import lazyCarved
 import lazyText
-import me.func.protocol.progress.Progress
+import me.func.protocol.ui.progress.Progress
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*

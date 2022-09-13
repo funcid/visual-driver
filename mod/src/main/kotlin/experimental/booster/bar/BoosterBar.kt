@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import dev.xdark.feder.NetUtil
 import experimental.booster.bar.model.BoosterBarModel
 import experimental.booster.bar.model.BoosterSegmentModel
-import me.func.protocol.booster.bar.CloseBoosterRequest
-import me.func.protocol.booster.bar.OpenBoosterRequest
+import me.func.protocol.ui.booster.CloseBoosterRequest
+import me.func.protocol.ui.booster.OpenBoosterRequest
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate

@@ -6,7 +6,7 @@ import dev.xdark.clientapi.entity.AbstractClientPlayer
 import dev.xdark.clientapi.entity.PlayerModelPart
 import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
-import me.func.protocol.npc.NpcData
+import me.func.protocol.world.npc.NpcData
 import ru.cristalix.clientapi.JavaMod.clientApi
 import java.security.MessageDigest
 import java.util.UUID

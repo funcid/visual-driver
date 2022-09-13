@@ -4,13 +4,14 @@ import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.Anime.GRAFFITI_MOD_URL
 import me.func.mod.Anime.STANDARD_MOD_URL
 import me.func.mod.Anime.graffitiClient
-import me.func.mod.Npc.npcs
-import me.func.mod.battlepass.BattlePass
+import me.func.mod.world.Npc.npcs
+import me.func.mod.ui.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.util.*
+import me.func.mod.world.Banners
 import me.func.protocol.Mod
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
@@ -20,7 +21,6 @@ import org.bukkit.event.Listener
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
 import org.bukkit.event.player.PlayerChangedWorldEvent
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import ru.cristalix.core.formatting.Formatting
 import java.util.EnumSet
@@ -115,12 +115,6 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
                 // Первая попытка загрузки данных
                 GraffitiManager.tryPutData(uniqueId)
             }
-        }
-
-        @EventHandler
-        fun PlayerQuitEvent.handle1() {
-            // Очистка от игрока
-            GraffitiManager.clear(player)
         }
 
         @EventHandler(priority = EventPriority.LOW)

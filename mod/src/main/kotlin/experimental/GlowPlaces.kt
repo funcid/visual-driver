@@ -4,12 +4,10 @@ import dev.xdark.clientapi.event.render.RenderPass
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.render.DefaultVertexFormats
 import dev.xdark.feder.NetUtil
-import me.func.protocol.GlowingPlace
-import me.func.protocol.Tricolor
+import me.func.protocol.world.GlowingPlace
+import me.func.protocol.data.color.Tricolor
 import org.lwjgl.opengl.GL11
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
 import kotlin.math.cos

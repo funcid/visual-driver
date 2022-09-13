@@ -6,7 +6,7 @@ import standard.storage.TextedIcon
 import standard.storage.button.StorageNode
 import standard.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
-import me.func.protocol.menu.SelectionModel
+import me.func.protocol.ui.menu.SelectionModel
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle

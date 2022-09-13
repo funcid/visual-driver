@@ -5,8 +5,8 @@ import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
-import me.func.protocol.element.Banner
-import me.func.protocol.element.MotionType
+import me.func.protocol.data.element.Banner
+import me.func.protocol.data.element.MotionType
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D

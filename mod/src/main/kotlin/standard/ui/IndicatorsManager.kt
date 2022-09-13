@@ -13,7 +13,7 @@ import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.PlayerListRender
 import dev.xdark.clientapi.event.render.PotionsRender
 import dev.xdark.clientapi.event.render.VehicleHealthRender
-import me.func.protocol.Indicators
+import me.func.protocol.ui.indicator.Indicators
 import ru.cristalix.clientapi.KotlinModHolder.mod
 
 class IndicatorsManager {

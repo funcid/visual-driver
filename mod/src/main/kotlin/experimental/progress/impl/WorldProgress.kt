@@ -1,7 +1,7 @@
 package experimental.progress.impl
 
 import experimental.progress.AbstractProgress
-import me.func.protocol.progress.Progress
+import me.func.protocol.ui.progress.Progress
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.utility.V3

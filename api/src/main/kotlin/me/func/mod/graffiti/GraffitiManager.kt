@@ -2,6 +2,8 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.BroadcastSubscriber
+import me.func.mod.conversation.broadcast.SubscribeVerifier
 import me.func.mod.service.Services.socketClient
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
@@ -17,7 +19,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Predicate
 import kotlin.math.abs
 
-object GraffitiManager {
+object GraffitiManager : BroadcastSubscriber {
 
     private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
     private const val MAX_GRAFFITI_IN_WORLD = 50
@@ -58,10 +60,6 @@ object GraffitiManager {
         }
 
         transfer.send("graffiti:create-bulk", player) // На моде все стоящие очистятся
-    }
-
-    fun clear(player: Player) {
-        graffiti.remove(player.uniqueId)
     }
 
     private fun safeRead(player: Player?): FeatureUserData? {
@@ -222,4 +220,10 @@ object GraffitiManager {
         }
         return future
     }
+
+    override val isConstant = true
+
+    override fun removeSubscriber(player: Player) { graffiti.remove(player.uniqueId) }
+
+    override fun getSubscribersCount() = graffiti.size
 }

@@ -1,6 +1,6 @@
 package me.func.protocol.personalization
 
-import me.func.protocol.DropRare
+import me.func.protocol.data.rare.DropRare
 import me.func.protocol.Unique
 import java.util.UUID
 

@@ -1,8 +1,7 @@
 import com.google.gson.Gson
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
-import me.func.protocol.RGB
-import me.func.protocol.Tricolor
+import me.func.protocol.data.color.Tricolor
 import model.LazyElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement

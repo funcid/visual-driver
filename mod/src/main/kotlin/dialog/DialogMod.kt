@@ -6,7 +6,7 @@ import com.google.gson.JsonParser
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.event.window.WindowResize
-import me.func.protocol.dialog.*
+import me.func.protocol.ui.dialog.*
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.clientApi

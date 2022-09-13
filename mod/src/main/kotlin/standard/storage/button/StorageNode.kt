@@ -1,12 +1,11 @@
 package standard.storage.button
 
-import Main.Companion.menuStack
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
 import standard.storage.AbstractMenu
 import standard.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
-import me.func.protocol.menu.Button
+import me.func.protocol.ui.menu.Button
 import ru.cristalix.uiengine.ClickEvent
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.AbstractElement
