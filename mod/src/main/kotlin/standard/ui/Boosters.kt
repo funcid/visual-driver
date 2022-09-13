@@ -1,8 +1,7 @@
-package standard
+package standard.ui
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.gui.ingame.ChatScreen
-import dev.xdark.feder.NetUtil
 import org.lwjgl.input.Keyboard
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readId
@@ -18,7 +17,7 @@ class Boosters {
 
     private var boosters = hashMapOf<UUID, CarvedRectangle>()
     private var boostersContainer: Flex by notNull()
-    private var enabled = true
+    private var enabled = false
 
     init {
         val container = flex {
@@ -58,13 +57,13 @@ class Boosters {
         }
 
         mod.registerChannel("mid:boosters-mode") {
-            enabled = readBoolean()
+            container.enabled = readBoolean()
         }
 
         mod.registerChannel("mid:boosters") {
             repeat(readInt()) {
                 val id = readId()
-                val enabled = readBoolean()
+                enabled = readBoolean()
                 val name = readUtf8()
                 val multiplier = readDouble()
                 if (enabled) {
