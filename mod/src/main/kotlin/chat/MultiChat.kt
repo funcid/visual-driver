@@ -30,7 +30,7 @@ class MultiChat {
     private val nonActiveColor = Color(alpha = 0.68)
 
     init {
-        UIEngine.overlayContext.afterRender {
+        UIEngine.postOverlayContext.afterRender {
             if (hoveringText != null) {
                 val resolution = UIEngine.clientApi.resolution()
                 val scaleFactor = resolution.scaleFactor
