@@ -2,7 +2,7 @@
 
 <a href="https://trello.com/invite/b/5YPXbUWx/ac9ba1a9988c918d4f8c87c0edd76d73/animation-api">Присоединиться</a>
 
-# Cristalix Animation API DOCS (актуальная версия 2.7.4)
+# Cristalix Animation API DOCS (актуальная версия 2.8.4)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -158,7 +158,10 @@ players.forEach { player -> data.send("lootbox", player) }
 Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods`
 является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
 
-<h3>Меню выбора / Меню выбора подрежима EXPERIMENTAL</h3>
+<h3>Прогресс Bars EXPERIMENTAL</h3>
+
+
+<h3>Меню выбора / Меню выбора подрежима STANDARD</h3>
 
 Selection
    
@@ -243,7 +246,7 @@ Selection menu = new Selection(
 menu.open(player);
 ```
    
-<h3>Меню реконнекта EXPERIMENTAL</h3>
+<h3>Меню реконнекта STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/168923320-5465ff25-70be-4324-9371-c830ba31a43c.png" width="500">
  
@@ -256,7 +259,7 @@ menu = Reconnect("Продать почку", 90, "Продать") { player -> 
 menu.open(player) // Открываем меню игроку
 ```
    
-<h3>Меню подтверждения EXPERIMENTAL</h3>
+<h3>Меню подтверждения STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/168159225-348a4e78-d9c1-44c1-818f-00e5d15fe395.png" width="500">
 
@@ -361,7 +364,7 @@ BattlePass.show(player, battlePass, BattlePassUserData(100, false))
 Редкость предмета берется из `NBTTag` предмета `rare` (DropRare), а статус собранности награды `taken` (Boolean).<br>
 Можно указывать награду на каждый уровень, требуемый опыт.<br>
 
-<h3>Баннеры EXPERIMENTAL</h3>
+<h3>Баннеры STANDARD</h3>
 
 <img src="https://user-images.githubusercontent.com/42806772/148836905-914c3f10-bf65-4767-b28d-7a884fac6acd.png" width="250">
 

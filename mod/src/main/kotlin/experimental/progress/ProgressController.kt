@@ -49,29 +49,11 @@ class ProgressController {
                             return@registerChannel
                         bar.model.progress = progress
 
-                        bar.progress.animate(0.1, Easings.QUART_OUT) {
+                        bar.progress.animate(0.3, Easings.QUART_OUT) {
                             size.x = PROGRESS_WIDTH * progress
                         }
                     }
                     1 -> bar.content.content = readColoredUtf8() // текст
-                }
-            }
-        }
-
-        mod.registerChannel("progress-ui:update") {
-
-            progressMap[readId()]?.let { bar ->
-                bar.content.content = readColoredUtf8()
-
-                val progress = readDouble()
-
-                if (progress !in 0.0..1.0)
-                    return@registerChannel
-
-                bar.model.progress = progress
-
-                bar.progress.animate(0.1, Easings.QUART_OUT) {
-                    size.x = PROGRESS_WIDTH * progress
                 }
             }
         }
