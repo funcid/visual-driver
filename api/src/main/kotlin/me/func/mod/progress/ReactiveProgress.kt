@@ -39,7 +39,7 @@ class ReactiveProgress : Progress() {
 
         // Удалить данный прогресс бар
         starter().send("progress-ui:remove", players)
-        subscribed.removeAll(players)
+        unsubscribe(players)
     }
 
 
