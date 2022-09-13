@@ -182,7 +182,7 @@ public final class me/func/mod/conversation/ModTransferKt {
 	public static final fun getWRITE_ITEM ()Ljava/lang/invoke/MethodHandle;
 }
 
-public abstract interface class me/func/mod/conversation/broadcast/BroadcastSubscriber {
+public abstract interface class me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public abstract fun getSubscribersCount ()I
 	public abstract fun isConstant ()Z
 	public abstract fun removeSubscriber (Lorg/bukkit/entity/Player;)V
@@ -190,6 +190,7 @@ public abstract interface class me/func/mod/conversation/broadcast/BroadcastSubs
 
 public final class me/func/mod/conversation/broadcast/SubscribeVerifier : org/bukkit/event/Listener {
 	public static final field INSTANCE Lme/func/mod/conversation/broadcast/SubscribeVerifier;
+	public final fun add ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)Z
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
 }
 
@@ -387,7 +388,7 @@ public abstract interface class me/func/mod/graffiti/GraffitiClient {
 	public abstract fun use (Ljava/util/UUID;Ljava/util/UUID;Ljava/util/UUID;)Ljava/util/concurrent/CompletableFuture;
 }
 
-public final class me/func/mod/graffiti/GraffitiManager : me/func/mod/conversation/broadcast/BroadcastSubscriber {
+public final class me/func/mod/graffiti/GraffitiManager : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field INSTANCE Lme/func/mod/graffiti/GraffitiManager;
 	public fun getSubscribersCount ()I
 	public final fun isCanPlace ()Ljava/util/function/Predicate;
@@ -456,7 +457,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun write (Lme/func/mod/conversation/ModTransfer;)V
 }
 
-public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/progress/Progress, me/func/mod/conversation/broadcast/BroadcastSubscriber {
+public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/progress/Progress, me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field Companion Lme/func/mod/reactive/ReactiveProgress$Companion;
 	public fun <init> ()V
 	public static final fun builder ()Lme/func/mod/reactive/ReactiveProgress$Builder;
@@ -715,15 +716,17 @@ public final class me/func/mod/ui/booster/Boosters {
 	public static final fun send (Lorg/bukkit/entity/Player;[Lme/func/mod/ui/booster/Booster;)V
 }
 
-public final class me/func/mod/ui/dialog/Dialog : org/bukkit/event/Listener {
+public final class me/func/mod/ui/dialog/Dialog : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field INSTANCE Lme/func/mod/ui/dialog/Dialog;
 	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/ui/dialog/Dialog;Ljava/lang/String;)V
-	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
+	public fun getSubscribersCount ()I
+	public fun isConstant ()Z
 	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
 	public static final fun sendDialog (Lorg/bukkit/entity/Player;Lme/func/protocol/ui/dialog/Dialog;)V
 }
 
-public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/broadcast/BroadcastSubscriber {
+public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field INSTANCE Lme/func/mod/ui/menu/MenuManager;
 	public static final fun bind (Lme/func/mod/ui/menu/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
 	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
@@ -787,7 +790,6 @@ public final class me/func/mod/ui/menu/Storage$DefaultImpls {
 public final class me/func/mod/ui/menu/choicer/Choicer : me/func/mod/ui/menu/Storage {
 	public static final field Companion Lme/func/mod/ui/menu/choicer/Choicer$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lme/func/mod/reactive/ReactiveButton;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
@@ -891,8 +893,6 @@ public final class me/func/mod/ui/menu/recconnct/Reconnect : me/func/mod/ui/menu
 public class me/func/mod/ui/menu/selection/Selection : me/func/protocol/ui/menu/SelectionModel, me/func/mod/ui/menu/Paginated {
 	public static final field Companion Lme/func/mod/ui/menu/selection/Selection$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/reactive/ReactiveButton;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
@@ -963,6 +963,7 @@ public final class me/func/mod/util/Utils {
 	public static final fun command (Ljava/lang/String;Lorg/apache/logging/log4j/util/BiConsumer;)V
 	public static final fun consoleCommand (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun listener ([Lorg/bukkit/event/Listener;)V
+	public static final fun subscriber ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)Z
 	public static final synthetic fun unit (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
 	public static final synthetic fun unit (Lkotlin/jvm/functions/Function0;)V
 }
