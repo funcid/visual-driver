@@ -13,7 +13,8 @@ open class Progress(
     open var text: String = "Загрузка...",
     open var offsetY: Double = 0.0,
     open var offsetX: Double = 0.0,
-    open var hideOnTab: Boolean = true
+    open var offsetZ: Double = 0.0,
+    open var hideOnTab: Boolean = true,
 ): Unique {
 
     open var progress: Double = 0.5 // Прогресс между 0.0 и 1.0
@@ -30,6 +31,7 @@ open class Progress(
         fun text(text: String) = apply { model.text = text }
         fun offsetY(offsetY: Double) = apply { model.offsetY = offsetY }
         fun offsetX(offsetX: Double) = apply { model.offsetX = offsetX }
+        fun offsetZ(offsetZ: Double) = apply { model.offsetZ = offsetZ }
         fun progress(progress: Double) = apply { model.progress = progress }
         fun hideOnTab(hideOnTab: Boolean) = apply { model.hideOnTab = hideOnTab }
         fun build() = model

@@ -4,6 +4,7 @@ import me.func.mod.conversation.ModTransfer
 import me.func.protocol.RGB
 import me.func.protocol.math.Position
 import me.func.protocol.progress.Progress
+import org.bukkit.Location
 import org.bukkit.entity.Player
 
 class ReactiveProgress : Progress() {
@@ -24,11 +25,13 @@ class ReactiveProgress : Progress() {
         // Отправить и добавить игроков в подписавшихся
         subscribed.addAll(players)
         starter()
+            .string(worldName)
             .rgb(lineColor)
             .integer(position.ordinal)
             .boolean(hideOnTab)
             .double(offsetX)
             .double(offsetY)
+            .double(offsetZ)
             .double(progress)
             .string(text)
             .send("progress-ui:create", *players)
@@ -79,6 +82,8 @@ class ReactiveProgress : Progress() {
         fun text(text: String) = apply { model.text = text }
         fun offsetY(offsetY: Double) = apply { model.offsetY = offsetY }
         fun offsetX(offsetX: Double) = apply { model.offsetX = offsetX }
+        fun offsetZ(offsetZ: Double) = apply { model.offsetZ = offsetZ }
+        fun location(location: Location) = offsetX(location.x).offsetY(location.y).offsetZ(location.z)
         fun progress(progress: Double) = apply { model.progress = progress }
         fun hideOnTab(hideOnTab: Boolean) = apply { model.hideOnTab = hideOnTab }
         fun build() = model

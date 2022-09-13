@@ -1,7 +1,7 @@
 package experimental
 
 import experimental.progress.ProgressController
-import experimental.progress.UIProgress
+import experimental.progress.AbstractProgress
 
 // не пытайтесь это "оптимизировать", иначе вы все сломаете
 class Experimental {
@@ -14,7 +14,7 @@ class Experimental {
             GlowPlaces.Companion
             Disguise()
             Disguise.Companion
-            UIProgress()
+            AbstractProgress()
             ProgressController()
             ProgressController.Companion
             return null
