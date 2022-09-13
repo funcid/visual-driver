@@ -290,7 +290,7 @@ menu.open(player); // Открываем меню игроку
    
 <h3>Батлпасс BATTLEPASS</h3>
 
-<img src="https://user-images.githubusercontent.com/97367701/150653992-b9bf373f-9f3c-4a2b-b9fe-3fb839484e9a.png" width="500">
+<img src="https://i.imgur.com/3R8pYtH.png" width="500">
 
 Что представляет из себя батлпасс?<br>
 Это приобретаемый набор заданий, за выполнение которых даются внутриигровые вещи.<br>
