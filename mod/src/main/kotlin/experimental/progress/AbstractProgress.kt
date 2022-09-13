@@ -16,9 +16,8 @@ abstract class AbstractProgress(val model: Progress) {
         origin = TOP
         align = TOP
         color = WHITE
-        shadow = true
         content = "Загрузка..."
-        offset.y -= 15
+        offset.y -= 12
     }
 
     val progress: CarvedRectangle by lazyCarved {
@@ -29,11 +28,11 @@ abstract class AbstractProgress(val model: Progress) {
     }
 
     val container: CarvedRectangle by lazyCarved {
-        offset.y += 30
         origin = TOP
         align = TOP
         size = V3(PROGRESS_WIDTH, 5.0, 0.0)
         color = Color(0, 0, 0, 0.62)
+
         +progress
         +content
     }

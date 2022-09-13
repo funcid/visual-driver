@@ -2,7 +2,8 @@ package experimental.progress
 
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.event.render.ScaleChange
-import dev.xdark.feder.NetUtil
+import dev.xdark.clientapi.event.window.WindowResize
+import dev.xdark.clientapi.render.ScaledResolution
 import experimental.progress.impl.UIProgress
 import experimental.progress.impl.WorldProgress
 import me.func.protocol.math.Position
@@ -26,14 +27,16 @@ class ProgressController {
     private val progressMap = hashMapOf<UUID, AbstractProgress>() // uuid to progress
 
     init {
-        mod.registerHandler<ScaleChange> {
-
+        fun rescale() {
             progressMap.values.filterIsInstance<UIProgress>().forEach { progress ->
                 // Смещение
                 progress.container.offset.y = -progress.model.offsetY
                 progress.container.offset.x = progress.model.offsetX
             }
         }
+
+        mod.registerHandler<ScaleChange> { rescale() }
+        mod.registerHandler<WindowResize> { rescale() }
 
         mod.registerHandler<RenderTickPre> {
 
@@ -131,6 +134,8 @@ class ProgressController {
 
                 progress.container.align = origin
                 progress.container.origin = origin
+            } else {
+                progress.progress.offset.z -= 0.001
             }
 
             progress.create()
