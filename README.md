@@ -1,8 +1,4 @@
-# Наш Trello
-
-<a href="https://trello.com/invite/b/5YPXbUWx/ac9ba1a9988c918d4f8c87c0edd76d73/animation-api">Присоединиться</a>
-
-# Cristalix Animation API DOCS (актуальная версия 2.8.4)
+# Cristalix Animation API DOCS (актуальная версия 2.8.5)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -160,6 +156,27 @@ players.forEach { player -> data.send("lootbox", player) }
 
 <h3>Прогресс Bars EXPERIMENTAL</h3>
 
+<img src="https://user-images.githubusercontent.com/42806772/189779202-e2fd1ab2-3014-4753-b75e-06f5c018f7b3.png" width="500">
+
+На данный момент реализован только реактивный прогрессбар (меняете поля на сервере - меняются на клиентах), работает на экране игрока.
+
+Создание на языка java
+```java
+ReactiveProgress.builder() // примеры того, что можно настроить
+   .position(Position.BOTTOM) // указать стартовую позицию снизу
+   .offsetY(32) // сместить вверх на 32 "пикселя"
+   .hideOnTab(false) // не скрывать при нажатии таба
+   .color(GlowColor.GREEN) // поставить зеленый цвет, можно поставить любой RGB, например через Tricolor
+   .build();
+```
+
+Чтобы показать его группе игроков и подписать их на обновление, используйте `ReactiveProgress#send(vararg players: Player)`
+Отписать игроков от обновления - `ReactiveProgress#unsubscribe(vararg players: Player)`
+Стереть прогресс у игроков и отписать от обновления - `ReactiveProgress#delete(vararg players: Player)`
+
+Как реактивно менять данные прогрессбара?
+- Уровень прогресса, вызовите `ReactiveProgress#setProgress(value: Double)` (число от 0 до 1)
+- Строку над прогрессом, вызовите `ReactiveProgress#setTest(test: String)`
 
 <h3>Меню выбора / Меню выбора подрежима STANDARD</h3>
 
@@ -172,17 +189,7 @@ Choicer
 <img src="https://user-images.githubusercontent.com/42806772/169326395-2e1b4119-5a6e-45db-b1e2-c377c5410d18.png" width="500">
 
 1. Чтобы загрузить свою текстуру, используйте `Anime#loadTextures` или `Anime#loadTexture` (возвращает texture).
-2. Если вы хотетите сменить валюту, то нужно изменить поле `vault` в `Selection` на имя фотографии, список:
-boost (![boost](https://user-images.githubusercontent.com/42806772/167699489-f3b01e86-96fa-40c0-b7f8-d93044f21323.png)),
-coin (![coin](https://user-images.githubusercontent.com/42806772/167699600-2d856415-12c4-4107-92da-1ca6de662394.png)),
-dollar (![dollar](https://user-images.githubusercontent.com/42806772/167699644-00d5a442-0b1b-40a5-91bd-a90a9685207d.png)),
-donate (![donate](https://user-images.githubusercontent.com/42806772/167699683-6ea27f1a-6397-4f7b-b8fe-e335b7121854.png)),
-exp (![exp](https://user-images.githubusercontent.com/42806772/167699755-55bc43fa-7716-4f50-90ed-e60ee1daaf04.png)),
-heart (![heart](https://user-images.githubusercontent.com/42806772/167699766-02518b7e-43d9-4835-a49c-41db5b798ce6.png)),
-mining (![mining](https://user-images.githubusercontent.com/42806772/167699785-0804e0c7-d77e-4314-8a6c-7aa1d15385dd.png)),
-ruby (![ruby](https://user-images.githubusercontent.com/42806772/167699803-ab4b1004-33c8-42e5-9c29-44fe5525abf7.png)),
-time (![time](https://user-images.githubusercontent.com/42806772/167699820-898924d5-d5d3-404d-a202-f4c79ab07c8a.png)),
-tree (![tree](https://user-images.githubusercontent.com/42806772/167699889-4b907b04-15ef-49ec-bb00-f8f46623cf64.png)).
+2. Если вы хотетите сменить валюту, то нужно изменить поле `vault` в `Selection` на символ валюты или путь к текстуре
 3. Если нужно закрыть меню, используйте `Anime#close`, которое закрывает любое окно игрока, кроме меню достижений и настроек.
 
 Пример для языка kotlin
