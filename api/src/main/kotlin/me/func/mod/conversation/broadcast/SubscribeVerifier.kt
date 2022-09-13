@@ -6,7 +6,9 @@ import org.bukkit.event.player.PlayerQuitEvent
 
 object SubscribeVerifier : Listener {
 
-    private val providers = arrayListOf<BroadcastSubscriber>()
+    private val providers = arrayListOf<PlayerSubscriber>()
+
+    fun add(vararg playerSubscriber: PlayerSubscriber) = providers.addAll(playerSubscriber)
 
     @EventHandler
     fun PlayerQuitEvent.handle() {

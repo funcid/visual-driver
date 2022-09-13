@@ -9,5 +9,6 @@ data class BattlePassPageAdvanced(
     var items: List<ItemStack> = mutableListOf(),
     var advancedItems: List<ItemStack> = mutableListOf(),
 ) : BattlePassPage(requiredExp, skipPrice) {
+
     constructor(init: BattlePassPageAdvanced.() -> Unit) : this() { this.init() }
 }

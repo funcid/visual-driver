@@ -1,22 +1,17 @@
 package me.func.mod.ui.dialog
 
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.util.command
 import me.func.protocol.ui.dialog.Dialog
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
-import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerQuitEvent
 import java.util.*
 
-object Dialog : Listener {
+object Dialog : PlayerSubscriber {
 
     private val opened = hashMapOf<UUID, Dialog>()
-
-    @EventHandler
-    fun PlayerQuitEvent.handle() {
-        opened.remove(player.uniqueId)
-    }
 
     init {
         command("dialog-callback") { player, args ->
@@ -54,5 +49,11 @@ object Dialog : Listener {
         .string("open")
         .string(dialogId)
         .send("rise:dialog-screen", player)
+
+    override val isConstant = true
+
+    override fun removeSubscriber(player: Player) { opened.remove(player.uniqueId) }
+
+    override fun getSubscribersCount() = opened.size
 
 }

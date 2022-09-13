@@ -1,14 +1,19 @@
 package me.func.mod.reactive
 
-import me.func.mod.conversation.broadcast.BroadcastSubscriber
+import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.util.subscriber
 import me.func.protocol.data.color.RGB
 import me.func.protocol.math.Position
 import me.func.protocol.ui.progress.Progress
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
-class ReactiveProgress : Progress(), BroadcastSubscriber {
+class ReactiveProgress : Progress(), PlayerSubscriber {
+
+    init {
+        subscriber(this)
+    }
 
     override val isConstant: Boolean = false
 

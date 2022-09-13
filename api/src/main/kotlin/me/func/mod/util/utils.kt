@@ -4,6 +4,9 @@ package me.func.mod.util
 
 import me.func.mod.Anime
 import me.func.mod.conversation.CRAFT_ITEM_TO_NMS
+import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.conversation.broadcast.SubscribeVerifier
+import me.func.mod.debug.Subscriber
 import net.minecraft.server.v1_12_R1.NBTTagCompound
 import org.apache.logging.log4j.util.BiConsumer
 import org.bukkit.Bukkit
@@ -46,6 +49,8 @@ fun after(ticks: Long = 1, runnable: Runnable): BukkitTask =
 
 fun listener(vararg listener: Listener) =
     listener.forEach { Bukkit.getPluginManager().registerEvents(it, Anime.provided) }
+
+fun subscriber(vararg subscriber: PlayerSubscriber) = SubscribeVerifier.add(*subscriber)
 
 /**
  * Копирует итемстак, добавляя в него новый нбт

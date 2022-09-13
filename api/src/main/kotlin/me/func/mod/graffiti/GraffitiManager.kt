@@ -2,8 +2,7 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.conversation.broadcast.BroadcastSubscriber
-import me.func.mod.conversation.broadcast.SubscribeVerifier
+import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.service.Services.socketClient
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
@@ -19,7 +18,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Predicate
 import kotlin.math.abs
 
-object GraffitiManager : BroadcastSubscriber {
+object GraffitiManager : PlayerSubscriber {
 
     private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
     private const val MAX_GRAFFITI_IN_WORLD = 50

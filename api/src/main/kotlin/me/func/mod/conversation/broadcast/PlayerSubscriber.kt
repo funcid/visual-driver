@@ -2,7 +2,7 @@ package me.func.mod.conversation.broadcast
 
 import org.bukkit.entity.Player
 
-interface BroadcastSubscriber {
+interface PlayerSubscriber {
 
     val isConstant: Boolean
 

@@ -13,13 +13,10 @@ class Choicer(
     var description: String = "Выбери нужный под-режим!",
     override var storage: MutableList<ReactiveButton> = mutableListOf()
 ) : Storage {
+
     var allowClosing: Boolean = true
 
-    constructor(title: String, description: String, vararg storage: ReactiveButton) :
-            this(UUID.randomUUID(), title, description, storage.toMutableList())
-
     companion object {
-
         @JvmStatic
         fun builder() = Builder()
     }

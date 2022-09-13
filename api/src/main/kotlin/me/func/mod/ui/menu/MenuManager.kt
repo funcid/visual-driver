@@ -4,7 +4,7 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.Anime.provided
-import me.func.mod.conversation.broadcast.BroadcastSubscriber
+import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.reactive.ReactiveButton
 import me.func.mod.ui.menu.choicer.Choicer
@@ -23,7 +23,7 @@ inline fun choicer(setup: Choicer.() -> Unit) = Choicer().also(setup)
 
 inline fun button(setup: ReactiveButton.() -> Unit) = ReactiveButton().also(setup)
 
-object MenuManager : BroadcastSubscriber {
+object MenuManager : PlayerSubscriber {
 
     val handleMap = hashMapOf<UUID, Openable>() // player uuid to selection
     val menuStacks = hashMapOf<UUID, Stack<Storage>>() // player uuid to openable history

@@ -12,10 +12,12 @@ import me.func.mod.conversation.data.LootDrop
 import me.func.mod.debug.Debug
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
+import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
 import me.func.mod.ui.menu.MenuManager
 import me.func.mod.ui.menu.queue.QueueViewer
 import me.func.mod.ui.Glow
+import me.func.mod.ui.MultiChat
 import me.func.mod.ui.dialog.Dialog
 import me.func.mod.util.*
 import me.func.protocol.data.color.RGB
@@ -61,7 +63,9 @@ object Anime {
     init {
         log("Enabling animation-api, version: $version")
 
-        listener(StandardMods, Glow, AutoSendRegistry, SubscribeVerifier, QueueViewer, Dialog)
+        listener(StandardMods, Glow, AutoSendRegistry, SubscribeVerifier, QueueViewer)
+        subscriber(GraffitiManager, Dialog, MenuManager)
+
         Debug // Инициализации команды и обработчика сообщений
     }
 
