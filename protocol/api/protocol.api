@@ -689,13 +689,14 @@ public final class me/func/protocol/npc/NpcData$Companion {
 public class me/func/protocol/progress/Progress : me/func/protocol/Unique {
 	public static final field Companion Lme/func/protocol/progress/Progress$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Lme/func/protocol/math/Position;Lme/func/protocol/RGB;Ljava/lang/String;DDZ)V
-	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/math/Position;Lme/func/protocol/RGB;Ljava/lang/String;DDZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/math/Position;Lme/func/protocol/RGB;Ljava/lang/String;DDDZ)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/math/Position;Lme/func/protocol/RGB;Ljava/lang/String;DDDZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun builder ()Lme/func/protocol/progress/Progress$Builder;
 	public fun getHideOnTab ()Z
 	public fun getLineColor ()Lme/func/protocol/RGB;
 	public fun getOffsetX ()D
 	public fun getOffsetY ()D
+	public fun getOffsetZ ()D
 	public fun getPosition ()Lme/func/protocol/math/Position;
 	public fun getProgress ()D
 	public fun getText ()Ljava/lang/String;
@@ -704,6 +705,7 @@ public class me/func/protocol/progress/Progress : me/func/protocol/Unique {
 	public fun setLineColor (Lme/func/protocol/RGB;)V
 	public fun setOffsetX (D)V
 	public fun setOffsetY (D)V
+	public fun setOffsetZ (D)V
 	public fun setPosition (Lme/func/protocol/math/Position;)V
 	public fun setProgress (D)V
 	public fun setText (Ljava/lang/String;)V
@@ -719,6 +721,7 @@ public final class me/func/protocol/progress/Progress$Builder {
 	public final fun hideOnTab (Z)Lme/func/protocol/progress/Progress$Builder;
 	public final fun offsetX (D)Lme/func/protocol/progress/Progress$Builder;
 	public final fun offsetY (D)Lme/func/protocol/progress/Progress$Builder;
+	public final fun offsetZ (D)Lme/func/protocol/progress/Progress$Builder;
 	public final fun position (Lme/func/protocol/math/Position;)Lme/func/protocol/progress/Progress$Builder;
 	public final fun progress (D)Lme/func/protocol/progress/Progress$Builder;
 	public final fun text (Ljava/lang/String;)Lme/func/protocol/progress/Progress$Builder;

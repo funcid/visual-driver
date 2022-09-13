@@ -25,7 +25,6 @@ class ReactiveProgress : Progress() {
         // Отправить и добавить игроков в подписавшихся
         subscribed.addAll(players)
         starter()
-            .string(worldName)
             .rgb(lineColor)
             .integer(position.ordinal)
             .boolean(hideOnTab)

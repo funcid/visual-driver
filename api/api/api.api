@@ -938,8 +938,10 @@ public final class me/func/mod/progress/ReactiveProgress$Builder {
 	public final fun color (Lme/func/protocol/RGB;)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun getModel ()Lme/func/mod/progress/ReactiveProgress;
 	public final fun hideOnTab (Z)Lme/func/mod/progress/ReactiveProgress$Builder;
+	public final fun location (Lorg/bukkit/Location;)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun offsetX (D)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun offsetY (D)Lme/func/mod/progress/ReactiveProgress$Builder;
+	public final fun offsetZ (D)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun position (Lme/func/protocol/math/Position;)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun progress (D)Lme/func/mod/progress/ReactiveProgress$Builder;
 	public final fun text (Ljava/lang/String;)Lme/func/mod/progress/ReactiveProgress$Builder;
