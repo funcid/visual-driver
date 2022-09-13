@@ -638,9 +638,16 @@ RGB<br>
 <img src="https://user-images.githubusercontent.com/42806772/148701775-bd2afe54-b659-492a-b779-061269924130.png" width="500">
 
 Методы:<br>
+Устаревший метод, который выводит сообщение только в правом нижнем углу:
 `Anime.bottomRightMessage(player: Player, text: String)` поставить справа снизу информацию игроку (строка делится
 по `\n`)<br>
 `Anime.bottomRightMessage(player: Player, vararg text: String)` тоже самое, но удобнее, так как можно указать строки
+через запятую<br>
+
+Новый метод, который выводит в 4 разных угла:
+`Anime.overlayText(player: Player, position: Position, text: String)` позволяет размещать текст в разные стороны экрана (строка делится
+по `\n`)<br>
+`Anime.overlayText(player: Player, position: Position, vararg text: String)` тоже самое, но удобнее, так как можно указать строки
 через запятую<br>
 
 <h3>Искуственные игроки NPC</h3>
