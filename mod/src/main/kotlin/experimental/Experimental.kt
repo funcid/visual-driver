@@ -14,7 +14,6 @@ class Experimental {
             GlowPlaces.Companion
             Disguise()
             Disguise.Companion
-            AbstractProgress()
             ProgressController()
             ProgressController.Companion
             return null
