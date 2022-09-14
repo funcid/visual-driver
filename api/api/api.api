@@ -929,6 +929,7 @@ public class me/func/mod/ui/menu/selection/Selection : me/func/protocol/ui/menu/
 public final class me/func/mod/ui/menu/selection/Selection$Builder {
 	public fun <init> ()V
 	public final fun build ()Lme/func/mod/ui/menu/selection/Selection;
+	public final fun columns (I)Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public final fun hint (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public final fun money (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public final fun rows (I)Lme/func/mod/ui/menu/selection/Selection$Builder;

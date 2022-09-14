@@ -35,6 +35,7 @@ open class Selection(
         fun money(money: String) = apply { selection.money = money }
         fun hint(hint: String) = apply { selection.hint = hint }
         fun rows(rows: Int) = apply { selection.rows = rows }
+        fun columns(columns: Int) = apply { selection.columns = columns }
         fun uuid(uuid: UUID) = apply { selection.uuid = uuid }
         fun storage(storage: MutableList<ReactiveButton>) = apply { selection.data = storage }
         fun storage(vararg storage: ReactiveButton) = apply { selection.data = storage.toMutableList() }
