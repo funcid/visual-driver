@@ -70,7 +70,7 @@ class EndingAlert {
     }
 
     init {
-        val url = "https://storage.c7x.dev/func/animation-api/"
+        val url = "https://storage.c7x.dev/func/animation-api"
 
         externalManager.loadPaths(
             "$url/win.png",
