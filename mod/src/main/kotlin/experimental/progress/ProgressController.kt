@@ -133,6 +133,8 @@ class ProgressController {
 
                 progress.container.align = origin
                 progress.container.origin = origin
+
+                rescale()
             } else {
                 progress.progress.offset.z -= 0.001
             }
