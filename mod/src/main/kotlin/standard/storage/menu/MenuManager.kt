@@ -146,6 +146,11 @@ class MenuManager {
                             break
                         }
                     }
+
+                    // Информационный блок
+                    if (stack.info.isNotEmpty() && stack.getInformationBlock().hovered) {
+                        lastText = stack.info
+                    }
                 }
 
                 if (lastText.isNullOrEmpty()) {

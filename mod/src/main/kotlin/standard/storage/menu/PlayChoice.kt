@@ -1,7 +1,6 @@
 package standard.storage.menu
 
 import Main.Companion.menuStack
-import dev.xdark.feder.NetUtil
 import standard.storage.AbstractMenu
 import standard.storage.button.StorageNode
 import io.netty.buffer.Unpooled
@@ -15,14 +14,19 @@ import java.util.*
 
 class PlayChoice(
     override var uuid: UUID,
-    var info: String,
+    override var info: String,
     var title: String,
     @JvmField var description: String,
     allowClosing: Boolean,
     override var storage: MutableList<StorageNode<*>>
 ) : AbstractMenu, ContextGui() {
 
+    private val information = generateInformation()
+
     init {
+        if (info.isNotEmpty()) +information
+        color = Color(0, 0, 0, .86)
+
         if (!allowClosing) {
             keyTypedHandlers.removeFirstOrNull() // удаление листенера ESC перед регистрацией наших листенеров
         }
@@ -187,7 +191,5 @@ class PlayChoice(
         }
     }
 
-    init {
-        color = Color(0, 0, 0, .86)
-    }
+    override fun getInformationBlock() = information
 }

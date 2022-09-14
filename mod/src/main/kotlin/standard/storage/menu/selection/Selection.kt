@@ -20,7 +20,7 @@ import kotlin.math.ceil
 
 class Selection(
     override var uuid: UUID,
-    var info: String = "",
+    override var info: String = "",
     var title: String,
     var vault: String,
     @JvmField var money: String,
@@ -272,9 +272,16 @@ class Selection(
         pages,
     )
 
+    private val information = generateInformation()
+
     init {
         color = Color(0, 0, 0, .86)
+
+        if (info.isNotEmpty()) +information
+
         redrawGrid()
     }
+
+    override fun getInformationBlock() = information
 
 }
