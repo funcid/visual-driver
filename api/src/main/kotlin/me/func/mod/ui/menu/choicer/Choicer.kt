@@ -16,6 +16,10 @@ class Choicer(
 
     var allowClosing: Boolean = true
 
+    constructor(title: String, description: String, vararg storage: ReactiveButton) :
+            this(UUID.randomUUID(), title, description, storage.toMutableList())
+
+
     companion object {
         @JvmStatic
         fun builder() = Builder()

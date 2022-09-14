@@ -790,6 +790,7 @@ public final class me/func/mod/ui/menu/Storage$DefaultImpls {
 public final class me/func/mod/ui/menu/choicer/Choicer : me/func/mod/ui/menu/Storage {
 	public static final field Companion Lme/func/mod/ui/menu/choicer/Choicer$Companion;
 	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lme/func/mod/reactive/ReactiveButton;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
@@ -893,6 +894,8 @@ public final class me/func/mod/ui/menu/recconnct/Reconnect : me/func/mod/ui/menu
 public class me/func/mod/ui/menu/selection/Selection : me/func/protocol/ui/menu/SelectionModel, me/func/mod/ui/menu/Paginated {
 	public static final field Companion Lme/func/mod/ui/menu/selection/Selection$Companion;
 	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/reactive/ReactiveButton;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
 	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
@@ -929,6 +932,7 @@ public class me/func/mod/ui/menu/selection/Selection : me/func/protocol/ui/menu/
 public final class me/func/mod/ui/menu/selection/Selection$Builder {
 	public fun <init> ()V
 	public final fun build ()Lme/func/mod/ui/menu/selection/Selection;
+	public final fun columns (I)Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public final fun hint (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public final fun money (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public final fun rows (I)Lme/func/mod/ui/menu/selection/Selection$Builder;

@@ -23,6 +23,28 @@ open class Selection(
 
     var tick: Consumer<Storage>? = null
 
+    constructor(title: String, money: String, hint: String, rows: Int, columns: Int, vararg storage: ReactiveButton) :
+            this(UUID.randomUUID(), title, money, "\uE03C", hint, rows, columns, storage.toMutableList())
+
+    constructor(
+        title: String,
+        money: String,
+        vault: String,
+        hint: String,
+        rows: Int,
+        columns: Int,
+        storage: List<ReactiveButton>
+    ) : this(
+        uuid = UUID.randomUUID(),
+        title = title,
+        money = money,
+        vault = vault,
+        hint = hint,
+        rows = rows,
+        columns = columns,
+        storage = storage.toMutableList()
+    )
+
     companion object {
         @JvmStatic
         fun builder() = Builder()
@@ -35,6 +57,7 @@ open class Selection(
         fun money(money: String) = apply { selection.money = money }
         fun hint(hint: String) = apply { selection.hint = hint }
         fun rows(rows: Int) = apply { selection.rows = rows }
+        fun columns(columns: Int) = apply { selection.columns = columns }
         fun uuid(uuid: UUID) = apply { selection.uuid = uuid }
         fun storage(storage: MutableList<ReactiveButton>) = apply { selection.data = storage }
         fun storage(vararg storage: ReactiveButton) = apply { selection.data = storage.toMutableList() }
