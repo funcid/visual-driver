@@ -51,12 +51,12 @@ class SystemMessageAlert {
 
                 MessageStatus.WARN -> {
                     symbol.content = "?"
-                    message.color = Color(203, 65, 84, 0.60)
+                    message.color = Color(255, 157, 66, 0.60)
                 }
 
                 MessageStatus.ERROR -> {
                     symbol.content = "X"
-                    message.color = Color(255, 157, 66, 0.60)
+                    message.color = Color(203, 65, 84, 0.60)
                 }
             }
 
