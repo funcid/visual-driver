@@ -301,10 +301,17 @@ public abstract class me/func/protocol/ui/battlepass/BattlePassPage {
 
 public final class me/func/protocol/ui/battlepass/BattlePassUserData {
 	public fun <init> (IZ)V
+	public final fun component1 ()I
+	public final fun component2 ()Z
+	public final fun copy (IZ)Lme/func/protocol/ui/battlepass/BattlePassUserData;
+	public static synthetic fun copy$default (Lme/func/protocol/ui/battlepass/BattlePassUserData;IZILjava/lang/Object;)Lme/func/protocol/ui/battlepass/BattlePassUserData;
+	public fun equals (Ljava/lang/Object;)Z
 	public final fun getAdvanced ()Z
 	public final fun getExp ()I
+	public fun hashCode ()I
 	public final fun setAdvanced (Z)V
 	public final fun setExp (I)V
+	public fun toString ()Ljava/lang/String;
 }
 
 public final class me/func/protocol/ui/booster/CloseBoosterRequest {
