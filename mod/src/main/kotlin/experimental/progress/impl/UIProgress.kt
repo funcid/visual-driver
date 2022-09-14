@@ -6,6 +6,10 @@ import ru.cristalix.uiengine.UIEngine
 
 class UIProgress(model: Progress) : AbstractProgress(model) {
 
+    init {
+        content.shadow = true
+    }
+
     override fun create() { UIEngine.overlayContext + container }
 
     override fun remove() { UIEngine.overlayContext.removeChild(container) }

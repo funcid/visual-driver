@@ -101,10 +101,10 @@ class PlayChoice(
                                 align = CENTER
                                 origin = CENTER
                                 lineHeight += padding / 2
-                                content = element.description ?: ""
+                                content = element.description
                             }
                         }
-                        onMouseUp { element.click(this@PlayChoice, this) }
+                        onMouseUp { element.click(this@PlayChoice, this@onMouseUp) }
                         carveSize = 2.0
                         val hint = +element.createHint(size, "Играть")
                         var hasHoverEffect = false

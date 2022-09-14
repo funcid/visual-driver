@@ -216,7 +216,7 @@ class Selection(
                         hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
                     }
                 }
-                onMouseUp { element.click(this@Selection, this) }
+                onMouseUp { element.click(this@Selection, this@onMouseUp) }
             }.apply {
                 element.bundle = this
                 element.optimizeSpace()
