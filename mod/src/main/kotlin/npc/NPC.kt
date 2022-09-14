@@ -19,6 +19,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class NPC {
+
     init {
         // Утилита для работы с NPC
         val npcManager = NpcManager()
@@ -51,6 +52,7 @@ class NPC {
                 readBoolean()
             )
             npcManager.spawn(data)
+
             npcManager.show(data.uuid)
         }
 

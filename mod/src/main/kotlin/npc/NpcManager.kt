@@ -9,10 +9,10 @@ import dev.xdark.clientapi.util.EnumFacing
 import me.func.protocol.world.npc.NpcData
 import ru.cristalix.clientapi.JavaMod.clientApi
 import java.security.MessageDigest
-import java.util.UUID
+import java.util.*
 
 class NpcManager {
-    private val storage = mutableMapOf<UUID, NpcEntity>()
+    private val storage = hashMapOf<UUID, NpcEntity>()
     private val wearing = arrayOf(
         PlayerModelPart.CAPE,
         PlayerModelPart.HAT,
@@ -43,16 +43,20 @@ class NpcManager {
     }
 
     fun spawn(data: NpcData): NpcEntity {
-        val spawned = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world).apply {
-            entityId = data.id
-        } as AbstractClientPlayer
+        val entity = clientApi.entityProvider().newEntity(data.type, clientApi.minecraft().world)
+        entity.entityId = data.id
+        val spawned = entity as AbstractClientPlayer
+
         val info = clientApi.clientConnection().newPlayerInfo(
             GameProfile(data.uuid, data.name).apply {
                 if (data.skinValue?.isNotEmpty() == true && data.skinSignature?.isNotEmpty() == true) {
                     properties.put("textures", Property("textures", data.skinValue, data.skinSignature))
                 } else {
                     properties.put("skinURL", Property("skinURL", data.skinUrl))
-                    properties.put("skinDigest", Property("skinDigest", data.skinDigest ?: sha1Hex(data.skinUrl ?: "null")))
+                    properties.put(
+                        "skinDigest",
+                        Property("skinDigest", data.skinDigest ?: sha1Hex(data.skinUrl ?: "null"))
+                    )
                 }
             }.apply { spawned.gameProfile = this }
         ).apply { responseTime = -2 }
@@ -79,7 +83,12 @@ class NpcManager {
         }
         info.skinType = if (data.slimArms) "SLIM" else "DEFAULT"
         clientApi.clientConnection().addPlayerInfo(info)
-        return NpcEntity(data.uuid, data, spawned).apply { storage[data.uuid] = this }
+
+        val npc = NpcEntity(data.uuid, data, spawned)
+
+        storage[data.uuid] = npc
+
+        return npc
     }
 
     fun get(uuid: UUID) = storage[uuid]
