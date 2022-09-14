@@ -78,7 +78,7 @@ class ProgressController {
                             return@registerChannel
                         bar.model.progress = progress
 
-                        bar.progress.animate(0.3, Easings.QUART_OUT) {
+                        bar.progress.animate(0.25) {
                             size.x = PROGRESS_WIDTH * progress
                         }
                     }
@@ -111,6 +111,8 @@ class ProgressController {
 
             val progress: AbstractProgress = if (model.offsetZ == 0.0) UIProgress(model) else WorldProgress(model)
 
+            progressMap[uuid] = progress
+
             progress.enabled = true
             progress.content.content = progress.model.text // текст
             progress.progress.color = Color(
@@ -140,7 +142,6 @@ class ProgressController {
             }
 
             progress.create()
-            progressMap[uuid] = progress
         }
     }
 
