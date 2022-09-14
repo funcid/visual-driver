@@ -114,8 +114,9 @@ class MenuManager {
                 push(
                     PlayChoice(
                         uuid = UUID.fromString(NetUtil.readUtf8(this)),
-                        title = NetUtil.readUtf8(this).replace("&", "§"),
-                        description = NetUtil.readUtf8(this).replace("&", "§"),
+                        info = NetUtil.readUtf8(this),
+                        title = readColoredUtf8(),
+                        description = readColoredUtf8(),
                         allowClosing = readBoolean(),
                         storage = readIcons(this)
                     )

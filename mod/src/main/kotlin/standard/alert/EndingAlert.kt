@@ -39,6 +39,8 @@ class EndingAlert {
         size = V3(225.0, 103.0)
         offset = V3(20.0, 0.0, -50.0)
         color = Color(16, 19, 19, 0.86)
+        +key
+        +value
     }
 
     private val key: TextElement by lazyText {

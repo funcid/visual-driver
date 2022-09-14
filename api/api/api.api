@@ -775,8 +775,10 @@ public abstract interface class me/func/mod/ui/menu/Storage : me/func/mod/ui/men
 	public abstract fun add (Lme/func/mod/reactive/ReactiveButton;)V
 	public abstract fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
 	public abstract fun clear ()V
+	public abstract fun getInfo ()Ljava/lang/String;
 	public abstract fun getStorage ()Ljava/util/List;
 	public abstract fun getTitle ()Ljava/lang/String;
+	public abstract fun setInfo (Ljava/lang/String;)V
 	public abstract fun setStorage (Ljava/util/List;)V
 	public abstract fun setTitle (Ljava/lang/String;)V
 }
@@ -790,14 +792,15 @@ public final class me/func/mod/ui/menu/Storage$DefaultImpls {
 public final class me/func/mod/ui/menu/choicer/Choicer : me/func/mod/ui/menu/Storage {
 	public static final field Companion Lme/func/mod/ui/menu/choicer/Choicer$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
 	public static final fun builder ()Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
 	public fun clear ()V
 	public final fun getAllowClosing ()Z
 	public final fun getDescription ()Ljava/lang/String;
+	public fun getInfo ()Ljava/lang/String;
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
@@ -805,6 +808,7 @@ public final class me/func/mod/ui/menu/choicer/Choicer : me/func/mod/ui/menu/Sto
 	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Storage;
 	public final fun setAllowClosing (Z)V
 	public final fun setDescription (Ljava/lang/String;)V
+	public fun setInfo (Ljava/lang/String;)V
 	public fun setStorage (Ljava/util/List;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
@@ -814,6 +818,7 @@ public final class me/func/mod/ui/menu/choicer/Choicer$Builder {
 	public fun <init> ()V
 	public final fun build ()Lme/func/mod/ui/menu/choicer/Choicer;
 	public final fun description (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
+	public final fun info (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public final fun storage (Ljava/util/List;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public final fun storage ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public final fun title (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;

@@ -4,6 +4,7 @@ import me.func.mod.reactive.ReactiveButton
 
 interface Storage : Openable {
     var title: String
+    var info: String
     var storage: MutableList<ReactiveButton>
 
     fun add(button: ReactiveButton) { storage.add(button) }

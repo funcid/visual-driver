@@ -15,11 +15,13 @@ import java.util.*
 
 class PlayChoice(
     override var uuid: UUID,
+    var info: String,
     var title: String,
     @JvmField var description: String,
     allowClosing: Boolean,
     override var storage: MutableList<StorageNode<*>>
 ) : AbstractMenu, ContextGui() {
+
     init {
         if (!allowClosing) {
             keyTypedHandlers.removeFirstOrNull() // удаление листенера ESC перед регистрацией наших листенеров

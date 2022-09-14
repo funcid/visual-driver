@@ -490,6 +490,7 @@ public class me/func/protocol/ui/menu/SelectionModel : me/func/protocol/ui/menu/
 	public fun getColumns ()I
 	public fun getData ()Ljava/util/List;
 	public fun getHint ()Ljava/lang/String;
+	public fun getInfo ()Ljava/lang/String;
 	public fun getMoney ()Ljava/lang/String;
 	public fun getRows ()I
 	public fun getTitle ()Ljava/lang/String;
@@ -498,6 +499,7 @@ public class me/func/protocol/ui/menu/SelectionModel : me/func/protocol/ui/menu/
 	public fun setColumns (I)V
 	public fun setData (Ljava/util/List;)V
 	public fun setHint (Ljava/lang/String;)V
+	public fun setInfo (Ljava/lang/String;)V
 	public fun setMoney (Ljava/lang/String;)V
 	public fun setRows (I)V
 	public fun setTitle (Ljava/lang/String;)V
@@ -512,6 +514,7 @@ public final class me/func/protocol/ui/menu/SelectionModel$Builder {
 	public final fun columns (I)Lme/func/protocol/ui/menu/SelectionModel$Builder;
 	public final fun getModel ()Lme/func/protocol/ui/menu/SelectionModel;
 	public final fun hint (Ljava/lang/String;)Lme/func/protocol/ui/menu/SelectionModel$Builder;
+	public final fun info (Ljava/lang/String;)Lme/func/protocol/ui/menu/SelectionModel$Builder;
 	public final fun money (Ljava/lang/String;)Lme/func/protocol/ui/menu/SelectionModel$Builder;
 	public final fun rows (I)Lme/func/protocol/ui/menu/SelectionModel$Builder;
 	public final fun storage (Ljava/lang/Iterable;)Lme/func/protocol/ui/menu/SelectionModel$Builder;

@@ -48,6 +48,7 @@ open class Selection(
 
         // Отправляем данные о меню
         bind(player)
+            .string(info)
             .string(title)
             .string(vault)
             .string(money)

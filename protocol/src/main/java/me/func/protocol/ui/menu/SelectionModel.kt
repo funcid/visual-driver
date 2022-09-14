@@ -13,6 +13,7 @@ open class SelectionModel(
     open var vault: String = "\uE03C"
     open var hint: String = ""
     open var money: String = ""
+    open var info: String = ""
 
     fun pageSize() = rows * columns
 
@@ -28,6 +29,7 @@ open class SelectionModel(
         fun vault(vault: String) = apply { model.vault = vault }
         fun hint(hint: String) = apply { model.hint = hint }
         fun money(money: String) = apply { model.money = money }
+        fun info(info: String) = apply { model.info = info }
         fun rows(rows: Int) = apply { model.rows = rows }
         fun columns(columns: Int) = apply { model.columns = columns }
         fun build() = model

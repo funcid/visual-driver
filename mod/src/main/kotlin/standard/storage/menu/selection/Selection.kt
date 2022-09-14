@@ -20,6 +20,7 @@ import kotlin.math.ceil
 
 class Selection(
     override var uuid: UUID,
+    var info: String = "",
     var title: String,
     var vault: String,
     @JvmField var money: String,
@@ -31,6 +32,7 @@ class Selection(
     override var storage: MutableList<StorageNode<*>> = mutableListOf(),
     @JvmField var currentPage: Int = 0,
 ) : AbstractMenu, ContextGui() {
+
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
 
@@ -259,6 +261,7 @@ class Selection(
 
     constructor(model: SelectionModel, pages: MutableList<Page>) : this(
         UUID.randomUUID(),
+        model.info,
         model.title,
         model.vault,
         model.money,

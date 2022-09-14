@@ -58,6 +58,7 @@ class SelectionManager {
                 MenuManager.push(
                     Selection(
                         UUID.fromString(NetUtil.readUtf8(this)),
+                        readColoredUtf8(), // info
                         readColoredUtf8(), // title
                         NetUtil.readUtf8(this), // vault
                         readColoredUtf8(), // money title
