@@ -27,9 +27,11 @@ class ProgressController {
 
     init {
         fun rescale() {
+
             progressMap.values.filterIsInstance<UIProgress>().forEach { progress ->
                 // Смещение
-                progress.container.offset.y = -progress.model.offsetY
+                val offsetStrings = (progress.content.content.lines().size - 1) * 12.0
+                progress.container.offset.y = -progress.model.offsetY + offsetStrings
                 progress.container.offset.x = progress.model.offsetX
             }
         }
