@@ -84,7 +84,7 @@ object Anime {
         }
 
         // Загружаем все киты
-        kits.filter { it != Kit.DEBUG && it != Kit.GRAFFITI}.forEach(::load)
+        kits.filter { it != Kit.DEBUG && it != Kit.GRAFFITI }.forEach(::load)
 
         // Загружаем модуль граффити
         load(Kit.GRAFFITI)

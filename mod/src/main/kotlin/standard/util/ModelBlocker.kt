@@ -22,16 +22,19 @@ class ModelBlocker {
         origin = CENTER
         content = "Недоступно на\nданном режиме"
         enabled = false
-        UIEngine.overlayContext + locker
     }
 
     init {
         var disabled = false
 
+        UIEngine.overlayContext + locker
+
         mod.registerHandler<ScreenDisplay> {
             if (!disabled) return@registerHandler
 
-            if (screen::class.java.simpleName == "aqW") {
+            println("Debug! Personalization class menu is " + screen::class.java.simpleName)
+
+            if (screen::class.java.simpleName == "aso") {
                 isCancelled = true
 
                 locker.enabled = true
