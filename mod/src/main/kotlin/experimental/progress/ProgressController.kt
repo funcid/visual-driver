@@ -30,9 +30,11 @@ class ProgressController {
 
             progressMap.values.filterIsInstance<UIProgress>().forEach { progress ->
                 // Смещение
-                val offsetStrings = (progress.content.content.lines().size - 1) * 12.0
-                progress.container.offset.y = -progress.model.offsetY + offsetStrings
+                val lines = progress.content.content.lines().size
+                val offsetStrings = lines * 1.0 * -(if (lines == 1) 12 else 10)
+                progress.container.offset.y = -progress.model.offsetY
                 progress.container.offset.x = progress.model.offsetX
+                progress.content.offset.y = offsetStrings
             }
         }
 
