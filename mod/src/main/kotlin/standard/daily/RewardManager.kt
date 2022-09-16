@@ -24,14 +24,6 @@ import ru.cristalix.uiengine.utility.text
 
 class RewardManager {
 
-    private val gui = ContextGui().apply {
-        color = Color(0, 0, 0, 0.86)
-        +hint
-        +topText
-    }
-
-    private var currentDay = 0
-
     private val hintText: TextElement by lazyText {
         content = "???"
         offset.x = 2.0
@@ -44,7 +36,6 @@ class RewardManager {
         size.y = 14.0
         offset.z += 10
         enabled = false
-        +hintText
     }
 
     private val topText: TextElement by lazyText {
@@ -57,7 +48,17 @@ class RewardManager {
         content = "Ваша ежедневная награда / $currentDay день"
     }
 
+    private val gui = ContextGui().apply {
+        color = Color(0, 0, 0, 0.86)
+        +hint
+        +topText
+    }
+
+    private var currentDay = 0
+
     init {
+        hint + hintText
+
         val week = arrayListOf<Day>()
 
         mod.registerChannel("func:weekly-reward") {

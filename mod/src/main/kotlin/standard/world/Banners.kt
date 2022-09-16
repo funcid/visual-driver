@@ -173,7 +173,7 @@ class Banners {
             val currentSize = sizes[banner.uuid to index] ?: 1.0
             val v3 = V3(currentSize, currentSize, currentSize)
 
-            rectangle + ru.cristalix.uiengine.utility.text {
+            rectangle + text {
                 align = TOP
                 origin = TOP
                 content = line
@@ -183,7 +183,7 @@ class Banners {
                 offset.y = -(-3 - index * 12) * currentSize
                 scale = v3
             }
-            rectangle + ru.cristalix.uiengine.utility.text {
+            rectangle + text {
                 align = TOP
                 origin = TOP
                 content = toBlackText(line)
