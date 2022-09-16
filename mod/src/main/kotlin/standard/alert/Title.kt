@@ -27,10 +27,11 @@ class Title {
         +text
         enabled = false
 
-        UIEngine.overlayContext + this
     }
 
     init {
+        UIEngine.overlayContext + box
+
         mod.registerChannel("func:title") {
             text.content = NetUtil.readUtf8(this)
             box.enabled = true

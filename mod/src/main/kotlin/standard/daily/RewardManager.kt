@@ -26,6 +26,8 @@ class RewardManager {
 
     private val gui = ContextGui().apply {
         color = Color(0, 0, 0, 0.86)
+        +hint
+        +topText
     }
 
     private var currentDay = 0
@@ -43,7 +45,6 @@ class RewardManager {
         offset.z += 10
         enabled = false
         +hintText
-        gui + this
     }
 
     private val topText: TextElement by lazyText {
@@ -54,7 +55,6 @@ class RewardManager {
         scale = V3(1.5, 1.5)
         offset.y -= 110.0
         content = "Ваша ежедневная награда / $currentDay день"
-        gui + topText
     }
 
     init {

@@ -36,10 +36,11 @@ class ScreenAlert {
         align = Relative.CENTER
         origin = Relative.CENTER
         +box
-        UIEngine.overlayContext + this
     }
 
     init {
+        UIEngine.overlayContext + topmessage
+
         mod.registerHandler<WindowResize> {
             topmessage.size = UIEngine.overlayContext.size
             box.size = V3(UIEngine.overlayContext.size.x, 0.0)

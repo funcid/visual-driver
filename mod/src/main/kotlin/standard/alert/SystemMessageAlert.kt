@@ -38,7 +38,6 @@ class SystemMessageAlert {
         +symbol
         +description
         enabled = false
-        UIEngine.overlayContext + this
     }
 
     init {
