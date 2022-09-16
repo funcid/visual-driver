@@ -84,10 +84,7 @@ object Anime {
         }
 
         // Загружаем все киты
-        kits.filter { it != Kit.DEBUG && it != Kit.GRAFFITI }.forEach(::load)
-
-        // Загружаем модуль граффити
-        load(Kit.GRAFFITI)
+        kits.filter { it != Kit.DEBUG }.forEach(::load)
     }
 
     // Метод для изменения правила установки граффити

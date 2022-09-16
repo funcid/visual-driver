@@ -317,7 +317,9 @@ class GraffitiMod : KotlinMod() {
             drewGraffities.forEach { UIEngine.worldContexts.remove(it.container) }
 
             // Поставить в мире новые граффити
-            drewGraffities = MutableList(readInt()) { readLocalGraffitiPlace(this) }
+            drewGraffities = MutableList(readInt()) {
+                readLocalGraffitiPlace(this)
+            }
             drewGraffities.forEach { addGraffiti(it) }
         }
 
