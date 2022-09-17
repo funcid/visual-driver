@@ -37,8 +37,8 @@ open class Selection(
         fun rows(rows: Int) = apply { selection.rows = rows }
         fun columns(columns: Int) = apply { selection.columns = columns }
         fun uuid(uuid: UUID) = apply { selection.uuid = uuid }
-        fun storage(storage: MutableList<ReactiveButton>) = apply { selection.data = storage }
-        fun storage(vararg storage: ReactiveButton) = apply { selection.data = storage.toMutableList() }
+        fun storage(data: MutableList<ReactiveButton>) = apply { selection.storage.addAll(data) }
+        fun storage(vararg data: ReactiveButton) = apply { selection.storage.addAll(data) }
         fun vault(vault: String) = apply { selection.vault = vault }
         fun build() = selection
     }
