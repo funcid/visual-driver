@@ -30,6 +30,8 @@ public final class me/func/mod/Anime {
 	public static final fun itemTitle (Lorg/bukkit/entity/Player;Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun itemTitle (Lorg/bukkit/entity/Player;Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;D)V
 	public static synthetic fun itemTitle$default (Lorg/bukkit/entity/Player;Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;DILjava/lang/Object;)V
+	public static final fun killboardMessage (Ljava/util/Collection;Ljava/lang/String;)V
+	public static final fun killboardMessage (Ljava/util/Collection;Ljava/lang/String;I)V
 	public static final fun killboardMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun killboardMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;I)V
 	public static final fun loadTexture (Lorg/bukkit/entity/Player;Ljava/lang/String;)Ljava/lang/String;
