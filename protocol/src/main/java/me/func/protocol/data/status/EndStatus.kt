@@ -5,10 +5,9 @@ enum class EndStatus(
     val red: Int,
     val green: Int,
     val blue: Int,
-    val texture: String,
     val offset: Double
 ) {
-    WIN("Победа!", 35, 170, 65, "mF7DWoV.png", -60.7),
-    LOSE("Поражение", 185, 25, 25, "vxyu2tZ.png", -60.7),
-    DRAW("Ничья", 200, 119, 42, "zUxhQ7y.png", -55.7)
+    WIN("Победа!", 35, 170, 65, -60.7),
+    LOSE("Поражение", 185, 25, 25,  -60.7),
+    DRAW("Ничья", 200, 119, 42,  -55.7)
 }

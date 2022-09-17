@@ -271,7 +271,6 @@ object Anime {
         cursorMessage(player, message.format(objects))
 
     @JvmStatic
-    @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
     fun marker(player: Player, marker: Marker): Marker {
         ModTransfer()
             .string(marker.uuid.toString())
@@ -302,7 +301,6 @@ object Anime {
         moveMarker(player, marker.uuid, marker.x, marker.y, marker.z, 0.01)
 
     @JvmStatic
-    @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
     fun markers(player: Player, vararg markers: Marker) = markers.forEach { marker(player, it) }
 
     @JvmStatic

@@ -90,7 +90,7 @@ class EndingAlert {
 
             cup.offset.x = endStatus.offset
             cup.offset.z = 50.0
-            cup.textureLocation = ResourceLocation.of("cache/animation", endStatus.texture)
+            cup.textureLocation = ResourceLocation.of("cache/animation", endStatus.name.lowercase() + ".png")
 
             information.size.x = 225.0
 

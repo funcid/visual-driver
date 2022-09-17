@@ -75,6 +75,7 @@ class Banners {
 
                     size = V3(banner.weight.toDouble(), banner.height.toDouble())
                     color = Color(banner.red, banner.green, banner.blue, banner.opacity)
+                    context.renderDistance = 75.0
                     context.rotation =
                         Rotation(Math.toRadians(banner.motionSettings["yaw"].toString().toDouble()), 0.0, 1.0, 0.0)
                     rotation =
