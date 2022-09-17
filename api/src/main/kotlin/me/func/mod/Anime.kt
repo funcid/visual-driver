@@ -187,6 +187,19 @@ object Anime {
     }
 
     @JvmStatic
+    fun killboardMessage(players: Collection<Player>, text: String, topMargin: Int) {
+        ModTransfer()
+            .string(text)
+            .integer(topMargin)
+            .send("func:notice", players)
+    }
+
+    @JvmStatic
+    fun killboardMessage(players: Collection<Player>, text: String) {
+        killboardMessage(players, text, 15)
+    }
+
+    @JvmStatic
     fun systemMessage(player: Player, messageStatus: MessageStatus, text: String) {
         ModTransfer().integer(messageStatus.ordinal).string(text).send("anime:message", player)
     }
