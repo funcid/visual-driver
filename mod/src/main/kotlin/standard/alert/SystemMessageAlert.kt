@@ -59,6 +59,7 @@ class SystemMessageAlert {
                 }
             }
 
+            val duration = readDouble()
             val text = readUtf8()
             val textLines = text.split("\n")
             val maxWidth = textLines.maxOf(UIEngine.clientApi.fontRenderer()::getStringWidth)
@@ -66,7 +67,7 @@ class SystemMessageAlert {
             description.content = text
             message.enabled = true
 
-            UIEngine.schedule(1.5) {
+            UIEngine.schedule(duration) {
                 message.enabled = false
             }
         }

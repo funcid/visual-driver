@@ -207,7 +207,6 @@ public final class me/func/protocol/data/status/EndStatus : java/lang/Enum {
 	public final fun getGreen ()I
 	public final fun getOffset ()D
 	public final fun getRed ()I
-	public final fun getTexture ()Ljava/lang/String;
 	public final fun getTitle ()Ljava/lang/String;
 	public static fun valueOf (Ljava/lang/String;)Lme/func/protocol/data/status/EndStatus;
 	public static fun values ()[Lme/func/protocol/data/status/EndStatus;

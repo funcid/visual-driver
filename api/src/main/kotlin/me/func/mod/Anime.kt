@@ -201,7 +201,12 @@ object Anime {
 
     @JvmStatic
     fun systemMessage(player: Player, messageStatus: MessageStatus, text: String) {
-        ModTransfer().integer(messageStatus.ordinal).string(text).send("anime:message", player)
+        ModTransfer().integer(messageStatus.ordinal).double(1.5).string(text).send("anime:message", player)
+    }
+
+    @JvmStatic
+    fun systemMessage(player: Player, messageStatus: MessageStatus, duration: Double, text: String) {
+        ModTransfer().integer(messageStatus.ordinal).double(duration).string(text).send("anime:message", player)
     }
 
     @JvmStatic
