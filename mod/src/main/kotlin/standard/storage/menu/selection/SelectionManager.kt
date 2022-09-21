@@ -29,6 +29,7 @@ class SelectionManager {
                 val localStorage = model.data.map {
                     StorageItemTexture(it.texture ?: "").apply {
                         price = it.price
+                        priceText = it.priceText
                         command = it.command
                         title = it.title
                         description = it.description

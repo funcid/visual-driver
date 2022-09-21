@@ -422,6 +422,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun getOnMiddleClick ()Lme/func/mod/reactive/ButtonClickHandler;
 	public final fun getOnRightClick ()Lme/func/mod/reactive/ButtonClickHandler;
 	public fun getPrice ()J
+	public fun getPriceText ()Ljava/lang/String;
 	public fun getSpecial ()Z
 	public fun getTexture ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
@@ -439,6 +440,8 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun onMiddleClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun onRightClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun price (J)Lme/func/mod/reactive/ReactiveButton;
+	public final fun price (JLjava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public static synthetic fun price$default (Lme/func/mod/reactive/ReactiveButton;JLjava/lang/String;ILjava/lang/Object;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun sale (I)Lme/func/mod/reactive/ReactiveButton;
 	public fun setCommand (Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
@@ -450,6 +453,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun setOnMiddleClick (Lme/func/mod/reactive/ButtonClickHandler;)V
 	public final fun setOnRightClick (Lme/func/mod/reactive/ButtonClickHandler;)V
 	public fun setPrice (J)V
+	public fun setPriceText (Ljava/lang/String;)V
 	public fun setSpecial (Z)V
 	public fun setTexture (Ljava/lang/String;)V
 	public fun setTitle (Ljava/lang/String;)V

@@ -68,6 +68,12 @@ class ReactiveButton : Button() {
     override var command: String? = ""
 
     override var price: Long = -1
+        set(value) {
+            field = value
+            priceText = value.toString()
+        }
+    override var priceText: String = ""
+
     private var sale = 0
 
     fun sale(percent: Int) = apply {
@@ -124,7 +130,11 @@ class ReactiveButton : Button() {
 
     fun description(desc: List<String>) = description(*desc.toTypedArray())
 
-    fun price(price: Long) = apply { this.price = price }
+    @JvmOverloads
+    fun price(price: Long, text: String = "") = apply {
+        this.price = price
+        this.priceText = text.ifEmpty { price.toString() }
+    }
 
     fun write(transfer: ModTransfer) {
         val isItem = item != null
@@ -134,6 +144,7 @@ class ReactiveButton : Button() {
         else transfer.string(texture ?: "")
 
         transfer.long(price)
+        transfer.string(priceText)
         transfer.string(title)
         transfer.string(description)
         transfer.string(hint ?: "")
@@ -155,6 +166,7 @@ class ReactiveButton : Button() {
         it.item = item
         it.hint = hint
         it.price = price
+        it.priceText = priceText
         it.sale = sale
         it.special = special
         it.command = command

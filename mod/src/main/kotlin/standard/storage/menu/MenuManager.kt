@@ -30,6 +30,7 @@ class MenuManager {
 
             data.apply {
                 price = buffer.readLong() // price
+                priceText = buffer.readColoredUtf8()
                 title = buffer.readColoredUtf8() // item title
                 description = buffer.readColoredUtf8() // item description
                 hint = buffer.readColoredUtf8() // item hint

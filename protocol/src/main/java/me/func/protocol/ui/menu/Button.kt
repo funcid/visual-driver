@@ -8,6 +8,7 @@ open class Button(
     open var hint: String? = "",
     open var special: Boolean = false,
     open var price: Long = -1,
+    open var priceText: String = "",
     open var command: String? = "",
     open var vault: String? = "",
 ) {
@@ -25,6 +26,7 @@ open class Button(
         fun hint(hint: String) = apply { button.hint = hint }
         fun command(command: String) = apply { button.command = command }
         fun price(price: Long) = apply { button.price = price }
+        fun price(text: String) = apply { button.priceText = text }
         fun special(special: Boolean) = apply { button.special = special }
         fun build() = button
     }

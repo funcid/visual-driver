@@ -16,6 +16,7 @@ import ru.cristalix.uiengine.utility.*
 abstract class StorageNode<T : AbstractElement>(
     open var icon: T,
     override var price: Long = -1,
+    override var priceText: String = "",
     override var title: String = "",
     override var description: String = "",
     override var hint: String? = null,

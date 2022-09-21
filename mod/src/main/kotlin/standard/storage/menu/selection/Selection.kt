@@ -1,10 +1,6 @@
 package standard.storage.menu.selection
 
 import Main.Companion.menuStack
-import standard.storage.AbstractMenu
-import standard.storage.TextedIcon
-import standard.storage.button.StorageNode
-import standard.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
 import me.func.protocol.ui.menu.SelectionModel
 import org.lwjgl.input.Keyboard
@@ -15,6 +11,10 @@ import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
+import standard.storage.AbstractMenu
+import standard.storage.TextedIcon
+import standard.storage.button.StorageNode
+import standard.storage.menu.MenuManager
 import java.util.*
 import kotlin.math.ceil
 
@@ -192,9 +192,10 @@ class Selection(
                     val hasTag = isItem && tag?.hasKeyOfType("sale", 8) == true
                     val sale = if (isItem && hasTag) tag?.getString("sale")?.toInt() ?: 0 else 0
                     val price = element.price
+                    val priceText = element.priceText
 
                     +textWithMoney(
-                        if (sale > 0) "§7§m$price§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else price.toString(),
+                        if (sale > 0) "§7§m$priceText§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else priceText,
                         if (element.vault?.isEmpty() == true) vault else element.vault!!,
                         false
                     ).apply {
