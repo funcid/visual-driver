@@ -408,6 +408,7 @@ public abstract interface class me/func/mod/reactive/ButtonClickHandler {
 
 public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/menu/Button {
 	public fun <init> ()V
+	public final fun command (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun copy ()Lme/func/mod/reactive/ReactiveButton;
 	public final fun description (Ljava/util/List;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun description ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;

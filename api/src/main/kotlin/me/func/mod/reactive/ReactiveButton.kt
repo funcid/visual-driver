@@ -116,6 +116,8 @@ class ReactiveButton : Button() {
 
     fun vault(vault: String) = apply { this.vault = vault }
 
+    fun command(command: String) = apply { this.command = command }
+
     fun description(vararg desc: String) = apply { this.description = desc.joinToString("\n") }
 
     fun description(desc: List<String>) = description(*desc.toTypedArray())
