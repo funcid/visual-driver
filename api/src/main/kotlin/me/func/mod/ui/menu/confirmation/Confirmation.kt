@@ -6,7 +6,7 @@ import org.bukkit.entity.Player
 import java.util.UUID
 import java.util.function.Consumer
 
-class Confirmation private constructor(
+class Confirmation(
     var text: String,
     var onAccept: Consumer<Player>,
     var onDeny: Consumer<Player>? = null,
