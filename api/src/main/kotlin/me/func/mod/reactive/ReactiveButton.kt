@@ -65,6 +65,8 @@ class ReactiveButton : Button() {
 
     override var vault: String? = ""
 
+    override var command: String? = ""
+
     override var price: Long = -1
     private var sale = 0
 

@@ -412,6 +412,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun copy ()Lme/func/mod/reactive/ReactiveButton;
 	public final fun description (Ljava/util/List;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun description ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public fun getCommand ()Ljava/lang/String;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getHint ()Ljava/lang/String;
 	public fun getHover ()Ljava/lang/String;
@@ -439,6 +440,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun onRightClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun price (J)Lme/func/mod/reactive/ReactiveButton;
 	public final fun sale (I)Lme/func/mod/reactive/ReactiveButton;
+	public fun setCommand (Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setHint (Ljava/lang/String;)V
 	public fun setHover (Ljava/lang/String;)V
