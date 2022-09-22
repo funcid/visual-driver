@@ -94,6 +94,8 @@ object MenuManager : PlayerSubscriber {
             }
         }
 
+
+
         // Тикаем все меню
         Bukkit.getScheduler().runTaskTimer(provided, {
             Bukkit.getOnlinePlayers().filter { handleMap.containsKey(it.uniqueId) }.forEach {

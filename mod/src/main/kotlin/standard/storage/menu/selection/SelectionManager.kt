@@ -1,13 +1,16 @@
 package standard.storage.menu.selection
 
 import Main.Companion.menuStack
+import dev.xdark.clientapi.event.gui.ScreenDisplay
 import dev.xdark.feder.NetUtil
-import standard.storage.button.StorageItemTexture
-import standard.storage.menu.MenuManager
+import io.netty.buffer.Unpooled
 import me.func.protocol.ui.menu.SelectionModel
 import readColoredUtf8
 import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import ru.cristalix.uiengine.UIEngine
+import standard.storage.button.StorageItemTexture
+import standard.storage.menu.MenuManager
 import java.util.*
 import kotlin.math.ceil
 
@@ -16,6 +19,12 @@ class SelectionManager {
     companion object {
         fun run() {
             println("Selection manager loaded!")
+
+            mod.registerHandler<ScreenDisplay> {
+                if (screen == null) {
+                    UIEngine.clientApi.clientConnection().sendPayload("func:display-null", Unpooled.EMPTY_BUFFER)
+                }
+            }
 
             mod.registerChannel("storage:open-json") {
                 val model = readJson<SelectionModel>()

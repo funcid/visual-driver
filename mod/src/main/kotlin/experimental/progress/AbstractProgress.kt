@@ -23,7 +23,7 @@ abstract class AbstractProgress(val model: Progress) {
     val progress: CarvedRectangle by lazyCarved {
         origin = LEFT
         align = LEFT
-        size = V3(PROGRESS_WIDTH, 5.0, 0.0)
+        size = V3(PROGRESS_WIDTH * model.progress, 5.0, 0.0)
         color = Color(42, 102, 189, 1.0)
     }
 
