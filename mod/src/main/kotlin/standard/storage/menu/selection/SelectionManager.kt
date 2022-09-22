@@ -20,12 +20,6 @@ class SelectionManager {
         fun run() {
             println("Selection manager loaded!")
 
-            mod.registerHandler<ScreenDisplay> {
-                if (screen == null) {
-                    UIEngine.clientApi.clientConnection().sendPayload("func:display-null", Unpooled.EMPTY_BUFFER)
-                }
-            }
-
             mod.registerChannel("storage:open-json") {
                 val model = readJson<SelectionModel>()
                 val pageSize = model.columns * model.rows
