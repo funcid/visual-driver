@@ -2,7 +2,6 @@ package me.func.mod.ui.scoreboard
 
 import me.func.mod.conversation.ModTransfer
 import org.bukkit.entity.Player
-import sun.audio.AudioPlayer.player
 import java.util.*
 
 data class ScoreBoardScheme(
@@ -29,6 +28,10 @@ data class ScoreBoardScheme(
             content.forEach { raw -> raw.write(this, player) }
         }.send("func:scoreboard-update", player)
     }
+
+    fun show(player: Player) = ScoreBoard.subscribe(key, player)
+
+    fun hide(player: Player) = ScoreBoard.hide(player)
 
     fun update(subscribers: Iterable<Player>) = subscribers.forEach { update(it) }
 

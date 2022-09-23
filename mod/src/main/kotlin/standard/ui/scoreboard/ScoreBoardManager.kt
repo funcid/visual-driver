@@ -26,11 +26,14 @@ class ScoreBoardManager {
         }
 
         mod.registerChannel("func:scoreboard-update") {
+
             if (scoreboard == null) return@registerChannel
+
             scoreboard?.lineKey = ""
             scoreboard?.lineValue = ""
 
-            if (scoreboard?.uuid != uuid) return@registerChannel
+            val currentUuid = readId()
+            if (currentUuid != uuid) return@registerChannel
 
             repeat(lines) {
                 scoreboard?.lineKey += readUtf8() + "\n"

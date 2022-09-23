@@ -38,8 +38,13 @@ object ScoreBoard : Listener {
 
     @JvmStatic
     fun unsubscribe(player: Player) {
-        subscribers.forEach { (_, players) -> players.remove(player) }
+        subscribers.forEach {
+                (_, players) -> players.remove(player)
+        }
     }
+
+    @JvmStatic
+    fun hide(player: Player) = Anime.sendEmptyBuffer("func:scoreboard-remove", player)
 
     @JvmStatic
     fun subscribe(key: String, player: Iterable<Player>) = subscribe(key, *player.toList().toTypedArray())

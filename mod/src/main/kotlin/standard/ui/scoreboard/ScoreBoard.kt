@@ -33,8 +33,6 @@ class ScoreBoard(
         scale = V3(1.025, 1.025)
         color = Color(0, 0, 0, 0.62)
 
-        enabled = false
-
         headerInfo.offset.y = 6.0
         footerInfo.offset.y = -6.0
 

@@ -966,6 +966,7 @@ public final class me/func/mod/ui/scoreboard/ScoreBoard : org/bukkit/event/Liste
 	public static final fun builder ()Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
 	public static final fun get (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoardScheme;
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
+	public static final fun hide (Lorg/bukkit/entity/Player;)V
 	public static final fun remove (Ljava/lang/String;)V
 	public static final fun subscribe (Ljava/lang/String;Ljava/lang/Iterable;)V
 	public static final fun subscribe (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
@@ -1026,11 +1027,13 @@ public final class me/func/mod/ui/scoreboard/ScoreBoardScheme {
 	public final fun getLastUpdateTimestamp ()J
 	public final fun getUuid ()Ljava/util/UUID;
 	public fun hashCode ()I
+	public final fun hide (Lorg/bukkit/entity/Player;)V
 	public final fun setContent (Ljava/util/List;)V
 	public final fun setFooter (Ljava/lang/String;)V
 	public final fun setHeader (Ljava/lang/String;)V
 	public final fun setKey (Ljava/lang/String;)V
 	public final fun setLastUpdateTimestamp (J)V
+	public final fun show (Lorg/bukkit/entity/Player;)V
 	public fun toString ()Ljava/lang/String;
 	public final fun update (Ljava/lang/Iterable;)V
 	public final fun update ([Lorg/bukkit/entity/Player;)V
