@@ -47,11 +47,14 @@ class ExternalManager {
     fun load(path: String): ResourceLocation {
         val parts = path.split(":", limit = 2)
         val last = parts.last()
-        val location = if (path.startsWith("runtime")) loadTextureFromJar(UIEngine.clientApi, "icons", last, "$last.png")
-        else if (path.startsWith("download")) ResourceLocation.of("cache/animation", "$last.png").apply {
-          loadPaths("https://storage.c7x.dev/func/animation-api/$last.png")
-        } else ResourceLocation.of(parts.first(), last)
-        textures.add(location)
+        val location = when {
+            path.startsWith("runtime") -> loadTextureFromJar(UIEngine.clientApi, "icons", last, "$last.png")
+            path.startsWith("download") -> ResourceLocation.of("cache/animation", "$last.png").apply {
+                loadPaths("https://storage.c7x.dev/func/animation-api/$last.png")
+            }
+            else -> ResourceLocation.of(parts.first(), last)
+        }
+        textures += location
         return location
     }
 }
