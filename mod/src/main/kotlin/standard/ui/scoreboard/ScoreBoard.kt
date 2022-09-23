@@ -4,6 +4,7 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement
+import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import java.util.*
@@ -20,7 +21,7 @@ class ScoreBoard(
     var lineKey = "§bЗагрузка"
     var lineValue = "..."
 
-    var lastMaxX = 0.0
+    var lastMaxX = 10.0
 
     private val dataLine = mutableListOf<RectangleElement>()
 
@@ -52,6 +53,8 @@ class ScoreBoard(
     }
 
     fun update() {
+        lastMaxX = 0.0
+
         val splitKey = lineKey.split("\n")
         val splitValue = lineValue.split("\n")
 
@@ -60,15 +63,17 @@ class ScoreBoard(
         dataLine.forEach { children.remove(it) }
         dataLine.clear()
 
+        fun width(text: String) = UIEngine.clientApi.fontRenderer().getStringWidth(text) * 1.0
+
         var offsetY = 25.0
-        var sizeMax = lastMaxX
+        var sizeMax = maxOf(lastMaxX, maxOf(width(headerInfo.valueText.content) + 5, width(footerInfo.valueText.content) + 5))
 
         for ((index, text) in splitKey.withIndex()) {
             var value = ""
             if (index <= sizeValue) value = splitValue[index]
 
-            val sizeData = UIEngine.clientApi.fontRenderer().getStringWidth("$text$value    ")
-            val totalSize = sizeData + 25.0
+            val sizeData = width("$text$value")
+            val totalSize = sizeData + 10.0
 
             if (sizeMax < totalSize) sizeMax = totalSize
 
