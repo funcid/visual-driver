@@ -40,7 +40,7 @@ class ExternalManager {
             *paths.map { load(it.split("/").last(), "FUNC${it.hashCode()}FUNC") }
                 .toTypedArray().apply { textures.addAll(map { it.location }) },
         ).thenAccept {
-            UIEngine.clientApi.clientConnection().sendPayload("func:loaded", Unpooled.buffer())
+            UIEngine.clientApi.clientConnection().sendPayload("func:loaded", Unpooled.EMPTY_BUFFER)
         }
     }
 
