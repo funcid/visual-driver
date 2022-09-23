@@ -44,6 +44,7 @@ class NpcData(
         fun behaviour(behaviour: NpcBehaviour) = apply { npcData.behaviour = behaviour }
         fun pitch(pitch: Float) = apply { npcData.pitch = pitch }
         fun skinUrl(skinUrl: String?) = apply { npcData.skinUrl = skinUrl }
+        fun skinDigest(skinDigest: String?) = apply { npcData.skinDigest = skinDigest }
         fun skinValue(skinValue: String?) = apply { npcData.skinValue = skinValue }
         fun skinSignature(skinSignature: String?) = apply { npcData.skinSignature = skinSignature }
         fun slimArms(slimArms: Boolean) = apply { npcData.slimArms = slimArms }
