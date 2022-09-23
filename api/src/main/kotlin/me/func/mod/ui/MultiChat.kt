@@ -10,6 +10,7 @@ import java.util.*
 import java.util.function.BiConsumer
 
 object MultiChat {
+
     private val handlers: MutableMap<UUID, BiConsumer<Player, String>> = hashMapOf()
     private val chatsKey: MutableMap<String, ModChat> = hashMapOf()
 

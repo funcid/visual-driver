@@ -7,6 +7,7 @@ import standard.storage.menu.MenuManager
 import standard.storage.menu.QueueStatus
 import standard.storage.menu.Reconnect
 import standard.ui.*
+import standard.ui.scoreboard.ScoreBoardManager
 import standard.util.ModelBlocker
 import standard.world.Banners
 import standard.world.CorpseManager
@@ -26,6 +27,7 @@ class Standard {
         Alert()
         TimeBar()
         GlowEffect()
+        ScoreBoardManager()
         RewardManager()
         ItemTitleAlert()
         CorpseManager()

@@ -180,7 +180,7 @@ class Banners {
                 content = line
                 size = V3(banner.weight.toDouble(), banner.height.toDouble())
                 color = WHITE
-                offset.z = -0.02
+                offset.z = -0.05
                 offset.y = -(-3 - index * 12) * currentSize
                 scale = v3
             }
@@ -190,7 +190,7 @@ class Banners {
                 content = toBlackText(line)
                 size = V3(banner.weight.toDouble(), banner.height.toDouble())
                 color = Color(0, 0, 0, 0.82)
-                offset.z = -0.01
+                offset.z = -0.002
                 offset.y = -(-3 - index * 12 - 0.75) * currentSize
                 offset.x += 0.75 * currentSize
                 scale = v3

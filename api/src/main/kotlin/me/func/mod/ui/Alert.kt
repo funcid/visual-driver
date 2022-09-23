@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 object Alert {
+
     private val alertTemplates = hashMapOf<String, NotificationData>()
 
     @JvmStatic
