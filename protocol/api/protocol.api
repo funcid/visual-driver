@@ -183,6 +183,22 @@ public final class me/func/protocol/data/element/MotionType : java/lang/Enum {
 	public static fun values ()[Lme/func/protocol/data/element/MotionType;
 }
 
+public final class me/func/protocol/data/emoji/Emoji {
+	public static final field COIN Ljava/lang/String;
+	public static final field DOLLAR Ljava/lang/String;
+	public static final field DONATE Ljava/lang/String;
+	public static final field DONATE_OTHER Ljava/lang/String;
+	public static final field DONATE_WHITE Ljava/lang/String;
+	public static final field EXP Ljava/lang/String;
+	public static final field HEART Ljava/lang/String;
+	public static final field INSTANCE Lme/func/protocol/data/emoji/Emoji;
+	public static final field MINING Ljava/lang/String;
+	public static final field RUBY Ljava/lang/String;
+	public static final field TIME Ljava/lang/String;
+	public static final field TREE Ljava/lang/String;
+	public static final field UP Ljava/lang/String;
+}
+
 public final class me/func/protocol/data/rare/DropRare : java/lang/Enum {
 	public static final field COMMON Lme/func/protocol/data/rare/DropRare;
 	public static final field EPIC Lme/func/protocol/data/rare/DropRare;
