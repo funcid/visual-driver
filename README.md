@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.0.5)
+# Cristalix Animation API DOCS (актуальная версия 3.1.0)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:3.0.5'
+    implementation 'me.func:animation-api:3.1.0'
 }
 ```
 
@@ -153,6 +153,32 @@ players.forEach { player -> data.send("lootbox", player) }
 вашей среды.
 Чтобы включить режим быстрого тестирования, допишите в `Anime#include` кит `Kit.DEBUG`. По умолчанию папка `mods`
 является хранилищем тестовых модов, чтобы сменить стандартную папку - измените переменную среды `MOD_TEST_PATH`.
+
+<h3>ScoreBoard STANDARD</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/192067005-439c2c7e-805c-4fb3-86ec-ccb7f8f64eb5.png" width="500">
+
+Сделали скорборд? Подписали на него игроков? - Ну все, теперь работает
+
+Создание
+```
+val schema = ScoreBoard.builder() 
+        .key("lobby") // ключевое слово скорборда
+        .header("Бедроковая коробка") // указываем верхушку
+        .empty() // пустая строка
+        .line("Привет") // неизменяемая строка
+        .line("Как дела", "433") // неизменяемая строка и значение
+        .empty() // пустая строка
+        .dynamic("Коины", player -> System.currentTimeMillis()) // слева "Коины", справа изменяемое значение
+        .build() // получаем схему
+```
+
+Показ игрокам (если делаете при входе, не забудьте задержку в 1 тик)
+```
+ScoreBoard.subscribe("lobby", player) // по ключевому слову
+
+schema.show(player) // по схеме (переменная объявлена в примере выше)
+```
 
 <h3>Прогресс Bars EXPERIMENTAL</h3>
 
