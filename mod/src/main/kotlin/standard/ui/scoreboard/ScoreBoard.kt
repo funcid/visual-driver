@@ -67,7 +67,7 @@ class ScoreBoard(
             var value = ""
             if (index <= sizeValue) value = splitValue[index]
 
-            val sizeData = UIEngine.clientApi.fontRenderer().getStringWidth("$text$value")
+            val sizeData = UIEngine.clientApi.fontRenderer().getStringWidth("$text$value    ")
             val totalSize = sizeData + 25.0
 
             if (sizeMax < totalSize) sizeMax = totalSize

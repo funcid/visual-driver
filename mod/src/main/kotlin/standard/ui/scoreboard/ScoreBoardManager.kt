@@ -1,5 +1,6 @@
 package standard.ui.scoreboard
 
+import readColoredUtf8
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readId
 import ru.cristalix.clientapi.readUtf8
@@ -16,7 +17,7 @@ class ScoreBoardManager {
         mod.registerChannel("func:scoreboard-scheme") {
             scoreboard?.hide()
             uuid = readId()
-            scoreboard = ScoreBoard(uuid, readUtf8(), readUtf8())
+            scoreboard = ScoreBoard(uuid, readColoredUtf8(), readColoredUtf8())
             lines = readInt()
             scoreboard?.show()
         }
@@ -36,8 +37,8 @@ class ScoreBoardManager {
             if (currentUuid != uuid) return@registerChannel
 
             repeat(lines) {
-                scoreboard?.lineKey += readUtf8() + "\n"
-                scoreboard?.lineValue += readUtf8() + "\n"
+                scoreboard?.lineKey += readColoredUtf8() + "\n"
+                scoreboard?.lineValue += readColoredUtf8() + "\n"
             }
 
             scoreboard?.update()
