@@ -3,7 +3,6 @@ package standard.ui.scoreboard
 import readColoredUtf8
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readId
-import ru.cristalix.clientapi.readUtf8
 import java.util.*
 
 class ScoreBoardManager {
@@ -37,8 +36,9 @@ class ScoreBoardManager {
             if (currentUuid != uuid) return@registerChannel
 
             repeat(lines) {
-                scoreboard?.lineKey += readColoredUtf8() + "\n"
-                scoreboard?.lineValue += readColoredUtf8() + "\n"
+                val notLast = lines != it + 1
+                scoreboard?.lineKey += readColoredUtf8() + if (notLast) "\n" else ""
+                scoreboard?.lineValue += readColoredUtf8() + if (notLast) "\n" else ""
             }
 
             scoreboard?.update()
