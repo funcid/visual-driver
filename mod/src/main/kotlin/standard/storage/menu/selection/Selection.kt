@@ -143,7 +143,7 @@ class Selection(
     private fun textWithMoney(text: String, vault: String, textLeft: Boolean = true) = TextedIcon(text, vault, textLeft)
 
     fun redrawGrid() {
-        val elements = getElementsOnPage(currentPage)
+        val elements = if (pages.size == 0) listOf() else getElementsOnPage(currentPage)
         grid.children.clear()
 
         elements.forEach { element ->
