@@ -3,7 +3,6 @@ package me.func.mod.reactive
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.data.Sprites
 import me.func.mod.ui.menu.MenuManager.reactive
-import me.func.mod.util.nbt
 import me.func.mod.util.warn
 import me.func.protocol.ui.menu.Button
 import org.bukkit.Material
@@ -74,17 +73,13 @@ class ReactiveButton : Button() {
         }
     override var priceText: String = ""
 
-    private var sale = 0
+    override var sale = 0
 
     fun sale(percent: Int) = apply {
-        if (item == null) {
-            warn("Cannot add sale to non-item button! Sorry :(")
-            return this
-        } else if (percent !in 0..100) {
+        if (percent !in 0..100) {
             warn("Sale percent must be between 0 and 100!")
             return this
         }
-        item = item?.nbt("sale", percent.toString())
         sale = percent
     }
 
@@ -152,6 +147,7 @@ class ReactiveButton : Button() {
         transfer.string(command ?: "")
         transfer.string(vault ?: "")
         transfer.boolean(special)
+        transfer.integer(sale)
     }
 
     fun copy(): ReactiveButton = ReactiveButton().also {

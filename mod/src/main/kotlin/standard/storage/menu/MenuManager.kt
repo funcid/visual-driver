@@ -38,6 +38,7 @@ class MenuManager {
                 command = buffer.readColoredUtf8() // command
                 vault = buffer.readColoredUtf8() // vault
                 special = buffer.readBoolean() // special
+                sale = buffer.readInt()
             }
         }
 

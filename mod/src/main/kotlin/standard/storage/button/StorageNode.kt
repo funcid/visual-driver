@@ -23,7 +23,8 @@ abstract class StorageNode<T : AbstractElement>(
     var hoverText: String = "",
     override var command: String? = null,
     override var special: Boolean = false,
-    override var vault: String? = null
+    override var vault: String? = null,
+    override var sale: Int = 0
 ) : Button() {
 
     var bundle: CarvedRectangle? = null

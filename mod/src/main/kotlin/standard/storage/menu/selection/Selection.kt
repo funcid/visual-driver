@@ -187,10 +187,7 @@ class Selection(
                     }
                 }
                 if (element.price >= 0) {
-                    val isItem = element.icon is ItemElement
-                    val tag = if (isItem) (element.icon as ItemElement).stack?.tagCompound else null
-                    val hasTag = isItem && tag?.hasKeyOfType("sale", 8) == true
-                    val sale = if (isItem && hasTag) tag?.getString("sale")?.toInt() ?: 0 else 0
+                    val sale = element.sale
                     val price = element.price
                     val priceText = element.priceText
 

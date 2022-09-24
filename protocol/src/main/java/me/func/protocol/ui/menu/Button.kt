@@ -11,6 +11,7 @@ open class Button(
     open var priceText: String = "",
     open var command: String? = "",
     open var vault: String? = "",
+    open var sale: Int = 0
 ) {
     companion object {
         @JvmStatic
@@ -28,6 +29,7 @@ open class Button(
         fun price(price: Long) = apply { button.price = price }
         fun price(text: String) = apply { button.priceText = text }
         fun special(special: Boolean) = apply { button.special = special }
+        fun sale(sale: Int) = apply { button.sale = sale }
         fun build() = button
     }
 }

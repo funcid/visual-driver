@@ -423,6 +423,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun getOnRightClick ()Lme/func/mod/reactive/ButtonClickHandler;
 	public fun getPrice ()J
 	public fun getPriceText ()Ljava/lang/String;
+	public fun getSale ()I
 	public fun getSpecial ()Z
 	public fun getTexture ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
@@ -454,6 +455,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun setOnRightClick (Lme/func/mod/reactive/ButtonClickHandler;)V
 	public fun setPrice (J)V
 	public fun setPriceText (Ljava/lang/String;)V
+	public fun setSale (I)V
 	public fun setSpecial (Z)V
 	public fun setTexture (Ljava/lang/String;)V
 	public fun setTitle (Ljava/lang/String;)V
