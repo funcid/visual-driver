@@ -25,6 +25,7 @@ abstract class AbstractProgress(val model: Progress) {
         align = LEFT
         size = V3(PROGRESS_WIDTH * model.progress, 5.0, 0.0)
         color = Color(42, 102, 189, 1.0)
+        enabled = model.progress > 0.0
     }
 
     val container: CarvedRectangle by lazyCarved {

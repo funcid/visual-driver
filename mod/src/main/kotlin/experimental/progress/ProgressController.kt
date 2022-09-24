@@ -84,6 +84,7 @@ class ProgressController {
 
                         bar.progress.animate(0.25) {
                             size.x = PROGRESS_WIDTH * progress
+                            enabled = progress > 0.0
                         }
                     }
                     1 -> bar.content.content = readColoredUtf8() // текст
