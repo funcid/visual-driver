@@ -2,6 +2,7 @@ package standard.ui
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.gui.ingame.ChatScreen
+import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readId
@@ -27,23 +28,6 @@ class Boosters {
             size = V3(80.0, 80.0)
             offset.y = 12.0
             offset.x -= 12.0
-
-            +carved {
-                size = V3(18.0, 18.0)
-                color.alpha = 0.62
-                carveSize = 2.0
-
-                +text {
-                    content = "+"
-                    size = V3(16.0, 16.0)
-                    color = WHITE
-                    shadow = true
-                    origin = CENTER
-                    align = CENTER
-                    offset.y = 3.5
-                    offset.x = 0.5
-                }
-            }
 
             boostersContainer = +flex {
                 flexSpacing = 4.0
