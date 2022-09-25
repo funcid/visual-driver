@@ -1,13 +1,14 @@
 package me.func.mod.reactive
 
-import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.util.subscriber
 import me.func.protocol.data.color.RGB
 import me.func.protocol.math.Position
 import me.func.protocol.ui.progress.Progress
 import org.bukkit.Location
 import org.bukkit.entity.Player
+import java.util.*
 
 class ReactiveProgress : Progress(), PlayerSubscriber {
 
@@ -84,6 +85,7 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
 
     class Builder(val model: ReactiveProgress = ReactiveProgress()) {
 
+        fun uuid(UUID: UUID) = apply { model.uuid = UUID }
         fun position(position: Position) = apply { model.position = position }
         fun color(lineColor: RGB) = apply { model.lineColor = lineColor }
         fun text(text: String) = apply { model.text = text }

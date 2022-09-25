@@ -578,6 +578,7 @@ public class me/func/protocol/ui/progress/Progress : me/func/protocol/Unique {
 	public fun setPosition (Lme/func/protocol/math/Position;)V
 	public fun setProgress (D)V
 	public fun setText (Ljava/lang/String;)V
+	public fun setUuid (Ljava/util/UUID;)V
 }
 
 public final class me/func/protocol/ui/progress/Progress$Builder {
@@ -594,6 +595,7 @@ public final class me/func/protocol/ui/progress/Progress$Builder {
 	public final fun position (Lme/func/protocol/math/Position;)Lme/func/protocol/ui/progress/Progress$Builder;
 	public final fun progress (D)Lme/func/protocol/ui/progress/Progress$Builder;
 	public final fun text (Ljava/lang/String;)Lme/func/protocol/ui/progress/Progress$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/protocol/ui/progress/Progress$Builder;
 }
 
 public final class me/func/protocol/ui/progress/Progress$Companion {

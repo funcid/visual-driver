@@ -1,13 +1,13 @@
 package me.func.protocol.ui.progress
 
+import me.func.protocol.Unique
 import me.func.protocol.data.color.GlowColor
 import me.func.protocol.data.color.RGB
-import me.func.protocol.Unique
 import me.func.protocol.math.Position
 import java.util.*
 
 open class Progress(
-    override val uuid: UUID = UUID.randomUUID(),
+    override var uuid: UUID = UUID.randomUUID(),
     open var position: Position = Position.TOP,
     open var lineColor: RGB = GlowColor.BLUE,
     open var text: String = "Загрузка...",
@@ -26,6 +26,7 @@ open class Progress(
 
     class Builder(val model: Progress = Progress()) {
 
+        fun uuid(UUID: UUID) = apply { model.uuid = UUID }
         fun position(position: Position) = apply { model.position = position }
         fun color(lineColor: RGB) = apply { model.lineColor = lineColor }
         fun text(text: String) = apply { model.text = text }
