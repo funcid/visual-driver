@@ -17,6 +17,9 @@ import java.util.*
 import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.collections.set
+import kotlin.math.abs
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class Banners {
 
@@ -75,7 +78,6 @@ class Banners {
 
                     size = V3(banner.weight.toDouble(), banner.height.toDouble())
                     color = Color(banner.red, banner.green, banner.blue, banner.opacity)
-                    context.renderDistance = 75.0
                     context.rotation =
                         Rotation(Math.toRadians(banner.motionSettings["yaw"].toString().toDouble()), 0.0, 1.0, 0.0)
                     rotation =
@@ -162,9 +164,18 @@ class Banners {
             val pitch =
                 (player.rotationPitch - player.prevRotationPitch) * timer.renderPartialTicks + player.prevRotationPitch
 
-            banners.filter { it.value.first.watchingOnPlayer }.forEach {
-                it.value.second.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
-                it.value.second.children[0].rotation = Rotation(-pitch * Math.PI / 180, 1.0, 0.0, 0.0)
+            banners.forEach {
+                val content = it.value.second
+                val banner = it.value.first
+                val size = sqrt(abs(banner.weight * banner.height / 100.0 / 100.0))
+
+                if (banner.watchingOnPlayer) {
+                    content.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
+                    content.children[0].rotation = Rotation(-pitch * Math.PI / 180, 1.0, 0.0, 0.0)
+                }
+                content.enabled = (content.offset.x - player.x).pow(2) +
+                        (content.offset.z - player.z).pow(2) +
+                        (content.offset.y - player.y).pow(2) < 75 * 75 * size
             }
         }
     }
