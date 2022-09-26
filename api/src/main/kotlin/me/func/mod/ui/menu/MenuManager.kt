@@ -89,6 +89,9 @@ object MenuManager : PlayerSubscriber {
         Anime.createReader("func:back") { player, _ ->
             menuStacks[player.uniqueId]?.let { stack ->
                 stack.pop()
+
+                if (stack.empty()) return@let
+
                 val menu = stack.peek()
                 if (menu is Storage) menu.bind(player)
             }
