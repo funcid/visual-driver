@@ -6,6 +6,7 @@ import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
 import me.func.protocol.data.color.RGB
 import net.minecraft.server.v1_12_R1.*
+import net.minecraft.server.v1_12_R1.SoundEffects.id
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
@@ -104,7 +105,7 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     @JvmName("putBoolean")
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
-    fun uuid(uuid: UUID) = apply { serializer.writeUuid(uuid) }
+    fun uuid(uuid: UUID) = apply { serializer.ensureWritable(16).writeLong(uuid.mostSignificantBits).writeLong(uuid.leastSignificantBits) }
 
     fun send(channel: String, vararg players: Player?): Unit = send(channel, players.asIterable())
 
