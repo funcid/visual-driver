@@ -94,8 +94,9 @@ class ScoreBoard(
 
         lastMaxX = sizeMax
 
+        dataLine.forEach { it.size.x = sizeMax }
+
         animate(0.228, Easings.ELASTIC_OUT) {
-            dataLine.forEach { it.size.x = sizeMax }
 
             headerInfo.size.x = sizeMax
             footerInfo.size.x = sizeMax
