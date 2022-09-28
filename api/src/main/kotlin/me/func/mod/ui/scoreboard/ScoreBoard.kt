@@ -74,7 +74,7 @@ object ScoreBoard : Listener {
     @JvmStatic
     fun builder() = Builder()
 
-    class Builder(val scheme: ScoreBoardScheme = ScoreBoardScheme()) {
+    class Builder(private val scheme: ScoreBoardScheme = ScoreBoardScheme()) {
 
         fun key(key: String) = apply { scheme.key = key }
         fun header(header: String) = apply { scheme.header = header }
@@ -94,11 +94,11 @@ object ScoreBoard : Listener {
             })
         }
 
-        fun build() {
+        fun build(): ScoreBoardScheme {
             schemes[scheme.key] = scheme
             subscribers[scheme.key] = arrayListOf()
             list.add(scheme.key)
-            scheme
+            return scheme
         }
     }
 
