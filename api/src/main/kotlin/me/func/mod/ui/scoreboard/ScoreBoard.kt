@@ -16,7 +16,7 @@ object ScoreBoard : Listener {
 
     private val list = arrayListOf<String>()
     private val schemes = hashMapOf<String, ScoreBoardScheme>()
-    private val subscribers = hashMapOf<String, MutableList<Player>>()
+    private val subscribers = hashMapOf<String, HashSet<Player>>()
 
     init {
         listener(this)
@@ -38,8 +38,8 @@ object ScoreBoard : Listener {
 
     @JvmStatic
     fun unsubscribe(player: Player) {
-        subscribers.forEach {
-                (_, players) -> players.remove(player)
+        subscribers.forEach { (_, players) ->
+            players.remove(player)
         }
     }
 
@@ -96,7 +96,7 @@ object ScoreBoard : Listener {
 
         fun build(): ScoreBoardScheme {
             schemes[scheme.key] = scheme
-            subscribers[scheme.key] = arrayListOf()
+            subscribers[scheme.key] = hashSetOf()
             list.add(scheme.key)
             return scheme
         }
