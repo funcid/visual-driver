@@ -6,6 +6,7 @@ import me.func.mod.util.subscriber
 import me.func.protocol.data.color.RGB
 import me.func.protocol.math.Position
 import me.func.protocol.ui.progress.Progress
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
@@ -20,19 +21,23 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
 
     var lastUpdate = -1L
 
-    private val subscribed = hashSetOf<Player>()
+    private val subscribed = hashSetOf<UUID>()
 
     // Отписать игроков от обновлений
-    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players)
+    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players.map { it.uniqueId }.toSet())
 
-    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players)
+    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players.map { it.uniqueId }.toSet())
+
+    fun unsubscribeByUUID(vararg uuids: UUID) = subscribed.removeAll(uuids.toSet())
+
+    fun unsubscribeByUUID(uuids: Iterable<UUID>) = subscribed.removeAll(uuids.toSet())
 
     fun send(players: List<Player>) = send(*players.toTypedArray())
 
     fun send(vararg players: Player) {
 
         // Отправить и добавить игроков в подписавшихся
-        subscribed.addAll(players)
+        subscribed.addAll(players.map { it.uniqueId })
         starter()
             .rgb(lineColor)
             .integer(position.ordinal)
@@ -46,11 +51,11 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
     }
 
     @JvmOverloads
-    fun delete(players: Set<Player> = subscribed) {
+    fun delete(players: Set<UUID> = subscribed) {
 
         // Удалить данный прогресс бар
-        starter().send("progress-ui:remove", players)
-        unsubscribe(players)
+        starter().send("progress-ui:remove", players.map { Bukkit.getPlayer(uuid) })
+        unsubscribeByUUID(players)
     }
 
 
@@ -71,9 +76,9 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
         // Обновить прогресс у всех игроков
         lastUpdate = System.currentTimeMillis()
 
-        subscribed.removeIf { !it.player.isOnline }
+        subscribed.removeIf { Bukkit.getPlayer(it) == null }
 
-        transfer.send("progress-ui:update", subscribed)
+        transfer.send("progress-ui:update", subscribed.map { Bukkit.getPlayer(it) })
     }
 
     private fun starter() = ModTransfer().uuid(uuid)

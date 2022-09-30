@@ -489,6 +489,8 @@ public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/p
 	public fun setText (Ljava/lang/String;)V
 	public final fun unsubscribe (Ljava/lang/Iterable;)Z
 	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
+	public final fun unsubscribeByUUID (Ljava/lang/Iterable;)Z
+	public final fun unsubscribeByUUID ([Ljava/util/UUID;)Z
 }
 
 public final class me/func/mod/reactive/ReactiveProgress$Builder {
@@ -968,6 +970,8 @@ public final class me/func/mod/ui/scoreboard/ScoreBoard : org/bukkit/event/Liste
 	public static final field INSTANCE Lme/func/mod/ui/scoreboard/ScoreBoard;
 	public static final fun builder ()Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
 	public static final fun get (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoardScheme;
+	public final fun handle (Lorg/bukkit/event/inventory/InventoryCloseEvent;)V
+	public final fun handle (Lorg/bukkit/event/player/PlayerKickEvent;)V
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
 	public static final fun hide (Lorg/bukkit/entity/Player;)V
 	public static final fun remove (Ljava/lang/String;)V
@@ -1039,6 +1043,8 @@ public final class me/func/mod/ui/scoreboard/ScoreBoardScheme {
 	public fun toString ()Ljava/lang/String;
 	public final fun update (Ljava/lang/Iterable;)V
 	public final fun update ([Lorg/bukkit/entity/Player;)V
+	public final fun updateByUUID (Ljava/lang/Iterable;)V
+	public final fun updateByUUID ([Ljava/util/UUID;)V
 }
 
 public final class me/func/mod/ui/scoreboard/raw/RawConstant : me/func/mod/ui/scoreboard/ScoreBoardRaw {

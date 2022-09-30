@@ -9,14 +9,18 @@ import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
+import org.bukkit.event.inventory.InventoryCloseEvent
+import org.bukkit.event.player.PlayerKickEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import java.util.*
 import java.util.function.Function
+import kotlin.collections.HashSet
 
 object ScoreBoard : Listener {
 
     private val list = arrayListOf<String>()
     private val schemes = hashMapOf<String, ScoreBoardScheme>()
-    private val subscribers = hashMapOf<String, HashSet<Player>>()
+    private val subscribers = hashMapOf<String, HashSet<UUID>>()
 
     init {
         listener(this)
@@ -26,9 +30,14 @@ object ScoreBoard : Listener {
                 val data = schemes[key] ?: return@forEach
                 val subscribers = subscribers[key] ?: return@forEach
 
-                data.update(subscribers)
+                data.updateByUUID(subscribers)
             }
         }, 10, 20)
+    }
+
+    @EventHandler
+    fun InventoryCloseEvent.handle() {
+        Anime.close(player as Player)
     }
 
     @EventHandler
@@ -36,10 +45,15 @@ object ScoreBoard : Listener {
         unsubscribe(player)
     }
 
+    @EventHandler
+    fun PlayerKickEvent.handle() {
+        unsubscribe(player)
+    }
+
     @JvmStatic
     fun unsubscribe(player: Player) {
         subscribers.forEach { (_, players) ->
-            players.remove(player)
+            players.remove(player.uniqueId)
         }
     }
 
@@ -54,7 +68,7 @@ object ScoreBoard : Listener {
 
         val data = get(key) ?: return
 
-        subscribers[data.key]?.addAll(players)
+        subscribers[data.key]?.addAll(players.map { it.uniqueId })
         players.forEach { data.bind(it) }
         data.update(*players)
     }
