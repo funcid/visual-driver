@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.2.6)
+# Cristalix Animation API DOCS (актуальная версия 3.2.9)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:3.2.6'
+    implementation 'me.func:animation-api:3.2.9'
 }
 ```
 
@@ -729,7 +729,7 @@ var behaviour: NpcBehaviour = NpcBehaviour.NONE, // модель поведен�
 var pitch: Float = 0f,
 var yaw: Float = 0f,
 var skinUrl: String? = null, // ссылка на скин 
-var skinDigest: String? = null,
+var skinDigest: String? = null, // ЕСЛИ ВЫ СТАВИТЕ ССЫЛКУ, ТО СТАВЬТЕ DIGEST (например uuid.toString())
 var slimArms: Boolean = false, // тонкие руки
 var sneaking: Boolean = false, // шифтит
 var sleeping: Boolean = false, // спит
