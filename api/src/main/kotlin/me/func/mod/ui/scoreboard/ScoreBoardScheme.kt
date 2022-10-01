@@ -25,13 +25,12 @@ data class ScoreBoardScheme(
 
     private fun update(player: Player) {
         starter().apply {
-
             content.forEach { raw -> raw.write(this, player) }
         }.send("func:scoreboard-update", player)
     }
 
     private fun update(uuid: UUID) {
-        update(Bukkit.getPlayer(uuid) ?: return)
+        Bukkit.getPlayer(uuid)?.let { update(it) }
     }
 
     fun show(player: Player) = ScoreBoard.subscribe(key, player)
@@ -40,11 +39,11 @@ data class ScoreBoardScheme(
 
     fun update(subscribers: Iterable<Player>) = subscribers.forEach { update(it) }
 
-    fun updateByUUID(subscribers: Iterable<UUID>) = subscribers.forEach { update(Bukkit.getPlayer(it)) }
+    fun updateByUUID(subscribers: Iterable<UUID>) = subscribers.forEach { update(it) }
 
     fun update(vararg subscribers: Player) = subscribers.forEach { update(it) }
 
-    fun updateByUUID(vararg subscribers: UUID) = subscribers.forEach { update(Bukkit.getPlayer(it)) }
+    fun updateByUUID(vararg subscribers: UUID) = subscribers.forEach { update(it) }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
