@@ -79,8 +79,8 @@ public class me/func/protocol/data/color/Tricolor : me/func/protocol/data/color/
 public final class me/func/protocol/data/element/Banner {
 	public static final field S Lme/func/protocol/data/element/Banner$S;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIID)V
-	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIIDILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIID)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIIDILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public static final fun builder ()Lme/func/protocol/data/element/Banner$Builder;
 	public final fun getBlue ()I
@@ -94,6 +94,7 @@ public final class me/func/protocol/data/element/Banner {
 	public final fun getTexture ()Ljava/lang/String;
 	public final fun getUuid ()Ljava/util/UUID;
 	public final fun getWatchingOnPlayer ()Z
+	public final fun getWatchingOnPlayerWithoutPitch ()Z
 	public final fun getWeight ()I
 	public final fun getX ()D
 	public final fun getY ()D
@@ -109,6 +110,7 @@ public final class me/func/protocol/data/element/Banner {
 	public final fun setTexture (Ljava/lang/String;)V
 	public final fun setUuid (Ljava/util/UUID;)V
 	public final fun setWatchingOnPlayer (Z)V
+	public final fun setWatchingOnPlayerWithoutPitch (Z)V
 	public final fun setWeight (I)V
 	public final fun setX (D)V
 	public final fun setY (D)V
@@ -132,6 +134,7 @@ public final class me/func/protocol/data/element/Banner$Builder {
 	public final fun resizeLine (ID)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun texture (Ljava/lang/String;)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun watchingOnPlayer (Z)Lme/func/protocol/data/element/Banner$Builder;
+	public final fun watchingOnPlayerWithoutPitch (Z)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun weight (I)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun x (D)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun y (D)Lme/func/protocol/data/element/Banner$Builder;
