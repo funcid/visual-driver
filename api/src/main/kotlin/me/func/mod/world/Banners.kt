@@ -59,6 +59,7 @@ object Banners {
             transfer.string(current.uuid.toString())
                 .integer(current.motionType.ordinal)
                 .boolean(current.watchingOnPlayer)
+                .boolean(current.watchingOnPlayerWithoutPitch)
                 .double(-current.motionSettings["yaw"].toString().toDouble())
                 .double(current.motionSettings["pitch"].toString().toDouble())
                 .string(current.content)

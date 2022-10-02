@@ -37,6 +37,7 @@ class Banners {
                     uuid = uuid,
                     motionType = MotionType.values()[readInt()],
                     watchingOnPlayer = readBoolean(),
+                    watchingOnPlayerWithoutPitch = readBoolean(),
                     motionSettings = hashMapOf<String, Any>().also { // НЕ ПИХАТЬ ДОБАВЛЕНИЕ СРАЗУ В ( сюда )
                         it["yaw"] = readDouble()
                         it["pitch"] = readDouble()
@@ -172,6 +173,9 @@ class Banners {
                 if (banner.watchingOnPlayer) {
                     content.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
                     content.children[0].rotation = Rotation(-pitch * Math.PI / 180, 1.0, 0.0, 0.0)
+                }
+                if (banner.watchingOnPlayerWithoutPitch) {
+                    content.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
                 }
                 content.enabled = (content.offset.x - player.x).pow(2) +
                         (content.offset.z - player.z).pow(2) +

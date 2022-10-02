@@ -6,6 +6,7 @@ class Banner(
     var uuid: UUID = UUID.randomUUID(),
     var motionType: MotionType = MotionType.CONSTANT,
     var watchingOnPlayer: Boolean = false,
+    var watchingOnPlayerWithoutPitch: Boolean = false,
     var motionSettings: MutableMap<String, Any> = mutableMapOf(
         "yaw" to 0.0,
         "pitch" to 0.0,
@@ -33,6 +34,7 @@ class Banner(
     class Builder(val banner: Banner = Banner()) {
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
         fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }
+        fun watchingOnPlayerWithoutPitch(watchingOnPlayerWithoutPitch: Boolean) = apply { banner.watchingOnPlayerWithoutPitch = watchingOnPlayerWithoutPitch }
         fun content(vararg content: String) = apply { banner.content = content.joinToString("\n") }
         fun resizeLine(lineIndex: Int, textScale: Double): Builder {
             val list = (banner.motionSettings["line"] ?: mutableListOf<Pair<Int, Double>>()) as MutableList<Pair<Int, Double>>
