@@ -26,97 +26,100 @@ class Banners {
     private val banners = hashMapOf<UUID, Pair<Banner, Context3D>>()
     private val sizes = hashMapOf<Pair<UUID, Int>, Double>()
 
-    private fun toBlackText(string: String) =
-        "¨222200" + string.replace(Regex("(§[0-9a-fA-F]|¨......)"), "¨222200")
+    private val regex = Regex("(§[0-9a-fA-F]|¨......)")
+
+    private fun toBlackText(string: String) = "¨222200" + string.replace(regex, "¨222200")
 
     init {
         mod.registerChannel("banner:new") {
-            repeat(readInt()) {
-                val uuid = UUID.fromString(NetUtil.readUtf8(this))
-                val banner = Banner(
-                    uuid = uuid,
-                    motionType = MotionType.values()[readInt()],
-                    watchingOnPlayer = readBoolean(),
-                    watchingOnPlayerWithoutPitch = readBoolean(),
-                    motionSettings = hashMapOf<String, Any>().also { // НЕ ПИХАТЬ ДОБАВЛЕНИЕ СРАЗУ В ( сюда )
-                        it["yaw"] = readDouble()
-                        it["pitch"] = readDouble()
-                    },
-                    content = NetUtil.readUtf8(this@registerChannel),
-                    x = readDouble(),
-                    y = readDouble(),
-                    z = readDouble(),
-                    height = readInt(),
-                    weight = readInt(),
-                    texture = NetUtil.readUtf8(this@registerChannel),
-                    red = readInt(),
-                    green = readInt(),
-                    blue = readInt(),
-                    opacity = readDouble()
-                )
+            val uuid = NetUtil.readId(this)
+            val banner = Banner(
+                uuid = uuid,
+                motionType = MotionType.values()[readInt()],
+                watchingOnPlayer = readBoolean(),
+                watchingOnPlayerWithoutPitch = readBoolean(),
+                motionSettings = hashMapOf<String, Any>().also { // НЕ ПИХАТЬ ДОБАВЛЕНИЕ СРАЗУ В ( сюда )
+                    it["yaw"] = readDouble()
+                    it["pitch"] = readDouble()
+                },
+                content = NetUtil.readUtf8(this),
+                x = readDouble(),
+                y = readDouble(),
+                z = readDouble(),
+                height = readInt(),
+                width = readInt(),
+                texture = NetUtil.readUtf8(this),
+                red = readInt(),
+                green = readInt(),
+                blue = readInt(),
+                opacity = readDouble()
+            )
 
-                if (banner.motionType == MotionType.STEP_BY_TARGET) {
-                    banner.motionSettings["target"] = readInt()
-                    banner.motionSettings["offsetX"] = readDouble()
-                    banner.motionSettings["offsetY"] = readDouble()
-                    banner.motionSettings["offsetZ"] = readDouble()
+            if (banner.motionType == MotionType.STEP_BY_TARGET) {
+                banner.motionSettings["target"] = readInt()
+                banner.motionSettings["offsetX"] = readDouble()
+                banner.motionSettings["offsetY"] = readDouble()
+                banner.motionSettings["offsetZ"] = readDouble()
+            }
+
+            val context = Context3D(V3(banner.x, banner.y, banner.z))
+            banners[uuid] = banner to context
+
+            context.addChild(rectangle {
+                align = TOP
+                origin = TOP
+
+                if (banner.texture.isNotEmpty()) {
+                    val parts = banner.texture.split(":")
+                    textureLocation = UIEngine.clientApi.resourceManager().getLocation(parts[0], parts[1])
+                }
+                if (banner.content.isNotEmpty()) {
+                    text(banner.content, banner, this)
                 }
 
-                val context = Context3D(V3(banner.x, banner.y, banner.z))
-                banners[uuid] = banner to context
+                size = V3(banner.width.toDouble(), banner.height.toDouble())
+                color = Color(banner.red, banner.green, banner.blue, banner.opacity)
+                context.rotation =
+                    Rotation(Math.toRadians(banner.motionSettings["yaw"].toString().toDouble()), 0.0, 1.0, 0.0)
+                rotation =
+                    Rotation(Math.toRadians(banner.motionSettings["pitch"].toString().toDouble()), 1.0, 0.0, 0.0)
 
-                context.addChild(rectangle {
-                    align = TOP
-                    origin = TOP
-
-                    if (banner.texture.isNotEmpty()) {
-                        val parts = banner.texture.split(":")
-                        textureLocation = UIEngine.clientApi.resourceManager().getLocation(parts[0], parts[1])
+                if (banner.motionSettings["xray"].toString().toBoolean()) {
+                    beforeRender = {
+                        GlStateManager.disableDepth()
                     }
-                    if (banner.content.isNotEmpty()) {
-                        text(banner.content, banner, this)
+                    afterRender = {
+                        GlStateManager.enableDepth()
                     }
-
-                    size = V3(banner.weight.toDouble(), banner.height.toDouble())
-                    color = Color(banner.red, banner.green, banner.blue, banner.opacity)
-                    context.rotation =
-                        Rotation(Math.toRadians(banner.motionSettings["yaw"].toString().toDouble()), 0.0, 1.0, 0.0)
-                    rotation =
-                        Rotation(Math.toRadians(banner.motionSettings["pitch"].toString().toDouble()), 1.0, 0.0, 0.0)
-
-                    if (banner.motionSettings["xray"].toString().toBoolean()) {
-                        beforeRender = {
-                            GlStateManager.disableDepth()
-                        }
-                        afterRender = {
-                            GlStateManager.enableDepth()
-                        }
-                    }
-                })
-                UIEngine.worldContexts.add(context)
-            }
+                }
+            })
+            UIEngine.worldContexts.add(context)
         }
 
-        mod.registerChannel("banner:change-content") {
-            val uuid = UUID.fromString(NetUtil.readUtf8(this))
-            banners[uuid]?.let { pair ->
-                if (pair.second.children.isNotEmpty()) {
-                    val element = (pair.second.children[0] as RectangleElement)
-                    element.children.clear()
-                    text(NetUtil.readUtf8(this), pair.first, element)
+        mod.registerChannel("banner:update") {
+            val uuid = NetUtil.readId(this)
+            val (banner, context) = banners[uuid] ?: return@registerChannel
+            when (readInt()) {
+                1 -> {
+                    val children = context.children
+                    if (children.isNotEmpty()) {
+                        val element = (children[0] as RectangleElement)
+                        element.children.clear()
+                        text(NetUtil.readUtf8(this), banner, element)
+                    }
                 }
             }
         }
 
         mod.registerChannel("banner:size-text") {
-            val uuid = UUID.fromString(NetUtil.readUtf8(this))
-            banners[uuid]?.let { pair ->
+            val uuid = NetUtil.readId(this)
+            banners[uuid]?.let { (_, context) ->
                 repeat(readInt()) {
                     val line = readInt()
                     val newScale = readDouble()
 
                     sizes[uuid to line] = newScale
-                    val element = pair.second.children[0] as RectangleElement
+                    val element = context.children[0] as RectangleElement
 
                     element.children[line * 2].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
@@ -131,12 +134,10 @@ class Banners {
         }
 
         mod.registerChannel("banner:remove") {
-            repeat(readInt()) {
-                val uuid = UUID.fromString(NetUtil.readUtf8(this))
-                banners[uuid]?.let {
-                    UIEngine.worldContexts.remove(it.second)
-                    banners.remove(uuid)
-                }
+            val uuid = NetUtil.readId(this)
+            banners[uuid]?.let {
+                UIEngine.worldContexts.remove(it.second)
+                banners.remove(uuid)
             }
         }
 
@@ -168,7 +169,7 @@ class Banners {
             banners.forEach {
                 val content = it.value.second
                 val banner = it.value.first
-                val size = sqrt(abs(banner.weight * banner.height / 100.0 / 100.0))
+                val size = sqrt(abs(banner.width * banner.height / 100.0 / 100.0))
 
                 if (banner.watchingOnPlayer) {
                     content.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
@@ -193,7 +194,7 @@ class Banners {
                 align = TOP
                 origin = TOP
                 content = line
-                size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                size = V3(banner.width.toDouble(), banner.height.toDouble())
                 color = WHITE
                 offset.z = -0.05
                 offset.y = -(-3 - index * 12) * currentSize
@@ -203,7 +204,7 @@ class Banners {
                 align = TOP
                 origin = TOP
                 content = toBlackText(line)
-                size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                size = V3(banner.width.toDouble(), banner.height.toDouble())
                 color = Color(0, 0, 0, 0.82)
                 offset.z = -0.002
                 offset.y = -(-3 - index * 12 - 0.75) * currentSize

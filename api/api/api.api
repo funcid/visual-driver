@@ -406,6 +406,62 @@ public abstract interface class me/func/mod/reactive/ButtonClickHandler {
 	public abstract fun handle (Lorg/bukkit/entity/Player;ILme/func/mod/reactive/ReactiveButton;)V
 }
 
+public final class me/func/mod/reactive/ReactiveBanner : me/func/protocol/data/element/Banner, me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field Companion Lme/func/mod/reactive/ReactiveBanner$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun delete ()V
+	public final fun delete (Ljava/util/Set;)V
+	public final fun delete ([Ljava/util/UUID;)V
+	public final fun delete ([Lorg/bukkit/entity/Player;)V
+	public static synthetic fun delete$default (Lme/func/mod/reactive/ReactiveBanner;Ljava/util/Set;ILjava/lang/Object;)V
+	public fun getContent ()Ljava/lang/String;
+	public fun getSubscribersCount ()I
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/util/Collection;)V
+	public final fun send ([Lorg/bukkit/entity/Player;)V
+	public fun setContent (Ljava/lang/String;)V
+	public final fun unsubscribe ([Ljava/util/UUID;)V
+	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/reactive/ReactiveBanner$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/reactive/ReactiveBanner;)V
+	public synthetic fun <init> (Lme/func/mod/reactive/ReactiveBanner;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun blue (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun build ()Lme/func/mod/reactive/ReactiveBanner;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun content ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun eyeLocation (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun getModel ()Lme/func/mod/reactive/ReactiveBanner;
+	public final fun green (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun harmonicVibrations (Lme/func/protocol/math/Dimension;DDD)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun height (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun location (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun motionType (Lme/func/protocol/data/element/MotionType;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun opacity (D)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun pitch (F)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun red (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun resizeLine (ID)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun shineBlocks (Z)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun target (Lorg/bukkit/entity/LivingEntity;DDD)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public static synthetic fun target$default (Lme/func/mod/reactive/ReactiveBanner$Builder;Lorg/bukkit/entity/LivingEntity;DDDILjava/lang/Object;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun texture (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun watchingOnPlayer (Z)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun watchingOnPlayerWithoutPitch (Z)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun width (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun x (D)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun y (D)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun yaw (F)Lme/func/mod/reactive/ReactiveBanner$Builder;
+	public final fun z (D)Lme/func/mod/reactive/ReactiveBanner$Builder;
+}
+
+public final class me/func/mod/reactive/ReactiveBanner$Companion {
+	public final fun builder ()Lme/func/mod/reactive/ReactiveBanner$Builder;
+}
+
 public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/menu/Button {
 	public fun <init> ()V
 	public final fun command (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
@@ -1094,25 +1150,10 @@ public final class me/func/mod/util/Utils {
 
 public final class me/func/mod/world/Banners {
 	public static final field INSTANCE Lme/func/mod/world/Banners;
-	public static final fun add (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
-	public static final fun content (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun content (Lorg/bukkit/entity/Player;Lme/func/protocol/data/element/Banner;Ljava/lang/String;)V
-	public final fun eyeLocation (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
+	public static final fun add ([Lme/func/mod/reactive/ReactiveBanner;)V
 	public final fun getBanners ()Ljava/util/Map;
-	public final fun harmonicVibrations (Lme/func/protocol/data/element/Banner;Lme/func/protocol/math/Dimension;DDD)V
-	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
-	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
-	public final fun location (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
-	public final synthetic fun new (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/data/element/Banner;
-	public static final synthetic fun new (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
-	public static final fun remove (Ljava/util/UUID;)V
+	public static final fun remove ([Lme/func/mod/reactive/ReactiveBanner;)V
 	public final fun setBanners (Ljava/util/Map;)V
-	public final fun shineBlocks (Lme/func/protocol/data/element/Banner;Z)V
-	public static final fun show (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
-	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
-	public static final fun showAll (Lorg/bukkit/entity/Player;)V
-	public final fun target (Lme/func/protocol/data/element/Banner;Lorg/bukkit/entity/LivingEntity;DDD)V
-	public static synthetic fun target$default (Lme/func/mod/world/Banners;Lme/func/protocol/data/element/Banner;Lorg/bukkit/entity/LivingEntity;DDDILjava/lang/Object;)V
 }
 
 public final class me/func/mod/world/Npc {

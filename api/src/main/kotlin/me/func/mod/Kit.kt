@@ -4,14 +4,14 @@ import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
 import me.func.mod.Anime.GRAFFITI_MOD_URL
 import me.func.mod.Anime.STANDARD_MOD_URL
 import me.func.mod.Anime.graffitiClient
-import me.func.mod.world.Npc.npcs
-import me.func.mod.ui.battlepass.BattlePass
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.graffiti.CoreGraffitiClient
 import me.func.mod.graffiti.GraffitiManager
+import me.func.mod.ui.battlepass.BattlePass
 import me.func.mod.util.*
 import me.func.mod.world.Banners
+import me.func.mod.world.Npc.npcs
 import me.func.protocol.Mod
 import org.bukkit.Sound
 import org.bukkit.SoundCategory
@@ -23,7 +23,7 @@ import org.bukkit.event.player.PlayerChangedWorldEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import ru.cristalix.core.formatting.Formatting
-import java.util.EnumSet
+import java.util.*
 
 @PublishedApi
 internal object StandardMods : Listener {
@@ -65,7 +65,9 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     EXPERIMENTAL({ StandardMods.mods.add(Mod.EXPERIMENTAL) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            after(3) { Banners.show(player, *Banners.banners.map { it.value }.toTypedArray()) }
+            after(3) {
+                Banners.banners.values.forEach { it.send(player) }
+            }
         }
     },
     MULTI_CHAT({ StandardMods.mods.add(Mod.CHAT) }),

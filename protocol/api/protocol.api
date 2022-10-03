@@ -76,15 +76,14 @@ public class me/func/protocol/data/color/Tricolor : me/func/protocol/data/color/
 	public fun toRGB (III)I
 }
 
-public final class me/func/protocol/data/element/Banner {
-	public static final field S Lme/func/protocol/data/element/Banner$S;
+public class me/func/protocol/data/element/Banner : me/func/protocol/Unique {
+	public static final field Companion Lme/func/protocol/data/element/Banner$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIID)V
 	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIIDILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public static final fun builder ()Lme/func/protocol/data/element/Banner$Builder;
 	public final fun getBlue ()I
-	public final fun getContent ()Ljava/lang/String;
+	public fun getContent ()Ljava/lang/String;
 	public final fun getGreen ()I
 	public final fun getHeight ()I
 	public final fun getMotionSettings ()Ljava/util/Map;
@@ -92,15 +91,15 @@ public final class me/func/protocol/data/element/Banner {
 	public final fun getOpacity ()D
 	public final fun getRed ()I
 	public final fun getTexture ()Ljava/lang/String;
-	public final fun getUuid ()Ljava/util/UUID;
+	public fun getUuid ()Ljava/util/UUID;
 	public final fun getWatchingOnPlayer ()Z
 	public final fun getWatchingOnPlayerWithoutPitch ()Z
-	public final fun getWeight ()I
+	public final fun getWidth ()I
 	public final fun getX ()D
 	public final fun getY ()D
 	public final fun getZ ()D
 	public final fun setBlue (I)V
-	public final fun setContent (Ljava/lang/String;)V
+	public fun setContent (Ljava/lang/String;)V
 	public final fun setGreen (I)V
 	public final fun setHeight (I)V
 	public final fun setMotionSettings (Ljava/util/Map;)V
@@ -108,10 +107,10 @@ public final class me/func/protocol/data/element/Banner {
 	public final fun setOpacity (D)V
 	public final fun setRed (I)V
 	public final fun setTexture (Ljava/lang/String;)V
-	public final fun setUuid (Ljava/util/UUID;)V
+	public fun setUuid (Ljava/util/UUID;)V
 	public final fun setWatchingOnPlayer (Z)V
 	public final fun setWatchingOnPlayerWithoutPitch (Z)V
-	public final fun setWeight (I)V
+	public final fun setWidth (I)V
 	public final fun setX (D)V
 	public final fun setY (D)V
 	public final fun setZ (D)V
@@ -135,14 +134,14 @@ public final class me/func/protocol/data/element/Banner$Builder {
 	public final fun texture (Ljava/lang/String;)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun watchingOnPlayer (Z)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun watchingOnPlayerWithoutPitch (Z)Lme/func/protocol/data/element/Banner$Builder;
-	public final fun weight (I)Lme/func/protocol/data/element/Banner$Builder;
+	public final fun width (I)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun x (D)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun y (D)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun yaw (F)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun z (D)Lme/func/protocol/data/element/Banner$Builder;
 }
 
-public final class me/func/protocol/data/element/Banner$S {
+public final class me/func/protocol/data/element/Banner$Companion {
 	public final fun builder ()Lme/func/protocol/data/element/Banner$Builder;
 }
 
