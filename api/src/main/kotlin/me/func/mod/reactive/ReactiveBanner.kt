@@ -26,9 +26,11 @@ class ReactiveBanner : Banner(), PlayerSubscriber {
         set(value) {
             if (field != value) {
                 update(starter().integer(1).string(value))
+                sendResize()
                 field = value
             }
         }
+
 
     override fun removeSubscriber(player: Player) {
         subscribed.remove(player.uniqueId)
@@ -76,12 +78,25 @@ class ReactiveBanner : Banner(), PlayerSubscriber {
             }
             .send("banner:new", *players)
 
+        if (content.isNotEmpty()) {
+            sendResize()
+        }
+    }
+
+    private fun sendResize() {
         val lines = motionSettings["line"]
         if (lines != null) {
             val sizes = lines as MutableList<Pair<Int, Double>>
-            val sizeTransfer = starter().integer(sizes.size)
-            sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
-            sizeTransfer.send("banner:size-text", *players)
+            update(
+                starter()
+                    .integer(2)
+                    .integer(sizes.size)
+                    .apply {
+                        sizes.forEach {
+                            integer(it.first).double(it.second)
+                        }
+                    }
+            )
         }
     }
 

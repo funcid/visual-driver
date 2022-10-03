@@ -108,26 +108,24 @@ class Banners {
                         text(NetUtil.readUtf8(this), banner, element)
                     }
                 }
-            }
-        }
+                2 -> {
+                    repeat(readInt()) {
+                        val line = readInt()
+                        val newScale = readDouble()
 
-        mod.registerChannel("banner:size-text") {
-            val uuid = NetUtil.readId(this)
-            banners[uuid]?.let { (_, context) ->
-                repeat(readInt()) {
-                    val line = readInt()
-                    val newScale = readDouble()
+                        sizes[uuid to line] = newScale
+                        val element = context.children[0] as RectangleElement
 
-                    sizes[uuid to line] = newScale
-                    val element = context.children[0] as RectangleElement
-
-                    element.children[line * 2].animate(0.2) {
-                        scale = V3(newScale, newScale, newScale)
-                        offset.y = -(-3 - line * 12) * newScale
-                    }
-                    element.children[line * 2 + 1].animate(0.2) {
-                        scale = V3(newScale, newScale, newScale)
-                        offset.y = -(-3 - line * 12 - 0.75) * newScale
+                        if (element.children.isNotEmpty()) {
+                            element.children[line * 2].animate(0.2) {
+                                scale = V3(newScale, newScale, newScale)
+                                offset.y = -(-3 - line * 12) * newScale
+                            }
+                            element.children[line * 2 + 1].animate(0.2) {
+                                scale = V3(newScale, newScale, newScale)
+                                offset.y = -(-3 - line * 12 - 0.75) * newScale
+                            }
+                        }
                     }
                 }
             }
