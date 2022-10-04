@@ -75,7 +75,7 @@ class Selection(
             menuTitle.origin = TOP
             menuTitle.align = TOP
         }
-        if (menuStack.size > 0) +backButton(height / 2 - padding + backButtonSize / 2, backButtonSize)
+        if (menuStack.size > 0) +backButton(height / 2 - padding + backButtonSize / 2)
 
         +closeButton(height / 2 - padding + backButtonSize / 2)
         +grid.apply { size = V3(this@rectangle.size.x, this@rectangle.size.y - padding) }
