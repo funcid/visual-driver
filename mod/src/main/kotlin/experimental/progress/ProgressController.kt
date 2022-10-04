@@ -74,6 +74,7 @@ class ProgressController {
         }
 
         mod.registerChannel("progress-ui:update") {
+
             progressMap[readId()]?.let { bar ->
                 when (readInt()) { // код изменения
                     0 -> { // прогресс

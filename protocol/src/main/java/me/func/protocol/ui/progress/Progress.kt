@@ -26,7 +26,7 @@ open class Progress(
 
     class Builder(val model: Progress = Progress()) {
 
-        fun uuid(UUID: UUID) = apply { model.uuid = UUID }
+        fun uuid(uuid: UUID) = apply { model.uuid = uuid }
         fun position(position: Position) = apply { model.position = position }
         fun color(lineColor: RGB) = apply { model.lineColor = lineColor }
         fun text(text: String) = apply { model.text = text }
