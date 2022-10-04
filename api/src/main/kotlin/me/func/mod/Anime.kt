@@ -319,16 +319,15 @@ object Anime {
     @JvmStatic
     fun clearMarkers(player: Player) = sendEmptyBuffer("func:clear", player)
 
+    @JvmOverloads
     @JvmStatic
-    fun openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward) {
+    fun openDailyRewardMenu(player: Player, currentDayIndex: Int, week: List<DailyReward>, takeDay: Boolean = false) {
         if (week.size != 7) {
             throw IllegalArgumentException("Week size must be 7!")
         }
 
-        val transfer = ModTransfer().integer(currentDayIndex + 1)
-        for (day in week)
-            transfer.item(CraftItemStack.asNMSCopy(day.icon))
-                .string("§7Награда: " + day.title)
+        val transfer = ModTransfer().integer(currentDayIndex + 1).boolean(takeDay)
+        for (day in week) transfer.item(CraftItemStack.asNMSCopy(day.icon)).string(day.title)
         transfer.send("func:weekly-reward", player)
     }
 

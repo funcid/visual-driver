@@ -45,7 +45,8 @@ public final class me/func/mod/Anime {
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;D)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
-	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;I[Lme/func/mod/conversation/data/DailyReward;)V
+	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;IZ[Lme/func/mod/conversation/data/DailyReward;)V
+	public static synthetic fun openDailyRewardMenu$default (Lorg/bukkit/entity/Player;IZ[Lme/func/mod/conversation/data/DailyReward;ILjava/lang/Object;)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;[Ljava/lang/String;)V

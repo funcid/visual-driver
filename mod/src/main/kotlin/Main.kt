@@ -19,6 +19,7 @@ import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
 import standard.util.ExternalManager
 import standard.Standard
+import standard.daily.RewardManager
 import java.util.Stack
 
 class Main : KotlinMod() {

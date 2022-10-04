@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.2.9)
+# Cristalix Animation API DOCS (актуальная версия 3.5.0)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -801,7 +801,7 @@ new Dialog(new Entrypoint(
 <img src="https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png" width="500">
 
 Метод показа окна награды:<br>
-`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward)` показать меню игроку с
+`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward, takeDay: Boolean)` показать меню игроку с
 указанием текущего дня [0..6], а также с указанием наград за каждый день в
 объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
 
