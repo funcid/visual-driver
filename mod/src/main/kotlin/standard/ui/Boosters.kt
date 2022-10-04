@@ -16,7 +16,6 @@ import kotlin.properties.Delegates.notNull
 
 class Boosters {
 
-    private var boosters = hashMapOf<UUID, CarvedRectangle>()
     private var boostersContainer: Flex by notNull()
     private var enabled = false
 
@@ -45,18 +44,13 @@ class Boosters {
         }
 
         mod.registerChannel("mid:boosters") {
+            val elements = boostersContainer.children
+            boostersContainer.removeChild(*elements.toTypedArray())
+
             repeat(readInt()) {
-                val id = readId()
-                enabled = readBoolean()
                 val name = readUtf8()
                 val multiplier = readDouble()
-                if (enabled) {
-                    boosters[id] = booster(name, multiplier).apply {
-                        boostersContainer.addChild(this)
-                    }
-                } else {
-                    boosters.remove(id)?.let { boostersContainer.removeChild(it) }
-                }
+                boostersContainer + booster(name, multiplier)
             }
         }
 
