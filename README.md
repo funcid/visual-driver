@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.5.0)
+# Cristalix Animation API DOCS (актуальная версия 3.5.1)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:3.2.9'
+    implementation 'me.func:animation-api:3.5.1'
 }
 ```
 
@@ -798,12 +798,13 @@ new Dialog(new Entrypoint(
 
 <h3>Меню ежедневных наград STANDARD</h3>
 
-<img src="https://user-images.githubusercontent.com/42806772/144913475-3ea8a658-2630-45d4-94ad-b637dc2b8665.png" width="500">
+<img src="https://user-images.githubusercontent.com/42806772/193907114-2ac7df8e-19ea-4573-935e-de75d3161d75.png" width="500">
 
 Метод показа окна награды:<br>
-`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward, takeDay: Boolean)` показать меню игроку с
+`Anime.openDailyRewardMenu(player: Player, currentDayIndex: Int, week: List<DailyReward>, takeDay: Boolean = true)` показать меню игроку с
 указанием текущего дня [0..6], а также с указанием наград за каждый день в
-объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук
+объекте `DailyReward(имя предмета, сам предмет)`, дневных наград должно быть всегда указано 7 штук.<br>
+`func:reward:click` в этот канал прийдет callback, а именно - номер для (int), словить его можно с `Anime#createReader`, <strong>УЯЗВИМОСТЬ</strong> игрок может написать чит, и сам отправлять в данный канал инфу, проверяйте, может ли игрок получить награду!
 
 <h3>Уведомления (зависит от предустановленного всеми cristalix-socials)</h3>
 
