@@ -857,6 +857,25 @@ public final class me/func/mod/ui/menu/confirmation/Confirmation : me/func/mod/u
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
+public final class me/func/mod/ui/menu/daily/DailyRewardMenu : me/func/mod/ui/menu/Storage {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
+	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
+	public fun clear ()V
+	public fun getInfo ()Ljava/lang/String;
+	public fun getStorage ()Ljava/util/List;
+	public fun getTitle ()Ljava/lang/String;
+	public fun getUuid ()Ljava/util/UUID;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Storage;
+	public fun setInfo (Ljava/lang/String;)V
+	public fun setStorage (Ljava/util/List;)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setUuid (Ljava/util/UUID;)V
+}
+
 public final class me/func/mod/ui/menu/queue/QueueView : me/func/mod/ui/menu/Openable {
 	public fun <init> ()V
 	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V

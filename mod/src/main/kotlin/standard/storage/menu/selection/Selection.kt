@@ -12,9 +12,11 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
+import standard.storage.Information
 import standard.storage.TextedIcon
 import standard.storage.button.StorageNode
 import standard.storage.menu.MenuManager
+import java.awt.SystemColor.info
 import java.util.*
 import kotlin.math.ceil
 
@@ -31,7 +33,7 @@ class Selection(
     var pages: MutableList<Page> = MutableList(pageCount) { Page(it) },
     override var storage: MutableList<StorageNode<*>> = mutableListOf(),
     @JvmField var currentPage: Int = 0,
-) : AbstractMenu, ContextGui() {
+) : AbstractMenu, Information, ContextGui() {
 
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
@@ -73,65 +75,9 @@ class Selection(
             menuTitle.origin = TOP
             menuTitle.align = TOP
         }
-        if (menuStack.size > 0) {
-            +carved {
-                carveSize = 1.0
-                align = BOTTOM
-                origin = CENTER
-                offset.y = backButtonSize / 2 - padding
-                offset.x -= 65
-                size = V3(40.0, backButtonSize)
-                val normalColor = Color(42, 102, 189, 0.83)
-                val hoveredColor = Color(224, 118, 20, 0.83)
-                color = normalColor
-                onHover {
-                    animate(0.08, Easings.QUINT_OUT) {
-                        color = if (hovered) hoveredColor else normalColor
-                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
-                    }
-                }
-                onMouseUp {
-                    menuStack.apply { pop() }.peek()?.open()
-                    clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
-                }
-                +text {
-                    align = CENTER
-                    origin = CENTER
-                    color = WHITE
-                    scale = V3(0.9, 0.9, 0.9)
-                    content = "Назад"
-                    shadow = true
-                }
-            }
-        }
-        +carved {
-            carveSize = 1.0
-            align = BOTTOM
-            origin = CENTER
-            offset.y = backButtonSize / 2 - padding
-            size = V3(76.0, backButtonSize)
-            val normalColor = Color(160, 29, 40, 0.83)
-            val hoveredColor = Color(231, 61, 75, 0.83)
-            color = normalColor
-            onHover {
-                animate(0.08, Easings.QUINT_OUT) {
-                    color = if (hovered) hoveredColor else normalColor
-                    scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
-                }
-            }
-            onMouseUp {
-                close()
-                menuStack.clear()
-            }
-            +text {
-                align = CENTER
-                origin = CENTER
-                color = WHITE
-                scale = V3(0.9, 0.9, 0.9)
-                content = "Выйти [ ESC ]"
-                shadow = true
-            }
-        }
+        if (menuStack.size > 0) +backButton(height / 2 - padding + backButtonSize / 2, backButtonSize)
+
+        +closeButton(height / 2 - padding + backButtonSize / 2)
         +grid.apply { size = V3(this@rectangle.size.x, this@rectangle.size.y - padding) }
 
         arrowRight = +drawChanger(false, ">")
@@ -227,7 +173,7 @@ class Selection(
     private fun getElementsOnPage(pageIndex: Int) = pages[pageIndex].content ?: listOf()
 
     private fun drawChanger(left: Boolean, text: String) = carved {
-        carveSize = 1.0
+        carveSize = 2.0
         align = if (left) BOTTOM_LEFT else BOTTOM_RIGHT
         origin = CENTER
         offset.y = backButtonSize / 2 - padding

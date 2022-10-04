@@ -1,8 +1,10 @@
 package standard.storage
 
-import ru.cristalix.uiengine.element.CarvedRectangle
-import ru.cristalix.uiengine.element.ContextGui
+import Main.Companion.menuStack
+import io.netty.buffer.Unpooled
+import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import standard.storage.button.StorageNode
 import java.util.*
@@ -11,45 +13,68 @@ interface AbstractMenu {
 
     var uuid: UUID
 
-    var info: String
-
     var storage: MutableList<StorageNode<*>>
 
     fun open()
 
     fun close()
 
-    fun getInformationBlock(): CarvedRectangle
-
-    fun generateInformation() = carved {
-        val scalar = 15.0
-        align = TOP_RIGHT
-        origin = TOP_RIGHT
-
-        var hasHovered = false
-
+    fun closeButton(offsetY: Double, backButtonSize: Double = 19.0) = carved {
+        carveSize = 2.0
+        align = CENTER
+        origin = CENTER
+        offset.y = offsetY
+        size = V3(76.0, backButtonSize)
+        val normalColor = Color(160, 29, 40, 0.83)
+        val hoveredColor = Color(231, 61, 75, 0.83)
+        color = normalColor
         onHover {
-            if (!hasHovered && hovered) {
-                hasHovered = !hasHovered
-                animate(0.1, Easings.QUAD_OUT) {
-                    size = V3(scalar + 4, scalar + 4)
-                }
-            } else if (hasHovered && !hovered) {
-                hasHovered = !hasHovered
-                animate(0.1, Easings.QUAD_OUT) {
-                    size = V3(scalar, scalar)
-                }
+            animate(0.08, Easings.QUINT_OUT) {
+                color = if (hovered) hoveredColor else normalColor
+                scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
             }
         }
-        offset = V3(-scalar, scalar, scalar)
-        size = V3(scalar, scalar)
-        color = Color(42, 102, 189)
+        onMouseUp {
+            close()
+            menuStack.clear()
+        }
         +text {
             align = CENTER
             origin = CENTER
             color = WHITE
-            content = "?"
+            scale = V3(0.9, 0.9, 0.9)
+            content = "Выйти [ ESC ]"
+            shadow = true
         }
     }
 
+    fun backButton(offsetY: Double, backButtonSize: Double = 19.0) = carved {
+        carveSize = 2.0
+        align = CENTER
+        origin = CENTER
+        offset.y = offsetY
+        offset.x -= 65
+        size = V3(40.0, backButtonSize)
+        val normalColor = Color(42, 102, 189, 0.83)
+        val hoveredColor = Color(224, 118, 20, 0.83)
+        color = normalColor
+        onHover {
+            animate(0.08, Easings.QUINT_OUT) {
+                color = if (hovered) hoveredColor else normalColor
+                scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
+            }
+        }
+        onMouseUp {
+            menuStack.apply { pop() }.peek()?.open()
+            UIEngine.clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
+        }
+        +text {
+            align = CENTER
+            origin = CENTER
+            color = WHITE
+            scale = V3(0.9, 0.9, 0.9)
+            content = "Назад"
+            shadow = true
+        }
+    }
 }

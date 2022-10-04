@@ -19,6 +19,7 @@ import me.func.mod.ui.menu.queue.QueueViewer
 import me.func.mod.ui.Glow
 import me.func.mod.ui.MultiChat
 import me.func.mod.ui.dialog.Dialog
+import me.func.mod.ui.menu.daily.DailyRewardMenu
 import me.func.mod.util.*
 import me.func.protocol.data.color.RGB
 import me.func.protocol.math.Position
@@ -319,6 +320,7 @@ object Anime {
     @JvmStatic
     fun clearMarkers(player: Player) = sendEmptyBuffer("func:clear", player)
 
+    @Deprecated("Будет переделано на полноценное меню!")
     @JvmOverloads
     @JvmStatic
     fun openDailyRewardMenu(player: Player, currentDayIndex: Int, week: List<DailyReward>, takeDay: Boolean = false) {
@@ -329,6 +331,8 @@ object Anime {
         val transfer = ModTransfer().integer(currentDayIndex + 1).boolean(takeDay)
         for (day in week) transfer.item(CraftItemStack.asNMSCopy(day.icon)).string(day.title)
         transfer.send("func:weekly-reward", player)
+
+        DailyRewardMenu().open(player)
     }
 
     @JvmOverloads

@@ -10,6 +10,7 @@ import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
+import standard.storage.Information
 import java.util.*
 
 class PlayChoice(
@@ -19,7 +20,7 @@ class PlayChoice(
     @JvmField var description: String,
     allowClosing: Boolean,
     override var storage: MutableList<StorageNode<*>>
-) : AbstractMenu, ContextGui() {
+) : AbstractMenu, Information, ContextGui() {
 
     private val information = generateInformation()
 
@@ -127,66 +128,11 @@ class PlayChoice(
                 }
             }
         }
-        if (menuStack.size > 0) {
-            +carved {
-                carveSize = 1.0
-                align = CENTER
-                origin = CENTER
-                offset.y = buttonSize.y * scaling
-                offset.x -= 65
-                size = V3(40.0, backButtonSize)
-                val normalColor = Color(42, 102, 189, 0.83)
-                val hoveredColor = Color(224, 118, 20, 0.83)
-                color = normalColor
-                onHover {
-                    animate(0.08, Easings.QUINT_OUT) {
-                        color = if (hovered) hoveredColor else normalColor
-                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
-                    }
-                }
-                onMouseUp {
-                    menuStack.apply { pop() }.peek()?.open()
-                    UIEngine.clientApi.clientConnection().sendPayload("func:back", Unpooled.EMPTY_BUFFER)
-                }
-                +text {
-                    align = CENTER
-                    origin = CENTER
-                    color = WHITE
-                    scale = V3(0.9, 0.9, 0.9)
-                    content = "Назад"
-                    shadow = true
-                }
-            }
-        }
+
+        if (menuStack.size > 0) +backButton(buttonSize.y / 2 + 30)
+
         if (allowClosing) {
-            +carved {
-                carveSize = 1.0
-                align = CENTER
-                origin = CENTER
-                offset.y = buttonSize.y * scaling
-                size = V3(76.0, backButtonSize)
-                val normalColor = Color(160, 29, 40, 0.83)
-                val hoveredColor = Color(231, 61, 75, 0.83)
-                color = normalColor
-                onHover {
-                    animate(0.08, Easings.QUINT_OUT) {
-                        color = if (hovered) hoveredColor else normalColor
-                        scale = V3(if (hovered) 1.1 else 1.0, if (hovered) 1.1 else 1.0, 1.0)
-                    }
-                }
-                onMouseUp {
-                    close()
-                    menuStack.clear()
-                }
-                +text {
-                    align = CENTER
-                    origin = CENTER
-                    color = WHITE
-                    scale = V3(0.9, 0.9, 0.9)
-                    content = "Выйти [ ESC ]"
-                    shadow = true
-                }
-            }
+            +closeButton(buttonSize.y / 2 + 30)
             onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) menuStack.clear() }
         }
     }

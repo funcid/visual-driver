@@ -1,5 +1,6 @@
-package standard.daily
+package standard.storage.daily
 
+import Main.Companion.menuStack
 import dev.xdark.clientapi.event.render.ScaleChange
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemTools
@@ -9,14 +10,21 @@ import io.netty.buffer.Unpooled
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
+import readColoredUtf8
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.element.*
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
+import standard.storage.AbstractMenu
+import standard.storage.button.StorageNode
+import standard.storage.menu.MenuManager
+import java.util.*
 
-class RewardManager : ContextGui() {
+class RewardManager(
+    override var uuid: UUID = UUID.randomUUID(),
+    override var storage: MutableList<StorageNode<*>> = arrayListOf()
+) : AbstractMenu, ContextGui() {
 
     private var isOpened: Boolean = false
 
@@ -28,18 +36,15 @@ class RewardManager : ContextGui() {
     private var currentDay = 0
     private var currentTake = false
 
-    private var rewardDay = mutableMapOf<Int, CarvedRectangle>()
-    private var rewardIcon = mutableMapOf<Int, ItemElement>()
-    private var rewardStatusTitle = mutableMapOf<Int, TextElement>()
-    private var rewardDayHover = mutableMapOf<Int, String>()
+    // todo: rewrite to storage node
+    private var rewardDay = hashMapOf<Int, CarvedRectangle>()
+    private var rewardIcon = hashMapOf<Int, ItemElement>()
+    private var rewardStatusTitle = hashMapOf<Int, TextElement>()
+    private var rewardDayHover = hashMapOf<Int, String>()
 
     init {
         keyTypedHandlers.clear()
-        onKeyTyped { _, code ->
-            run {
-                if (code == Keyboard.KEY_ESCAPE) closeGui()
-            }
-        }
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) closeGui() }
 
         color = Color(0, 0, 0, 0.86)
 
@@ -57,17 +62,20 @@ class RewardManager : ContextGui() {
 
             for (day in 0..6) {
                 rewardIcon[day + 1]?.stack = ItemTools.read(this)
-                rewardDayHover[day + 1] = readUtf8()
+                rewardDayHover[day + 1] = readColoredUtf8()
             }
 
+            MenuManager.push(this@RewardManager)
             openGui()
             updateScale()
         }
     }
 
     fun update() {
-        children.forEach { removeChild(it) }
+
         rootElement?.let { removeChild(it) }
+
+        val height = 189.5
 
         val hoverText = text {
             lineHeight = 12.0
@@ -96,7 +104,11 @@ class RewardManager : ContextGui() {
         }
 
         rootElement = rectangle gui@{
-            size = V3(566.0, 189.5)
+
+            +backButton(height / 2 + 30)
+            +closeButton(height / 2 + 30)
+
+            size = V3(566.0, height)
             align = CENTER
             origin = CENTER
 
@@ -200,7 +212,7 @@ class RewardManager : ContextGui() {
 
                             container.size.x =
                                 clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { t -> t.length } ?: "")
-                                    .toDouble() + 11.0 + 15.0 //15.0 Тестовый вправо
+                                    .toDouble() + 11.0
                             container.size.y = (hoverText.lineHeight * countLine) + 9.0
 
                             hoverCenter.size.x = container.size.x - 1.0
@@ -269,6 +281,7 @@ class RewardManager : ContextGui() {
 
     fun closeGui(hideWrapped: Boolean = true) {
         isOpened = false
+        menuStack.clear()
         if (hideWrapped) close()
     }
 

@@ -13,6 +13,7 @@ import org.lwjgl.input.Mouse
 import readColoredUtf8
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import standard.storage.Information
 import java.util.*
 
 class MenuManager {
@@ -150,7 +151,7 @@ class MenuManager {
                     }
 
                     // Информационный блок
-                    if (stack.info.isNotEmpty() && stack.getInformationBlock().hovered) {
+                    if (stack is Information && stack.info.isNotEmpty() && stack.getInformationBlock().hovered) {
                         lastText = stack.info
                     }
                 }
