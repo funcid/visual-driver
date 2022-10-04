@@ -7,8 +7,6 @@ import java.util.*
 fun booster(booster: Booster.() -> Unit) = Booster().also(booster)
 
 data class Booster(
-    var uuid: UUID = UUID.randomUUID(),
-    var enabled: Boolean = true,
     var name: String = "name",
     var multiplier: Double = 0.0
 )
@@ -20,8 +18,6 @@ object Boosters {
         .integer(boosters.size)
         .apply {
             boosters.forEach {
-                uuid(it.uuid)
-                boolean(it.enabled)
                 string(it.name)
                 double(it.multiplier)
             }
