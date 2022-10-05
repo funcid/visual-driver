@@ -54,7 +54,9 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
     fun delete(players: Set<UUID> = subscribed) {
 
         // Удалить данный прогресс бар
-        starter().send("progress-ui:remove", players.map { Bukkit.getPlayer(uuid) })
+        players.map { Bukkit.getPlayer(uuid) }.forEach {
+            if (it != null) starter().send("progress-ui:remove", it)
+        }
         unsubscribeByUUID(players)
     }
 
@@ -78,7 +80,9 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
 
         subscribed.removeIf { Bukkit.getPlayer(it) == null }
 
-        transfer.send("progress-ui:update", subscribed.map { Bukkit.getPlayer(it) })
+        subscribed.map { Bukkit.getPlayer(it) }.forEach {
+            if (it != null) transfer.send("progress-ui:update", it)
+        }
     }
 
     private fun starter() = ModTransfer().uuid(uuid)
