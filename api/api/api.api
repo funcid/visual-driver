@@ -491,8 +491,6 @@ public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/p
 	public fun setText (Ljava/lang/String;)V
 	public final fun unsubscribe (Ljava/lang/Iterable;)Z
 	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
-	public final fun unsubscribeByUUID (Ljava/lang/Iterable;)Z
-	public final fun unsubscribeByUUID ([Ljava/util/UUID;)Z
 }
 
 public final class me/func/mod/reactive/ReactiveProgress$Builder {

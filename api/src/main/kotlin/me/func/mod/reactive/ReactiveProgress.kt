@@ -21,23 +21,19 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
 
     var lastUpdate = -1L
 
-    private val subscribed = hashSetOf<UUID>()
+    private val subscribed = hashSetOf<Player>()
 
     // Отписать игроков от обновлений
-    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players.map { it.uniqueId }.toSet())
+    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players)
 
-    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players.map { it.uniqueId }.toSet())
-
-    fun unsubscribeByUUID(vararg uuids: UUID) = subscribed.removeAll(uuids.toSet())
-
-    fun unsubscribeByUUID(uuids: Iterable<UUID>) = subscribed.removeAll(uuids.toSet())
+    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players)
 
     fun send(players: List<Player>) = send(*players.toTypedArray())
 
     fun send(vararg players: Player) {
 
         // Отправить и добавить игроков в подписавшихся
-        subscribed.addAll(players.map { it.uniqueId })
+        subscribed.addAll(players)
         starter()
             .rgb(lineColor)
             .integer(position.ordinal)
@@ -51,13 +47,11 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
     }
 
     @JvmOverloads
-    fun delete(players: Set<UUID> = subscribed) {
+    fun delete(players: Set<Player> = subscribed) {
 
         // Удалить данный прогресс бар
-        players.map { Bukkit.getPlayer(uuid) }.forEach {
-            if (it != null) starter().send("progress-ui:remove", it)
-        }
-        unsubscribeByUUID(players)
+        starter().send("progress-ui:remove", players)
+        unsubscribe(players)
     }
 
 
@@ -78,11 +72,9 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
         // Обновить прогресс у всех игроков
         lastUpdate = System.currentTimeMillis()
 
-        subscribed.removeIf { Bukkit.getPlayer(it) == null }
+        subscribed.removeIf { !it.player.isOnline }
 
-        subscribed.map { Bukkit.getPlayer(it) }.forEach {
-            if (it != null) transfer.send("progress-ui:update", it)
-        }
+        transfer.send("progress-ui:update", subscribed)
     }
 
     private fun starter() = ModTransfer().uuid(uuid)
