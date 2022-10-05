@@ -14,6 +14,7 @@ import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
 import standard.storage.Information
 import standard.storage.TextedIcon
+import standard.storage.button.StorageItemStack
 import standard.storage.button.StorageNode
 import standard.storage.menu.MenuManager
 import java.awt.SystemColor.info
@@ -162,6 +163,8 @@ class Selection(
                 }
                 onMouseUp { element.click(this@Selection, this@onMouseUp) }
             }.apply {
+                enabled = !(element is StorageItemStack && element.icon.stack?.item?.id == 0)
+
                 element.bundle = this
                 element.optimizeSpace()
             }
