@@ -1,23 +1,18 @@
 package standard.storage.menu.selection
 
 import Main.Companion.menuStack
-import io.netty.buffer.Unpooled
 import me.func.protocol.ui.menu.SelectionModel
 import org.lwjgl.input.Keyboard
-import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
-import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
 import standard.storage.Information
 import standard.storage.TextedIcon
-import standard.storage.button.StorageItemStack
 import standard.storage.button.StorageNode
 import standard.storage.menu.MenuManager
-import java.awt.SystemColor.info
 import java.util.*
 import kotlin.math.ceil
 
@@ -94,80 +89,81 @@ class Selection(
         grid.children.clear()
 
         elements.forEach { element ->
-            element.bundle?.let {
-                grid + it
-                return@forEach
-            }
-            grid + carved a@{
-                val fieldHeight =
-                    (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows
-                carveSize = 2.0
-                size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
-                color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
-                val image = +rectangle {
-                    val iconSize = fieldHeight - MenuManager.itemPadding * 2
-                    size = V3(iconSize, iconSize, iconSize)
-                    origin = LEFT
-                    align = LEFT
-                    offset.x += MenuManager.itemPadding / 2 + 2
-                    +element.scaling(iconSize).apply { color = WHITE }
-                }
-                val xOffset = image.size.x + MenuManager.itemPadding * 2
-                +flex {
-                    origin = TOP_LEFT
-                    align = TOP_LEFT
-                    offset.x = xOffset
-                    offset.y = MenuManager.itemPadding + 1
-                    flexDirection = FlexDirection.DOWN
-                    flexSpacing = 0.0
-                    element.titleElement = +text {
-                        color = Color(255, 202, 66, 1.0)
-                        scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.title
-                        shadow = true
-                        lineHeight = 8.0
+            val bundle = if (element.bundle != null) {
+                element.bundle!!
+            } else {
+                carved a@{
+                    val fieldHeight =
+                        (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows
+                    carveSize = 2.0
+                    size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
+                    color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
+                    val image = +rectangle {
+                        val iconSize = fieldHeight - MenuManager.itemPadding * 2
+                        size = V3(iconSize, iconSize, iconSize)
+                        origin = LEFT
+                        align = LEFT
+                        offset.x += MenuManager.itemPadding / 2 + 2
+                        +element.scaling(iconSize).apply { color = WHITE }
                     }
-                    element.descriptionElement = +text {
-                        scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
-                        content = element.description
-                        shadow = true
-                    }
-                }
-                if (element.price >= 0) {
-                    val sale = element.sale
-                    val price = element.price
-                    val priceText = element.priceText
-
-                    +textWithMoney(
-                        if (sale > 0) "§7§m$priceText§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else priceText,
-                        if (element.vault?.isEmpty() == true) vault else element.vault!!,
-                        false
-                    ).apply {
-                        origin = BOTTOM_LEFT
-                        align = BOTTOM_LEFT
-                        title.shadow = true
-                        offset.y -= MenuManager.itemPadding
+                    val xOffset = image.size.x + MenuManager.itemPadding * 2
+                    +flex {
+                        origin = TOP_LEFT
+                        align = TOP_LEFT
                         offset.x = xOffset
-                        scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
+                        offset.y = MenuManager.itemPadding + 1
+                        flexDirection = FlexDirection.DOWN
+                        flexSpacing = 0.0
+                        element.titleElement = +text {
+                            color = Color(255, 202, 66, 1.0)
+                            scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
+                            content = element.title
+                            shadow = true
+                            lineHeight = 8.0
+                        }
+                        element.descriptionElement = +text {
+                            scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
+                            content = element.description
+                            shadow = true
+                        }
                     }
-                }
+                    if (element.price >= 0) {
+                        val sale = element.sale
+                        val price = element.price
+                        val priceText = element.priceText
 
-                val hint = +element.createHint(this@a.size, hint)
-                onHover {
-                    val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@Selection.hint.isEmpty())
-
-                    animate(0.2, Easings.CUBIC_OUT) {
-                        hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
-                        hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
+                        +textWithMoney(
+                            if (sale > 0) "§7§m$priceText§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else priceText,
+                            if (element.vault?.isEmpty() == true) vault else element.vault!!,
+                            false
+                        ).apply {
+                            origin = BOTTOM_LEFT
+                            align = BOTTOM_LEFT
+                            title.shadow = true
+                            offset.y -= MenuManager.itemPadding
+                            offset.x = xOffset
+                            scale = V3(0.75 + 0.125, 0.75 + 0.125, 0.75 + 0.125)
+                        }
                     }
-                }
-                onMouseUp { element.click(this@Selection, this@onMouseUp) }
-            }.apply {
-                enabled = !(element is StorageItemStack && element.icon.stack?.item?.id == 0)
 
-                element.bundle = this
-                element.optimizeSpace()
+                    val hint = +element.createHint(this@a.size, hint)
+                    onHover {
+                        val hasHoverEffect = hovered && !(element.hint.isNullOrEmpty() && this@Selection.hint.isEmpty())
+
+                        animate(0.2, Easings.CUBIC_OUT) {
+                            hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                            hint.children[3].color.alpha = if (hasHoverEffect) 1.0 else 0.0
+                        }
+                    }
+                    onMouseUp { element.click(this@Selection, this@onMouseUp) }
+                }.apply {
+                    element.bundle = this
+                    element.optimizeSpace()
+                }
             }
+            bundle.enabled = element.title.isNotEmpty() || element.description.isNotEmpty()
+
+            grid + bundle
         }
         arrowRight.enabled = currentPage < pageCount - 1
         arrowLeft.enabled = currentPage > 0
