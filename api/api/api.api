@@ -45,9 +45,6 @@ public final class me/func/mod/Anime {
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;D)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
-	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;ILjava/util/List;)V
-	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;ILjava/util/List;Z)V
-	public static synthetic fun openDailyRewardMenu$default (Lorg/bukkit/entity/Player;ILjava/util/List;ZILjava/lang/Object;)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
@@ -755,6 +752,7 @@ public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/br
 public final class me/func/mod/ui/menu/MenuManagerKt {
 	public static final fun button (Lkotlin/jvm/functions/Function1;)Lme/func/mod/reactive/ReactiveButton;
 	public static final fun choicer (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/choicer/Choicer;
+	public static final fun dailyReward (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/daily/DailyRewardMenu;
 	public static final fun selection (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/selection/Selection;
 }
 
@@ -859,22 +857,40 @@ public final class me/func/mod/ui/menu/confirmation/Confirmation : me/func/mod/u
 }
 
 public final class me/func/mod/ui/menu/daily/DailyRewardMenu : me/func/mod/ui/menu/Storage {
+	public static final field Companion Lme/func/mod/ui/menu/daily/DailyRewardMenu$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
+	public static final fun builder ()Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
 	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
 	public fun clear ()V
+	public final fun getCurrentDay ()I
 	public fun getInfo ()Ljava/lang/String;
 	public fun getStorage ()Ljava/util/List;
+	public final fun getTaken ()Z
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
 	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
 	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Storage;
+	public final fun setCurrentDay (I)V
 	public fun setInfo (Ljava/lang/String;)V
 	public fun setStorage (Ljava/util/List;)V
+	public final fun setTaken (Z)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
+}
+
+public final class me/func/mod/ui/menu/daily/DailyRewardMenu$Builder {
+	public fun <init> ()V
+	public final fun build ()Lme/func/mod/ui/menu/daily/DailyRewardMenu;
+	public final fun rewards (Ljava/util/List;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun rewards ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+}
+
+public final class me/func/mod/ui/menu/daily/DailyRewardMenu$Companion {
+	public final fun builder ()Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
 }
 
 public final class me/func/mod/ui/menu/queue/QueueView : me/func/mod/ui/menu/Openable {
