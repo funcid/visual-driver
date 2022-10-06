@@ -30,6 +30,7 @@ open class Button(
         fun price(price: Long) = apply { button.price = price }
         fun price(text: String) = apply { button.priceText = text }
         fun special(special: Boolean) = apply { button.special = special }
+        fun enabled(enabled: Boolean) = apply { button.enabled = enabled }
         fun sale(sale: Int) = apply { button.sale = sale }
         fun build() = button
     }
