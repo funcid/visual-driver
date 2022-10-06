@@ -414,8 +414,10 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun copy ()Lme/func/mod/reactive/ReactiveButton;
 	public final fun description (Ljava/util/List;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun description ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun enabled (Z)Lme/func/mod/reactive/ReactiveButton;
 	public fun getCommand ()Ljava/lang/String;
 	public fun getDescription ()Ljava/lang/String;
+	public fun getEnabled ()Z
 	public fun getHint ()Ljava/lang/String;
 	public fun getHover ()Ljava/lang/String;
 	public final fun getItem ()Lorg/bukkit/inventory/ItemStack;
@@ -448,6 +450,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun sale (I)Lme/func/mod/reactive/ReactiveButton;
 	public fun setCommand (Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
+	public fun setEnabled (Z)V
 	public fun setHint (Ljava/lang/String;)V
 	public fun setHover (Ljava/lang/String;)V
 	public final fun setItem (Lorg/bukkit/inventory/ItemStack;)V

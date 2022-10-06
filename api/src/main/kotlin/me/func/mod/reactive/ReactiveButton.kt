@@ -66,6 +66,12 @@ class ReactiveButton : Button() {
             field = value
         }
 
+    override var enabled: Boolean = true
+        set(value) {
+            if (value != field) reactive { byte(6).boolean(value) }
+            field = value
+        }
+
     override var vault: String? = ""
 
     override var command: String? = ""
@@ -90,6 +96,8 @@ class ReactiveButton : Button() {
     fun title(title: String) = apply { this.title = title }
 
     fun special(special: Boolean) = apply { this.special = special }
+
+    fun enabled(enabled: Boolean) = apply { this.enabled = enabled }
 
     fun withSale() = ((100.0 - sale) / 100.0 * price).toInt()
 
@@ -151,6 +159,7 @@ class ReactiveButton : Button() {
         transfer.string(command ?: "")
         transfer.string(vault ?: "")
         transfer.boolean(special)
+        transfer.boolean(enabled)
         transfer.integer(sale)
     }
 
@@ -169,6 +178,7 @@ class ReactiveButton : Button() {
         it.priceText = priceText
         it.sale = sale
         it.special = special
+        it.enabled = enabled
         it.command = command
         it.vault = vault
     }
