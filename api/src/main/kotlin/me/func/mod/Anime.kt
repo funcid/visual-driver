@@ -7,7 +7,6 @@ import me.func.mod.conversation.AutoSendRegistry
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.broadcast.SubscribeVerifier
-import me.func.mod.conversation.data.DailyReward
 import me.func.mod.conversation.data.LootDrop
 import me.func.mod.debug.Debug
 import me.func.mod.debug.ModWatcher
@@ -17,9 +16,7 @@ import me.func.mod.graffiti.GraffitiManager.isCanPlace
 import me.func.mod.ui.menu.MenuManager
 import me.func.mod.ui.menu.queue.QueueViewer
 import me.func.mod.ui.Glow
-import me.func.mod.ui.MultiChat
 import me.func.mod.ui.dialog.Dialog
-import me.func.mod.ui.menu.daily.DailyRewardMenu
 import me.func.mod.util.*
 import me.func.protocol.data.color.RGB
 import me.func.protocol.math.Position
@@ -30,7 +27,6 @@ import me.func.protocol.ui.indicator.Indicators
 import me.func.protocol.world.marker.Marker
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin

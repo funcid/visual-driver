@@ -196,12 +196,6 @@ public final class me/func/mod/conversation/broadcast/SubscribeVerifier : org/bu
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
 }
 
-public class me/func/mod/conversation/data/DailyReward {
-	public fun <init> (Ljava/lang/String;Lorg/bukkit/inventory/ItemStack;)V
-	public fun getIcon ()Lorg/bukkit/inventory/ItemStack;
-	public fun getTitle ()Ljava/lang/String;
-}
-
 public class me/func/mod/conversation/data/LootDrop {
 	public fun <init> (Lnet/minecraft/server/v1_12_R1/ItemStack;Ljava/lang/String;Ljava/lang/String;)V
 	public fun <init> (Lnet/minecraft/server/v1_12_R1/ItemStack;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;)V
