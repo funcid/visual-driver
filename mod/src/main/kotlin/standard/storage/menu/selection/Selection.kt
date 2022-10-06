@@ -161,7 +161,7 @@ class Selection(
                     element.optimizeSpace()
                 }
             }
-            bundle.enabled = element.title.isNotEmpty() || element.description.isNotEmpty()
+            bundle.enabled = element.enabled
 
             grid + bundle
         }

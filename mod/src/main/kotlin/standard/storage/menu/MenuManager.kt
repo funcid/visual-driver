@@ -4,16 +4,16 @@ import Main.Companion.menuStack
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
-import standard.storage.AbstractMenu
-import standard.storage.button.StorageItemStack
-import standard.storage.button.StorageItemTexture
-import standard.storage.menu.selection.SelectionManager
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import readColoredUtf8
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import standard.storage.AbstractMenu
 import standard.storage.Information
+import standard.storage.button.StorageItemStack
+import standard.storage.button.StorageItemTexture
+import standard.storage.menu.selection.SelectionManager
 import java.util.*
 
 class MenuManager {
@@ -39,6 +39,7 @@ class MenuManager {
                 command = buffer.readColoredUtf8() // command
                 vault = buffer.readColoredUtf8() // vault
                 special = buffer.readBoolean() // special
+                enabled = buffer.readBoolean() // enabled button
                 sale = buffer.readInt()
             }
         }
