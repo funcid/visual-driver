@@ -130,7 +130,7 @@ class DailyRewardMenu(
 
                         offset = V3(if (it == 6) 0.0 else -20.0, 0.0)
 
-                        +element.scaling(if (it == 6) 5.5 else 0.0).apply {
+                        +element.scaling(if (it == 6) 5.5 else 1.0).apply {
                             color = WHITE
                             align = CENTER
                             origin = CENTER
@@ -151,16 +151,16 @@ class DailyRewardMenu(
 
                     onHover {
                         val container = hoverContainer ?: return@onHover
-                        val icon = storage[day].icon
+                        val currentIcon = storage[day - 1].icon
 
                         container.enabled = hovered
 
                         animate(0.228, Easings.QUINT_OUT) {
                             if (hovered) {
-                                icon.scale = if (it == 6) V3(5.75, 5.75, 1.0)
+                                currentIcon.scale = if (it == 6) V3(5.75, 5.75, 1.0)
                                 else V3(3.25, 3.25, 1.0)
                             } else {
-                                icon.scale = if (it == 6) V3(5.5, 5.5, 1.0)
+                                currentIcon.scale = if (it == 6) V3(5.5, 5.5, 1.0)
                                 else V3(3.0, 3.0, 1.0)
                             }
                         }
@@ -217,7 +217,7 @@ class DailyRewardMenu(
             val element = storage[i]
             val setDay = i + 1
 
-            var color = Color(42, 102, 189, 0.28)
+            var color = Color(42, 102, 189)
             var content = "Награда за\nвход в игру"
 
             if (setDay < i) {
