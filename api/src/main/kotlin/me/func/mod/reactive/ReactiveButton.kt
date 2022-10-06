@@ -68,7 +68,7 @@ class ReactiveButton : Button() {
 
     override var enabled: Boolean = true
         set(value) {
-            if (value != field) reactive { byte(6).boolean(value) }
+            if (value != field) reactive { byte(7).boolean(value) }
             field = value
         }
 
