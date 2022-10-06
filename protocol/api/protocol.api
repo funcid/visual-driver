@@ -493,6 +493,7 @@ public final class me/func/protocol/ui/menu/Button$Builder {
 	public final fun build ()Lme/func/protocol/ui/menu/Button;
 	public final fun command (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun description (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
+	public final fun enabled (Z)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun getButton ()Lme/func/protocol/ui/menu/Button;
 	public final fun hint (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun hover (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
