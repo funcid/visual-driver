@@ -61,6 +61,10 @@ class ReactiveButton : Button() {
         }
 
     override var special: Boolean = false
+        set(value) {
+            if (value != field) reactive { byte(6).boolean(value) }
+            field = value
+        }
 
     override var vault: String? = ""
 

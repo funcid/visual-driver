@@ -9,6 +9,7 @@ import org.lwjgl.input.Mouse
 import readColoredUtf8
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.utility.Color
 import standard.storage.AbstractMenu
 import standard.storage.Information
 import standard.storage.button.StorageItemStack
@@ -107,6 +108,13 @@ class MenuManager {
                     5 -> {
                         if (!inited) return@registerChannel
                         node.hoverText = NetUtil.readUtf8(this).replace("&", "§")
+                    }
+
+                    6 -> {
+                        node.special = readBoolean()
+                        if (!inited) return@registerChannel
+                        node.hintContainer?.color = if (node.special) Color(255, 157, 66, 1.0)
+                        else Color(74, 140, 236, 1.0)
                     }
 
                     else -> return@registerChannel
