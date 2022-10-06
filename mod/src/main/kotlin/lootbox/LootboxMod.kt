@@ -18,7 +18,9 @@ import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 
 class LootboxMod {
+
     init {
+
         val crateScreen = CrateScreen()
         var ready = false
         var pressed = false

@@ -1,11 +1,13 @@
 package lootbox
 
+import Main.Companion.menuStack
 import dev.xdark.clientapi.item.Item
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.opengl.RenderHelper
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.glu.GLU
 import ru.cristalix.uiengine.UIEngine
@@ -27,7 +29,16 @@ import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
 class CrateScreen : ContextGui() {
-    @JvmField var opened = false
+
+    var opened = false
+    set(value) {
+        clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
+        field = value
+    }
+
+    init {
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) opened = false }
+    }
 
     @JvmField val rotationIntensity = rectangle {
         color.alpha = 0.6
