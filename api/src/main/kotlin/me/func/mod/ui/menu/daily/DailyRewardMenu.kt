@@ -26,6 +26,8 @@ class DailyRewardMenu(
     class Builder {
         private val dailyRewardMenu: DailyRewardMenu = DailyRewardMenu()
 
+        fun taken(taken: Boolean) = apply { dailyRewardMenu.taken = taken }
+        fun currentDay(currentDay: Int) = apply { dailyRewardMenu.currentDay = currentDay }
         fun uuid(uuid: UUID) = apply { dailyRewardMenu.uuid = uuid }
         fun rewards(storage: MutableList<ReactiveButton>) = apply { dailyRewardMenu.storage = storage }
         fun rewards(vararg storage: ReactiveButton) = apply { dailyRewardMenu.storage = storage.toMutableList() }
