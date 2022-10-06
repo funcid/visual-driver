@@ -2,7 +2,7 @@ package standard
 
 import experimental.Recharge
 import standard.alert.*
-import standard.storage.daily.RewardManager
+import standard.storage.menu.daily.RewardManager
 import standard.storage.menu.MenuManager
 import standard.storage.menu.QueueStatus
 import standard.storage.menu.Reconnect

@@ -11,8 +11,34 @@ class DailyRewardMenu(
     override var uuid: UUID = UUID.randomUUID(),
     override var storage: MutableList<ReactiveButton> = arrayListOf(),
     override var title: String = "",
-    override var info: String = ""
 ) : Storage {
 
-    override fun open(player: Player): Storage = MenuManager.push(player, this).apply { bind(player) }
+    override var info: String = ""
+
+    var taken: Boolean = false
+    var currentDay: Int = 0
+
+    companion object {
+        @JvmStatic
+        fun builder() = Builder()
+    }
+
+    class Builder {
+        private val dailyRewardMenu: DailyRewardMenu = DailyRewardMenu()
+
+        fun uuid(uuid: UUID) = apply { dailyRewardMenu.uuid = uuid }
+        fun rewards(storage: MutableList<ReactiveButton>) = apply { dailyRewardMenu.storage = storage }
+        fun rewards(vararg storage: ReactiveButton) = apply { dailyRewardMenu.storage = storage.toMutableList() }
+        fun build() = dailyRewardMenu
+    }
+
+    override fun open(player: Player): Storage = MenuManager.push(player, this).apply {
+
+        bind(player)
+            .integer(currentDay + 1)
+            .boolean(taken)
+            .integer(storage.size)
+            .apply { storage.forEach { it.write(this) } }
+            .send("func:weekly-reward", player)
+    }
 }

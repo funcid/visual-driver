@@ -12,7 +12,7 @@ class Choicer(
     override var info: String = "",
     override var title: String = "Игра",
     var description: String = "Выбери нужный под-режим!",
-    override var storage: MutableList<ReactiveButton> = mutableListOf()
+    override var storage: MutableList<ReactiveButton> = arrayListOf()
 ) : Storage {
 
     var allowClosing: Boolean = true

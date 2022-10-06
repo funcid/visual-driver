@@ -12,12 +12,15 @@ import me.func.mod.ui.menu.confirmation.Confirmation
 import me.func.mod.ui.menu.recconnct.Reconnect
 import me.func.mod.ui.menu.selection.Selection
 import me.func.mod.conversation.data.MouseButton
+import me.func.mod.ui.menu.daily.DailyRewardMenu
 import me.func.mod.util.warn
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import java.util.*
 
 inline fun selection(setup: Selection.() -> Unit) = Selection().also(setup)
+
+inline fun dailyReward(setup: DailyRewardMenu.() -> Unit) = DailyRewardMenu().also(setup)
 
 inline fun choicer(setup: Choicer.() -> Unit) = Choicer().also(setup)
 
