@@ -7,6 +7,7 @@ open class Button(
     open var description: String = "",
     open var hint: String? = "",
     open var special: Boolean = false,
+    open var enabled: Boolean = true,
     open var price: Long = -1,
     open var priceText: String = "",
     open var command: String? = "",

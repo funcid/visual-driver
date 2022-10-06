@@ -2,8 +2,6 @@ package standard.storage.button
 
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
-import standard.storage.AbstractMenu
-import standard.storage.menu.MenuManager
 import io.netty.buffer.Unpooled
 import me.func.protocol.ui.menu.Button
 import ru.cristalix.uiengine.ClickEvent
@@ -12,6 +10,8 @@ import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
+import standard.storage.AbstractMenu
+import standard.storage.menu.MenuManager
 
 abstract class StorageNode<T : AbstractElement>(
     open var icon: T,
@@ -23,6 +23,7 @@ abstract class StorageNode<T : AbstractElement>(
     var hoverText: String = "",
     override var command: String? = null,
     override var special: Boolean = false,
+    override var enabled: Boolean = true,
     override var vault: String? = null,
     override var sale: Int = 0
 ) : Button() {

@@ -457,11 +457,12 @@ public final class me/func/protocol/ui/indicator/Indicators : java/lang/Enum {
 public class me/func/protocol/ui/menu/Button {
 	public static final field Companion Lme/func/protocol/ui/menu/Button$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun builder ()Lme/func/protocol/ui/menu/Button$Builder;
 	public fun getCommand ()Ljava/lang/String;
 	public fun getDescription ()Ljava/lang/String;
+	public fun getEnabled ()Z
 	public fun getHint ()Ljava/lang/String;
 	public fun getHover ()Ljava/lang/String;
 	public fun getPrice ()J
@@ -473,6 +474,7 @@ public class me/func/protocol/ui/menu/Button {
 	public fun getVault ()Ljava/lang/String;
 	public fun setCommand (Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
+	public fun setEnabled (Z)V
 	public fun setHint (Ljava/lang/String;)V
 	public fun setHover (Ljava/lang/String;)V
 	public fun setPrice (J)V

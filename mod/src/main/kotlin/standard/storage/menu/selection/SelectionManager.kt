@@ -1,14 +1,11 @@
 package standard.storage.menu.selection
 
 import Main.Companion.menuStack
-import dev.xdark.clientapi.event.gui.ScreenDisplay
 import dev.xdark.feder.NetUtil
-import io.netty.buffer.Unpooled
 import me.func.protocol.ui.menu.SelectionModel
 import readColoredUtf8
 import readJson
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.uiengine.UIEngine
 import standard.storage.button.StorageItemTexture
 import standard.storage.menu.MenuManager
 import java.util.*
@@ -40,6 +37,7 @@ class SelectionManager {
                         hover = it.hover
                         vault = it.vault
                         special = it.special
+                        enabled = it.enabled
                     }
                 }
 
