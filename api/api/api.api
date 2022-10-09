@@ -465,6 +465,46 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun write (Lme/func/mod/conversation/ModTransfer;)V
 }
 
+public final class me/func/mod/reactive/ReactivePanel : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field Companion Lme/func/mod/reactive/ReactivePanel$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun delete ()V
+	public final fun delete (Ljava/util/Set;)V
+	public static synthetic fun delete$default (Lme/func/mod/reactive/ReactivePanel;Ljava/util/Set;ILjava/lang/Object;)V
+	public final fun getColor ()Lme/func/protocol/data/color/RGB;
+	public final fun getProgress ()D
+	public fun getSubscribersCount ()I
+	public final fun getText ()Ljava/lang/String;
+	public final fun getUuid ()Ljava/util/UUID;
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/util/List;)V
+	public final fun send ([Lorg/bukkit/entity/Player;)V
+	public final fun setColor (Lme/func/protocol/data/color/RGB;)V
+	public final fun setProgress (D)V
+	public final fun setText (Ljava/lang/String;)V
+	public final fun setUuid (Ljava/util/UUID;)V
+	public final fun unsubscribe (Ljava/lang/Iterable;)Z
+	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
+}
+
+public final class me/func/mod/reactive/ReactivePanel$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/reactive/ReactivePanel;)V
+	public synthetic fun <init> (Lme/func/mod/reactive/ReactivePanel;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/reactive/ReactivePanel;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun getModel ()Lme/func/mod/reactive/ReactivePanel;
+	public final fun progress (D)Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun text (Ljava/lang/String;)Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactivePanel$Builder;
+}
+
+public final class me/func/mod/reactive/ReactivePanel$Companion {
+	public final fun builder ()Lme/func/mod/reactive/ReactivePanel$Builder;
+}
+
 public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/progress/Progress, me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field Companion Lme/func/mod/reactive/ReactiveProgress$Companion;
 	public fun <init> ()V
