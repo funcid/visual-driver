@@ -11,7 +11,9 @@ import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.uiengine.element.*
+import ru.cristalix.uiengine.element.CarvedRectangle
+import ru.cristalix.uiengine.element.ContextGui
+import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
@@ -170,7 +172,7 @@ class DailyRewardMenu(
                         if (hovered) {
                             hover = this@carved
 
-                            val desc = element.title + "\n" + element.description
+                            val desc = element.title + if (element.description.isNotEmpty()) "\n" + element.description else ""
                             hoverText.content = desc
 
                             val lines = desc.split("\n")
@@ -217,7 +219,7 @@ class DailyRewardMenu(
             val element = storage[i]
             val setDay = i + 1
 
-            var color = Color(42, 102, 189)
+            var color = Color(42, 102, 189, 0.28)
             var content = "Награда за\nвход в игру"
 
             if (setDay < i) {
@@ -225,7 +227,7 @@ class DailyRewardMenu(
                 content = "Награда получена!"
             }
 
-            element.titleElement?.color = color
+            element.bundle?.color = color
             element.descriptionElement?.content = content
         }
 
@@ -234,11 +236,11 @@ class DailyRewardMenu(
 
         if (taken) {
             color = Color(42, 102, 189, 0.62)
-            content = "Награда получена!"
+            content = "Собрано!"
         }
 
-        storage[currentDay].titleElement?.color = color
-        storage[currentDay].descriptionElement?.content = content
+        storage[currentDay].bundle?.color = color
+        storage[currentDay].titleElement?.content = content
     }
 
     fun openGui() {
