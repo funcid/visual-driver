@@ -715,7 +715,6 @@ public final class me/func/mod/ui/booster/BoosterKt {
 
 public final class me/func/mod/ui/booster/Boosters {
 	public static final field INSTANCE Lme/func/mod/ui/booster/Boosters;
-	public static final fun mode (Lorg/bukkit/entity/Player;Z)V
 	public static final fun send (Lorg/bukkit/entity/Player;[Lme/func/mod/ui/booster/Booster;)V
 }
 

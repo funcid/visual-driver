@@ -22,10 +22,5 @@ object Boosters {
                 double(it.multiplier)
             }
         }
-        .send("mid:boosters", player)
-
-    @JvmStatic
-    fun mode(player: Player, enabled: Boolean) = ModTransfer()
-        .boolean(enabled)
-        .send("mid:boosters-mode", player)
+        .send("zabelov:boosters", player)
 }

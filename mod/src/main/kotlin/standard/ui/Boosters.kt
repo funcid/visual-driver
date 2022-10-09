@@ -17,7 +17,6 @@ import kotlin.properties.Delegates.notNull
 class Boosters {
 
     private var boostersContainer: Flex by notNull()
-    private var enabled = false
 
     init {
         val container = flex {
@@ -31,27 +30,24 @@ class Boosters {
             boostersContainer = +flex {
                 flexSpacing = 4.0
             }
-            enabled = false
+            enabled = true
         }
 
         mod.registerHandler<GameLoop> {
             val isChatDisabled = UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen
-            container.enabled = enabled && !Keyboard.isKeyDown(Keyboard.KEY_TAB) && isChatDisabled
+            container.enabled = !Keyboard.isKeyDown(Keyboard.KEY_TAB) && isChatDisabled
         }
 
-        mod.registerChannel("mid:boosters-mode") {
-            container.enabled = readBoolean()
-        }
-
-        mod.registerChannel("mid:boosters") {
-            val elements = boostersContainer.children
-            boostersContainer.removeChild(*elements.toTypedArray())
+        mod.registerChannel("zabelov:boosters") {
+            boostersContainer.children.clear()
+            println("Clear boosters")
 
             repeat(readInt()) {
                 val name = readUtf8()
                 val multiplier = readDouble()
                 boostersContainer + booster(name, multiplier)
             }
+            println("Boosters: ${boostersContainer.children.size}")
         }
 
         UIEngine.overlayContext.addChild(container)
