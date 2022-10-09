@@ -1,5 +1,6 @@
 package experimental
 
+import experimental.panel.Panel
 import experimental.progress.ProgressController
 import experimental.progress.AbstractProgress
 
@@ -16,6 +17,7 @@ class Experimental {
             Disguise.Companion
             ProgressController()
             ProgressController.Companion
+            Panel()
             return null
         }
     }
