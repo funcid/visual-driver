@@ -31,13 +31,11 @@ import ru.cristalix.uiengine.utility.text
 class CrateScreen : ContextGui() {
 
     var opened = false
-    set(value) {
-        clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
-        field = value
-    }
 
     init {
-        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) opened = false }
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE)
+            clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
+        }
     }
 
     @JvmField val rotationIntensity = rectangle {

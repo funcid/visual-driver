@@ -8,6 +8,7 @@ import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
+import io.netty.buffer.Unpooled
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod.clientApi
@@ -34,6 +35,7 @@ class LootboxMod {
                 crateScreen.acceptClose()
                 crateScreen.close()
                 UIEngine.clientApi.minecraft().setIngameFocus()
+                UIEngine.clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
                 return@registerHandler
             }
 
@@ -99,6 +101,7 @@ class LootboxMod {
                 ready = false
                 crateScreen.close()
                 UIEngine.clientApi.minecraft().setIngameFocus()
+                UIEngine.clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
             }
         }
 

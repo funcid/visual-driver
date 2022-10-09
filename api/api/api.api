@@ -878,8 +878,10 @@ public final class me/func/mod/ui/menu/daily/DailyRewardMenu : me/func/mod/ui/me
 public final class me/func/mod/ui/menu/daily/DailyRewardMenu$Builder {
 	public fun <init> ()V
 	public final fun build ()Lme/func/mod/ui/menu/daily/DailyRewardMenu;
+	public final fun currentDay (I)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
 	public final fun rewards (Ljava/util/List;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
 	public final fun rewards ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun taken (Z)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
 	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
 }
 

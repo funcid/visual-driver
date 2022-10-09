@@ -113,8 +113,9 @@ class MenuManager {
                     6 -> {
                         node.special = readBoolean()
                         if (!inited) return@registerChannel
-                        node.hintContainer?.color = if (node.special) Color(255, 157, 66, 1.0)
-                        else Color(74, 140, 236, 1.0)
+                        node.hintContainer?.color =
+                            if (node.special) Color(255, 157, 66, 1.0) else Color(21, 53, 98, 0.62)
+                        node.bundle?.color = if (node.special) Color(224, 118, 20, 0.28) else Color(42, 102, 189, 0.28)
                     }
 
                     else -> return@registerChannel
@@ -136,33 +137,25 @@ class MenuManager {
             }
 
             // Обновление места нахождения текста при наведении
-            var mouseX = 0
-            var mouseY = 0
-            var lastText: String? = null
+            var lastText: String?
+
             UIEngine.postOverlayContext.afterRender {
                 if (menuStack.isEmpty()) {
                     return@afterRender
                 }
 
-                val currentMouseX = Mouse.getX()
-                val currentMouseY = Mouse.getY()
-                if (mouseX != currentMouseX || mouseY != currentMouseY) {
-                    mouseX = currentMouseX
-                    mouseY = currentMouseY
-
-                    lastText = null
-                    val stack = menuStack.peek() ?: return@afterRender
-                    for (node in stack.storage) {
-                        if (node.bundle?.hovered == true) {
-                            lastText = node.hoverText
-                            break
-                        }
+                lastText = null
+                val stack = menuStack.peek() ?: return@afterRender
+                for (node in stack.storage) {
+                    if (node.bundle?.hovered == true) {
+                        lastText = node.hoverText
+                        break
                     }
+                }
 
-                    // Информационный блок
-                    if (stack is Information && stack.info.isNotEmpty() && stack.getInformationBlock().hovered) {
-                        lastText = stack.info
-                    }
+                // Информационный блок
+                if (stack is Information && stack.info.isNotEmpty() && stack.getInformationBlock().hovered) {
+                    lastText = stack.info
                 }
 
                 if (lastText.isNullOrEmpty()) {
@@ -172,8 +165,8 @@ class MenuManager {
                 val resolution = UIEngine.clientApi.resolution()
                 val scaleFactor = resolution.scaleFactor
 
-                val x = mouseX / scaleFactor
-                val y = resolution.scaledHeight - mouseY / scaleFactor
+                val x = Mouse.getX() / scaleFactor
+                val y = resolution.scaledHeight - Mouse.getY() / scaleFactor
 
                 val screen = UIEngine.clientApi.minecraft().currentScreen()
                 screen?.drawHoveringText(lastText!!.split("\n"), x, y)
