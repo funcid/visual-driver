@@ -232,7 +232,7 @@ class DailyRewardMenu(
         }
 
         var color = Color(42, 102, 189)
-        var content = "Заберите награду\nза вход в игру"
+        var content = "Собрать!"
 
         if (taken) {
             color = Color(42, 102, 189, 0.62)
