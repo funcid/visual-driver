@@ -731,6 +731,7 @@ public final class me/func/protocol/world/npc/NpcData$Builder {
 	public final fun uuid (Ljava/util/UUID;)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun x (D)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun y (D)Lme/func/protocol/world/npc/NpcData$Builder;
+	public final fun yaw (F)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun z (D)Lme/func/protocol/world/npc/NpcData$Builder;
 }
 

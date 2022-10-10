@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.7.2)
+# Cristalix Animation API DOCS (актуальная версия 3.7.3)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:3.7.2'
+    implementation 'me.func:animation-api:3.7.3'
 }
 ```
 
