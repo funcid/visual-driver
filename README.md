@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.7.1)
+# Cristalix Animation API DOCS (актуальная версия 3.7.2)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:3.7.1'
+    implementation 'me.func:animation-api:3.7.2'
 }
 ```
 
@@ -700,7 +700,7 @@ RGB<br>
 Методы:<br>
 `Npc.npc(init: NpcData.() -> Unit): NpcSmart` kotlin вариант конструктора для создания NPC (только через него можно
 сделать глобальных NPC, которых плагин отправляет игроку при заходе на сервер)<br>
-`Npc.npc(data: NpcData): NpcSmart` java версия (делает тоже самое)<br>
+`Npc.link(data: NpcData): NpcSmart` java версия (делает тоже самое)<br>
 `Npc.spawn(entityId: Int)` показать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.kill(entityId: Int)` спрятать всем игрокам заранее созданный NPC по entityId (оно есть в NpcData)<br>
 `Npc.hide(entityId: Int, player: Player)` скрыть конкретному игроку NPC по entityId<br>

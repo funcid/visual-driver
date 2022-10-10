@@ -1185,13 +1185,12 @@ public final class me/func/mod/world/Banners {
 public final class me/func/mod/world/Npc {
 	public static final field INSTANCE Lme/func/mod/world/Npc;
 	public static final fun clear ()V
-	public static final fun create (Ljava/lang/String;Lme/func/protocol/world/npc/NpcBehaviour;Ljava/lang/String;Ljava/lang/String;)Lme/func/mod/conversation/data/NpcSmart;
-	public final fun getNpcs ()Ljava/util/Map;
+	public final fun getNpcs ()Ljava/util/HashMap;
 	public static final fun hide (ILorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
 	public static final fun kill (I)Lkotlin/Unit;
+	public static final fun link (Lme/func/protocol/world/npc/NpcData;)Lme/func/mod/conversation/data/NpcSmart;
 	public final fun location (Lme/func/protocol/world/npc/NpcData;Lorg/bukkit/Location;)V
 	public final fun npc (Lkotlin/jvm/functions/Function1;)Lme/func/mod/conversation/data/NpcSmart;
-	public static final fun npc (Lme/func/protocol/world/npc/NpcData;)Lme/func/mod/conversation/data/NpcSmart;
 	public final fun onClick (Lme/func/protocol/world/npc/NpcData;Ljava/util/function/Consumer;)V
 	public static final fun show (ILorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
 	public final fun skin (Lme/func/protocol/world/npc/NpcData;Ljava/lang/String;)V

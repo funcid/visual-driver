@@ -14,34 +14,22 @@ import java.util.function.Consumer
 
 object Npc {
 
-    val npcs = mutableMapOf<Int, NpcSmart>()
+    val npcs = hashMapOf<Int, NpcSmart>()
 
     fun npc(init: NpcData.() -> Unit): NpcSmart {
         val data = NpcData()
-        val npc = NpcSmart(data)
+        val smart = link(data)
+        smart.data = data.apply(init)
 
-        npcs[data.id] = npc
-        npc.data = data.apply(init)
-
-        return npc
+        return smart
     }
 
     @JvmStatic
-    fun npc(data: NpcData): NpcSmart {
+    fun link(data: NpcData): NpcSmart {
         val npc = NpcSmart(data)
         npcs[data.id] = npc
         return npc
     }
-
-    @JvmStatic
-    fun create(currentName: String, currentBehaviour: NpcBehaviour, currentSkin: String, currentDigest: String) =
-        NpcSmart(NpcData {
-            name = currentName
-            behaviour = currentBehaviour
-            skinUrl = currentSkin
-            skinDigest = currentDigest
-        })
-
 
     @JvmStatic
     fun clear() = Bukkit.getOnlinePlayers().forEach { Anime.sendEmptyBuffer("npc:kill-all", it) }
