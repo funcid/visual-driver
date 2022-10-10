@@ -1,4 +1,4 @@
-# Cristalix Animation API DOCS (актуальная версия 3.6.3)
+# Cristalix Animation API DOCS (актуальная версия 3.7.1)
 
 ![image](https://user-images.githubusercontent.com/42806772/149049028-a99c790a-224a-48c5-b3a2-58989900fd3e.png)
 <br>
@@ -29,7 +29,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'me.func:animation-api:3.6.3'
+    implementation 'me.func:animation-api:3.7.1'
 }
 ```
 
@@ -313,6 +313,22 @@ Confirmation menu = new Confirmation(Arrays.asList("Купить Уганду з
 });
 
 menu.open(player); // Открываем меню игроку
+```
+
+<h3>Панели EXPERIMENTAL</h3>
+
+<img src="https://user-images.githubusercontent.com/42806772/194780484-71a767ba-b8a6-4793-88bc-8de891c45fcc.png" width="500">
+
+Панели над хотбаром, их можно указывать сколько угодно, вся ширина делится в таком же отношении, в котором делится текст ко всему тексту. Можно реактивно менять текст/прогресс/цвет, стратегию реализуйте сами хук в сеттер/по таймингу.
+
+```kotlin
+val moneyPanel = ReactivePanel.builder()
+        .color(GlowColor.GOLD)
+        .progress(0.5)
+        .text(Emoji.COIN + " " + stat?.money)
+        .build()
+        
+moneyPanel.send(player)
 ```
    
 <h3>Батлпасс BATTLEPASS</h3>
