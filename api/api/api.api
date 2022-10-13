@@ -579,7 +579,7 @@ public final class me/func/mod/ui/Glow : org/bukkit/event/Listener {
 	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;D)V
 	public static final fun changePlaceColor (Lme/func/protocol/world/GlowingPlace;Lme/func/protocol/data/color/RGB;[Lorg/bukkit/entity/Player;)V
 	public static final fun clearPlaces ([Lorg/bukkit/entity/Player;)V
-	public final fun getGlowingPlaces ()Ljava/util/Map;
+	public final fun getGlowingPlaces ()Ljava/util/HashMap;
 	public final fun handle (Lorg/bukkit/event/player/PlayerMoveEvent;)V
 	public static final fun removePlace (Lme/func/protocol/world/GlowingPlace;[Lorg/bukkit/entity/Player;)Lme/func/protocol/world/GlowingPlace;
 	public static final fun set (Lorg/bukkit/entity/Player;IIID)V
@@ -621,7 +621,7 @@ public final class me/func/mod/ui/battlepass/BattlePass {
 	public static final field INSTANCE Lme/func/mod/ui/battlepass/BattlePass;
 	public final fun buy (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
 	public static final fun create (Lme/func/mod/ui/battlepass/BattlePassData;)Lme/func/mod/ui/battlepass/BattlePassData;
-	public final fun getBattlePasses ()Ljava/util/Map;
+	public final fun getBattlePasses ()Ljava/util/HashMap;
 	public final fun new (ILkotlin/jvm/functions/Function1;)Lme/func/mod/ui/battlepass/BattlePassData;
 	public final fun onBuyAdvanced (Lme/func/mod/ui/battlepass/BattlePassData;Ljava/util/function/Consumer;)V
 	public final fun onBuyPage (Lme/func/mod/ui/battlepass/BattlePassData;Ljava/util/function/BiConsumer;)V
@@ -1166,7 +1166,7 @@ public final class me/func/mod/world/Banners {
 	public static final fun content (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun content (Lorg/bukkit/entity/Player;Lme/func/protocol/data/element/Banner;Ljava/lang/String;)V
 	public final fun eyeLocation (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
-	public final fun getBanners ()Ljava/util/Map;
+	public final fun getBanners ()Ljava/util/HashMap;
 	public final fun harmonicVibrations (Lme/func/protocol/data/element/Banner;Lme/func/protocol/math/Dimension;DDD)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
@@ -1174,7 +1174,7 @@ public final class me/func/mod/world/Banners {
 	public final synthetic fun new (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/data/element/Banner;
 	public static final synthetic fun new (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
 	public static final fun remove (Ljava/util/UUID;)V
-	public final fun setBanners (Ljava/util/Map;)V
+	public final fun setBanners (Ljava/util/HashMap;)V
 	public final fun shineBlocks (Lme/func/protocol/data/element/Banner;Z)V
 	public static final fun show (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
