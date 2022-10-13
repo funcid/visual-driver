@@ -3,13 +3,13 @@ package me.func.mod.ui
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
-import me.func.protocol.world.GlowingPlace
 import me.func.protocol.data.color.RGB
+import me.func.protocol.world.GlowingPlace
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
-import java.util.UUID
+import java.util.*
 import java.util.function.Consumer
 import kotlin.math.pow
 
@@ -96,7 +96,7 @@ object Glow : Listener {
     @JvmStatic
     fun showPlace(player: Player, place: GlowingPlace) {
         ModTransfer()
-            .string(place.uuid.toString())
+            .uuid(place.uuid)
             .integer(place.rgb.red)
             .integer(place.rgb.blue)
             .integer(place.rgb.green)
@@ -121,7 +121,7 @@ object Glow : Listener {
         if (glowingPlaces.remove(place.uuid) != null) {
             playerAccepter.remove(place.uuid)
 
-            val current = ModTransfer().string(place.uuid.toString())
+            val current = ModTransfer().uuid(place.uuid)
             players.forEach { current.send("func:place-kill", it) }
         }
         return place
@@ -132,5 +132,15 @@ object Glow : Listener {
         players.forEach { Anime.sendEmptyBuffer("func:place-clear", it) }
         glowingPlaces.clear()
         playerAccepter.clear()
+    }
+
+    @JvmStatic
+    fun changePlaceColor(place: GlowingPlace, rgb: RGB, vararg players: Player) {
+        ModTransfer()
+            .uuid(place.uuid)
+            .integer(rgb.red)
+            .integer(rgb.blue)
+            .integer(rgb.green)
+            .send("func:place-color", *players)
     }
 }

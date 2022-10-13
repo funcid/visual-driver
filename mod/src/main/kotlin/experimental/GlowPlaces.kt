@@ -19,7 +19,7 @@ class GlowPlaces {
 
         init {
             mod.registerChannel("func:place") {
-                val uuid = UUID.fromString(NetUtil.readUtf8(this))
+                val uuid = NetUtil.readId(this)
                 places.add(
                     GlowingPlace(
                         uuid,
@@ -38,8 +38,14 @@ class GlowPlaces {
             }
 
             mod.registerChannel("func:place-kill") {
-                val uuid = UUID.fromString(NetUtil.readUtf8(this))
+                val uuid = NetUtil.readId(this)
                 places.filter { it.uuid == uuid }.forEach { places.remove(it) }
+            }
+
+            mod.registerChannel("func:place-color") {
+                val uuid = NetUtil.readId(this)
+                val color = Tricolor(readInt().apply { println(this) }, readInt().apply { println(this) }, readInt().apply { println(this) })
+                places.filter { it.uuid == uuid }.forEach { it.rgb = color }
             }
 
             val mc = clientApi.minecraft()

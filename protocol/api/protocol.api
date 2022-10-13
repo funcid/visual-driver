@@ -621,6 +621,7 @@ public final class me/func/protocol/world/GlowingPlace {
 	public final fun getX ()D
 	public final fun getY ()D
 	public final fun getZ ()D
+	public final fun setRgb (Lme/func/protocol/data/color/RGB;)V
 }
 
 public final class me/func/protocol/world/marker/Marker {

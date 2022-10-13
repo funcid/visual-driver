@@ -5,7 +5,7 @@ import java.util.UUID
 
 class GlowingPlace(
     val uuid: UUID = UUID.randomUUID(),
-    val rgb: RGB,
+    var rgb: RGB,
     val x: Double,
     val y: Double,
     val z: Double,
