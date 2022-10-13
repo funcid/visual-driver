@@ -15,6 +15,7 @@ import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
 import standard.storage.button.StorageNode
@@ -22,7 +23,7 @@ import java.util.*
 
 class DailyRewardMenu(
     override var uuid: UUID = UUID.randomUUID(),
-    var currentDay: Int = 1,
+    var currentDay: Int = 0,
     var taken: Boolean = false,
     override var storage: MutableList<StorageNode<*>> = arrayListOf()
 ) : AbstractMenu, ContextGui() {
@@ -79,7 +80,7 @@ class DailyRewardMenu(
 
         rootElement = rectangle gui@{
 
-            +backButton(height / 2 + 30)
+            if (menuStack.size > 0) +backButton(height / 2 + 30)
             +closeButton(height / 2 + 30)
 
             size = V3(566.0, height)
@@ -141,8 +142,8 @@ class DailyRewardMenu(
                         }
                     }
 
-                    onLeftClick {
-                        if (day == currentDay && !taken) {
+                    onMouseUp {
+                        if (it == currentDay && !taken) {
                             clientApi.clientConnection().sendPayload("func:reward:click", Unpooled.buffer().apply {
                                 writeInt(day)
                             })
@@ -239,8 +240,8 @@ class DailyRewardMenu(
             content = "Собрано!"
         }
 
-        storage[currentDay].bundle?.color = color
-        storage[currentDay].titleElement?.content = content
+        storage[currentDay - 1].bundle?.color = color
+        storage[currentDay - 1].titleElement?.content = content
     }
 
     fun openGui() {

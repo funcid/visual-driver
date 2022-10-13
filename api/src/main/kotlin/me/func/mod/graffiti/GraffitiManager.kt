@@ -26,7 +26,7 @@ object GraffitiManager : PlayerSubscriber {
     private const val MAX_PLACE_DISTANCE = 10
 
     private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
-    private val placed: MutableList<GraffitiPlaced> = mutableListOf()
+    private val placed: MutableList<GraffitiPlaced> = arrayListOf()
 
     var isCanPlace: Predicate<Location> = Predicate { true }
 

@@ -91,7 +91,7 @@ object Anime {
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) = ModTransfer().send(channel, player)
 
-    @Deprecated("Будет переделанно на полноценное меню")
+    @Deprecated("Будет переделано на полноценное меню")
     @JvmStatic
     fun openLootBox(player: Player, vararg items: LootDrop) = ModTransfer().integer(items.size).apply {
         items.forEach {

@@ -15,8 +15,8 @@ import kotlin.math.pow
 
 object Glow : Listener {
 
-    val glowingPlaces = mutableMapOf<UUID, GlowingPlace>()
-    private val playerAccepter = mutableMapOf<UUID, Consumer<Player>>()
+    val glowingPlaces = hashMapOf<UUID, GlowingPlace>()
+    private val playerAccepter = hashMapOf<UUID, Consumer<Player>>()
 
     @EventHandler
     fun PlayerMoveEvent.handle() {
