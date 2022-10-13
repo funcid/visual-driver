@@ -10,11 +10,12 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.lang.StrictMath.pow
 import java.util.*
+import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
 object Banners {
 
-    var banners = mutableMapOf<UUID, Banner>()
+    var banners = hashMapOf<UUID, Banner>()
 
     @JvmSynthetic
     fun new(data: Banner.() -> Unit) = new(Banner().apply(data))
@@ -32,7 +33,7 @@ object Banners {
         if (banners.size > 300) {
             val unique = banners.values.distinctBy { it.x }.distinctBy { it.y }.distinctBy { it.z }
             warn("Fatal error: banners map size>300! Found and cleared ${banners.size - unique.size} unused banners!")
-            banners = unique.associateBy { banner.uuid }.toMutableMap()
+            banners = HashMap(unique.associateBy { banner.uuid })
             return banner
         }
         banners[banner.uuid] = banner

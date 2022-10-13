@@ -10,8 +10,8 @@ import java.util.function.Function
 data class BattlePassData(
     var uuid: UUID = UUID.randomUUID(),
     var facade: BattlePassFacade = BattlePassFacade(),
-    var pages: MutableList<BattlePassPageAdvanced> = mutableListOf(),
-    var quests: MutableList<String> = mutableListOf(),
+    var pages: MutableList<BattlePassPageAdvanced> = arrayListOf(),
+    var quests: MutableList<String> = arrayListOf(),
     var questStatusUpdater: Function<Player, List<String>>? = null,
     var buyAdvanced: Consumer<Player>? = null,
     var buyPage: BiConsumer<Player, Int>? = null,

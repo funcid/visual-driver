@@ -136,7 +136,7 @@ class BoosterBar {
         check(segment.progress != null) { "Progress of the segment ${segment.label} is not set" }
 
         carveSize = 1.5
-        size = V3(90.5, 15.0)
+        size = V3(60.5, 15.0)
         color = Color(20, 98, 41, 0.62)
 
         if (!isFirst) {
@@ -162,7 +162,7 @@ class BoosterBar {
         +carved {
             carveSize = 1.5
 
-            size = V3(90.5 * segment.progress!!, 15.0)
+            size = V3(60.5 * segment.progress!!, 15.0)
             color = Color(34, 174, 73, 0.62)
 
             if (segment.progress == 0.0) enabled = false

@@ -11,7 +11,7 @@ import java.util.function.Consumer
 
 object BattlePass {
 
-    val battlePasses = mutableMapOf<UUID, BattlePassData>()
+    val battlePasses = hashMapOf<UUID, BattlePassData>()
 
     fun new(price: Int, data: BattlePassData.() -> Unit): BattlePassData {
         val battlepass = BattlePassData().apply(data)
