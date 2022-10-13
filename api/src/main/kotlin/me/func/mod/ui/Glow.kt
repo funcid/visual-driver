@@ -97,9 +97,7 @@ object Glow : Listener {
     fun showPlace(player: Player, place: GlowingPlace) {
         ModTransfer()
             .uuid(place.uuid)
-            .integer(place.rgb.red)
-            .integer(place.rgb.blue)
-            .integer(place.rgb.green)
+            .rgb(place.rgb)
             .double(place.x)
             .double(place.y)
             .double(place.z)
@@ -138,9 +136,7 @@ object Glow : Listener {
     fun changePlaceColor(place: GlowingPlace, rgb: RGB, vararg players: Player) {
         ModTransfer()
             .uuid(place.uuid)
-            .integer(rgb.red)
-            .integer(rgb.blue)
-            .integer(rgb.green)
+            .rgb(rgb)
             .send("func:place-color", *players)
     }
 }

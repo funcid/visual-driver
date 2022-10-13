@@ -7,6 +7,7 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.world.GlowingPlace
 import me.func.protocol.data.color.Tricolor
 import org.lwjgl.opengl.GL11
+import readRgb
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
@@ -44,7 +45,7 @@ class GlowPlaces {
 
             mod.registerChannel("func:place-color") {
                 val uuid = NetUtil.readId(this)
-                val color = Tricolor(readInt().apply { println(this) }, readInt().apply { println(this) }, readInt().apply { println(this) })
+                val color = readRgb()
                 places.filter { it.uuid == uuid }.forEach { it.rgb = color }
             }
 

@@ -40,14 +40,12 @@ class Boosters {
 
         mod.registerChannel("zabelov:boosters") {
             boostersContainer.children.clear()
-            println("Clear boosters")
 
             repeat(readInt()) {
                 val name = readUtf8()
                 val multiplier = readDouble()
                 boostersContainer + booster(name, multiplier)
             }
-            println("Boosters: ${boostersContainer.children.size}")
         }
 
         UIEngine.overlayContext.addChild(container)
