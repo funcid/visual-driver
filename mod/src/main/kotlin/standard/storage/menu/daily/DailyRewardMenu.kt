@@ -18,7 +18,9 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
+import standard.storage.Information
 import standard.storage.button.StorageNode
+import java.awt.SystemColor.info
 import java.util.*
 
 class DailyRewardMenu(
@@ -30,8 +32,6 @@ class DailyRewardMenu(
 
     private var rootElement: RectangleElement? = null
     private var hoverContainer: CarvedRectangle? = null
-
-    private var hover: CarvedRectangle? = null
 
     init {
         keyTypedHandlers.clear()
@@ -142,6 +142,8 @@ class DailyRewardMenu(
                         }
                     }
 
+                    element.hoverText = element.title + if (element.description.isNotEmpty()) "\n" + element.description else ""
+
                     onMouseUp {
                         if (it == currentDay && !taken) {
                             clientApi.clientConnection().sendPayload("func:reward:click", Unpooled.buffer().apply {
@@ -167,26 +169,6 @@ class DailyRewardMenu(
                                 else V3(3.0, 3.0, 1.0)
                             }
                         }
-
-                        if (hover == this@carved) return@onHover
-
-                        if (hovered) {
-                            hover = this@carved
-
-                            val desc = element.title + if (element.description.isNotEmpty()) "\n" + element.description else ""
-                            hoverText.content = desc
-
-                            val lines = desc.split("\n")
-                            val countLine = lines.size
-
-                            container.size.x =
-                                clientApi.fontRenderer().getStringWidth(lines.maxByOrNull { t -> t.length } ?: "")
-                                    .toDouble() + 11.0
-                            container.size.y = (hoverText.lineHeight * countLine) + 9.0
-
-                            hoverCenter.size.x = container.size.x - 1.0
-                            hoverCenter.size.y = container.size.y - 1.0
-                        }
                     }
                 }
 
@@ -195,24 +177,6 @@ class DailyRewardMenu(
         }
 
         addChild(rootElement!!)
-        addChild(hoverContainer!!)
-
-        afterRender {
-            clientApi.resolution().run {
-                val mouseX = Mouse.getX()
-                val mouseY = Mouse.getY()
-
-                val displayHeight = Display.getHeight()
-
-                val sizeX = mouseX / scaleFactor
-                val sizeY = (displayHeight - mouseY) / scaleFactor
-
-                val container = hoverContainer ?: return@afterRender
-
-                container.offset.x = sizeX + 6.0
-                container.offset.y = sizeY - 6.0
-            }
-        }
     }
 
     fun sendDayStatus() {

@@ -27,7 +27,7 @@ class Selection(
     @JvmField var columns: Int,
     var pageCount: Int,
     var pages: MutableList<Page> = MutableList(pageCount) { Page(it) },
-    override var storage: MutableList<StorageNode<*>> = mutableListOf(),
+    override var storage: MutableList<StorageNode<*>> = arrayListOf(),
     @JvmField var currentPage: Int = 0,
 ) : AbstractMenu, Information, ContextGui() {
 
