@@ -7,7 +7,7 @@ class Banner(
     var motionType: MotionType = MotionType.CONSTANT,
     var watchingOnPlayer: Boolean = false,
     var watchingOnPlayerWithoutPitch: Boolean = false,
-    var motionSettings: MutableMap<String, Any> = mutableMapOf(
+    var motionSettings: MutableMap<String, Any> = hashMapOf(
         "yaw" to 0.0,
         "pitch" to 0.0,
         "xray" to true
@@ -24,7 +24,7 @@ class Banner(
     var blue: Int = 0,
     var opacity: Double = 0.62
 ) {
-    companion object S {
+    companion object {
         @JvmStatic
         fun builder() = Builder()
     }
@@ -47,6 +47,7 @@ class Banner(
         fun z(z: Double) = apply { banner.z = z }
         fun yaw(yaw: Float) = apply { banner.motionSettings["yaw"] = yaw }
         fun pitch(pitch: Float) = apply { banner.motionSettings["pitch"] = pitch }
+        fun xray(xray: Double) = apply { banner.motionSettings["xray"] = xray }
         fun height(height: Int) = apply { banner.height = height }
         fun weight(weight: Int) = apply { banner.weight = weight }
         fun texture(texture: String) = apply { banner.texture = texture }

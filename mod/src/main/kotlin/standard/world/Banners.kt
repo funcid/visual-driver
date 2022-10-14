@@ -41,6 +41,7 @@ class Banners {
                     motionSettings = hashMapOf<String, Any>().also { // НЕ ПИХАТЬ ДОБАВЛЕНИЕ СРАЗУ В ( сюда )
                         it["yaw"] = readDouble()
                         it["pitch"] = readDouble()
+                        it["xray"] = readBoolean()
                     },
                     content = NetUtil.readUtf8(this@registerChannel),
                     x = readDouble(),
@@ -85,10 +86,10 @@ class Banners {
                         Rotation(Math.toRadians(banner.motionSettings["pitch"].toString().toDouble()), 1.0, 0.0, 0.0)
 
                     if (banner.motionSettings["xray"].toString().toBoolean()) {
-                        beforeRender = {
+                        beforeRender {
                             GlStateManager.disableDepth()
                         }
-                        afterRender = {
+                        afterRender {
                             GlStateManager.enableDepth()
                         }
                     }

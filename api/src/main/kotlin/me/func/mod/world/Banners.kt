@@ -63,6 +63,7 @@ object Banners {
                 .boolean(current.watchingOnPlayerWithoutPitch)
                 .double(-current.motionSettings["yaw"].toString().toDouble())
                 .double(current.motionSettings["pitch"].toString().toDouble())
+                .boolean(current.motionSettings["xray"].toString().toBoolean())
                 .string(current.content)
                 .double(current.x)
                 .double(current.y)
