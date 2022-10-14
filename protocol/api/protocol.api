@@ -77,7 +77,7 @@ public class me/func/protocol/data/color/Tricolor : me/func/protocol/data/color/
 }
 
 public final class me/func/protocol/data/element/Banner {
-	public static final field S Lme/func/protocol/data/element/Banner$S;
+	public static final field Companion Lme/func/protocol/data/element/Banner$Companion;
 	public fun <init> ()V
 	public fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIID)V
 	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIIDILkotlin/jvm/internal/DefaultConstructorMarker;)V
@@ -137,12 +137,13 @@ public final class me/func/protocol/data/element/Banner$Builder {
 	public final fun watchingOnPlayerWithoutPitch (Z)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun weight (I)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun x (D)Lme/func/protocol/data/element/Banner$Builder;
+	public final fun xray (D)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun y (D)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun yaw (F)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun z (D)Lme/func/protocol/data/element/Banner$Builder;
 }
 
-public final class me/func/protocol/data/element/Banner$S {
+public final class me/func/protocol/data/element/Banner$Companion {
 	public final fun builder ()Lme/func/protocol/data/element/Banner$Builder;
 }
 
