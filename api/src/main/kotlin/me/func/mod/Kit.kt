@@ -1,6 +1,8 @@
 package me.func.mod
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
+import me.func.atlas.Atlas.download
+import me.func.atlas.util.fileLastName
 import me.func.mod.Anime.GRAFFITI_MOD_URL
 import me.func.mod.Anime.STANDARD_MOD_URL
 import me.func.mod.Anime.graffitiClient
@@ -30,10 +32,10 @@ internal object StandardMods : Listener {
     val mods: EnumSet<Mod> = EnumSet.noneOf(Mod::class.java)
 
     init {
-        val node = ModLoader.download(STANDARD_MOD_URL)
+        val node = download(STANDARD_MOD_URL)
 
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
-        if (node.isEmpty()) {
+        if (node == null) {
             warn("Standard mod WEB storage not available! Get standard mod from JAR.")
             val name = STANDARD_MOD_URL.fileLastName()
             val stream = Anime.javaClass.classLoader.getResourceAsStream(name)

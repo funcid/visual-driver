@@ -1,10 +1,9 @@
 package me.func.mod.world
 
 import com.destroystokyo.paper.event.player.PlayerUseUnknownEntityEvent
+import me.func.atlas.util.fileLastName
 import me.func.mod.Anime
 import me.func.mod.conversation.data.NpcSmart
-import me.func.mod.util.fileLastName
-import me.func.protocol.world.npc.NpcBehaviour
 import me.func.protocol.world.npc.NpcData
 import org.bukkit.Bukkit
 import org.bukkit.Location

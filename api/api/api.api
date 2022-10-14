@@ -119,9 +119,6 @@ public final class me/func/mod/conversation/AutoSendRegistry : org/bukkit/event/
 
 public final class me/func/mod/conversation/ModLoader {
 	public static final field INSTANCE Lme/func/mod/conversation/ModLoader;
-	public static final fun download (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun download (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-	public static synthetic fun download$default (Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun getMods ()Ljava/util/Map;
 	public static final fun isLoaded (Ljava/lang/String;)Z
 	public static final fun load (Ljava/io/File;)V
@@ -1133,13 +1130,6 @@ public final class me/func/mod/ui/scoreboard/raw/RawEmpty : me/func/mod/ui/score
 	public static final field INSTANCE Lme/func/mod/ui/scoreboard/raw/RawEmpty;
 	public fun get (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/scoreboard/ScoreBoardRecord;
 	public fun write (Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
-}
-
-public final class me/func/mod/util/FilesKt {
-	public static final fun dir (Ljava/lang/String;)Ljava/nio/file/Path;
-	public static final fun fileLastName (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun fileLastName (Ljava/nio/file/Path;)Ljava/lang/String;
-	public static final fun listFiles (Ljava/lang/String;)Ljava/util/List;
 }
 
 public final class me/func/mod/util/LogKt {

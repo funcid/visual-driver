@@ -3,6 +3,8 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.atlas.util.dir
+import me.func.atlas.util.fileLastName
 import me.func.mod.conversation.AutoSendRegistry
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer

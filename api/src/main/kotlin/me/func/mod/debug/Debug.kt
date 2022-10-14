@@ -1,5 +1,7 @@
 package me.func.mod.debug
 
+import me.func.atlas.util.fileLastName
+import me.func.atlas.util.listFiles
 import me.func.mod.Anime
 import me.func.mod.Anime.STANDARD_MOD_URL
 import me.func.mod.MOD_LOCAL_DIR_NAME
@@ -7,8 +9,6 @@ import me.func.mod.MOD_LOCAL_TEST_DIR_NAME
 import me.func.mod.StandardMods
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.consoleCommand
-import me.func.mod.util.fileLastName
-import me.func.mod.util.listFiles
 import me.func.mod.util.log
 import ru.cristalix.core.formatting.Formatting
 
