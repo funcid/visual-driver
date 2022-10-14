@@ -32,7 +32,7 @@ internal object StandardMods : Listener {
     val mods: EnumSet<Mod> = EnumSet.noneOf(Mod::class.java)
 
     init {
-        val node = download(STANDARD_MOD_URL)
+        val node = download(STANDARD_MOD_URL, MOD_LOCAL_DIR_NAME)
 
         // Если не получилось скачать мод с сервера, загрузить его из ресурсов
         if (node == null) {
