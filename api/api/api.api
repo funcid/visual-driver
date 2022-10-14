@@ -350,19 +350,6 @@ public final class me/func/mod/emotion/EmotionsKt {
 	public static final fun playEmotion (Lme/func/mod/emotion/Emotions;Lorg/bukkit/entity/Player;[Lorg/bukkit/entity/Player;)V
 }
 
-public abstract interface class me/func/mod/experimental/disguise/EntityDisguiser {
-	public static final field Companion Lme/func/mod/experimental/disguise/EntityDisguiser$Companion;
-	public abstract fun disguise (Lorg/bukkit/entity/Entity;Lorg/bukkit/entity/EntityType;[Lorg/bukkit/entity/Player;)V
-	public static fun getMod ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-	public static fun getPacket ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-	public abstract fun reset (Lorg/bukkit/entity/Entity;[Lorg/bukkit/entity/Player;)V
-}
-
-public final class me/func/mod/experimental/disguise/EntityDisguiser$Companion {
-	public final fun getMod ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-	public final fun getPacket ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-}
-
 public final class me/func/mod/experimental/shader/Shaders {
 	public static final field INSTANCE Lme/func/mod/experimental/shader/Shaders;
 	public final fun loadShader (Lorg/bukkit/entity/Player;ILjava/lang/String;)V
