@@ -1,6 +1,7 @@
 package standard.storage.menu
 
 import Main.Companion.menuStack
+import asColor
 import standard.storage.AbstractMenu
 import standard.storage.button.StorageNode
 import io.netty.buffer.Unpooled
@@ -54,11 +55,7 @@ class PlayChoice(
             origin = CENTER
             align = CENTER
             size = V3(UIEngine.overlayContext.size.x, 240.0)
-            val centerColor = Color(224, 118, 20, 0.28)
-            val normal = Color(42, 102, 189, 0.28)
-            val textNormal = Color(74, 140, 236, 1.0)
-            val textCenter = Color(255, 157, 66, 1.0)
-            val iconHover = Color(255, 255, 200, 1.0)
+
             +title
             +description
             val flex = +flex {
@@ -71,11 +68,11 @@ class PlayChoice(
                         origin = CENTER
                         align = CENTER
                         size = buttonSize
-                        color = if (element.special) centerColor else normal
+                        color = element.backgroundColor.asColor(0.28)
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = if (element.special) textCenter else textNormal
+                            color = element.backgroundColor.asColor()
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding
