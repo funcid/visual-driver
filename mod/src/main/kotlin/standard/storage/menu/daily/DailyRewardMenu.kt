@@ -147,7 +147,7 @@ class DailyRewardMenu(
                     onMouseUp {
                         if (it == currentDay && !taken) {
                             clientApi.clientConnection().sendPayload("func:reward:click", Unpooled.buffer().apply {
-                                writeInt(day)
+                                writeInt(currentDay)
                             })
 
                             closeGui()
@@ -187,7 +187,7 @@ class DailyRewardMenu(
             var color = Color(42, 102, 189, 0.28)
             var content = "Награда за\nвход в игру"
 
-            if (setDay < i) {
+            if (i < currentDay) {
                 color = Color(42, 102, 189, 0.62)
                 content = "Награда получена!"
             }
