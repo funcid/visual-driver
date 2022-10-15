@@ -33,9 +33,41 @@ public final class me/func/protocol/data/chat/ModChat {
 
 public final class me/func/protocol/data/color/GlowColor : java/lang/Enum, me/func/protocol/data/color/RGB {
 	public static final field BLUE Lme/func/protocol/data/color/GlowColor;
-	public static final field GOLD Lme/func/protocol/data/color/GlowColor;
+	public static final field BLUE_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field BLUE_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field BLUE_MIDDLE Lme/func/protocol/data/color/GlowColor;
+	public static final field CIAN Lme/func/protocol/data/color/GlowColor;
+	public static final field CIAN_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field CIAN_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field CIAN_MIDDLE Lme/func/protocol/data/color/GlowColor;
 	public static final field GREEN Lme/func/protocol/data/color/GlowColor;
+	public static final field GREEN_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field GREEN_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field GREEN_MIDDLE Lme/func/protocol/data/color/GlowColor;
+	public static final field NEUTRAL Lme/func/protocol/data/color/GlowColor;
+	public static final field NEUTRAL_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field NEUTRAL_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field NEUTRAL_MIDDLE Lme/func/protocol/data/color/GlowColor;
+	public static final field ORANGE Lme/func/protocol/data/color/GlowColor;
+	public static final field ORANGE_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field ORANGE_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field ORANGE_MIDDLE Lme/func/protocol/data/color/GlowColor;
+	public static final field PINK Lme/func/protocol/data/color/GlowColor;
+	public static final field PINK_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field PINK_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field PINK_MIDDLE Lme/func/protocol/data/color/GlowColor;
+	public static final field PURPLE Lme/func/protocol/data/color/GlowColor;
+	public static final field PURPLE_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field PURPLE_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field PURPLE_MIDDLE Lme/func/protocol/data/color/GlowColor;
 	public static final field RED Lme/func/protocol/data/color/GlowColor;
+	public static final field RED_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field RED_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field RED_MIDDLE Lme/func/protocol/data/color/GlowColor;
+	public static final field YELLOW Lme/func/protocol/data/color/GlowColor;
+	public static final field YELLOW_DARK Lme/func/protocol/data/color/GlowColor;
+	public static final field YELLOW_LIGHT Lme/func/protocol/data/color/GlowColor;
+	public static final field YELLOW_MIDDLE Lme/func/protocol/data/color/GlowColor;
 	public fun getBlue ()I
 	public fun getGreen ()I
 	public fun getRed ()I
@@ -458,9 +490,10 @@ public final class me/func/protocol/ui/indicator/Indicators : java/lang/Enum {
 public class me/func/protocol/ui/menu/Button {
 	public static final field Companion Lme/func/protocol/ui/menu/Button$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;ZZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/data/color/RGB;ZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;I)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/data/color/RGB;ZJLjava/lang/String;Ljava/lang/String;Ljava/lang/String;IILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public static final fun builder ()Lme/func/protocol/ui/menu/Button$Builder;
+	public fun getBackgroundColor ()Lme/func/protocol/data/color/RGB;
 	public fun getCommand ()Ljava/lang/String;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getEnabled ()Z
@@ -469,10 +502,10 @@ public class me/func/protocol/ui/menu/Button {
 	public fun getPrice ()J
 	public fun getPriceText ()Ljava/lang/String;
 	public fun getSale ()I
-	public fun getSpecial ()Z
 	public fun getTexture ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getVault ()Ljava/lang/String;
+	public fun setBackgroundColor (Lme/func/protocol/data/color/RGB;)V
 	public fun setCommand (Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setEnabled (Z)V
@@ -481,7 +514,6 @@ public class me/func/protocol/ui/menu/Button {
 	public fun setPrice (J)V
 	public fun setPriceText (Ljava/lang/String;)V
 	public fun setSale (I)V
-	public fun setSpecial (Z)V
 	public fun setTexture (Ljava/lang/String;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setVault (Ljava/lang/String;)V
@@ -492,6 +524,7 @@ public final class me/func/protocol/ui/menu/Button$Builder {
 	public fun <init> (Lme/func/protocol/ui/menu/Button;)V
 	public synthetic fun <init> (Lme/func/protocol/ui/menu/Button;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lme/func/protocol/ui/menu/Button;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun command (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun description (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun enabled (Z)Lme/func/protocol/ui/menu/Button$Builder;
@@ -501,7 +534,6 @@ public final class me/func/protocol/ui/menu/Button$Builder {
 	public final fun price (J)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun price (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun sale (I)Lme/func/protocol/ui/menu/Button$Builder;
-	public final fun special (Z)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun texture (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun title (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
 	public final fun vault (Ljava/lang/String;)Lme/func/protocol/ui/menu/Button$Builder;
