@@ -14,11 +14,9 @@ import org.bukkit.event.player.PlayerKickEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import java.util.*
 import java.util.function.Function
-import kotlin.collections.HashSet
 
 object ScoreBoard : Listener {
 
-    private val list = arrayListOf<String>()
     private val schemes = hashMapOf<String, ScoreBoardScheme>()
     private val subscribers = hashMapOf<String, HashSet<UUID>>()
 
@@ -26,8 +24,7 @@ object ScoreBoard : Listener {
         listener(this)
 
         Bukkit.getScheduler().runTaskTimer(Anime.provided, {
-            list.forEach { key ->
-                val data = schemes[key] ?: return@forEach
+            schemes.forEach { (key, data) ->
                 val subscribers = subscribers[key] ?: return@forEach
 
                 data.updateByUUID(subscribers)
@@ -77,7 +74,6 @@ object ScoreBoard : Listener {
     fun remove(key: String) {
         schemes.remove(key)
         subscribers.remove(key)
-        list.remove(key)
     }
 
     @JvmStatic
@@ -111,7 +107,6 @@ object ScoreBoard : Listener {
         fun build(): ScoreBoardScheme {
             schemes[scheme.key] = scheme
             subscribers[scheme.key] = hashSetOf()
-            list.add(scheme.key)
             return scheme
         }
     }
