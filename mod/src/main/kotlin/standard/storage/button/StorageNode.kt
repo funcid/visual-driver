@@ -1,8 +1,11 @@
 package standard.storage.button
 
+import asColor
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.Unpooled
+import me.func.protocol.data.color.GlowColor
+import me.func.protocol.data.color.RGB
 import me.func.protocol.ui.menu.Button
 import ru.cristalix.uiengine.ClickEvent
 import ru.cristalix.uiengine.UIEngine
@@ -22,7 +25,7 @@ abstract class StorageNode<T : AbstractElement>(
     override var hint: String? = null,
     var hoverText: String = "",
     override var command: String? = null,
-    override var special: Boolean = false,
+    override var backgroundColor: RGB = GlowColor.BLUE,
     override var enabled: Boolean = true,
     override var vault: String? = null,
     override var sale: Int = 0
@@ -37,7 +40,7 @@ abstract class StorageNode<T : AbstractElement>(
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0
         size = sized
-        color = if (special) Color(255, 157, 66, 1.0) else Color(74, 140, 236, 1.0)
+        color = backgroundColor.asColor()
         color.alpha = 0.0
         beforeRender { GlStateManager.disableDepth() }
         afterRender { GlStateManager.enableDepth() }

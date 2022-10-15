@@ -1,6 +1,7 @@
 package standard.storage.menu.selection
 
 import Main.Companion.menuStack
+import asColor
 import me.func.protocol.ui.menu.SelectionModel
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.element.CarvedRectangle
@@ -97,7 +98,7 @@ class Selection(
                         (height - (rows - 1) * flexSpace - padding * 2 - backButtonSize - menuTitle.lineHeight) / rows
                     carveSize = 2.0
                     size = V3((width - (columns - 1) * flexSpace) / columns, fieldHeight)
-                    color = if (element.special) Color(224, 118, 20, 0.28) else Color(21, 53, 98, 0.62)
+                    color = element.backgroundColor.asColor(0.28)
                     val image = +rectangle {
                         val iconSize = fieldHeight - MenuManager.itemPadding * 2
                         size = V3(iconSize, iconSize, iconSize)

@@ -4,6 +4,8 @@ import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.data.Sprites
 import me.func.mod.ui.menu.MenuManager.reactive
 import me.func.mod.util.warn
+import me.func.protocol.data.color.GlowColor
+import me.func.protocol.data.color.RGB
 import me.func.protocol.ui.menu.Button
 import org.bukkit.Material
 import org.bukkit.entity.Player
@@ -60,9 +62,9 @@ class ReactiveButton : Button() {
             field = value
         }
 
-    override var special: Boolean = false
+    override var backgroundColor: RGB = GlowColor.BLUE
         set(value) {
-            if (value != field) reactive { byte(6).boolean(value) }
+            if (value != field) reactive { byte(6).rgb(value) }
             field = value
         }
 
@@ -95,7 +97,9 @@ class ReactiveButton : Button() {
 
     fun title(title: String) = apply { this.title = title }
 
-    fun special(special: Boolean) = apply { this.special = special }
+    fun color(color: RGB) = apply { this.backgroundColor = color }
+
+    fun special(boolean: Boolean) = apply { this.backgroundColor = if (boolean) GlowColor.ORANGE else GlowColor.BLUE }
 
     fun enabled(enabled: Boolean) = apply { this.enabled = enabled }
 
@@ -158,7 +162,7 @@ class ReactiveButton : Button() {
         transfer.string(hover ?: "")
         transfer.string(command ?: "")
         transfer.string(vault ?: "")
-        transfer.boolean(special)
+        transfer.rgb(backgroundColor)
         transfer.boolean(enabled)
         transfer.integer(sale)
     }
@@ -177,7 +181,7 @@ class ReactiveButton : Button() {
         it.price = price
         it.priceText = priceText
         it.sale = sale
-        it.special = special
+        it.backgroundColor = backgroundColor
         it.enabled = enabled
         it.command = command
         it.vault = vault

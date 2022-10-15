@@ -1,12 +1,15 @@
 package me.func.protocol.ui.menu
 
+import me.func.protocol.data.color.GlowColor
+import me.func.protocol.data.color.RGB
+
 open class Button(
     open var hover: String? = "",
     open var texture: String? = "",
     open var title: String = "",
     open var description: String = "",
     open var hint: String? = "",
-    open var special: Boolean = false,
+    open var backgroundColor: RGB = GlowColor.BLUE,
     open var enabled: Boolean = true,
     open var price: Long = -1,
     open var priceText: String = "",
@@ -29,7 +32,7 @@ open class Button(
         fun command(command: String) = apply { button.command = command }
         fun price(price: Long) = apply { button.price = price }
         fun price(text: String) = apply { button.priceText = text }
-        fun special(special: Boolean) = apply { button.special = special }
+        fun color(color: RGB) = apply { button.backgroundColor = color }
         fun enabled(enabled: Boolean) = apply { button.enabled = enabled }
         fun sale(sale: Int) = apply { button.sale = sale }
         fun build() = button

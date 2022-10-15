@@ -1,12 +1,14 @@
 package standard.storage.menu
 
 import Main.Companion.menuStack
+import asColor
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import readColoredUtf8
+import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.Color
@@ -39,7 +41,7 @@ class MenuManager {
                 hoverText = buffer.readColoredUtf8() // item hover desc
                 command = buffer.readColoredUtf8() // command
                 vault = buffer.readColoredUtf8() // vault
-                special = buffer.readBoolean() // special
+                backgroundColor = buffer.readRgb() // color
                 enabled = buffer.readBoolean() // enabled button
                 sale = buffer.readInt()
             }
@@ -111,11 +113,10 @@ class MenuManager {
                     }
 
                     6 -> {
-                        node.special = readBoolean()
+                        node.backgroundColor = readRgb()
                         if (!inited) return@registerChannel
-                        node.hintContainer?.color =
-                            if (node.special) Color(255, 157, 66, 1.0) else Color(21, 53, 98, 0.62)
-                        node.bundle?.color = if (node.special) Color(224, 118, 20, 0.28) else Color(42, 102, 189, 0.28)
+                        node.hintContainer?.color = node.backgroundColor.asColor()
+                        node.bundle?.color = node.backgroundColor.asColor(0.28)
                     }
 
                     else -> return@registerChannel

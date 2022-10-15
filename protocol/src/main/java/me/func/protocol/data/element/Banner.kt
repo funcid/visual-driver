@@ -10,7 +10,7 @@ class Banner(
     var motionSettings: MutableMap<String, Any> = hashMapOf(
         "yaw" to 0.0,
         "pitch" to 0.0,
-        "xray" to true
+        "xray" to false
     ),
     var content: String = "",
     var x: Double = 0.0,

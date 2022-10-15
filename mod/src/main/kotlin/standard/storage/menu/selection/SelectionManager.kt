@@ -36,7 +36,7 @@ class SelectionManager {
                         hint = it.hint ?: ""
                         hover = it.hover
                         vault = it.vault
-                        special = it.special
+                        backgroundColor = it.backgroundColor
                         enabled = it.enabled
                     }
                 }
