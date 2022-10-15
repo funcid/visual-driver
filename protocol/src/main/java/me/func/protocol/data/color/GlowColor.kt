@@ -1,6 +1,6 @@
 package me.func.protocol.data.color
 
-enum class GlowColor(override var red: Int, override var blue: Int, override var green: Int): RGB {
+enum class GlowColor(override var red: Int, override var green: Int, override var blue: Int,): RGB {
 
     BLUE_LIGHT(74, 140, 236),
     BLUE(42, 102, 189),
