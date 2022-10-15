@@ -49,10 +49,9 @@ abstract class StorageNode<T : AbstractElement>(
             origin = CENTER
             align = CENTER
             color = WHITE
-            shadow = true
             color.alpha = 0.0
             content = hint ?: default
-            scale = V3(1.5, 1.5, 1.5)
+            scale = V3(2.0, 2.0, 2.0)
         }
     }.apply { hintContainer = this }
 
