@@ -386,11 +386,13 @@ public abstract interface class me/func/mod/reactive/ButtonClickHandler {
 
 public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/menu/Button {
 	public fun <init> ()V
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun command (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun copy ()Lme/func/mod/reactive/ReactiveButton;
 	public final fun description (Ljava/util/List;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun description ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun enabled (Z)Lme/func/mod/reactive/ReactiveButton;
+	public fun getBackgroundColor ()Lme/func/protocol/data/color/RGB;
 	public fun getCommand ()Ljava/lang/String;
 	public fun getDescription ()Ljava/lang/String;
 	public fun getEnabled ()Z
@@ -404,7 +406,6 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public fun getPrice ()J
 	public fun getPriceText ()Ljava/lang/String;
 	public fun getSale ()I
-	public fun getSpecial ()Z
 	public fun getTexture ()Ljava/lang/String;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getVault ()Ljava/lang/String;
@@ -424,6 +425,7 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun price (JLjava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
 	public static synthetic fun price$default (Lme/func/mod/reactive/ReactiveButton;JLjava/lang/String;ILjava/lang/Object;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun sale (I)Lme/func/mod/reactive/ReactiveButton;
+	public fun setBackgroundColor (Lme/func/protocol/data/color/RGB;)V
 	public fun setCommand (Ljava/lang/String;)V
 	public fun setDescription (Ljava/lang/String;)V
 	public fun setEnabled (Z)V
@@ -437,7 +439,6 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public fun setPrice (J)V
 	public fun setPriceText (Ljava/lang/String;)V
 	public fun setSale (I)V
-	public fun setSpecial (Z)V
 	public fun setTexture (Ljava/lang/String;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setVault (Ljava/lang/String;)V
