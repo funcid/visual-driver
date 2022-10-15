@@ -99,6 +99,9 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     fun byte(byte: Byte) = apply { serializer.writeByte(byte.toInt()) }
 
+    @JvmName("putFloat")
+    fun float(float: Float) = apply { serializer.writeFloat(float) }
+
     @JvmName("putDouble")
     fun double(double: Double) = apply { serializer.writeDouble(double) }
 

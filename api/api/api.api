@@ -163,6 +163,7 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun nbt (Lorg/bukkit/inventory/ItemStack;)Lme/func/mod/conversation/ModTransfer;
 	public final fun putBoolean (Z)Lme/func/mod/conversation/ModTransfer;
 	public final fun putDouble (D)Lme/func/mod/conversation/ModTransfer;
+	public final fun putFloat (F)Lme/func/mod/conversation/ModTransfer;
 	public final fun putLong (J)Lme/func/mod/conversation/ModTransfer;
 	public final fun putString (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
 	public final fun rgb (Lme/func/protocol/data/color/RGB;)Lme/func/mod/conversation/ModTransfer;
