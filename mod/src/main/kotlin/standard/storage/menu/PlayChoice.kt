@@ -72,7 +72,7 @@ class PlayChoice(
                         element.titleElement = +text {
                             align = TOP
                             origin = TOP
-                            color = element.backgroundColor.asColor()
+                            color = WHITE
                             content = element.title
                             val mul = if (UIEngine.clientApi.fontRenderer()
                                     .getStringWidth(element.title) > buttonSize.x * scaling - 2 * padding

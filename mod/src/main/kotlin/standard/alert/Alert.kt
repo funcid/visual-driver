@@ -1,5 +1,6 @@
 package standard.alert
 
+import dev.xdark.feder.NetUtil.readUtf8
 import lazyCarved
 import lazyText
 import ru.cristalix.clientapi.KotlinModHolder.mod
@@ -56,11 +57,16 @@ class Alert {
     init {
         UIEngine.overlayContext + dayTitleBox
 
+        var block = false
+
         mod.registerChannel("func:alert") {
             dayTitle.content = readUtf8()
             lore.content = readUtf8()
 
+            if (block) return@registerChannel
+
             val duration = readDouble()
+            block = true
 
             dayTitleBox.animate(0.45, Easings.BACK_BOTH) {
                 offset.y += VECTOR + 50
@@ -70,6 +76,10 @@ class Alert {
                 dayTitleBox.animate(0.2, Easings.BACK_IN) {
                     offset.y -= (VECTOR + 50)
                 }
+            }
+
+            UIEngine.schedule(duration + 0.65) {
+                block = false
             }
         }
     }
