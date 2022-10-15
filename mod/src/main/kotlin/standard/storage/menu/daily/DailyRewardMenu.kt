@@ -145,9 +145,9 @@ class DailyRewardMenu(
                     element.hoverText = element.title + if (element.description.isNotEmpty()) "\n" + element.description else ""
 
                     onMouseUp {
-                        if (it == currentDay && !taken) {
+                        if (it == currentDay - 1 && !taken) {
                             clientApi.clientConnection().sendPayload("func:reward:click", Unpooled.buffer().apply {
-                                writeInt(currentDay)
+                                writeInt(currentDay - 1)
                             })
 
                             closeGui()
