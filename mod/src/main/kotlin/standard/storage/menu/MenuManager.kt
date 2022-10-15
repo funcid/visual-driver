@@ -79,6 +79,7 @@ class MenuManager {
                 when (readByte().toInt()) {
                     0 -> {
                         if (!inited) return@registerChannel
+
                         val parts = NetUtil.readUtf8(this).split(":", limit = 2)
                         (node as StorageItemTexture).icon.textureLocation =
                             ResourceLocation.of(parts.first(), parts.last())
@@ -90,26 +91,31 @@ class MenuManager {
                     }
 
                     2 -> {
-                        node.title = NetUtil.readUtf8(this).replace("&", "§")
+                        node.title = readColoredUtf8()
+
                         if (!inited) return@registerChannel
-                        node.titleElement?.content = node.title ?: return@registerChannel
+                        node.titleElement?.content = node.title
                     }
 
                     3 -> {
-                        node.description = NetUtil.readUtf8(this).replace("&", "§")
-                        if (last is PlayChoice || !inited) return@registerChannel
+                        node.description = readColoredUtf8()
+
+                        if (!inited) return@registerChannel
+                        node.descriptionElement?.content = node.description
+
+                        if (last is PlayChoice) return@registerChannel
                         node.optimizeSpace()
                     }
 
                     4 -> {
-                        node.hint = NetUtil.readUtf8(this).replace("&", "§")
+                        node.hint = readColoredUtf8()
                         if (!inited) return@registerChannel
                         node.hintElement?.content = node.hint!!
                     }
 
                     5 -> {
                         if (!inited) return@registerChannel
-                        node.hoverText = NetUtil.readUtf8(this).replace("&", "§")
+                        node.hoverText = readColoredUtf8()
                     }
 
                     6 -> {
