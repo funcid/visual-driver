@@ -9,31 +9,28 @@ import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
 
 class SystemMessageAlert {
-    private val offsetX = 10.0
-    private val buttonY = 5.0
-    private var buttonX = 70.0
     private val symbol: TextElement by lazyText {
         content = "Загрузка..."
         scale = V3(2.0, 2.0)
         align = LEFT
         origin = LEFT
-        offset.x += offsetX
+        offset.x += 10.0
     }
     private val description: TextElement by lazyText {
         content = "Загрузка"
         shadow = true
         origin = LEFT
         align = LEFT
-        offset.x += 30
+        offset.x += 20.0
     }
 
-    private val message = UIEngine.overlayContext + carved {
+    private val container = carved {
         carveSize = 2.0
         align = BOTTOM
         origin = BOTTOM
         offset.y -= 40.0
-        size = V3(buttonX, buttonY + 2 * offsetX)
         color = Color(203, 65, 84, 0.60)
+        size = V3(70.0, 25.0)
 
         +symbol
         +description
@@ -45,30 +42,27 @@ class SystemMessageAlert {
             when (MessageStatus.values()[readInt()]) {
                 MessageStatus.FINE -> {
                     symbol.content = "!"
-                    message.color = Color(74, 140, 236, 0.60)
+                    container.color = Color(74, 140, 236, 0.60)
                 }
 
                 MessageStatus.WARN -> {
                     symbol.content = "?"
-                    message.color = Color(255, 157, 66, 0.60)
+                    container.color = Color(255, 157, 66, 0.60)
                 }
 
                 MessageStatus.ERROR -> {
                     symbol.content = "X"
-                    message.color = Color(203, 65, 84, 0.60)
+                    container.color = Color(203, 65, 84, 0.60)
                 }
             }
 
             val duration = readDouble()
-            val text = readUtf8()
-            val textLines = text.split("\n")
-            val maxWidth = textLines.maxOf(UIEngine.clientApi.fontRenderer()::getStringWidth)
-            message.size.x = maxWidth + buttonX
-            description.content = text
-            message.enabled = true
+            description.content = readUtf8()
+            container.size.x = UIEngine.clientApi.fontRenderer().getStringWidth(description.content) + 30.0
+            container.enabled = true
 
             UIEngine.schedule(duration) {
-                message.enabled = false
+                container.enabled = false
             }
         }
     }
