@@ -58,7 +58,11 @@ public final class me/func/mod/Anime {
 	public static final fun sendEmptyBuffer (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
 	public final fun setGraffitiClient (Lme/func/mod/graffiti/GraffitiClient;)V
 	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;D)V
 	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;)V
+	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;D)V
+	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;DILjava/lang/Object;)V
+	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;DILjava/lang/Object;)V
 	public static final fun showIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/ui/indicator/Indicators;)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;D)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;DDD)V

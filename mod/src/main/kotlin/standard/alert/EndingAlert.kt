@@ -82,6 +82,7 @@ class EndingAlert {
             val endStatus = EndStatus.values()[readInt()]
             key.content = readUtf8(this)
             value.content = readUtf8(this)
+            val secondsShown = readDouble()
 
             text.content = endStatus.title
             text.offset.z = 50.0
@@ -103,7 +104,7 @@ class EndingAlert {
             }.thenAnimate(1.5) {
                 offset.x -= 113.0
                 information.offset.x += 185
-            }.thenWait(8.0).thenAnimate(0.7) {
+            }.thenWait(secondsShown).thenAnimate(0.7) {
                 information.size.x -= 40.0
                 information.offset.x -= 95
                 offset.x += 55

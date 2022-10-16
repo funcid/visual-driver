@@ -15,16 +15,16 @@ import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
-import me.func.mod.ui.menu.MenuManager
-import me.func.mod.ui.menu.queue.QueueViewer
 import me.func.mod.ui.Glow
 import me.func.mod.ui.dialog.Dialog
+import me.func.mod.ui.menu.MenuManager
+import me.func.mod.ui.menu.queue.QueueViewer
 import me.func.mod.util.*
 import me.func.protocol.data.color.RGB
-import me.func.protocol.math.Position
-import me.func.protocol.personalization.GraffitiPlaced
 import me.func.protocol.data.status.EndStatus
 import me.func.protocol.data.status.MessageStatus
+import me.func.protocol.math.Position
+import me.func.protocol.personalization.GraffitiPlaced
 import me.func.protocol.ui.indicator.Indicators
 import me.func.protocol.world.marker.Marker
 import org.bukkit.Bukkit
@@ -501,11 +501,19 @@ object Anime {
     fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255, 192, 203)
 
     @JvmStatic
-    fun showEnding(player: Player, endStatus: EndStatus, key: String, value: String) {
+    @JvmOverloads
+    fun showEnding(
+        player: Player,
+        endStatus: EndStatus,
+        key: String,
+        value: String,
+        secondsShown: Double = 8.0,
+    ) {
         ModTransfer()
             .integer(endStatus.ordinal)
             .string(key)
             .string(value)
+            .double(secondsShown)
             .send("crazy:ending", player)
     }
 
@@ -517,8 +525,20 @@ object Anime {
     }
 
     @JvmStatic
-    fun showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>) =
-        showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
+    @JvmOverloads
+    fun showEnding(
+        player: Player,
+        endStatus: EndStatus,
+        key: List<String>,
+        value: List<String>,
+        secondsShown: Double = 8.0,
+    ) = showEnding(
+        player = player,
+        endStatus = endStatus,
+        key = key.joinToString("\n \n"),
+        value = value.joinToString("\n \n"),
+        secondsShown = secondsShown,
+    )
 
     @JvmStatic
     fun close(player: Player) {
