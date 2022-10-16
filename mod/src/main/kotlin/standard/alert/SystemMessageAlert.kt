@@ -24,7 +24,7 @@ class SystemMessageAlert {
         offset.x += 20.0
     }
 
-    private val container = carved {
+    private val container = UIEngine.overlayContext + carved {
         carveSize = 2.0
         align = BOTTOM
         origin = BOTTOM
