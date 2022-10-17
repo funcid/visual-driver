@@ -31,42 +31,42 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun set(player: Player, red: Int, blue: Int, green: Int, alpha: Double) {
+    fun set(player: Player, red: Int, green: Int, blue: Int, alpha: Double) {
         ModTransfer()
             .integer(red)
-            .integer(blue)
             .integer(green)
+            .integer(blue)
             .double(alpha)
             .send("func:glow", player)
     }
 
     @JvmStatic
-    fun set(player: Player, color: RGB) = set(player, color.red, color.blue, color.green, 1.0)
+    fun set(player: Player, color: RGB) = set(player, color.red, color.green, color.blue, 1.0)
 
     @JvmStatic
-    fun animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int, alpha: Double) {
+    fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int, alpha: Double) {
         ModTransfer()
             .double(seconds)
             .integer(red)
-            .integer(blue)
             .integer(green)
+            .integer(blue)
             .double(alpha)
             .send("func:glow-short", player)
     }
 
     @JvmStatic
     fun animate(player: Player, seconds: Double, color: RGB, alpha: Double) {
-        animate(player, seconds, color.red, color.blue, color.green, alpha)
+        animate(player, seconds, color.red, color.green, color.blue, alpha)
     }
 
     @JvmStatic
-    fun animate(player: Player, seconds: Double, red: Int, blue: Int, green: Int) {
-        animate(player, seconds, red, blue, green, 1.0)
+    fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int) {
+        animate(player, seconds, red, green, blue, 1.0)
     }
 
     @JvmStatic
     fun animate(player: Player, seconds: Double, color: RGB) {
-        animate(player, seconds, color.red, color.blue, color.green, 1.0)
+        animate(player, seconds, color.red, color.green, color.blue, 1.0)
     }
 
     @JvmOverloads
