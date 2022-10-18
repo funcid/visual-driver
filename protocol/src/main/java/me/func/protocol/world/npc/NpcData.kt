@@ -35,6 +35,7 @@ class NpcData(
         private val npcData: NpcData = NpcData()
 
         fun id(id: Int) = apply { npcData.id = id }
+        fun uuid(uuid: String) = uuid(UUID.fromString(uuid))
         fun uuid(uuid: UUID) = apply { npcData.uuid = uuid }
         fun x(x: Double) = apply { npcData.x = x }
         fun y(y: Double) = apply { npcData.y = y }
