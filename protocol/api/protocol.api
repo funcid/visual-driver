@@ -750,6 +750,8 @@ public final class me/func/protocol/world/npc/NpcData$Builder {
 	public final fun id (I)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun name (Ljava/lang/String;)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun pitch (F)Lme/func/protocol/world/npc/NpcData$Builder;
+	public final fun profile (Ljava/lang/String;)Lme/func/protocol/world/npc/NpcData$Builder;
+	public final fun profile (Ljava/util/UUID;)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun sitting (Z)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun skinDigest (Ljava/lang/String;)Lme/func/protocol/world/npc/NpcData$Builder;
 	public final fun skinSignature (Ljava/lang/String;)Lme/func/protocol/world/npc/NpcData$Builder;

@@ -45,6 +45,8 @@ class NpcData(
         fun behaviour(behaviour: NpcBehaviour) = apply { npcData.behaviour = behaviour }
         fun yaw(yaw: Float) = apply { npcData.yaw = yaw }
         fun pitch(pitch: Float) = apply { npcData.pitch = pitch }
+        fun profile(uuid: UUID) = skinUrl("https://webdata.c7x.dev/textures/skin/$uuid").skinDigest(uuid.toString())
+        fun profile(uuid: String) = profile(UUID.fromString(uuid))
         fun skinUrl(skinUrl: String) = apply { npcData.skinUrl = skinUrl }
         fun skinDigest(skinDigest: String) = apply { npcData.skinDigest = skinDigest }
         fun skinValue(skinValue: String) = apply { npcData.skinValue = skinValue }
