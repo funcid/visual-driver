@@ -1,5 +1,7 @@
 package me.func.protocol.data.element
 
+import me.func.protocol.data.color.RGB
+import me.func.protocol.data.color.Tricolor
 import java.util.UUID
 
 class Banner(
@@ -19,9 +21,7 @@ class Banner(
     var height: Int = 100,
     var weight: Int = 100,
     var texture: String = "",
-    var red: Int = 0,
-    var green: Int = 0,
-    var blue: Int = 0,
+    var color: RGB = Tricolor(0, 0, 0),
     var opacity: Double = 0.62
 ) {
     companion object {
@@ -51,9 +51,10 @@ class Banner(
         fun height(height: Int) = apply { banner.height = height }
         fun weight(weight: Int) = apply { banner.weight = weight }
         fun texture(texture: String) = apply { banner.texture = texture }
-        fun red(red: Int) = apply { banner.red = red }
-        fun green(green: Int) = apply { banner.green = green }
-        fun blue(blue: Int) = apply { banner.blue = blue }
+        fun color(rgb: RGB) = apply { banner.color = rgb }
+        fun red(red: Int) = apply { banner.color.red = red }
+        fun green(green: Int) = apply { banner.color.green = green }
+        fun blue(blue: Int) = apply { banner.color.blue = blue }
         fun opacity(opacity: Double) = apply { banner.opacity = opacity }
 
         fun build() = banner

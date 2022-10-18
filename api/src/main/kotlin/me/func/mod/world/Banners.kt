@@ -65,15 +65,11 @@ object Banners {
                 .double(current.motionSettings["pitch"].toString().toDouble())
                 .boolean(current.motionSettings["xray"].toString().toBoolean())
                 .string(current.content)
-                .double(current.x)
-                .double(current.y)
-                .double(current.z)
+                .v3(current.x, current.y, current.z)
                 .integer(current.height)
                 .integer(current.weight)
                 .string(current.texture)
-                .integer(current.red)
-                .integer(current.green)
-                .integer(current.blue)
+                .rgb(current.color)
                 .double(current.opacity)
                 .apply {
                     if (current.motionType == MotionType.STEP_BY_TARGET) {

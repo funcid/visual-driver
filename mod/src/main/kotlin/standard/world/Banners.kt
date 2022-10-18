@@ -1,5 +1,6 @@
 package standard.world
 
+import asColor
 import dev.xdark.clientapi.entity.Entity
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.RenderTickPre
@@ -7,12 +8,14 @@ import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
 import me.func.protocol.data.element.Banner
 import me.func.protocol.data.element.MotionType
+import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
+import java.awt.Color.red
 import java.util.*
 import kotlin.collections.component1
 import kotlin.collections.component2
@@ -50,9 +53,7 @@ class Banners {
                     height = readInt(),
                     weight = readInt(),
                     texture = NetUtil.readUtf8(this@registerChannel),
-                    red = readInt(),
-                    green = readInt(),
-                    blue = readInt(),
+                    color = readRgb(),
                     opacity = readDouble()
                 )
 
@@ -79,7 +80,7 @@ class Banners {
                     }
 
                     size = V3(banner.weight.toDouble(), banner.height.toDouble())
-                    color = Color(banner.red, banner.green, banner.blue, banner.opacity)
+                    color = banner.color.asColor(banner.opacity)
                     context.rotation =
                         Rotation(Math.toRadians(banner.motionSettings["yaw"].toString().toDouble()), 0.0, 1.0, 0.0)
                     rotation =

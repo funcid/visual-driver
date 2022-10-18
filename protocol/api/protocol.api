@@ -111,18 +111,16 @@ public class me/func/protocol/data/color/Tricolor : me/func/protocol/data/color/
 public final class me/func/protocol/data/element/Banner {
 	public static final field Companion Lme/func/protocol/data/element/Banner$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIID)V
-	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;IIIDILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;Lme/func/protocol/data/color/RGB;D)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/data/element/MotionType;ZZLjava/util/Map;Ljava/lang/String;DDDIILjava/lang/String;Lme/func/protocol/data/color/RGB;DILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Lkotlin/jvm/functions/Function1;)V
 	public static final fun builder ()Lme/func/protocol/data/element/Banner$Builder;
-	public final fun getBlue ()I
+	public final fun getColor ()Lme/func/protocol/data/color/RGB;
 	public final fun getContent ()Ljava/lang/String;
-	public final fun getGreen ()I
 	public final fun getHeight ()I
 	public final fun getMotionSettings ()Ljava/util/Map;
 	public final fun getMotionType ()Lme/func/protocol/data/element/MotionType;
 	public final fun getOpacity ()D
-	public final fun getRed ()I
 	public final fun getTexture ()Ljava/lang/String;
 	public final fun getUuid ()Ljava/util/UUID;
 	public final fun getWatchingOnPlayer ()Z
@@ -131,14 +129,12 @@ public final class me/func/protocol/data/element/Banner {
 	public final fun getX ()D
 	public final fun getY ()D
 	public final fun getZ ()D
-	public final fun setBlue (I)V
+	public final fun setColor (Lme/func/protocol/data/color/RGB;)V
 	public final fun setContent (Ljava/lang/String;)V
-	public final fun setGreen (I)V
 	public final fun setHeight (I)V
 	public final fun setMotionSettings (Ljava/util/Map;)V
 	public final fun setMotionType (Lme/func/protocol/data/element/MotionType;)V
 	public final fun setOpacity (D)V
-	public final fun setRed (I)V
 	public final fun setTexture (Ljava/lang/String;)V
 	public final fun setUuid (Ljava/util/UUID;)V
 	public final fun setWatchingOnPlayer (Z)V
@@ -155,6 +151,7 @@ public final class me/func/protocol/data/element/Banner$Builder {
 	public synthetic fun <init> (Lme/func/protocol/data/element/Banner;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun blue (I)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun build ()Lme/func/protocol/data/element/Banner;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun content ([Ljava/lang/String;)Lme/func/protocol/data/element/Banner$Builder;
 	public final fun getBanner ()Lme/func/protocol/data/element/Banner;
 	public final fun green (I)Lme/func/protocol/data/element/Banner$Builder;
