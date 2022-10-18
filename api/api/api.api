@@ -175,6 +175,7 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun send (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun short (S)Lme/func/mod/conversation/ModTransfer;
 	public final fun string (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
+	public final fun uuid (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
 	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/conversation/ModTransfer;
 	public final fun varInt (I)Lme/func/mod/conversation/ModTransfer;
 	public final fun writeNbtCompound (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;Lnet/minecraft/server/v1_12_R1/NBTTagCompound;)Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;
@@ -567,6 +568,8 @@ public final class me/func/mod/ui/Glow : org/bukkit/event/Listener {
 	public static final fun animate (Lorg/bukkit/entity/Player;DIIID)V
 	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;)V
 	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;D)V
+	public static synthetic fun animate$default (Lorg/bukkit/entity/Player;DIIIDILjava/lang/Object;)V
+	public static synthetic fun animate$default (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;DILjava/lang/Object;)V
 	public static final fun changePlaceColor (Lme/func/protocol/world/GlowingPlace;Lme/func/protocol/data/color/RGB;[Lorg/bukkit/entity/Player;)V
 	public static final fun clearPlaces ([Lorg/bukkit/entity/Player;)V
 	public final fun getGlowingPlaces ()Ljava/util/HashMap;
