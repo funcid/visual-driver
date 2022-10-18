@@ -12,6 +12,7 @@ import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.rectangle
 
 class GlowEffect {
+    
     private var added = false
     private val vignette = rectangle {
         size = UIEngine.overlayContext.size
@@ -39,22 +40,22 @@ class GlowEffect {
         }
     }
 
-    private fun showAlways(red: Int, blue: Int, green: Int, power: Double) {
+    private fun showAlways(red: Int, green: Int, blue: Int, power: Double) {
         lazy()
 
         vignette.size = UIEngine.overlayContext.size
         vignette.color.red = red
-        vignette.color.blue = blue
         vignette.color.green = green
+        vignette.color.blue = blue
         vignette.color.alpha = power
     }
 
-    private fun show(duration: Double, red: Int, blue: Int, green: Int, power: Double) {
+    private fun show(duration: Double, red: Int, green: Int, blue: Int, power: Double) {
         lazy()
 
         vignette.color.red = red
-        vignette.color.blue = blue
         vignette.color.green = green
+        vignette.color.blue = blue
         vignette.size = UIEngine.overlayContext.size
 
         vignette.animate(duration) {
