@@ -6,11 +6,12 @@ import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
 import me.func.protocol.data.color.RGB
 import net.minecraft.server.v1_12_R1.*
-import net.minecraft.server.v1_12_R1.SoundEffects.id
+import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 import ru.cristalix.core.GlobalSerializers
 import java.io.DataOutput
 import java.lang.invoke.MethodHandle
@@ -104,6 +105,12 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     @JvmName("putDouble")
     fun double(double: Double) = apply { serializer.writeDouble(double) }
+
+    fun v3(x: Double, y: Double, z: Double) = double(x).double(y).double(z)
+
+    fun v3(vector: Vector) = v3(vector.x, vector.y, vector.z)
+
+    fun v3(location: Location) = v3(location.toVector())
 
     @JvmName("putBoolean")
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
