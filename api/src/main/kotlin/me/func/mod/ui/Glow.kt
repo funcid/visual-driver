@@ -4,11 +4,14 @@ import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.util.warn
 import me.func.protocol.data.color.RGB
+import me.func.protocol.data.color.Tricolor
 import me.func.protocol.world.GlowingPlace
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
+import java.awt.Color.green
+import java.awt.Color.red
 import java.util.*
 import java.util.function.Consumer
 import kotlin.math.pow
@@ -44,32 +47,23 @@ object Glow : Listener {
     fun set(player: Player, color: RGB) = set(player, color.red, color.green, color.blue, 1.0)
 
     @JvmStatic
-    @Deprecated("Используйте метод с RGB",
-        ReplaceWith("animate(player, seconds, color, 1.0)", "me.func.mod.ui.Glow.animate")
-    )
-    fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int, alpha: Double) {
+    @JvmOverloads
+    fun animate(player: Player, seconds: Double, color: RGB, alpha: Double = 1.0) {
         ModTransfer()
             .double(seconds)
-            .integer(red)
-            .integer(green)
-            .integer(blue)
+            .rgb(color)
             .double(alpha)
             .send("func:glow-short", player)
     }
 
     @JvmStatic
     @JvmOverloads
-    fun animate(player: Player, seconds: Double, color: RGB, alpha: Double = 1.0) {
-        animate(player, seconds, color.red, color.green, color.blue, alpha)
-    }
-
-    @JvmStatic
-    @Deprecated("Используйте метод с RGB",
+    @Deprecated(
+        "Используйте метод с RGB",
         ReplaceWith("animate(player, seconds, color, 1.0)", "me.func.mod.ui.Glow.animate")
     )
-    fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int) {
-        animate(player, seconds, red, green, blue, 1.0)
-    }
+    fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int, alpha: Double = 1.0) =
+        animate(player, seconds, Tricolor(red, green, blue), alpha)
 
     @JvmOverloads
     @JvmStatic
