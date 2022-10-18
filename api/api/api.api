@@ -177,6 +177,9 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun string (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
 	public final fun uuid (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
 	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/conversation/ModTransfer;
+	public final fun v3 (DDD)Lme/func/mod/conversation/ModTransfer;
+	public final fun v3 (Lorg/bukkit/Location;)Lme/func/mod/conversation/ModTransfer;
+	public final fun v3 (Lorg/bukkit/util/Vector;)Lme/func/mod/conversation/ModTransfer;
 	public final fun varInt (I)Lme/func/mod/conversation/ModTransfer;
 	public final fun writeNbtCompound (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;Lnet/minecraft/server/v1_12_R1/NBTTagCompound;)Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;
 }
