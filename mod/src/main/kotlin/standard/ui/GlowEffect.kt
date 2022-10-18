@@ -12,7 +12,7 @@ import ru.cristalix.uiengine.utility.Color
 import ru.cristalix.uiengine.utility.rectangle
 
 class GlowEffect {
-    
+
     private var added = false
     private val vignette = rectangle {
         size = UIEngine.overlayContext.size

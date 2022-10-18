@@ -44,6 +44,9 @@ object Glow : Listener {
     fun set(player: Player, color: RGB) = set(player, color.red, color.green, color.blue, 1.0)
 
     @JvmStatic
+    @Deprecated("Используйте метод с RGB",
+        ReplaceWith("animate(player, seconds, color, 1.0)", "me.func.mod.ui.Glow.animate")
+    )
     fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int, alpha: Double) {
         ModTransfer()
             .double(seconds)
@@ -55,18 +58,17 @@ object Glow : Listener {
     }
 
     @JvmStatic
-    fun animate(player: Player, seconds: Double, color: RGB, alpha: Double) {
+    @JvmOverloads
+    fun animate(player: Player, seconds: Double, color: RGB, alpha: Double = 1.0) {
         animate(player, seconds, color.red, color.green, color.blue, alpha)
     }
 
     @JvmStatic
+    @Deprecated("Используйте метод с RGB",
+        ReplaceWith("animate(player, seconds, color, 1.0)", "me.func.mod.ui.Glow.animate")
+    )
     fun animate(player: Player, seconds: Double, red: Int, green: Int, blue: Int) {
         animate(player, seconds, red, green, blue, 1.0)
-    }
-
-    @JvmStatic
-    fun animate(player: Player, seconds: Double, color: RGB) {
-        animate(player, seconds, color.red, color.green, color.blue, 1.0)
     }
 
     @JvmOverloads
