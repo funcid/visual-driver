@@ -110,6 +110,8 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     fun uuid(uuid: UUID) = apply { serializer.ensureWritable(16).writeLong(uuid.mostSignificantBits).writeLong(uuid.leastSignificantBits) }
 
+    fun uuid(uuid: String) = uuid(UUID.fromString(uuid))
+
     fun send(channel: String, vararg players: Player?): Unit = send(channel, players.asIterable())
 
     fun send(channel: String, players: Iterable<Player?>): Unit =
