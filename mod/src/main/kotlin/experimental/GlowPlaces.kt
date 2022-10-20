@@ -15,6 +15,7 @@ import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.nio.ByteBuffer
 import java.util.UUID
 import kotlin.math.cos
+import kotlin.math.pow
 import kotlin.math.sin
 
 class GlowPlaces {
@@ -71,12 +72,15 @@ class GlowPlaces {
                 GlStateManager.disableLighting()
                 GlStateManager.disableTexture2D()
                 GlStateManager.disableAlpha()
-                GlStateManager.disableCull()
                 GlStateManager.shadeModel(GL11.GL_SMOOTH)
                 GlStateManager.enableBlend()
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
+                GlStateManager.disableCull()
+                GlStateManager.depthMask(false)
 
-                places.forEach { place ->
+                places.sortedByDescending {
+                    (it.x - entity.x).pow(2) + (it.z - entity.z).pow(2)
+                }.forEach { place ->
 
                     val x = place.x - (entity.x - prevX) * pt - prevX
                     val y = place.y - (entity.y - prevY) * pt - prevY
@@ -114,11 +118,11 @@ class GlowPlaces {
                     tessellator.draw()
                 }
 
+                GlStateManager.depthMask(true)
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR)
                 GlStateManager.shadeModel(GL11.GL_FLAT)
                 GlStateManager.enableTexture2D()
                 GlStateManager.enableAlpha()
-                GlStateManager.enableCull()
             }
         }
     }
