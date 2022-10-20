@@ -18,13 +18,12 @@ class SystemMessageAlert {
     }
     private val description: TextElement by lazyText {
         content = "Загрузка"
-        shadow = true
         origin = LEFT
         align = LEFT
         offset.x += 20.0
     }
 
-    private val container = UIEngine.overlayContext + carved {
+    private val container = UIEngine.postOverlayContext + carved {
         carveSize = 2.0
         align = BOTTOM
         origin = BOTTOM
