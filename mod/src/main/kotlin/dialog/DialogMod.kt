@@ -156,14 +156,16 @@ class DialogMod {
         }
 
         fun close(target: Entrypoint) {
+            visible = false
+            entrypoint = target
+
             buttonPart.align.x = 0.0
             buttonCursor.offset.x = 1.0
             buttonsBG.offset.x = 0.0
-            entrypoint = target
-            visible = false
             pickedItem = -1
             npcPart.size.y = 0.0
             buttonPart.align.x = 1.0
+
             gui.close()
         }
 
@@ -324,8 +326,10 @@ class DialogMod {
         }
 
         gui.onKeyTyped { _, code ->
-            if (code == Keyboard.KEY_ESCAPE)
+            if (code == Keyboard.KEY_ESCAPE) {
                 close(entrypoint)
+                gui.close()
+            }
 
             if (visible) {
                 var i = 0
@@ -398,8 +402,17 @@ class DialogMod {
         }
 
         mod.registerHandler<GameLoop> {
-            if (!visible)
+            if (!visible) {
+
+                buttonPart.align.x = 0.0
+                buttonCursor.offset.x = 1.0
+                buttonsBG.offset.x = 0.0
+                pickedItem = -1
+                npcPart.size.y = 0.0
+                buttonPart.align.x = 1.0
+
                 return@registerHandler
+            }
             val wheel = Mouse.getDWheel()
             if (wheel != 0)
                 shiftButtonCursor(sign(-wheel.toDouble()).toInt())
