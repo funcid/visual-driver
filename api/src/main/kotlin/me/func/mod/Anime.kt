@@ -527,9 +527,11 @@ object Anime {
 
     @JvmStatic
     fun bigTitle(player: Player, message: String) {
-        ModTransfer()
-            .string(message)
-            .send("ilisov:bigtitle", player)
+        ModTransfer().double(1.5).string(message).send("ilisov:bigtitle", player)
+    }
+    @JvmStatic
+    fun bigTitle(player: Player, duration: Double, message: String) {
+        ModTransfer().double(duration).string(message).send("ilisov:bigtitle", player)
     }
 
     @JvmStatic

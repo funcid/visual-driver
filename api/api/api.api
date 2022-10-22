@@ -4,6 +4,7 @@ public final class me/func/mod/Anime {
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;D)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;D)V
+	public static final fun bigTitle (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun bigTitle (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V

@@ -6,9 +6,12 @@ import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readUtf8
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
+import ru.cristalix.uiengine.eventloop.Task
 import ru.cristalix.uiengine.utility.*
 
 class SystemMessageAlert {
+    private var task: Task? = null
+
     private val symbol: TextElement by lazyText {
         content = "Загрузка..."
         scale = V3(2.0, 2.0)
@@ -20,7 +23,7 @@ class SystemMessageAlert {
         content = "Загрузка"
         origin = LEFT
         align = LEFT
-        offset.x += 20.0
+        offset.x += 25.0
     }
 
     private val container = UIEngine.postOverlayContext + carved {
@@ -57,10 +60,11 @@ class SystemMessageAlert {
 
             val duration = readDouble()
             description.content = readUtf8()
-            container.size.x = UIEngine.clientApi.fontRenderer().getStringWidth(description.content) + 30.0
+            container.size.x = UIEngine.clientApi.fontRenderer().getStringWidth(description.content) + 35.0
             container.enabled = true
+            task?.cancelled = true
 
-            UIEngine.schedule(duration) {
+            task = UIEngine.schedule(duration) {
                 container.enabled = false
             }
         }
