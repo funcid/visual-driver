@@ -34,7 +34,7 @@ class ModelBlocker {
 
             println("Debug! Personalization class menu is " + screen::class.java.simpleName)
 
-            if (screen::class.java.simpleName == "aso") {
+            if (screen::class.java.simpleName == "atm") {
                 isCancelled = true
 
                 locker.enabled = true
