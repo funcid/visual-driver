@@ -36,7 +36,6 @@ class ModelBlocker {
 
             if (screen::class.java.simpleName == "atm") {
                 isCancelled = true
-
                 locker.enabled = true
                 UIEngine.schedule(1.5) {
                     animate(0.5, Easings.BACK_BOTH) {
