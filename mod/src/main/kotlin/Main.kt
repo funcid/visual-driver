@@ -24,7 +24,7 @@ import java.util.Stack
 
 class Main : KotlinMod() {
     companion object {
-        
+
         lateinit var externalManager: ExternalManager
         @Volatile
         var menuStack: Stack<AbstractMenu> = Stack()

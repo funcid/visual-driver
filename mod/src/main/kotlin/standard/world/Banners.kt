@@ -11,10 +11,7 @@ import me.func.protocol.data.element.MotionType
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.element.AbstractElement
-import ru.cristalix.uiengine.element.CarvedRectangle
-import ru.cristalix.uiengine.element.Context3D
-import ru.cristalix.uiengine.element.Parent
+import ru.cristalix.uiengine.element.*
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import java.util.*
@@ -36,8 +33,6 @@ class Banners {
     init {
         mod.registerChannel("banner:new") {
 
-            println(1)
-
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
@@ -58,7 +53,8 @@ class Banners {
                     weight = readInt(),
                     texture = NetUtil.readUtf8(this@registerChannel),
                     color = readRgb(),
-                    opacity = readDouble()
+                    opacity = readDouble(),
+                    carveSize = readDouble()
                 )
 
                 if (banner.motionType == MotionType.STEP_BY_TARGET) {
@@ -69,10 +65,11 @@ class Banners {
                 }
 
                 val context = Context3D(V3(banner.x, banner.y, banner.z))
-                val carved = rectangle {
+
+                val carved = carved {
+                    carveSize = banner.carveSize
                     align = TOP
                     origin = TOP
-                    //carveSize = 2.0
 
                     if (banner.texture.isNotEmpty()) {
                         val parts = banner.texture.split(":")
@@ -108,8 +105,8 @@ class Banners {
         mod.registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             banners[uuid]?.let { triple ->
-                if (triple.second.children.isNotEmpty()) {
-                    triple.second.children.clear()
+                if (triple.third.children.size > 2) {
+                    triple.third.removeChild(*triple.third.children.filterIsInstance<TextElement>().toTypedArray())
                     text(NetUtil.readUtf8(this), triple.first, triple.third)
                 }
             }
@@ -124,14 +121,16 @@ class Banners {
 
                     sizes[uuid to line] = newScale
 
-                    /*triple.third.children[line * 2].animate(0.2) {
+                    val text = triple.third.children.filterIsInstance<TextElement>().toTypedArray()
+
+                    text[line * 2].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
                         offset.y = -(-3 - line * 12) * newScale
                     }
-                    triple.third.children[line * 2 + 1].animate(0.2) {
+                    text[line * 2 + 1].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
                         offset.y = -(-3 - line * 12 - 0.75) * newScale
-                    }*/
+                    }
                 }
             }
         }

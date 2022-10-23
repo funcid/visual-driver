@@ -22,7 +22,8 @@ class Banner(
     var weight: Int = 100,
     var texture: String = "",
     var color: RGB = Tricolor(0, 0, 0),
-    var opacity: Double = 0.62
+    var opacity: Double = 0.62,
+    var carveSize: Double = 2.0
 ) {
     companion object {
         @JvmStatic
@@ -56,6 +57,7 @@ class Banner(
         fun green(green: Int) = apply { banner.color.green = green }
         fun blue(blue: Int) = apply { banner.color.blue = blue }
         fun opacity(opacity: Double) = apply { banner.opacity = opacity }
+        fun carveSize(carveSize: Double) = apply { banner.carveSize = carveSize }
 
         fun build() = banner
     }

@@ -71,6 +71,7 @@ object Banners {
                 .string(current.texture)
                 .rgb(current.color)
                 .double(current.opacity)
+                .double(current.carveSize)
                 .apply {
                     if (current.motionType == MotionType.STEP_BY_TARGET) {
                         integer(current.motionSettings["target"].toString().toInt())
