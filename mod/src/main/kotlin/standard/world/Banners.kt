@@ -71,15 +71,24 @@ class Banners {
                     align = TOP
                     origin = TOP
 
+                    val sized = V3(banner.weight.toDouble(), banner.height.toDouble())
+
                     if (banner.texture.isNotEmpty()) {
                         val parts = banner.texture.split(":")
-                        textureLocation = UIEngine.clientApi.resourceManager().getLocation(parts[0], parts[1])
+                        val location = UIEngine.clientApi.resourceManager().getLocation(parts[0], parts[1])
+
+                        color = Color(0, 0, 0, 0.0)
+
+                        left.enabled = false
+                        right.enabled = false
+                        main.size = sized
+                        main.textureLocation = location
                     }
                     if (banner.content.isNotEmpty()) {
                         text(banner.content, banner, this)
                     }
 
-                    size = V3(banner.weight.toDouble(), banner.height.toDouble())
+                    size = sized
                     color = banner.color.asColor(banner.opacity)
                     context.rotation =
                         Rotation(Math.toRadians(banner.motionSettings["yaw"].toString().toDouble()), 0.0, 1.0, 0.0)
