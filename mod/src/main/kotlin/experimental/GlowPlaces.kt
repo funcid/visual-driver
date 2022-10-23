@@ -1,9 +1,7 @@
 package experimental
 
-import com.sun.corba.se.impl.util.RepositoryId.cache
 import dev.xdark.clientapi.event.render.RenderPass
 import dev.xdark.clientapi.opengl.GlStateManager
-import dev.xdark.clientapi.render.BufferBuilder
 import dev.xdark.clientapi.render.DefaultVertexFormats
 import dev.xdark.feder.NetUtil
 import me.func.protocol.world.GlowingPlace
@@ -12,7 +10,6 @@ import org.lwjgl.opengl.GL11
 import readRgb
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import java.nio.ByteBuffer
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.pow
@@ -78,45 +75,48 @@ class GlowPlaces {
                 GlStateManager.disableCull()
                 GlStateManager.depthMask(false)
 
-                places.sortedByDescending {
-                    (it.x - entity.x).pow(2) + (it.z - entity.z).pow(2)
-                }.forEach { place ->
+                places.sortedByDescending { place -> (place.x - entity.x).pow(2) + (place.z - entity.z).pow(2) }
+                    .forEach { place ->
 
-                    val x = place.x - (entity.x - prevX) * pt - prevX
-                    val y = place.y - (entity.y - prevY) * pt - prevY
-                    val z = place.z - (entity.z - prevZ) * pt - prevZ
+                        println((place.x - entity.x).pow(2) + (place.z - entity.z).pow(2))
 
-                    val cache = placeCache[place.uuid] ?: arrayListOf()
+                        if ((place.x - entity.x).pow(2) + (place.z - entity.z).pow(2) > 20 * 20) return@forEach
 
-                    val tessellator = clientApi.tessellator()
-                    val bufferBuilder = tessellator.bufferBuilder
+                        val x = place.x - (entity.x - prevX) * pt - prevX
+                        val y = place.y - (entity.y - prevY) * pt - prevY
+                        val z = place.z - (entity.z - prevZ) * pt - prevZ
 
-                    bufferBuilder.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR)
+                        val cache = placeCache[place.uuid] ?: arrayListOf()
 
-                    val angles = place.angles
+                        val tessellator = clientApi.tessellator()
+                        val bufferBuilder = tessellator.bufferBuilder
+
+                        bufferBuilder.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR)
+
+                        val angles = place.angles
 
 
-                    repeat(angles * 2 + 2) { index ->
+                        repeat(angles * 2 + 2) { index ->
 
-                        if (cache.size <= index) {
-                            cache.add(
-                                Triple(
-                                    sin(Math.toRadians(index * 360.0 / angles / 2 - 1 + 45)) * place.radius,
-                                    if (index % 2 == 1) 5.0 else 0.0,
-                                    cos(Math.toRadians(index * 360.0 / angles / 2 - 1 + 45)) * place.radius
+                            if (cache.size <= index) {
+                                cache.add(
+                                    Triple(
+                                        sin(Math.toRadians(index * 360.0 / angles / 2 - 1 + 45)) * place.radius,
+                                        if (index % 2 == 1) 5.0 else 0.0,
+                                        cos(Math.toRadians(index * 360.0 / angles / 2 - 1 + 45)) * place.radius
+                                    )
                                 )
-                            )
+                            }
+
+                            val v3 = cache[index]
+
+                            bufferBuilder.pos(x + v3.first, y + v3.second, z + v3.third)
+                                .color(place.rgb.red, place.rgb.green, place.rgb.blue, if (index % 2 == 1) 0 else 100)
+                                .endVertex()
                         }
 
-                        val v3 = cache[index]
-
-                        bufferBuilder.pos(x + v3.first, y + v3.second, z + v3.third)
-                            .color(place.rgb.red, place.rgb.green, place.rgb.blue, if (index % 2 == 1) 0 else 100)
-                            .endVertex()
+                        tessellator.draw()
                     }
-
-                    tessellator.draw()
-                }
 
                 GlStateManager.depthMask(true)
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR)

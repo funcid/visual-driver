@@ -30,7 +30,7 @@ object ModLoader {
     @JvmStatic
     @JvmOverloads
     fun loadFromWeb(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME) =
-        load(download(fileUrl, saveDir))
+        load(download(fileUrl, saveDir, cache = false))
 
     @JvmStatic
     fun loadManyFromWeb(saveDir: String = MOD_LOCAL_DIR_NAME, vararg fileUrls: String) =
