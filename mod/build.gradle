@@ -16,6 +16,7 @@ mod {
     main = "Main"
     author = "func"
     jarFileName = "animation-api-production.jar"
+    setVersion(project.version)
 }
 
 def modJar = layout.buildDirectory.file("libs/animation-api-production.jar")

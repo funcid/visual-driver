@@ -24,12 +24,14 @@ import java.util.Stack
 
 class Main : KotlinMod() {
     companion object {
+        
         lateinit var externalManager: ExternalManager
         @Volatile
         var menuStack: Stack<AbstractMenu> = Stack()
     }
 
     override fun onEnable() {
+
         UIEngine.initialize(this)
 
         registerChannel("anime:loadmod") {

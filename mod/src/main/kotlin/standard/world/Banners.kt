@@ -11,8 +11,10 @@ import me.func.protocol.data.element.MotionType
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.AbstractElement
 import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.Context3D
+import ru.cristalix.uiengine.element.Parent
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 import java.util.*
@@ -25,7 +27,7 @@ import kotlin.math.sqrt
 
 class Banners {
 
-    private val banners = hashMapOf<UUID, Triple<Banner, Context3D, CarvedRectangle>>()
+    private val banners = hashMapOf<UUID, Triple<Banner, Context3D, Parent>>()
     private val sizes = hashMapOf<Pair<UUID, Int>, Double>()
 
     private fun toBlackText(string: String) =
@@ -33,6 +35,8 @@ class Banners {
 
     init {
         mod.registerChannel("banner:new") {
+
+            println(1)
 
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
@@ -65,10 +69,10 @@ class Banners {
                 }
 
                 val context = Context3D(V3(banner.x, banner.y, banner.z))
-                val carved = carved {
+                val carved = rectangle {
                     align = TOP
                     origin = TOP
-                    carveSize = 2.0
+                    //carveSize = 2.0
 
                     if (banner.texture.isNotEmpty()) {
                         val parts = banner.texture.split(":")
@@ -120,14 +124,14 @@ class Banners {
 
                     sizes[uuid to line] = newScale
 
-                    triple.second.children[line * 2].animate(0.2) {
+                    /*triple.third.children[line * 2].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
                         offset.y = -(-3 - line * 12) * newScale
                     }
-                    triple.second.children[line * 2 + 1].animate(0.2) {
+                    triple.third.children[line * 2 + 1].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
                         offset.y = -(-3 - line * 12 - 0.75) * newScale
-                    }
+                    }*/
                 }
             }
         }
@@ -186,12 +190,12 @@ class Banners {
         }
     }
 
-    fun text(text: String, banner: Banner, carvedRectangle: CarvedRectangle) {
+    fun text(text: String, banner: Banner, element: Parent) {
         text.split("\n").forEachIndexed { index, line ->
             val currentSize = sizes[banner.uuid to index] ?: 1.0
             val v3 = V3(currentSize, currentSize, currentSize)
 
-            carvedRectangle + text {
+            element + text {
                 align = TOP
                 origin = TOP
                 content = line
@@ -201,7 +205,7 @@ class Banners {
                 offset.y = -(-3 - index * 12) * currentSize
                 scale = v3
             }
-            carvedRectangle + text {
+            element + text {
                 align = TOP
                 origin = TOP
                 content = toBlackText(line)
