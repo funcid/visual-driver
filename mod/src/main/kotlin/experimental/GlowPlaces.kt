@@ -78,9 +78,8 @@ class GlowPlaces {
                 places.sortedByDescending { place -> (place.x - entity.x).pow(2) + (place.z - entity.z).pow(2) }
                     .forEach { place ->
 
-                        println((place.x - entity.x).pow(2) + (place.z - entity.z).pow(2))
-
-                        if ((place.x - entity.x).pow(2) + (place.z - entity.z).pow(2) > 20 * 20) return@forEach
+                        if ((place.x - entity.x).pow(2) + (place.y - entity.y).pow(2) + (place.z - entity.z).pow(2) > 25 * 25 * 25)
+                            return@forEach
 
                         val x = place.x - (entity.x - prevX) * pt - prevX
                         val y = place.y - (entity.y - prevY) * pt - prevY

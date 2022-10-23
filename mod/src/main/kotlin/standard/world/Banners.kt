@@ -11,11 +11,10 @@ import me.func.protocol.data.element.MotionType
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.Context3D
-import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
-import java.awt.Color.red
 import java.util.*
 import kotlin.collections.component1
 import kotlin.collections.component2
@@ -26,7 +25,7 @@ import kotlin.math.sqrt
 
 class Banners {
 
-    private val banners = hashMapOf<UUID, Pair<Banner, Context3D>>()
+    private val banners = hashMapOf<UUID, Triple<Banner, Context3D, CarvedRectangle>>()
     private val sizes = hashMapOf<Pair<UUID, Int>, Double>()
 
     private fun toBlackText(string: String) =
@@ -34,6 +33,7 @@ class Banners {
 
     init {
         mod.registerChannel("banner:new") {
+
             repeat(readInt()) {
                 val uuid = UUID.fromString(NetUtil.readUtf8(this))
                 val banner = Banner(
@@ -65,11 +65,10 @@ class Banners {
                 }
 
                 val context = Context3D(V3(banner.x, banner.y, banner.z))
-                banners[uuid] = banner to context
-
-                context.addChild(rectangle {
+                val carved = carved {
                     align = TOP
                     origin = TOP
+                    carveSize = 2.0
 
                     if (banner.texture.isNotEmpty()) {
                         val parts = banner.texture.split(":")
@@ -94,37 +93,38 @@ class Banners {
                             GlStateManager.enableDepth()
                         }
                     }
-                })
+                }
+                banners[uuid] = Triple(banner, context, carved)
+
+                context.addChild(carved)
                 UIEngine.worldContexts.add(context)
             }
         }
 
         mod.registerChannel("banner:change-content") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
-            banners[uuid]?.let { pair ->
-                if (pair.second.children.isNotEmpty()) {
-                    val element = (pair.second.children[0] as RectangleElement)
-                    element.children.clear()
-                    text(NetUtil.readUtf8(this), pair.first, element)
+            banners[uuid]?.let { triple ->
+                if (triple.second.children.isNotEmpty()) {
+                    triple.second.children.clear()
+                    text(NetUtil.readUtf8(this), triple.first, triple.third)
                 }
             }
         }
 
         mod.registerChannel("banner:size-text") {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
-            banners[uuid]?.let { pair ->
+            banners[uuid]?.let { triple ->
                 repeat(readInt()) {
                     val line = readInt()
                     val newScale = readDouble()
 
                     sizes[uuid to line] = newScale
-                    val element = pair.second.children[0] as RectangleElement
 
-                    element.children[line * 2].animate(0.2) {
+                    triple.second.children[line * 2].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
                         offset.y = -(-3 - line * 12) * newScale
                     }
-                    element.children[line * 2 + 1].animate(0.2) {
+                    triple.second.children[line * 2 + 1].animate(0.2) {
                         scale = V3(newScale, newScale, newScale)
                         offset.y = -(-3 - line * 12 - 0.75) * newScale
                     }
@@ -146,13 +146,13 @@ class Banners {
             if (entity !is Entity)
                 return@registerHandler
             val current = entity as Entity
-            banners.filter { it.value.first.motionType == MotionType.STEP_BY_TARGET }.forEach { (_, pair) ->
-                pair.first.motionSettings["target"]?.let {
+            banners.filter { it.value.first.motionType == MotionType.STEP_BY_TARGET }.forEach { (_, triple) ->
+                triple.first.motionSettings["target"]?.let {
                     if (it.toString().toInt() == current.entityId) {
-                        pair.second.animate(0.01) {
-                            offset.x = current.x + pair.first.motionSettings["offsetX"].toString().toDouble()
-                            offset.y = current.y + pair.first.motionSettings["offsetY"].toString().toDouble()
-                            offset.z = current.z + pair.first.motionSettings["offsetZ"].toString().toDouble()
+                        triple.second.animate(0.01) {
+                            offset.x = current.x + triple.first.motionSettings["offsetX"].toString().toDouble()
+                            offset.y = current.y + triple.first.motionSettings["offsetY"].toString().toDouble()
+                            offset.z = current.z + triple.first.motionSettings["offsetZ"].toString().toDouble()
                         }
                     }
                 }
@@ -186,12 +186,12 @@ class Banners {
         }
     }
 
-    fun text(text: String, banner: Banner, rectangle: RectangleElement) {
+    fun text(text: String, banner: Banner, carvedRectangle: CarvedRectangle) {
         text.split("\n").forEachIndexed { index, line ->
             val currentSize = sizes[banner.uuid to index] ?: 1.0
             val v3 = V3(currentSize, currentSize, currentSize)
 
-            rectangle + text {
+            carvedRectangle + text {
                 align = TOP
                 origin = TOP
                 content = line
@@ -201,7 +201,7 @@ class Banners {
                 offset.y = -(-3 - index * 12) * currentSize
                 scale = v3
             }
-            rectangle + text {
+            carvedRectangle + text {
                 align = TOP
                 origin = TOP
                 content = toBlackText(line)
