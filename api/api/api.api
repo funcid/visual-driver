@@ -4,6 +4,7 @@ public final class me/func/mod/Anime {
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;D)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;D)V
+	public static final fun bigTitle (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun bigTitle (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
@@ -46,6 +47,8 @@ public final class me/func/mod/Anime {
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
+	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;Ljava/lang/String;)V
+	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
