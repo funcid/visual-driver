@@ -31,7 +31,6 @@ class ScoreBoard(
         align = RIGHT
         origin = RIGHT
         offset = V3(-6.0, 0.0)
-        scale = V3(1.025, 1.025)
         color = Color(0, 0, 0, 0.62)
 
         headerInfo.offset.y = 6.0

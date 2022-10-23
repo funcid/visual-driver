@@ -76,14 +76,17 @@ abstract class StorageNode<T : AbstractElement>(
 
     fun optimizeSpace(length: Double = (bundle?.size?.x ?: 200.0) - (bundle?.size?.y ?: 100.0)) {
         if (bundle == null || descriptionElement == null) return
+
         val words = description.split(" ")
 
         descriptionElement!!.content = lineStart
+
         words.forEach { word ->
             val line = descriptionElement!!.content.split("\n").last()
             val new = line + word
             val color = line.split("§").last().first()
-            if (line != lineStart && new.getRealWidth() > length) {
+
+            if (new.getRealWidth() * 0.75 > length) {
                 descriptionElement!!.content += "\n§$color"
             }
             descriptionElement!!.content += "$word "

@@ -23,6 +23,7 @@ import standard.storage.Information
 import java.util.Stack
 
 class Main : KotlinMod() {
+
     companion object {
 
         lateinit var externalManager: ExternalManager
