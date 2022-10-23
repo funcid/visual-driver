@@ -56,8 +56,11 @@ abstract class StorageNode<T : AbstractElement>(
     }.apply { hintContainer = this }
 
     fun click(menu: AbstractMenu, event: ClickEvent) {
+
         if (MenuManager.isMenuClickBlocked()) return
+
         val key = menu.storage.indexOf(this@StorageNode)
+
         if (command.isNullOrEmpty()) {
             UIEngine.clientApi.clientConnection().sendPayload("storage:click", Unpooled.buffer().apply {
                 NetUtil.writeUtf8(this, menu.uuid.toString())
@@ -67,6 +70,7 @@ abstract class StorageNode<T : AbstractElement>(
             return
         }
         val command = "/" + if (command?.startsWith("/") == true) command?.drop(1) else command
+
         UIEngine.clientApi.chat().sendChatMessage("$command $key")
     }
 

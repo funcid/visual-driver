@@ -20,7 +20,7 @@ import java.util.*
 class ProgressController {
 
     companion object {
-        const val PROGRESS_WIDTH = 180.0
+        const val PROGRESS_WIDTH = 182.0
     }
 
     private val progressMap = hashMapOf<UUID, AbstractProgress>() // uuid to progress

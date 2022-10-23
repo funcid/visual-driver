@@ -12,10 +12,9 @@ class Choicer(
     override var info: String = "",
     override var title: String = "Игра",
     var description: String = "Выбери нужный под-режим!",
-    override var storage: MutableList<ReactiveButton> = arrayListOf()
-) : Storage {
-
+    override var storage: MutableList<ReactiveButton> = arrayListOf(),
     var allowClosing: Boolean = true
+) : Storage {
 
     companion object {
         @JvmStatic
@@ -25,7 +24,6 @@ class Choicer(
     class Builder {
         private val choicer: Choicer = Choicer()
 
-        fun uuid(uuid: UUID) = apply { choicer.uuid = uuid }
         fun title(title: String) = apply { choicer.title = title }
         fun description(description: String) = apply { choicer.description = description }
         fun info(info: String) = apply { choicer.info = info }

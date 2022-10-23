@@ -25,6 +25,7 @@ import java.util.Stack
 class Main : KotlinMod() {
     companion object {
         lateinit var externalManager: ExternalManager
+        @Volatile
         var menuStack: Stack<AbstractMenu> = Stack()
     }
 
@@ -80,6 +81,7 @@ class Main : KotlinMod() {
         registerChannel("func:close") {
             val mc = UIEngine.clientApi.minecraft()
             val screen = mc.currentScreen()
+
             if (screen is AdvancementsScreen || screen is OptionsScreen)
                 return@registerChannel
             menuStack.clear()

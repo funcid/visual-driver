@@ -4,7 +4,6 @@ public final class me/func/mod/Anime {
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;D)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;D)V
-	public static final fun bigTitle (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun bigTitle (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
@@ -47,8 +46,6 @@ public final class me/func/mod/Anime {
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
-	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;Ljava/lang/String;)V
-	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
@@ -835,8 +832,8 @@ public final class me/func/mod/ui/menu/Storage$DefaultImpls {
 public final class me/func/mod/ui/menu/choicer/Choicer : me/func/mod/ui/menu/Storage {
 	public static final field Companion Lme/func/mod/ui/menu/choicer/Choicer$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Z)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
 	public static final fun builder ()Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
@@ -865,7 +862,6 @@ public final class me/func/mod/ui/menu/choicer/Choicer$Builder {
 	public final fun storage (Ljava/util/List;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public final fun storage ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 	public final fun title (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
-	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 }
 
 public final class me/func/mod/ui/menu/choicer/Choicer$Companion {
@@ -982,8 +978,8 @@ public final class me/func/mod/ui/menu/recconnct/Reconnect : me/func/mod/ui/menu
 public class me/func/mod/ui/menu/selection/Selection : me/func/protocol/ui/menu/SelectionModel, me/func/mod/ui/menu/Paginated {
 	public static final field Companion Lme/func/mod/ui/menu/selection/Selection$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;Ljava/util/function/Consumer;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
 	public static final fun builder ()Lme/func/mod/ui/menu/selection/Selection$Builder;
 	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V

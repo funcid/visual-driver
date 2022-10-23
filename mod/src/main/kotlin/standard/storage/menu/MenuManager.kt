@@ -2,6 +2,7 @@ package standard.storage.menu
 
 import Main.Companion.menuStack
 import asColor
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
@@ -10,6 +11,7 @@ import org.lwjgl.input.Mouse
 import readColoredUtf8
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.utility.Color
 import standard.storage.AbstractMenu
@@ -22,6 +24,8 @@ import java.util.*
 class MenuManager {
 
     companion object {
+
+        @Volatile
         var openTimeAndDelayMillis = 0L // Время последнего открытия меню
         val beforeClickDelay = 200 // задержка перед кликом в миллисекундах
         val itemPadding = 4.0
@@ -48,8 +52,6 @@ class MenuManager {
         }
 
         fun push(gui: AbstractMenu) {
-            if (menuStack.size > 20)
-                menuStack.clear()
             menuStack.push(gui)
             openTimeAndDelayMillis = System.currentTimeMillis()
             gui.open()
@@ -134,12 +136,12 @@ class MenuManager {
                 push(
                     PlayChoice(
                         uuid = UUID.fromString(NetUtil.readUtf8(this)),
-                        info = NetUtil.readUtf8(this),
+                        info = readColoredUtf8(),
                         title = readColoredUtf8(),
                         description = readColoredUtf8(),
                         allowClosing = readBoolean(),
                         storage = readIcons(this)
-                    )
+                    ).apply { open() }
                 )
             }
 
