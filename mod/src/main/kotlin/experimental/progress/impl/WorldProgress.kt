@@ -10,7 +10,7 @@ class WorldProgress(model: Progress) : AbstractProgress(model) {
 
     val context: Context3D = Context3D(V3(model.offsetX, model.offsetY, model.offsetZ)).apply {
         addChild(container)
-        scale = V3(0.0125, 0.0125, 0.0125)
+        scale = V3(0.0125 * model.scale, 0.0125 * model.scale, 0.0125 * model.scale)
     }
 
     override fun create() { UIEngine.worldContexts.add(context) }

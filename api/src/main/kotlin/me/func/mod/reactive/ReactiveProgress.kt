@@ -40,6 +40,7 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
             .boolean(hideOnTab)
             .v3(offsetX, offsetY, offsetZ)
             .double(progress)
+            .double(scale)
             .string(text)
             .send("progress-ui:create", *players)
     }
@@ -93,6 +94,7 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
         fun offsetZ(offsetZ: Double) = apply { model.offsetZ = offsetZ }
         fun location(location: Location) = offsetX(location.x).offsetY(location.y).offsetZ(location.z)
         fun progress(progress: Double) = apply { model.progress = progress }
+        fun scale(scale: Double) = apply { model.scale = scale }
         fun hideOnTab(hideOnTab: Boolean) = apply { model.hideOnTab = hideOnTab }
         fun build() = model
     }

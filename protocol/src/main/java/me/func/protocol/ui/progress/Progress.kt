@@ -14,6 +14,7 @@ open class Progress(
     open var offsetY: Double = 0.0,
     open var offsetX: Double = 0.0,
     open var offsetZ: Double = 0.0,
+    open var scale: Double = 1.0,
     open var hideOnTab: Boolean = true,
 ): Unique {
 
@@ -34,6 +35,7 @@ open class Progress(
         fun offsetX(offsetX: Double) = apply { model.offsetX = offsetX }
         fun offsetZ(offsetZ: Double) = apply { model.offsetZ = offsetZ }
         fun progress(progress: Double) = apply { model.progress = progress }
+        fun scale(scale: Double) = apply { model.scale = scale }
         fun hideOnTab(hideOnTab: Boolean) = apply { model.hideOnTab = hideOnTab }
         fun build() = model
     }
