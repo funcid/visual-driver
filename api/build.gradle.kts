@@ -20,7 +20,10 @@ tasks {
         val propertiesFile = file("$buildDir/generated-version/version.properties")
         propertiesFile.parentFile.mkdirs()
         val properties = Properties()
-        properties.setProperty("version", "${project.version}")
+        val build = (project.properties["buildVersion"] ?: return@registering).toString().toInt() +
+                project.properties["offset"].toString().toInt()
+
+        properties.setProperty("version", "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10)
         val out = FileOutputStream(propertiesFile)
         properties.store(out, null)
         outputs.file(propertiesFile)

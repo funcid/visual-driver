@@ -12,19 +12,11 @@ plugins {
 
 allprojects {
     group = "me.func.animation-api"
-    /*
-     * Именно тут находится версия animation-api,
-     * которая будет указана как version.properties внутри JAR, maven версия,
-     * директория в storage для получения нужного мода.
-     *
-     * Если ваше изменение ломает обратную совместимость:
-     *    - Поднимите второй параметр на один и обнулите последний
-     *    - Не забудьте сделать apiDump, чтобы сборка не сломалась
-     *
-     * Подробнее про семантическое версионирование:
-     *     https://semver.org/lang/ru/
-     */
-    project.version = "4.0." + (project.properties["buildVersion"] ?: 0)
+
+    // Версия генерируется автоматически
+    val build = (project.properties["buildVersion"] ?: return@allprojects).toString().toInt() +
+            project.properties["offset"].toString().toInt()
+    project.version = "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10
 }
 
 subprojects {
@@ -73,8 +65,12 @@ subprojects {
                     }/"
                 )
                 credentials {
-                    username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME") ?: System.getenv("REPO_C7X_USERNAME")
-                    password = System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD") ?: System.getenv("REPO_C7X_PASSWORD")
+                    username = System.getenv("CRI_REPO_LOGIN") ?: System.getenv("CRISTALIX_REPO_USERNAME")
+                            ?: System.getenv("REPO_C7X_USERNAME")
+                    password =
+                        System.getenv("CRI_REPO_PASSWORD") ?: System.getenv("CRISTALIX_REPO_PASSWORD") ?: System.getenv(
+                            "REPO_C7X_PASSWORD"
+                        )
                 }
             }
         }
