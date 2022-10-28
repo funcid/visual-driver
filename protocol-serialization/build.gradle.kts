@@ -3,16 +3,14 @@ plugins {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json-jvm:1.3.3")
     api(project(":protocol"))
 }
 
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            group = project.group
             artifactId = "animation-api-protocol-serialization"
-            version = project.version.toString()
 
             from(components["java"])
         }

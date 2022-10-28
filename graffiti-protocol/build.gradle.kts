@@ -7,9 +7,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            group = project.group
             artifactId = "animation-api-graffiti-protocol"
-            version = project.version.toString()
 
             from(components["java"])
         }

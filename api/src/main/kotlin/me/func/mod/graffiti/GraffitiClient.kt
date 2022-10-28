@@ -1,7 +1,8 @@
 package me.func.mod.graffiti
 
 import me.func.protocol.personalization.FeatureUserData
-import java.util.*
+import org.bukkit.Location
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
 
 interface GraffitiClient {

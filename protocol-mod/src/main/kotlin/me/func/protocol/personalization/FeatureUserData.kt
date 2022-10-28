@@ -3,7 +3,7 @@ package me.func.protocol.personalization
 import me.func.protocol.Unique
 import java.util.UUID
 
-data class FeatureUserData(
+class FeatureUserData(
     override var uuid: UUID,
     var packs: MutableList<GraffitiPack>,
     var activePack: Int,

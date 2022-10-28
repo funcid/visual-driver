@@ -3,7 +3,7 @@ package me.func.protocol.personalization
 import kotlinx.serialization.Serializable
 import me.func.protocol.Unique
 import me.func.protocol.util.UUIDSerializer
-import java.util.*
+import java.util.UUID
 
 @Serializable
 data class GraffitiPack(
@@ -15,7 +15,7 @@ data class GraffitiPack(
     var price: Int,
     var rare: Int,
     var available: Boolean
-) : Unique, Cloneable {
-    public override fun clone() =
+) : Unique {
+    fun clone() =
         GraffitiPack(uuid, graffiti.map { it.clone() }.toMutableList(), title, creator, price, rare, available)
 }

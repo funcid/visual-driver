@@ -10,15 +10,13 @@ import data.FeatureUserStorage
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withTimeout
 import me.func.protocol.Unique
-import me.func.protocol.personalization.FeatureUserData
-import org.bson.Document
 import org.bson.UuidRepresentation
 import org.litote.kmongo.coroutine.CoroutineCollection
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.litote.kmongo.replaceUpsert
-import java.util.*
+import java.util.UUID
 import kotlin.reflect.KClass
 
 class CollectionTypeNotRegisteredException(name: String) : RuntimeException(name)
@@ -46,7 +44,7 @@ class MongoAdapter(private val url: String, private val databaseName: String, pr
 
                 // Создание индекса UUID для быстрого поиска
                 collections.forEach { (_, value) ->
-                    value.createIndex(Indexes.ascending("uuid"))
+                    value.createIndex(Indexes.hashed("uuid"))
                     println("Created index for collection.")
                     println("Documents total: ${value.countDocuments()}")
                 }

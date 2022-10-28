@@ -2,6 +2,7 @@
 build
 
 /.idea
+*.iml
 
 hs_err_pid*
 replay_pid*

@@ -1,9 +1,9 @@
 package me.func.protocol.personalization
 
 import me.func.protocol.Unique
-import java.util.*
+import java.util.UUID
 
-data class GraffitiPack(
+class GraffitiPack(
     override var uuid: UUID,
     var graffiti: MutableList<Graffiti>,
     var title: String,
@@ -11,7 +11,7 @@ data class GraffitiPack(
     var price: Int,
     var rare: Int,
     var available: Boolean
-) : Unique, Cloneable {
-    public override fun clone() =
-        GraffitiPack(uuid, graffiti.map { it.clone() }.toMutableList(), title, creator, price, rare, available)
+) : Unique {
+    fun clone() =
+        GraffitiPack(uuid, graffiti.mapTo(ArrayList()) { it.clone() }, title, creator, price, rare, available)
 }

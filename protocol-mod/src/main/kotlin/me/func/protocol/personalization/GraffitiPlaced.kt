@@ -2,8 +2,9 @@ package me.func.protocol.personalization
 
 import java.util.UUID
 
-data class GraffitiPlaced(
+class GraffitiPlaced(
     var owner: UUID,
+    var ownerName: String,
     val world: String,
     var graffiti: Graffiti,
     var x: Double,
@@ -14,6 +15,6 @@ data class GraffitiPlaced(
     var rotationAxisX: Double = 0.0,
     var rotationAxisY: Double = 0.0,
     var rotationAxisZ: Double = 0.0,
-    var onGround: Boolean = false,
-    var local: Boolean = false
+    var extraRotation: Double = 0.0,
+    var onGround: Boolean = false
 )

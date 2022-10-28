@@ -8,6 +8,7 @@ import java.util.UUID
 data class GraffitiPlaced(
     @Serializable(with = UUIDSerializer::class)
     var owner: UUID,
+    var ownerName: String,
     val world: String,
     var graffiti: Graffiti,
     var x: Double,
@@ -18,6 +19,6 @@ data class GraffitiPlaced(
     var rotationAxisX: Double = 0.0,
     var rotationAxisY: Double = 0.0,
     var rotationAxisZ: Double = 0.0,
+    var extraRotation: Double = 0.0,
     var onGround: Boolean = false,
-    var local: Boolean = false
 )
