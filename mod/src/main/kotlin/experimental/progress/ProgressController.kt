@@ -111,6 +111,7 @@ class ProgressController {
                 .offsetX(readDouble())
                 .offsetY(readDouble())
                 .offsetZ(readDouble())
+                .scale(readDouble())
                 .progress(readDouble())
                 .text(readColoredUtf8())
                 .build()

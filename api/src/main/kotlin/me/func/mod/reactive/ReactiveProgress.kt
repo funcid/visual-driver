@@ -40,6 +40,7 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
             .boolean(hideOnTab)
             .v3(offsetX, offsetY, offsetZ)
             .double(progress)
+            .double(scale)
             .string(text)
             .send("progress-ui:create", *players)
     }
