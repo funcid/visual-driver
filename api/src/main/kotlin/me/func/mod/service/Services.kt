@@ -2,6 +2,7 @@ package me.func.mod.service
 
 import com.github.benmanes.caffeine.cache.Caffeine
 import org.apache.logging.log4j.jul.LogManager
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import ru.cristalix.core.CoreCredentials
 import ru.cristalix.core.coupons.CouponsService
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit
 
 object Services {
     internal val socketClient: ISocketClient =
-        ISocketClient.get() ?: SocketClient(LogManager().getLogger("Animation API Socket Client")).apply {
+        ISocketClient.get() ?: SocketClient(Bukkit.getLogger()).apply {
             connect(
                 getenv("TOWER_IP"),
                 getenv("TOWER_PORT").toInt(),

@@ -4,24 +4,25 @@ import dev.xdark.clientapi.event.render.RenderPass
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.render.DefaultVertexFormats
 import dev.xdark.feder.NetUtil
-import me.func.protocol.GlowingPlace
-import me.func.protocol.Tricolor
+import me.func.protocol.world.GlowingPlace
+import me.func.protocol.data.color.Tricolor
 import org.lwjgl.opengl.GL11
+import readRgb
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
-import ru.cristalix.clientapi.KotlinModHolder
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.UUID
 import kotlin.math.cos
+import kotlin.math.pow
 import kotlin.math.sin
 
 class GlowPlaces {
     companion object {
         private val places = arrayListOf<GlowingPlace>()
+        private val placeCache = hashMapOf<UUID, MutableList<Triple<Double, Double, Double>>>()
 
         init {
             mod.registerChannel("func:place") {
-                val uuid = UUID.fromString(NetUtil.readUtf8(this))
+                val uuid = NetUtil.readId(this)
                 places.add(
                     GlowingPlace(
                         uuid,
@@ -33,15 +34,23 @@ class GlowPlaces {
                         readInt()
                     )
                 )
+                placeCache.clear()
             }
 
             mod.registerChannel("func:place-clear") {
                 places.clear()
+                placeCache.clear()
             }
 
             mod.registerChannel("func:place-kill") {
-                val uuid = UUID.fromString(NetUtil.readUtf8(this))
+                val uuid = NetUtil.readId(this)
                 places.filter { it.uuid == uuid }.forEach { places.remove(it) }
+            }
+
+            mod.registerChannel("func:place-color") {
+                val uuid = NetUtil.readId(this)
+                val color = readRgb()
+                places.filter { it.uuid == uuid }.forEach { it.rgb = color }
             }
 
             val mc = clientApi.minecraft()
@@ -60,35 +69,59 @@ class GlowPlaces {
                 GlStateManager.disableLighting()
                 GlStateManager.disableTexture2D()
                 GlStateManager.disableAlpha()
-                GlStateManager.disableCull()
                 GlStateManager.shadeModel(GL11.GL_SMOOTH)
                 GlStateManager.enableBlend()
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
+                GlStateManager.disableCull()
+                GlStateManager.depthMask(false)
 
-                places.forEach { place ->
-                    val tessellator = clientApi.tessellator()
-                    val bufferBuilder = tessellator.bufferBuilder
+                places.sortedByDescending { place -> (place.x - entity.x).pow(2) + (place.z - entity.z).pow(2) }
+                    .forEach { place ->
 
-                    bufferBuilder.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR)
+                        if ((place.x - entity.x).pow(2) + (place.y - entity.y).pow(2) + (place.z - entity.z).pow(2) > 25 * 25 * 25)
+                            return@forEach
 
-                    val angles = place.angles
+                        val x = place.x - (entity.x - prevX) * pt - prevX
+                        val y = place.y - (entity.y - prevY) * pt - prevY
+                        val z = place.z - (entity.z - prevZ) * pt - prevZ
 
-                    repeat(angles * 2 + 2) {
-                        bufferBuilder.pos(
-                            place.x - (entity.x - prevX) * pt - prevX + sin(Math.toRadians(it * 360.0 / angles / 2 - 1 + 45)) * place.radius,
-                            place.y - (entity.y - prevY) * pt - prevY + if (it % 2 == 1) 5f else 0f,
-                            place.z - (entity.z - prevZ) * pt - prevZ + cos(Math.toRadians(it * 360.0 / angles / 2 - 1 + 45)) * place.radius
-                        ).color(place.rgb.red, place.rgb.blue, place.rgb.green, if (it % 2 == 1) 0 else 100).endVertex()
+                        val cache = placeCache[place.uuid] ?: arrayListOf()
+
+                        val tessellator = clientApi.tessellator()
+                        val bufferBuilder = tessellator.bufferBuilder
+
+                        bufferBuilder.begin(GL11.GL_TRIANGLE_STRIP, DefaultVertexFormats.POSITION_COLOR)
+
+                        val angles = place.angles
+
+
+                        repeat(angles * 2 + 2) { index ->
+
+                            if (cache.size <= index) {
+                                cache.add(
+                                    Triple(
+                                        sin(Math.toRadians(index * 360.0 / angles / 2 - 1 + 45)) * place.radius,
+                                        if (index % 2 == 1) 5.0 else 0.0,
+                                        cos(Math.toRadians(index * 360.0 / angles / 2 - 1 + 45)) * place.radius
+                                    )
+                                )
+                            }
+
+                            val v3 = cache[index]
+
+                            bufferBuilder.pos(x + v3.first, y + v3.second, z + v3.third)
+                                .color(place.rgb.red, place.rgb.green, place.rgb.blue, if (index % 2 == 1) 0 else 100)
+                                .endVertex()
+                        }
+
+                        tessellator.draw()
                     }
 
-                    tessellator.draw()
-                }
-
+                GlStateManager.depthMask(true)
                 GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_CONSTANT_COLOR)
                 GlStateManager.shadeModel(GL11.GL_FLAT)
                 GlStateManager.enableTexture2D()
                 GlStateManager.enableAlpha()
-                GlStateManager.enableCull()
             }
         }
     }

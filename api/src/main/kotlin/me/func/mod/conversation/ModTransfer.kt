@@ -4,16 +4,20 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
+import me.func.protocol.data.color.RGB
 import net.minecraft.server.v1_12_R1.*
+import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 import ru.cristalix.core.GlobalSerializers
 import java.io.DataOutput
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
+import java.util.*
 
 val LOOKUP: MethodHandles.Lookup = MethodHandles.publicLookup()
 val WRITE_ITEM: MethodHandle = try {
@@ -70,6 +74,8 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     fun putString(string: String) = apply { NetUtil.writeUtf8(string, serializer) }
 
+    fun rgb(rgb: RGB) = integer(rgb.red).integer(rgb.green).integer(rgb.blue)
+
     fun string(string: String) = apply { putString(string) }
 
     fun byteArray(vararg byte: Byte) = apply { serializer.writeBytes(byte) }
@@ -94,19 +100,29 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
 
     fun byte(byte: Byte) = apply { serializer.writeByte(byte.toInt()) }
 
+    @JvmName("putFloat")
+    fun float(float: Float) = apply { serializer.writeFloat(float) }
+
     @JvmName("putDouble")
     fun double(double: Double) = apply { serializer.writeDouble(double) }
+
+    fun v3(x: Double, y: Double, z: Double) = double(x).double(y).double(z)
+
+    fun v3(vector: Vector) = v3(vector.x, vector.y, vector.z)
+
+    fun v3(location: Location) = v3(location.toVector())
 
     @JvmName("putBoolean")
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
-    fun send(channel: String, vararg players: Player?): Unit =
-        send(channel, object : Iterable<Player?> {
-            override fun iterator() = players.iterator()
-        })
+    fun uuid(uuid: UUID) = apply { serializer.ensureWritable(16).writeLong(uuid.mostSignificantBits).writeLong(uuid.leastSignificantBits) }
+
+    fun uuid(uuid: String) = uuid(UUID.fromString(uuid))
+
+    fun send(channel: String, vararg players: Player?): Unit = send(channel, players.asIterable())
 
     fun send(channel: String, players: Iterable<Player?>): Unit =
-        players.filterNotNull().filterIsInstance<CraftPlayer>().forEach {
+        players.filterIsInstance<CraftPlayer>().forEach {
             it.handle.playerConnection.networkManager.sendPacket(
                 PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
             )

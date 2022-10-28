@@ -60,7 +60,7 @@ fun main() {
         // Загрузка профиля игрока
         scope.launch {
             loadProfile(packet.playerUuid) { data ->
-                var update = false
+                var update: Boolean
 
                 // Если данные уже есть - обновляем набор паков, если нет - создаем новые
                 packet.data = data?.let {

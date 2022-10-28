@@ -1,7 +1,7 @@
 package me.func.protocol.personalization
 
 import kotlinx.serialization.Serializable
-import me.func.protocol.DropRare
+import me.func.protocol.data.rare.DropRare
 import me.func.protocol.Unique
 import me.func.protocol.util.UUIDSerializer
 // import me.func.protocol.util.UUIDSerializer

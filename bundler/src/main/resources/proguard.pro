@@ -6,8 +6,8 @@
 #-adaptresourcefilecontents *.txt // dontobfuscate main
 -dontpreverify
 -allowaccessmodification
--optimizationpasses 10
--overloadaggressively
+-optimizationpasses 2
+#-overloadaggressively
 
 -dontobfuscate
 

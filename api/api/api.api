@@ -1,20 +1,10 @@
-public final class me/func/mod/Alert {
-	public static final field INSTANCE Lme/func/mod/Alert;
-	public static final fun button (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/RGB;ZZ)Lme/func/protocol/alert/NotificationButton;
-	public static synthetic fun button$default (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/RGB;ZZILjava/lang/Object;)Lme/func/protocol/alert/NotificationButton;
-	public static final fun find (Ljava/lang/String;)Lme/func/protocol/alert/NotificationData;
-	public static final fun notificationDataReplace (Lme/func/protocol/alert/NotificationData;Ljava/lang/String;Ljava/lang/String;)Lme/func/protocol/alert/NotificationData;
-	public static final fun put (Ljava/lang/String;Lme/func/protocol/alert/NotificationData;)Lme/func/protocol/alert/NotificationData;
-	public static final fun send (Lorg/bukkit/entity/Player;Ljava/lang/String;JLme/func/protocol/RGB;Lme/func/protocol/RGB;Ljava/lang/String;[Lme/func/protocol/alert/NotificationButton;)V
-	public static final fun sendNotificationData (Lme/func/protocol/alert/NotificationData;Lorg/bukkit/entity/Player;)V
-}
-
 public final class me/func/mod/Anime {
 	public static final field INSTANCE Lme/func/mod/Anime;
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;D)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun alert (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;D)V
+	public static final fun bigTitle (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun bigTitle (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun bottomRightMessage (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
@@ -29,53 +19,60 @@ public final class me/func/mod/Anime {
 	public static final fun createReader (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun cursorMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;[Ljava/lang/Object;)V
-	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;Ljava/lang/String;)V
-	public static final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
+	public final fun equipPersonalization (Lorg/bukkit/entity/Player;Ljava/util/UUID;[Ljava/util/UUID;)V
 	public final fun getGRAFFITI_MOD_URL ()Ljava/lang/String;
 	public final fun getGraffitiClient ()Lme/func/mod/graffiti/GraffitiClient;
 	public final fun getProvided ()Lorg/bukkit/plugin/java/JavaPlugin;
 	public final fun getSTANDARD_MOD_URL ()Ljava/lang/String;
 	public final fun getVersion ()Ljava/lang/String;
 	public static final fun graffiti (Lorg/bukkit/entity/Player;Lme/func/protocol/personalization/GraffitiPlaced;)V
-	public static final fun hideIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/Indicators;)V
+	public static final fun hideIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/ui/indicator/Indicators;)V
 	public static final fun include ([Lme/func/mod/Kit;)V
 	public static final fun itemTitle (Lorg/bukkit/entity/Player;Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun itemTitle (Lorg/bukkit/entity/Player;Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;D)V
 	public static synthetic fun itemTitle$default (Lorg/bukkit/entity/Player;Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;DILjava/lang/Object;)V
+	public static final fun killboardMessage (Ljava/util/Collection;Ljava/lang/String;)V
+	public static final fun killboardMessage (Ljava/util/Collection;Ljava/lang/String;I)V
 	public static final fun killboardMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun killboardMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;I)V
 	public static final fun loadTexture (Lorg/bukkit/entity/Player;Ljava/lang/String;)Ljava/lang/String;
 	public static final fun loadTextures (Lorg/bukkit/entity/Player;[Ljava/lang/String;)Ljava/util/List;
 	public static final fun lockPersonalization (Lorg/bukkit/entity/Player;)V
-	public static final fun marker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)Lme/func/protocol/Marker;
-	public static final fun markers (Lorg/bukkit/entity/Player;[Lme/func/protocol/Marker;)V
+	public static final fun marker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)Lme/func/protocol/world/marker/Marker;
+	public static final fun markers (Lorg/bukkit/entity/Player;[Lme/func/protocol/world/marker/Marker;)V
+	public static final fun modifyGraffitiPlaceCondition (Ljava/util/function/Predicate;)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
-	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)V
-	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;D)V
+	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)V
+	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;D)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
-	public static final fun openDailyRewardMenu (Lorg/bukkit/entity/Player;I[Lme/func/mod/data/DailyReward;)V
-	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
-	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/data/LootDrop;)V
-	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/Position;Ljava/lang/String;)V
-	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/Position;[Ljava/lang/String;)V
+	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
+	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;Ljava/lang/String;)V
+	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
+	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
+	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;)V
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;III)V
-	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/RGB;)V
+	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/data/color/RGB;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
-	public static final fun removeMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/Marker;)V
+	public static final fun removeMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)V
 	public static final fun removeSphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun safeReadUUID (Lio/netty/buffer/ByteBuf;)Ljava/util/UUID;
-	public static final fun sendDialog (Lorg/bukkit/entity/Player;Lme/func/protocol/dialog/Dialog;)V
 	public static final fun sendEmptyBuffer (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
 	public final fun setGraffitiClient (Lme/func/mod/graffiti/GraffitiClient;)V
-	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/EndStatus;Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/EndStatus;Ljava/util/List;Ljava/util/List;)V
-	public static final fun showIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/Indicators;)V
+	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;D)V
+	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;)V
+	public static final fun showEnding (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;D)V
+	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;DILjava/lang/Object;)V
+	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;DILjava/lang/Object;)V
+	public static final fun showIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/ui/indicator/Indicators;)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;D)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;DDD)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;D)V
 	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;DDD)V
+	public static final fun systemMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/MessageStatus;DLjava/lang/String;)V
+	public static final fun systemMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/MessageStatus;Ljava/lang/String;)V
 	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDD)V
 	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;)V
 	public static final fun timer (Lorg/bukkit/entity/Player;I)V
@@ -92,50 +89,6 @@ public final class me/func/mod/AnimeKt {
 	public static final fun getMOD_LOCAL_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_LOCAL_TEST_DIR_NAME ()Ljava/lang/String;
 	public static final fun getMOD_STORAGE_URL ()Ljava/lang/String;
-}
-
-public final class me/func/mod/Banners {
-	public static final field INSTANCE Lme/func/mod/Banners;
-	public static final fun add (Lme/func/protocol/element/Banner;)Lme/func/protocol/element/Banner;
-	public static final fun content (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun content (Lorg/bukkit/entity/Player;Lme/func/protocol/element/Banner;Ljava/lang/String;)V
-	public final fun eyeLocation (Lme/func/protocol/element/Banner;Lorg/bukkit/Location;)V
-	public final fun getBanners ()Ljava/util/Map;
-	public final fun harmonicVibrations (Lme/func/protocol/element/Banner;Lme/func/protocol/Dimension;DDD)V
-	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
-	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/element/Banner;)V
-	public final fun location (Lme/func/protocol/element/Banner;Lorg/bukkit/Location;)V
-	public final synthetic fun new (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/element/Banner;
-	public static final synthetic fun new (Lme/func/protocol/element/Banner;)Lme/func/protocol/element/Banner;
-	public static final fun remove (Ljava/util/UUID;)V
-	public final fun setBanners (Ljava/util/Map;)V
-	public final fun shineBlocks (Lme/func/protocol/element/Banner;Z)V
-	public static final fun show (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
-	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/element/Banner;)V
-	public final fun target (Lme/func/protocol/element/Banner;Lorg/bukkit/entity/LivingEntity;DDD)V
-	public static synthetic fun target$default (Lme/func/mod/Banners;Lme/func/protocol/element/Banner;Lorg/bukkit/entity/LivingEntity;DDDILjava/lang/Object;)V
-}
-
-public final class me/func/mod/Glow : org/bukkit/event/Listener {
-	public static final field INSTANCE Lme/func/mod/Glow;
-	public static final fun addPlace (Lme/func/protocol/GlowingPlace;)Lme/func/protocol/GlowingPlace;
-	public static final fun addPlace (Lme/func/protocol/GlowingPlace;Ljava/util/function/Consumer;)Lme/func/protocol/GlowingPlace;
-	public static final fun addPlace (Lme/func/protocol/RGB;DDD)Lme/func/protocol/GlowingPlace;
-	public static final fun addPlace (Lme/func/protocol/RGB;DDDLkotlin/jvm/functions/Function1;)Lme/func/protocol/GlowingPlace;
-	public static synthetic fun addPlace$default (Lme/func/protocol/RGB;DDDLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/func/protocol/GlowingPlace;
-	public static final fun animate (Lorg/bukkit/entity/Player;DIII)V
-	public static final fun animate (Lorg/bukkit/entity/Player;DIIID)V
-	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/RGB;)V
-	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/RGB;D)V
-	public static final fun clearPlaces ([Lorg/bukkit/entity/Player;)V
-	public final fun getGlowingPlaces ()Ljava/util/Map;
-	public final fun handle (Lorg/bukkit/event/player/PlayerMoveEvent;)V
-	public static final fun removePlace (Lme/func/protocol/GlowingPlace;[Lorg/bukkit/entity/Player;)Lme/func/protocol/GlowingPlace;
-	public static final fun set (Lorg/bukkit/entity/Player;IIID)V
-	public static final fun set (Lorg/bukkit/entity/Player;Lme/func/protocol/RGB;)V
-	public static final fun showAllPlaces (Lorg/bukkit/entity/Player;)V
-	public static final fun showLoadedPlace (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
-	public static final fun showPlace (Lorg/bukkit/entity/Player;Lme/func/protocol/GlowingPlace;)V
 }
 
 public class me/func/mod/Kit : java/lang/Enum, org/bukkit/event/Listener {
@@ -157,176 +110,10 @@ public class me/func/mod/Kit : java/lang/Enum, org/bukkit/event/Listener {
 	public static fun values ()[Lme/func/mod/Kit;
 }
 
-public final class me/func/mod/MultiChat {
-	public static final field INSTANCE Lme/func/mod/MultiChat;
-	public static final fun broadcast (Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun broadcast (Ljava/util/Collection;Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun broadcast (Ljava/util/Collection;Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun broadcast (Ljava/util/Collection;Lme/func/protocol/ModChat;Ljava/lang/String;)V
-	public static final fun broadcast (Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun broadcast (Lme/func/protocol/ModChat;Ljava/lang/String;)V
-	public static final fun createKey (Ljava/lang/String;Lme/func/protocol/ModChat;)V
-	public static final fun registerHandler (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
-	public static final fun registerHandler (Ljava/util/UUID;Ljava/util/function/BiConsumer;)V
-	public static final fun registerHandler (Lme/func/protocol/ModChat;Ljava/util/function/BiConsumer;)V
-	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
-	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
-	public static final fun removeChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
-	public static final fun removeHandler (Ljava/lang/String;)V
-	public static final fun removeHandler (Ljava/util/UUID;)V
-	public static final fun removeHandler (Lme/func/protocol/ModChat;)V
-	public static final fun removeKey (Ljava/lang/String;)V
-	public static final fun removeKey (Ljava/util/UUID;)V
-	public static final fun removeKey (Lme/func/protocol/ModChat;)V
-	public static final fun sendChats (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
-	public static final fun sendChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/ModChat;)V
-	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
-	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
-	public static final fun sendMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/ModChat;Ljava/lang/String;)V
-}
-
-public final class me/func/mod/Npc {
-	public static final field INSTANCE Lme/func/mod/Npc;
-	public static final fun clear ()V
-	public static final fun create (Ljava/lang/String;Lme/func/protocol/npc/NpcBehaviour;Ljava/lang/String;Ljava/lang/String;)Lme/func/mod/data/NpcSmart;
-	public final fun getNpcs ()Ljava/util/Map;
-	public static final fun hide (ILorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
-	public static final fun kill (I)Lkotlin/Unit;
-	public final fun location (Lme/func/protocol/npc/NpcData;Lorg/bukkit/Location;)V
-	public final fun npc (Lkotlin/jvm/functions/Function1;)Lme/func/mod/data/NpcSmart;
-	public static final fun npc (Lme/func/protocol/npc/NpcData;)Lme/func/mod/data/NpcSmart;
-	public final fun onClick (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;)V
-	public static final fun show (ILorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
-	public final fun skin (Lme/func/protocol/npc/NpcData;Ljava/lang/String;)V
-	public final fun skin (Lme/func/protocol/npc/NpcData;Ljava/util/UUID;)V
-	public static final fun spawn (I)Lkotlin/Unit;
-}
-
-public final class me/func/mod/Shaders {
-	public static final field INSTANCE Lme/func/mod/Shaders;
-	public final fun loadShader (Lorg/bukkit/entity/Player;ILjava/lang/String;)V
-}
-
 public final class me/func/mod/StandardMods : org/bukkit/event/Listener {
 	public static final field INSTANCE Lme/func/mod/StandardMods;
 	public final fun getMods ()Ljava/util/EnumSet;
 	public final fun handle (Lorg/bukkit/event/player/PlayerJoinEvent;)V
-}
-
-public final class me/func/mod/battlepass/BattlePass {
-	public static final field INSTANCE Lme/func/mod/battlepass/BattlePass;
-	public final fun buy (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
-	public static final fun create (Lme/func/mod/battlepass/BattlePassData;)Lme/func/mod/battlepass/BattlePassData;
-	public final fun getBattlePasses ()Ljava/util/Map;
-	public final fun new (ILkotlin/jvm/functions/Function1;)Lme/func/mod/battlepass/BattlePassData;
-	public final fun onBuyAdvanced (Lme/func/mod/battlepass/BattlePassData;Ljava/util/function/Consumer;)V
-	public final fun onBuyPage (Lme/func/mod/battlepass/BattlePassData;Ljava/util/function/BiConsumer;)V
-	public final fun sale (Lme/func/mod/battlepass/BattlePassData;D)V
-	public final fun send (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
-	public final fun send (Lorg/bukkit/entity/Player;Lme/func/mod/battlepass/BattlePassData;)V
-	public final fun show (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lme/func/protocol/battlepass/BattlePassUserData;)V
-	public final fun show (Lorg/bukkit/entity/Player;Lme/func/mod/battlepass/BattlePassData;Lme/func/protocol/battlepass/BattlePassUserData;)V
-}
-
-public final class me/func/mod/battlepass/BattlePassData {
-	public fun <init> ()V
-	public fun <init> (Ljava/util/UUID;Lme/func/protocol/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;)V
-	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()Ljava/util/UUID;
-	public final fun component2 ()Lme/func/protocol/battlepass/BattlePassFacade;
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Ljava/util/List;
-	public final fun component5 ()Ljava/util/function/Function;
-	public final fun component6 ()Ljava/util/function/Consumer;
-	public final fun component7 ()Ljava/util/function/BiConsumer;
-	public final fun copy (Ljava/util/UUID;Lme/func/protocol/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;)Lme/func/mod/battlepass/BattlePassData;
-	public static synthetic fun copy$default (Lme/func/mod/battlepass/BattlePassData;Ljava/util/UUID;Lme/func/protocol/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;ILjava/lang/Object;)Lme/func/mod/battlepass/BattlePassData;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBuyAdvanced ()Ljava/util/function/Consumer;
-	public final fun getBuyPage ()Ljava/util/function/BiConsumer;
-	public final fun getFacade ()Lme/func/protocol/battlepass/BattlePassFacade;
-	public final fun getPages ()Ljava/util/List;
-	public final fun getQuestStatusUpdater ()Ljava/util/function/Function;
-	public final fun getQuests ()Ljava/util/List;
-	public final fun getUuid ()Ljava/util/UUID;
-	public fun hashCode ()I
-	public final fun setBuyAdvanced (Ljava/util/function/Consumer;)V
-	public final fun setBuyPage (Ljava/util/function/BiConsumer;)V
-	public final fun setFacade (Lme/func/protocol/battlepass/BattlePassFacade;)V
-	public final fun setPages (Ljava/util/List;)V
-	public final fun setQuestStatusUpdater (Ljava/util/function/Function;)V
-	public final fun setQuests (Ljava/util/List;)V
-	public final fun setUuid (Ljava/util/UUID;)V
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/func/mod/battlepass/BattlePassData$Builder {
-	public fun <init> ()V
-	public fun <init> (Lme/func/mod/battlepass/BattlePassData;)V
-	public synthetic fun <init> (Lme/func/mod/battlepass/BattlePassData;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun build ()Lme/func/mod/battlepass/BattlePassData;
-	public final fun component1 ()Lme/func/mod/battlepass/BattlePassData;
-	public final fun copy (Lme/func/mod/battlepass/BattlePassData;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public static synthetic fun copy$default (Lme/func/mod/battlepass/BattlePassData$Builder;Lme/func/mod/battlepass/BattlePassData;ILjava/lang/Object;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBattlepass ()Lme/func/mod/battlepass/BattlePassData;
-	public fun hashCode ()I
-	public final fun onBuyAdvanced (Ljava/util/function/Consumer;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public final fun onBuyPage (Ljava/util/function/BiConsumer;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public final fun page (Lme/func/mod/battlepass/BattlePassPageAdvanced;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public final fun pages ([Lme/func/mod/battlepass/BattlePassPageAdvanced;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public final fun price (I)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public final fun salePercent (D)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public final fun tags ([Ljava/lang/String;)Lme/func/mod/battlepass/BattlePassData$Builder;
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/func/mod/battlepass/BattlePassPageAdvanced : me/func/protocol/battlepass/BattlePassPage {
-	public fun <init> ()V
-	public fun <init> (IILjava/util/List;Ljava/util/List;)V
-	public synthetic fun <init> (IILjava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun <init> (Lkotlin/jvm/functions/Function1;)V
-	public final fun component1 ()I
-	public final fun component2 ()I
-	public final fun component3 ()Ljava/util/List;
-	public final fun component4 ()Ljava/util/List;
-	public final fun copy (IILjava/util/List;Ljava/util/List;)Lme/func/mod/battlepass/BattlePassPageAdvanced;
-	public static synthetic fun copy$default (Lme/func/mod/battlepass/BattlePassPageAdvanced;IILjava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/func/mod/battlepass/BattlePassPageAdvanced;
-	public fun equals (Ljava/lang/Object;)Z
-	public final fun getAdvancedItems ()Ljava/util/List;
-	public final fun getItems ()Ljava/util/List;
-	public fun getRequiredExp ()I
-	public fun getSkipPrice ()I
-	public fun hashCode ()I
-	public final fun setAdvancedItems (Ljava/util/List;)V
-	public final fun setItems (Ljava/util/List;)V
-	public fun setRequiredExp (I)V
-	public fun setSkipPrice (I)V
-	public fun toString ()Ljava/lang/String;
-}
-
-public final class me/func/mod/boosterbar/BoosterBar {
-	public fun <init> ()V
-	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)V
-	public final fun close (Lorg/bukkit/entity/Player;)V
-	public final fun getProgress ()D
-	public final fun getSegments ()Ljava/util/List;
-	public final fun getSubtitle ()Ljava/lang/String;
-	public final fun getTitle ()Ljava/lang/String;
-	public final fun isShowBackground ()Z
-	public final fun open (Lorg/bukkit/entity/Player;)V
-	public final fun setProgress (D)V
-	public final fun setSegments (Ljava/util/List;)V
-	public final fun setShowBackground (Z)V
-	public final fun setSubtitle (Ljava/lang/String;)V
-	public final fun setTitle (Ljava/lang/String;)V
-}
-
-public final class me/func/mod/boosterbar/BoosterBarKt {
-	public static final fun boosterBar (Lkotlin/jvm/functions/Function1;)Lme/func/mod/boosterbar/BoosterBar;
-	public static final fun boosterBarClose (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/booster/bar/CloseBoosterRequest;
-	public static final fun boosterBarOpen (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/booster/bar/OpenBoosterRequest;
 }
 
 public final class me/func/mod/conversation/AutoSendRegistry : org/bukkit/event/Listener {
@@ -337,19 +124,8 @@ public final class me/func/mod/conversation/AutoSendRegistry : org/bukkit/event/
 	public static final fun remove (Ljava/lang/String;)Z
 }
 
-public final class me/func/mod/conversation/Debug {
-	public static final field INSTANCE Lme/func/mod/conversation/Debug;
-}
-
-public final class me/func/mod/conversation/DebugKt {
-	public static final field DEBUG_COMMAND Ljava/lang/String;
-}
-
 public final class me/func/mod/conversation/ModLoader {
 	public static final field INSTANCE Lme/func/mod/conversation/ModLoader;
-	public static final fun download (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun download (Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;
-	public static synthetic fun download$default (Ljava/lang/String;Ljava/lang/String;ILjava/lang/Object;)Ljava/lang/String;
 	public final fun getMods ()Ljava/util/Map;
 	public static final fun isLoaded (Ljava/lang/String;)Z
 	public static final fun load (Ljava/io/File;)V
@@ -394,12 +170,19 @@ public final class me/func/mod/conversation/ModTransfer {
 	public final fun nbt (Lorg/bukkit/inventory/ItemStack;)Lme/func/mod/conversation/ModTransfer;
 	public final fun putBoolean (Z)Lme/func/mod/conversation/ModTransfer;
 	public final fun putDouble (D)Lme/func/mod/conversation/ModTransfer;
+	public final fun putFloat (F)Lme/func/mod/conversation/ModTransfer;
 	public final fun putLong (J)Lme/func/mod/conversation/ModTransfer;
 	public final fun putString (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
+	public final fun rgb (Lme/func/protocol/data/color/RGB;)Lme/func/mod/conversation/ModTransfer;
 	public final fun send (Ljava/lang/String;Ljava/lang/Iterable;)V
 	public final fun send (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
 	public final fun short (S)Lme/func/mod/conversation/ModTransfer;
 	public final fun string (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
+	public final fun uuid (Ljava/lang/String;)Lme/func/mod/conversation/ModTransfer;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/conversation/ModTransfer;
+	public final fun v3 (DDD)Lme/func/mod/conversation/ModTransfer;
+	public final fun v3 (Lorg/bukkit/Location;)Lme/func/mod/conversation/ModTransfer;
+	public final fun v3 (Lorg/bukkit/util/Vector;)Lme/func/mod/conversation/ModTransfer;
 	public final fun varInt (I)Lme/func/mod/conversation/ModTransfer;
 	public final fun writeNbtCompound (Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;Lnet/minecraft/server/v1_12_R1/NBTTagCompound;)Lnet/minecraft/server/v1_12_R1/PacketDataSerializer;
 }
@@ -410,71 +193,97 @@ public final class me/func/mod/conversation/ModTransferKt {
 	public static final fun getWRITE_ITEM ()Ljava/lang/invoke/MethodHandle;
 }
 
-public class me/func/mod/data/DailyReward {
-	public fun <init> (Ljava/lang/String;Lorg/bukkit/inventory/ItemStack;)V
-	public fun getIcon ()Lorg/bukkit/inventory/ItemStack;
-	public fun getTitle ()Ljava/lang/String;
+public abstract interface class me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public abstract fun getSubscribersCount ()I
+	public abstract fun isConstant ()Z
+	public abstract fun removeSubscriber (Lorg/bukkit/entity/Player;)V
 }
 
-public class me/func/mod/data/LootDrop {
+public final class me/func/mod/conversation/broadcast/SubscribeVerifier : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/conversation/broadcast/SubscribeVerifier;
+	public final fun add ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)Z
+	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
+}
+
+public class me/func/mod/conversation/data/LootDrop {
 	public fun <init> (Lnet/minecraft/server/v1_12_R1/ItemStack;Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Lnet/minecraft/server/v1_12_R1/ItemStack;Ljava/lang/String;Lme/func/protocol/DropRare;)V
+	public fun <init> (Lnet/minecraft/server/v1_12_R1/ItemStack;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;)V
 	public fun <init> (Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Lme/func/protocol/DropRare;)V
-	public synthetic fun <init> (Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Lme/func/protocol/DropRare;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;)V
+	public synthetic fun <init> (Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun getCustomRare ()Ljava/lang/String;
 	public fun getItemStack ()Lorg/bukkit/inventory/ItemStack;
-	public final fun getRare ()Lme/func/protocol/DropRare;
+	public final fun getRare ()Lme/func/protocol/data/rare/DropRare;
 	public final fun getTitle ()Ljava/lang/String;
 	public final fun setCustomRare (Ljava/lang/String;)V
 	public fun setItemStack (Lorg/bukkit/inventory/ItemStack;)V
-	public final fun setRare (Lme/func/protocol/DropRare;)V
+	public final fun setRare (Lme/func/protocol/data/rare/DropRare;)V
 	public final fun setTitle (Ljava/lang/String;)V
 }
 
-public final class me/func/mod/data/NpcSmart {
-	public fun <init> (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)V
-	public synthetic fun <init> (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1 ()Lme/func/protocol/npc/NpcData;
+public final class me/func/mod/conversation/data/MouseButton : java/lang/Enum {
+	public static final field LEFT Lme/func/mod/conversation/data/MouseButton;
+	public static final field MIDDLE Lme/func/mod/conversation/data/MouseButton;
+	public static final field RIGHT Lme/func/mod/conversation/data/MouseButton;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/conversation/data/MouseButton;
+	public static fun values ()[Lme/func/mod/conversation/data/MouseButton;
+}
+
+public final class me/func/mod/conversation/data/NpcSmart {
+	public static final field Companion Lme/func/mod/conversation/data/NpcSmart$Companion;
+	public fun <init> (Lme/func/protocol/world/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)V
+	public synthetic fun <init> (Lme/func/protocol/world/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Lme/func/protocol/world/npc/NpcData;
 	public final fun component2 ()Ljava/util/function/Consumer;
 	public final fun component3 ()Ljava/util/UUID;
 	public final fun component4 ()Ljava/util/Set;
-	public final fun copy (Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)Lme/func/mod/data/NpcSmart;
-	public static synthetic fun copy$default (Lme/func/mod/data/NpcSmart;Lme/func/protocol/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILjava/lang/Object;)Lme/func/mod/data/NpcSmart;
+	public final fun copy (Lme/func/protocol/world/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;)Lme/func/mod/conversation/data/NpcSmart;
+	public static synthetic fun copy$default (Lme/func/mod/conversation/data/NpcSmart;Lme/func/protocol/world/npc/NpcData;Ljava/util/function/Consumer;Ljava/util/UUID;Ljava/util/Set;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;Lnet/minecraft/server/v1_12_R1/ItemStack;ILjava/lang/Object;)Lme/func/mod/conversation/data/NpcSmart;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getClick ()Ljava/util/function/Consumer;
-	public final fun getData ()Lme/func/protocol/npc/NpcData;
+	public final fun getData ()Lme/func/protocol/world/npc/NpcData;
 	public final fun getPersonalization ()Ljava/util/Set;
 	public final fun getWorldUuid ()Ljava/util/UUID;
 	public fun hashCode ()I
-	public final fun hide (Lorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
-	public final fun kill ()Lme/func/mod/data/NpcSmart;
-	public final fun personalization ([Ljava/util/UUID;)Lme/func/mod/data/NpcSmart;
+	public final fun hide (Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun kill ()Lme/func/mod/conversation/data/NpcSmart;
+	public final fun personalization ([Ljava/util/UUID;)Lme/func/mod/conversation/data/NpcSmart;
 	public final fun setClick (Ljava/util/function/Consumer;)V
-	public final fun setData (Lme/func/protocol/npc/NpcData;)V
+	public final fun setData (Lme/func/protocol/world/npc/NpcData;)V
 	public final fun setPersonalization (Ljava/util/Set;)V
-	public final fun setWorld (Ljava/util/UUID;)Lme/func/mod/data/NpcSmart;
-	public final fun setWorld (Lorg/bukkit/World;)Lme/func/mod/data/NpcSmart;
+	public final fun setWorld (Ljava/util/UUID;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun setWorld (Lorg/bukkit/World;)Lme/func/mod/conversation/data/NpcSmart;
 	public final fun setWorldUuid (Ljava/util/UUID;)V
-	public final fun show (Lorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
-	public final fun slot (Lorg/bukkit/inventory/EquipmentSlot;Lnet/minecraft/server/v1_12_R1/ItemStack;)Lme/func/mod/data/NpcSmart;
-	public final fun slot (Lorg/bukkit/inventory/EquipmentSlot;Lnet/minecraft/server/v1_12_R1/ItemStack;Lorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
-	public final fun spawn (Lorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
-	public final fun swingArm (ZLorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
+	public final fun show (Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun slot (Lorg/bukkit/inventory/EquipmentSlot;Lnet/minecraft/server/v1_12_R1/ItemStack;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun slot (Lorg/bukkit/inventory/EquipmentSlot;Lnet/minecraft/server/v1_12_R1/ItemStack;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun spawn (Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun swingArm (ZLorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
 	public fun toString ()Ljava/lang/String;
-	public final fun update (Lorg/bukkit/entity/Player;)Lme/func/mod/data/NpcSmart;
+	public final fun update (Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
 }
 
-public final class me/func/mod/data/Sprites : java/lang/Enum {
-	public static final field DUO Lme/func/mod/data/Sprites;
-	public static final field SOLO Lme/func/mod/data/Sprites;
-	public static final field SPECIAL Lme/func/mod/data/Sprites;
-	public static final field SQUAD Lme/func/mod/data/Sprites;
-	public static final field TEAM Lme/func/mod/data/Sprites;
-	public static final field TRIO Lme/func/mod/data/Sprites;
+public final class me/func/mod/conversation/data/NpcSmart$Companion {
+}
+
+public final class me/func/mod/conversation/data/Sprites : java/lang/Enum {
+	public static final field DUO Lme/func/mod/conversation/data/Sprites;
+	public static final field SOLO Lme/func/mod/conversation/data/Sprites;
+	public static final field SPECIAL Lme/func/mod/conversation/data/Sprites;
+	public static final field SQUAD Lme/func/mod/conversation/data/Sprites;
+	public static final field TEAM Lme/func/mod/conversation/data/Sprites;
+	public static final field TRIO Lme/func/mod/conversation/data/Sprites;
 	public final fun path ()Ljava/lang/String;
-	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/data/Sprites;
-	public static fun values ()[Lme/func/mod/data/Sprites;
+	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/conversation/data/Sprites;
+	public static fun values ()[Lme/func/mod/conversation/data/Sprites;
+}
+
+public final class me/func/mod/debug/Debug {
+	public static final field INSTANCE Lme/func/mod/debug/Debug;
+}
+
+public final class me/func/mod/debug/DebugKt {
+	public static final field DEBUG_COMMAND Ljava/lang/String;
 }
 
 public abstract interface class me/func/mod/debug/Subscriber {
@@ -553,17 +362,9 @@ public final class me/func/mod/emotion/EmotionsKt {
 	public static final fun playEmotion (Lme/func/mod/emotion/Emotions;Lorg/bukkit/entity/Player;[Lorg/bukkit/entity/Player;)V
 }
 
-public abstract interface class me/func/mod/experimental/disguise/EntityDisguiser {
-	public static final field Companion Lme/func/mod/experimental/disguise/EntityDisguiser$Companion;
-	public abstract fun disguise (Lorg/bukkit/entity/Entity;Lorg/bukkit/entity/EntityType;[Lorg/bukkit/entity/Player;)V
-	public static fun getMod ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-	public static fun getPacket ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-	public abstract fun reset (Lorg/bukkit/entity/Entity;[Lorg/bukkit/entity/Player;)V
-}
-
-public final class me/func/mod/experimental/disguise/EntityDisguiser$Companion {
-	public final fun getMod ()Lme/func/mod/experimental/disguise/EntityDisguiser;
-	public final fun getPacket ()Lme/func/mod/experimental/disguise/EntityDisguiser;
+public final class me/func/mod/experimental/shader/Shaders {
+	public static final field INSTANCE Lme/func/mod/experimental/shader/Shaders;
+	public final fun loadShader (Lorg/bukkit/entity/Player;ILjava/lang/String;)V
 }
 
 public final class me/func/mod/graffiti/CoreGraffitiClient : me/func/mod/graffiti/GraffitiClient {
@@ -579,168 +380,588 @@ public abstract interface class me/func/mod/graffiti/GraffitiClient {
 	public abstract fun use (Ljava/util/UUID;Ljava/util/UUID;Ljava/util/UUID;)Ljava/util/concurrent/CompletableFuture;
 }
 
-public final class me/func/mod/graffiti/GraffitiManager {
+public final class me/func/mod/graffiti/GraffitiManager : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field INSTANCE Lme/func/mod/graffiti/GraffitiManager;
-	public final fun clear (Lorg/bukkit/entity/Player;)V
+	public fun getSubscribersCount ()I
+	public final fun isCanPlace ()Ljava/util/function/Predicate;
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
 	public final fun sendGraffitiBulk (Lorg/bukkit/entity/Player;)V
+	public final fun setCanPlace (Ljava/util/function/Predicate;)V
 	public final fun tryPutData (Ljava/util/UUID;)Ljava/util/concurrent/CompletableFuture;
 }
 
-public final class me/func/mod/selection/Button {
+public abstract interface class me/func/mod/reactive/ButtonClickHandler {
+	public abstract fun handle (Lorg/bukkit/entity/Player;ILme/func/mod/reactive/ReactiveButton;)V
+}
+
+public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/menu/Button {
 	public fun <init> ()V
-	public final fun copy ()Lme/func/mod/selection/Button;
-	public final fun description (Ljava/util/List;)Lme/func/mod/selection/Button;
-	public final fun description ([Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun getDescription ()Ljava/lang/String;
-	public final fun getHint ()Ljava/lang/String;
-	public final fun getHover ()Ljava/lang/String;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun command (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun copy ()Lme/func/mod/reactive/ReactiveButton;
+	public final fun description (Ljava/util/List;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun description ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun enabled (Z)Lme/func/mod/reactive/ReactiveButton;
+	public fun getBackgroundColor ()Lme/func/protocol/data/color/RGB;
+	public fun getCommand ()Ljava/lang/String;
+	public fun getDescription ()Ljava/lang/String;
+	public fun getEnabled ()Z
+	public fun getHint ()Ljava/lang/String;
+	public fun getHover ()Ljava/lang/String;
 	public final fun getItem ()Lorg/bukkit/inventory/ItemStack;
-	public final fun getOnClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getOnLeftClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getOnMiddleClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getOnRightClick ()Lme/func/mod/selection/ButtonClickHandler;
-	public final fun getPrice ()J
-	public final fun getSpecial ()Z
-	public final fun getTexture ()Ljava/lang/String;
-	public final fun getTitle ()Ljava/lang/String;
-	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun hover (Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun hover (Ljava/util/Collection;)Lme/func/mod/selection/Button;
-	public final fun hover ([Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun item (Lorg/bukkit/inventory/ItemStack;)Lme/func/mod/selection/Button;
-	public final fun item (Lorg/bukkit/inventory/ItemStack;Z)Lme/func/mod/selection/Button;
-	public static synthetic fun item$default (Lme/func/mod/selection/Button;Lorg/bukkit/inventory/ItemStack;ZILjava/lang/Object;)Lme/func/mod/selection/Button;
-	public final fun material (Lorg/bukkit/Material;)Lme/func/mod/selection/Button;
-	public final fun onClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun onLeftClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun onMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun onRightClick (Lme/func/mod/selection/ButtonClickHandler;)Lme/func/mod/selection/Button;
-	public final fun price (J)Lme/func/mod/selection/Button;
-	public final fun sale (I)Lme/func/mod/selection/Button;
-	public final fun setDescription (Ljava/lang/String;)V
-	public final fun setHint (Ljava/lang/String;)V
-	public final fun setHover (Ljava/lang/String;)V
+	public final fun getOnClick ()Lme/func/mod/reactive/ButtonClickHandler;
+	public final fun getOnLeftClick ()Lme/func/mod/reactive/ButtonClickHandler;
+	public final fun getOnMiddleClick ()Lme/func/mod/reactive/ButtonClickHandler;
+	public final fun getOnRightClick ()Lme/func/mod/reactive/ButtonClickHandler;
+	public fun getPrice ()J
+	public fun getPriceText ()Ljava/lang/String;
+	public fun getSale ()I
+	public fun getTexture ()Ljava/lang/String;
+	public fun getTitle ()Ljava/lang/String;
+	public fun getVault ()Ljava/lang/String;
+	public final fun hint (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun hover (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun hover (Ljava/util/Collection;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun hover ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun item (Lorg/bukkit/inventory/ItemStack;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun item (Lorg/bukkit/inventory/ItemStack;Z)Lme/func/mod/reactive/ReactiveButton;
+	public static synthetic fun item$default (Lme/func/mod/reactive/ReactiveButton;Lorg/bukkit/inventory/ItemStack;ZILjava/lang/Object;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun material (Lorg/bukkit/Material;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun onClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun onLeftClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun onMiddleClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun onRightClick (Lme/func/mod/reactive/ButtonClickHandler;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun price (J)Lme/func/mod/reactive/ReactiveButton;
+	public final fun price (JLjava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public static synthetic fun price$default (Lme/func/mod/reactive/ReactiveButton;JLjava/lang/String;ILjava/lang/Object;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun sale (I)Lme/func/mod/reactive/ReactiveButton;
+	public fun setBackgroundColor (Lme/func/protocol/data/color/RGB;)V
+	public fun setCommand (Ljava/lang/String;)V
+	public fun setDescription (Ljava/lang/String;)V
+	public fun setEnabled (Z)V
+	public fun setHint (Ljava/lang/String;)V
+	public fun setHover (Ljava/lang/String;)V
 	public final fun setItem (Lorg/bukkit/inventory/ItemStack;)V
-	public final fun setOnClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setOnLeftClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setOnMiddleClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setOnRightClick (Lme/func/mod/selection/ButtonClickHandler;)V
-	public final fun setPrice (J)V
-	public final fun setSpecial (Z)V
-	public final fun setTexture (Ljava/lang/String;)V
-	public final fun setTitle (Ljava/lang/String;)V
-	public final fun special (Z)Lme/func/mod/selection/Button;
-	public final fun texture (Ljava/lang/String;)Lme/func/mod/selection/Button;
-	public final fun texture (Lme/func/mod/data/Sprites;)Lme/func/mod/selection/Button;
-	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Button;
+	public final fun setOnClick (Lme/func/mod/reactive/ButtonClickHandler;)V
+	public final fun setOnLeftClick (Lme/func/mod/reactive/ButtonClickHandler;)V
+	public final fun setOnMiddleClick (Lme/func/mod/reactive/ButtonClickHandler;)V
+	public final fun setOnRightClick (Lme/func/mod/reactive/ButtonClickHandler;)V
+	public fun setPrice (J)V
+	public fun setPriceText (Ljava/lang/String;)V
+	public fun setSale (I)V
+	public fun setTexture (Ljava/lang/String;)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setVault (Ljava/lang/String;)V
+	public final fun special (Z)Lme/func/mod/reactive/ReactiveButton;
+	public final fun texture (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun texture (Lme/func/mod/conversation/data/Sprites;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
+	public final fun vault (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveButton;
 	public final fun withSale ()I
 	public final fun write (Lme/func/mod/conversation/ModTransfer;)V
 }
 
-public abstract interface class me/func/mod/selection/ButtonClickHandler {
-	public abstract fun handle (Lorg/bukkit/entity/Player;ILme/func/mod/selection/Button;)V
+public final class me/func/mod/reactive/ReactivePanel : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field Companion Lme/func/mod/reactive/ReactivePanel$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun delete ()V
+	public final fun delete (Ljava/util/Set;)V
+	public static synthetic fun delete$default (Lme/func/mod/reactive/ReactivePanel;Ljava/util/Set;ILjava/lang/Object;)V
+	public final fun getColor ()Lme/func/protocol/data/color/RGB;
+	public final fun getProgress ()D
+	public fun getSubscribersCount ()I
+	public final fun getText ()Ljava/lang/String;
+	public final fun getUuid ()Ljava/util/UUID;
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/util/List;)V
+	public final fun send ([Lorg/bukkit/entity/Player;)V
+	public final fun setColor (Lme/func/protocol/data/color/RGB;)V
+	public final fun setProgress (D)V
+	public final fun setText (Ljava/lang/String;)V
+	public final fun setUuid (Ljava/util/UUID;)V
+	public final fun unsubscribe (Ljava/lang/Iterable;)Z
+	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
 }
 
-public final class me/func/mod/selection/Choicer : me/func/mod/selection/Storage {
-	public static final field Companion Lme/func/mod/selection/Choicer$Companion;
+public final class me/func/mod/reactive/ReactivePanel$Builder {
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;[Lme/func/mod/selection/Button;)V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun add (Lme/func/mod/selection/Button;)V
-	public static final fun builder ()Lme/func/mod/selection/Choicer$Builder;
-	public fun buttons ([Lme/func/mod/selection/Button;)V
+	public fun <init> (Lme/func/mod/reactive/ReactivePanel;)V
+	public synthetic fun <init> (Lme/func/mod/reactive/ReactivePanel;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/reactive/ReactivePanel;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun getModel ()Lme/func/mod/reactive/ReactivePanel;
+	public final fun progress (D)Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun text (Ljava/lang/String;)Lme/func/mod/reactive/ReactivePanel$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactivePanel$Builder;
+}
+
+public final class me/func/mod/reactive/ReactivePanel$Companion {
+	public final fun builder ()Lme/func/mod/reactive/ReactivePanel$Builder;
+}
+
+public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/progress/Progress, me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field Companion Lme/func/mod/reactive/ReactiveProgress$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun delete ()V
+	public final fun delete (Ljava/util/Set;)V
+	public static synthetic fun delete$default (Lme/func/mod/reactive/ReactiveProgress;Ljava/util/Set;ILjava/lang/Object;)V
+	public final fun getLastUpdate ()J
+	public fun getProgress ()D
+	public fun getSubscribersCount ()I
+	public fun getText ()Ljava/lang/String;
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/util/List;)V
+	public final fun send ([Lorg/bukkit/entity/Player;)V
+	public final fun setLastUpdate (J)V
+	public fun setProgress (D)V
+	public fun setText (Ljava/lang/String;)V
+	public final fun unsubscribe (Ljava/lang/Iterable;)Z
+	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
+}
+
+public final class me/func/mod/reactive/ReactiveProgress$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/reactive/ReactiveProgress;)V
+	public synthetic fun <init> (Lme/func/mod/reactive/ReactiveProgress;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/reactive/ReactiveProgress;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun getModel ()Lme/func/mod/reactive/ReactiveProgress;
+	public final fun hideOnTab (Z)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun location (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun offsetX (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun offsetY (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun offsetZ (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun position (Lme/func/protocol/math/Position;)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun progress (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun scale (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun text (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactiveProgress$Builder;
+}
+
+public final class me/func/mod/reactive/ReactiveProgress$Companion {
+	public final fun builder ()Lme/func/mod/reactive/ReactiveProgress$Builder;
+}
+
+public final class me/func/mod/service/Services {
+	public static final field INSTANCE Lme/func/mod/service/Services;
+	public final fun getBalanceData (Lorg/bukkit/entity/Player;)Ljava/util/concurrent/CompletableFuture;
+	public final fun getDiscount (Lorg/bukkit/entity/Player;)Ljava/util/concurrent/CompletableFuture;
+}
+
+public final class me/func/mod/ui/Alert {
+	public static final field INSTANCE Lme/func/mod/ui/Alert;
+	public static final fun button (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/data/color/RGB;ZZ)Lme/func/protocol/ui/alert/NotificationButton;
+	public static synthetic fun button$default (Ljava/lang/String;Ljava/lang/String;Lme/func/protocol/data/color/RGB;ZZILjava/lang/Object;)Lme/func/protocol/ui/alert/NotificationButton;
+	public static final fun find (Ljava/lang/String;)Lme/func/protocol/ui/alert/NotificationData;
+	public static final fun notificationDataReplace (Lme/func/protocol/ui/alert/NotificationData;Ljava/lang/String;Ljava/lang/String;)Lme/func/protocol/ui/alert/NotificationData;
+	public static final fun put (Ljava/lang/String;Lme/func/protocol/ui/alert/NotificationData;)Lme/func/protocol/ui/alert/NotificationData;
+	public static final fun send (Lorg/bukkit/entity/Player;Ljava/lang/String;JLme/func/protocol/data/color/RGB;Lme/func/protocol/data/color/RGB;Ljava/lang/String;[Lme/func/protocol/ui/alert/NotificationButton;)V
+	public static final fun sendNotificationData (Lme/func/protocol/ui/alert/NotificationData;Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/Glow : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/ui/Glow;
+	public static final fun addPlace (Lme/func/protocol/data/color/RGB;DDD)Lme/func/protocol/world/GlowingPlace;
+	public static final fun addPlace (Lme/func/protocol/data/color/RGB;DDDLkotlin/jvm/functions/Function1;)Lme/func/protocol/world/GlowingPlace;
+	public static final fun addPlace (Lme/func/protocol/world/GlowingPlace;)Lme/func/protocol/world/GlowingPlace;
+	public static final fun addPlace (Lme/func/protocol/world/GlowingPlace;Ljava/util/function/Consumer;)Lme/func/protocol/world/GlowingPlace;
+	public static synthetic fun addPlace$default (Lme/func/protocol/data/color/RGB;DDDLkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/func/protocol/world/GlowingPlace;
+	public static final fun animate (Lorg/bukkit/entity/Player;DIII)V
+	public static final fun animate (Lorg/bukkit/entity/Player;DIIID)V
+	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;)V
+	public static final fun animate (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;D)V
+	public static synthetic fun animate$default (Lorg/bukkit/entity/Player;DIIIDILjava/lang/Object;)V
+	public static synthetic fun animate$default (Lorg/bukkit/entity/Player;DLme/func/protocol/data/color/RGB;DILjava/lang/Object;)V
+	public static final fun changePlaceColor (Lme/func/protocol/world/GlowingPlace;Lme/func/protocol/data/color/RGB;[Lorg/bukkit/entity/Player;)V
+	public static final fun clearPlaces ([Lorg/bukkit/entity/Player;)V
+	public final fun getGlowingPlaces ()Ljava/util/HashMap;
+	public final fun handle (Lorg/bukkit/event/player/PlayerMoveEvent;)V
+	public static final fun removePlace (Lme/func/protocol/world/GlowingPlace;[Lorg/bukkit/entity/Player;)Lme/func/protocol/world/GlowingPlace;
+	public static final fun set (Lorg/bukkit/entity/Player;IIID)V
+	public static final fun set (Lorg/bukkit/entity/Player;Lme/func/protocol/data/color/RGB;)V
+	public static final fun showAllPlaces (Lorg/bukkit/entity/Player;)V
+	public static final fun showLoadedPlace (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
+	public static final fun showPlace (Lorg/bukkit/entity/Player;Lme/func/protocol/world/GlowingPlace;)V
+}
+
+public final class me/func/mod/ui/MultiChat {
+	public static final field INSTANCE Lme/func/mod/ui/MultiChat;
+	public static final fun broadcast (Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/Collection;Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/Collection;Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/Collection;Lme/func/protocol/data/chat/ModChat;Ljava/lang/String;)V
+	public static final fun broadcast (Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun broadcast (Lme/func/protocol/data/chat/ModChat;Ljava/lang/String;)V
+	public static final fun createKey (Ljava/lang/String;Lme/func/protocol/data/chat/ModChat;)V
+	public static final fun registerHandler (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
+	public static final fun registerHandler (Ljava/util/UUID;Ljava/util/function/BiConsumer;)V
+	public static final fun registerHandler (Lme/func/protocol/data/chat/ModChat;Ljava/util/function/BiConsumer;)V
+	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
+	public static final fun removeChats (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
+	public static final fun removeChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/chat/ModChat;)V
+	public static final fun removeHandler (Ljava/lang/String;)V
+	public static final fun removeHandler (Ljava/util/UUID;)V
+	public static final fun removeHandler (Lme/func/protocol/data/chat/ModChat;)V
+	public static final fun removeKey (Ljava/lang/String;)V
+	public static final fun removeKey (Ljava/util/UUID;)V
+	public static final fun removeKey (Lme/func/protocol/data/chat/ModChat;)V
+	public static final fun sendChats (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
+	public static final fun sendChats (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/chat/ModChat;)V
+	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
+	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun sendMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/chat/ModChat;Ljava/lang/String;)V
+}
+
+public final class me/func/mod/ui/battlepass/BattlePass {
+	public static final field INSTANCE Lme/func/mod/ui/battlepass/BattlePass;
+	public final fun buy (Ljava/lang/String;Ljava/util/function/BiConsumer;)V
+	public static final fun create (Lme/func/mod/ui/battlepass/BattlePassData;)Lme/func/mod/ui/battlepass/BattlePassData;
+	public final fun getBattlePasses ()Ljava/util/HashMap;
+	public final fun new (ILkotlin/jvm/functions/Function1;)Lme/func/mod/ui/battlepass/BattlePassData;
+	public final fun onBuyAdvanced (Lme/func/mod/ui/battlepass/BattlePassData;Ljava/util/function/Consumer;)V
+	public final fun onBuyPage (Lme/func/mod/ui/battlepass/BattlePassData;Ljava/util/function/BiConsumer;)V
+	public final fun sale (Lme/func/mod/ui/battlepass/BattlePassData;D)V
+	public final fun send (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
+	public final fun send (Lorg/bukkit/entity/Player;Lme/func/mod/ui/battlepass/BattlePassData;)V
+	public final fun show (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lme/func/protocol/ui/battlepass/BattlePassUserData;)V
+	public final fun show (Lorg/bukkit/entity/Player;Lme/func/mod/ui/battlepass/BattlePassData;Lme/func/protocol/ui/battlepass/BattlePassUserData;)V
+}
+
+public final class me/func/mod/ui/battlepass/BattlePassData {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/UUID;Lme/func/protocol/ui/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;)V
+	public synthetic fun <init> (Ljava/util/UUID;Lme/func/protocol/ui/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()Ljava/util/UUID;
+	public final fun component2 ()Lme/func/protocol/ui/battlepass/BattlePassFacade;
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun component5 ()Ljava/util/function/Function;
+	public final fun component6 ()Ljava/util/function/Consumer;
+	public final fun component7 ()Ljava/util/function/BiConsumer;
+	public final fun copy (Ljava/util/UUID;Lme/func/protocol/ui/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;)Lme/func/mod/ui/battlepass/BattlePassData;
+	public static synthetic fun copy$default (Lme/func/mod/ui/battlepass/BattlePassData;Ljava/util/UUID;Lme/func/protocol/ui/battlepass/BattlePassFacade;Ljava/util/List;Ljava/util/List;Ljava/util/function/Function;Ljava/util/function/Consumer;Ljava/util/function/BiConsumer;ILjava/lang/Object;)Lme/func/mod/ui/battlepass/BattlePassData;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBuyAdvanced ()Ljava/util/function/Consumer;
+	public final fun getBuyPage ()Ljava/util/function/BiConsumer;
+	public final fun getFacade ()Lme/func/protocol/ui/battlepass/BattlePassFacade;
+	public final fun getPages ()Ljava/util/List;
+	public final fun getQuestStatusUpdater ()Ljava/util/function/Function;
+	public final fun getQuests ()Ljava/util/List;
+	public final fun getUuid ()Ljava/util/UUID;
+	public fun hashCode ()I
+	public final fun setBuyAdvanced (Ljava/util/function/Consumer;)V
+	public final fun setBuyPage (Ljava/util/function/BiConsumer;)V
+	public final fun setFacade (Lme/func/protocol/ui/battlepass/BattlePassFacade;)V
+	public final fun setPages (Ljava/util/List;)V
+	public final fun setQuestStatusUpdater (Ljava/util/function/Function;)V
+	public final fun setQuests (Ljava/util/List;)V
+	public final fun setUuid (Ljava/util/UUID;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/func/mod/ui/battlepass/BattlePassData$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/ui/battlepass/BattlePassData;)V
+	public synthetic fun <init> (Lme/func/mod/ui/battlepass/BattlePassData;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/ui/battlepass/BattlePassData;
+	public final fun component1 ()Lme/func/mod/ui/battlepass/BattlePassData;
+	public final fun copy (Lme/func/mod/ui/battlepass/BattlePassData;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public static synthetic fun copy$default (Lme/func/mod/ui/battlepass/BattlePassData$Builder;Lme/func/mod/ui/battlepass/BattlePassData;ILjava/lang/Object;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBattlepass ()Lme/func/mod/ui/battlepass/BattlePassData;
+	public fun hashCode ()I
+	public final fun onBuyAdvanced (Ljava/util/function/Consumer;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public final fun onBuyPage (Ljava/util/function/BiConsumer;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public final fun page (Lme/func/mod/ui/battlepass/BattlePassPageAdvanced;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public final fun pages ([Lme/func/mod/ui/battlepass/BattlePassPageAdvanced;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public final fun price (I)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public final fun salePercent (D)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public final fun tags ([Ljava/lang/String;)Lme/func/mod/ui/battlepass/BattlePassData$Builder;
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/func/mod/ui/battlepass/BattlePassPageAdvanced : me/func/protocol/ui/battlepass/BattlePassPage {
+	public fun <init> ()V
+	public fun <init> (IILjava/util/List;Ljava/util/List;)V
+	public synthetic fun <init> (IILjava/util/List;Ljava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lkotlin/jvm/functions/Function1;)V
+	public final fun component1 ()I
+	public final fun component2 ()I
+	public final fun component3 ()Ljava/util/List;
+	public final fun component4 ()Ljava/util/List;
+	public final fun copy (IILjava/util/List;Ljava/util/List;)Lme/func/mod/ui/battlepass/BattlePassPageAdvanced;
+	public static synthetic fun copy$default (Lme/func/mod/ui/battlepass/BattlePassPageAdvanced;IILjava/util/List;Ljava/util/List;ILjava/lang/Object;)Lme/func/mod/ui/battlepass/BattlePassPageAdvanced;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAdvancedItems ()Ljava/util/List;
+	public final fun getItems ()Ljava/util/List;
+	public fun getRequiredExp ()I
+	public fun getSkipPrice ()I
+	public fun hashCode ()I
+	public final fun setAdvancedItems (Ljava/util/List;)V
+	public final fun setItems (Ljava/util/List;)V
+	public fun setRequiredExp (I)V
+	public fun setSkipPrice (I)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/func/mod/ui/booster/Booster {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;D)V
+	public synthetic fun <init> (Ljava/lang/String;DILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()D
+	public final fun copy (Ljava/lang/String;D)Lme/func/mod/ui/booster/Booster;
+	public static synthetic fun copy$default (Lme/func/mod/ui/booster/Booster;Ljava/lang/String;DILjava/lang/Object;)Lme/func/mod/ui/booster/Booster;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getMultiplier ()D
+	public final fun getName ()Ljava/lang/String;
+	public fun hashCode ()I
+	public final fun setMultiplier (D)V
+	public final fun setName (Ljava/lang/String;)V
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class me/func/mod/ui/booster/BoosterBar {
+	public fun <init> ()V
+	public fun <init> (Ljava/util/List;Ljava/lang/String;Ljava/lang/String;ZD)V
+	public final fun close (Lorg/bukkit/entity/Player;)V
+	public final fun getProgress ()D
+	public final fun getSegments ()Ljava/util/List;
+	public final fun getSubtitle ()Ljava/lang/String;
+	public final fun getTitle ()Ljava/lang/String;
+	public final fun isShowBackground ()Z
+	public final fun open (Lorg/bukkit/entity/Player;)V
+	public final fun setProgress (D)V
+	public final fun setSegments (Ljava/util/List;)V
+	public final fun setShowBackground (Z)V
+	public final fun setSubtitle (Ljava/lang/String;)V
+	public final fun setTitle (Ljava/lang/String;)V
+}
+
+public final class me/func/mod/ui/booster/BoosterBarKt {
+	public static final fun boosterBar (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/booster/BoosterBar;
+	public static final fun boosterBarClose (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/ui/booster/CloseBoosterRequest;
+	public static final fun boosterBarOpen (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/ui/booster/OpenBoosterRequest;
+}
+
+public final class me/func/mod/ui/booster/BoosterKt {
+	public static final fun booster (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/booster/Booster;
+}
+
+public final class me/func/mod/ui/booster/Boosters {
+	public static final field INSTANCE Lme/func/mod/ui/booster/Boosters;
+	public static final fun send (Lorg/bukkit/entity/Player;[Lme/func/mod/ui/booster/Booster;)V
+}
+
+public final class me/func/mod/ui/dialog/Dialog : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field INSTANCE Lme/func/mod/ui/dialog/Dialog;
+	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/ui/dialog/Dialog;Ljava/lang/String;)V
+	public fun getSubscribersCount ()I
+	public fun isConstant ()Z
+	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public static final fun sendDialog (Lorg/bukkit/entity/Player;Lme/func/protocol/ui/dialog/Dialog;)V
+}
+
+public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field INSTANCE Lme/func/mod/ui/menu/MenuManager;
+	public static final fun bind (Lme/func/mod/ui/menu/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
+	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
+	public final fun getHandleMap ()Ljava/util/HashMap;
+	public final fun getMenuStacks ()Ljava/util/HashMap;
+	public final fun getReconnectMap ()Ljava/util/HashMap;
+	public fun getSubscribersCount ()I
+	public fun isConstant ()Z
+	public final fun push (Lorg/bukkit/entity/Player;Lme/func/mod/ui/menu/Storage;)Lme/func/mod/ui/menu/Storage;
+	public final fun reactive (Lme/func/mod/reactive/ReactiveButton;Lkotlin/jvm/functions/Function1;)V
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/menu/MenuManagerKt {
+	public static final fun button (Lkotlin/jvm/functions/Function1;)Lme/func/mod/reactive/ReactiveButton;
+	public static final fun choicer (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/choicer/Choicer;
+	public static final fun dailyReward (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/daily/DailyRewardMenu;
+	public static final fun selection (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/selection/Selection;
+}
+
+public abstract interface class me/func/mod/ui/menu/Openable {
+	public abstract fun getUuid ()Ljava/util/UUID;
+	public abstract fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public abstract fun setUuid (Ljava/util/UUID;)V
+}
+
+public abstract interface class me/func/mod/ui/menu/Paginated : me/func/mod/ui/menu/Storage, me/func/protocol/ui/menu/Page {
+	public abstract fun getContentByPage (I)Ljava/util/List;
+	public abstract fun getPageCapacity ()I
+	public abstract fun getPageCount ()I
+	public abstract fun isPageExists (I)Z
+	public abstract fun sendPage (ILorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/menu/Paginated$DefaultImpls {
+	public static fun add (Lme/func/mod/ui/menu/Paginated;Lme/func/mod/reactive/ReactiveButton;)V
+	public static fun buttons (Lme/func/mod/ui/menu/Paginated;[Lme/func/mod/reactive/ReactiveButton;)V
+	public static fun clear (Lme/func/mod/ui/menu/Paginated;)V
+	public static fun getContentByPage (Lme/func/mod/ui/menu/Paginated;I)Ljava/util/List;
+	public static fun getPageCapacity (Lme/func/mod/ui/menu/Paginated;)I
+	public static fun getPageCount (Lme/func/mod/ui/menu/Paginated;)I
+	public static fun isPageExists (Lme/func/mod/ui/menu/Paginated;I)Z
+	public static fun sendPage (Lme/func/mod/ui/menu/Paginated;ILorg/bukkit/entity/Player;)V
+}
+
+public abstract interface class me/func/mod/ui/menu/Storage : me/func/mod/ui/menu/Openable {
+	public abstract fun add (Lme/func/mod/reactive/ReactiveButton;)V
+	public abstract fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
+	public abstract fun clear ()V
+	public abstract fun getInfo ()Ljava/lang/String;
+	public abstract fun getStorage ()Ljava/util/List;
+	public abstract fun getTitle ()Ljava/lang/String;
+	public abstract fun setInfo (Ljava/lang/String;)V
+	public abstract fun setStorage (Ljava/util/List;)V
+	public abstract fun setTitle (Ljava/lang/String;)V
+}
+
+public final class me/func/mod/ui/menu/Storage$DefaultImpls {
+	public static fun add (Lme/func/mod/ui/menu/Storage;Lme/func/mod/reactive/ReactiveButton;)V
+	public static fun buttons (Lme/func/mod/ui/menu/Storage;[Lme/func/mod/reactive/ReactiveButton;)V
+	public static fun clear (Lme/func/mod/ui/menu/Storage;)V
+}
+
+public final class me/func/mod/ui/menu/choicer/Choicer : me/func/mod/ui/menu/Storage {
+	public static final field Companion Lme/func/mod/ui/menu/choicer/Choicer$Companion;
+	public fun <init> ()V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;Z)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/List;ZILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
+	public static final fun builder ()Lme/func/mod/ui/menu/choicer/Choicer$Builder;
+	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
 	public fun clear ()V
 	public final fun getAllowClosing ()Z
 	public final fun getDescription ()Ljava/lang/String;
+	public fun getInfo ()Ljava/lang/String;
 	public fun getStorage ()Ljava/util/List;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Storage;
 	public final fun setAllowClosing (Z)V
 	public final fun setDescription (Ljava/lang/String;)V
+	public fun setInfo (Ljava/lang/String;)V
 	public fun setStorage (Ljava/util/List;)V
 	public fun setTitle (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public final class me/func/mod/selection/Choicer$Builder {
+public final class me/func/mod/ui/menu/choicer/Choicer$Builder {
 	public fun <init> ()V
-	public final fun build ()Lme/func/mod/selection/Choicer;
-	public final fun description (Ljava/lang/String;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun storage (Ljava/util/List;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun storage ([Lme/func/mod/selection/Button;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Choicer$Builder;
-	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/selection/Choicer$Builder;
+	public final fun build ()Lme/func/mod/ui/menu/choicer/Choicer;
+	public final fun description (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
+	public final fun info (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
+	public final fun storage (Ljava/util/List;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
+	public final fun storage ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 }
 
-public final class me/func/mod/selection/Choicer$Companion {
-	public final fun builder ()Lme/func/mod/selection/Choicer$Builder;
+public final class me/func/mod/ui/menu/choicer/Choicer$Companion {
+	public final fun builder ()Lme/func/mod/ui/menu/choicer/Choicer$Builder;
 }
 
-public final class me/func/mod/selection/Confirmation : me/func/mod/selection/Openable {
+public final class me/func/mod/ui/menu/confirmation/Confirmation : me/func/mod/ui/menu/Openable {
+	public fun <init> (Ljava/lang/String;Ljava/util/function/Consumer;Ljava/util/function/Consumer;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/util/function/Consumer;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun <init> (Ljava/util/List;Ljava/util/function/Consumer;)V
 	public fun <init> ([Ljava/lang/String;Ljava/util/function/Consumer;)V
 	public final fun getOnAccept ()Ljava/util/function/Consumer;
 	public final fun getOnDeny ()Ljava/util/function/Consumer;
 	public final fun getText ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Confirmation;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/confirmation/Confirmation;
 	public final fun setOnAccept (Ljava/util/function/Consumer;)V
 	public final fun setOnDeny (Ljava/util/function/Consumer;)V
 	public final fun setText (Ljava/lang/String;)V
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public class me/func/mod/selection/DonateSelection : me/func/mod/selection/Selection {
+public final class me/func/mod/ui/menu/daily/DailyRewardMenu : me/func/mod/ui/menu/Storage {
+	public static final field Companion Lme/func/mod/ui/menu/daily/DailyRewardMenu$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Z)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZI)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZII)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;ZIILjava/util/List;)V
-	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;ZIILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun getMoney ()Ljava/lang/String;
-	public final fun getVault ()Ljava/lang/String;
-	public final fun getWithGlobalSale ()Z
-	public final fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/DonateSelection;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
-	public final fun setMoney (Ljava/lang/String;)V
-	public final fun setVault (Ljava/lang/String;)V
-	public final synthetic fun setWithGlobalSale (Z)V
-	public final fun withGlobalSale (Z)V
+	public fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/util/List;Ljava/lang/String;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
+	public static final fun builder ()Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
+	public fun clear ()V
+	public final fun getCurrentDay ()I
+	public fun getInfo ()Ljava/lang/String;
+	public fun getStorage ()Ljava/util/List;
+	public final fun getTaken ()Z
+	public fun getTitle ()Ljava/lang/String;
+	public fun getUuid ()Ljava/util/UUID;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Storage;
+	public final fun setCurrentDay (I)V
+	public fun setInfo (Ljava/lang/String;)V
+	public fun setStorage (Ljava/util/List;)V
+	public final fun setTaken (Z)V
+	public fun setTitle (Ljava/lang/String;)V
+	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public final class me/func/mod/selection/MenuManager : org/bukkit/event/Listener {
-	public static final field INSTANCE Lme/func/mod/selection/MenuManager;
-	public static final fun bind (Lme/func/mod/selection/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
-	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
-	public final fun getHandleMap ()Ljava/util/HashMap;
-	public final fun getMenuStacks ()Ljava/util/HashMap;
-	public final fun getReconnectMap ()Ljava/util/HashMap;
+public final class me/func/mod/ui/menu/daily/DailyRewardMenu$Builder {
+	public fun <init> ()V
+	public final fun build ()Lme/func/mod/ui/menu/daily/DailyRewardMenu;
+	public final fun currentDay (I)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun rewards (Ljava/util/List;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun rewards ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun taken (Z)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+}
+
+public final class me/func/mod/ui/menu/daily/DailyRewardMenu$Companion {
+	public final fun builder ()Lme/func/mod/ui/menu/daily/DailyRewardMenu$Builder;
+}
+
+public final class me/func/mod/ui/menu/queue/QueueView : me/func/mod/ui/menu/Openable {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
+	public final fun close (Lorg/bukkit/entity/Player;)V
+	public final fun getDescription ()Ljava/lang/String;
+	public final fun getIcon ()Ljava/lang/String;
+	public final fun getOnLeave ()Ljava/util/function/Consumer;
+	public final fun getTitle ()Ljava/lang/String;
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun onLeave (Ljava/util/function/Consumer;)V
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/queue/QueueView;
+	public final fun setDescription (Ljava/lang/String;)V
+	public final fun setIcon (Ljava/lang/String;)V
+	public final fun setOnLeave (Ljava/util/function/Consumer;)V
+	public final fun setTitle (Ljava/lang/String;)V
+	public fun setUuid (Ljava/util/UUID;)V
+	public final fun update (Ljava/lang/String;)Lme/func/mod/ui/menu/queue/QueueView;
+	public final fun update (Lorg/bukkit/entity/Player;Ljava/lang/String;)Lme/func/mod/ui/menu/queue/QueueView;
+}
+
+public final class me/func/mod/ui/menu/queue/QueueViewer : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/ui/menu/queue/QueueViewer;
+	public final fun getViews ()Ljava/util/HashMap;
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
-	public static final fun open (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Storage;
-	public static synthetic fun open$default (Lme/func/mod/selection/Storage;Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/util/List;Lkotlin/jvm/functions/Function1;ILjava/lang/Object;)Lme/func/mod/selection/Storage;
-	public final fun reactive (Lme/func/mod/selection/Button;Lkotlin/jvm/functions/Function1;)V
+	public final fun stop ([Lorg/bukkit/entity/Player;)V
 }
 
-public final class me/func/mod/selection/MenuManagerKt {
-	public static final fun button (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Button;
-	public static final fun choicer (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Choicer;
-	public static final fun selection (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/Selection;
+public final class me/func/mod/ui/menu/queue/QueueViewerKt {
+	public static final fun queueView (Lkotlin/jvm/functions/Function1;)Lme/func/mod/ui/menu/queue/QueueView;
 }
 
-public abstract interface class me/func/mod/selection/Openable {
-	public abstract fun getUuid ()Ljava/util/UUID;
-	public abstract fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public abstract fun setUuid (Ljava/util/UUID;)V
-}
-
-public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Openable {
+public final class me/func/mod/ui/menu/recconnct/Reconnect : me/func/mod/ui/menu/Openable {
 	public fun <init> (ILjava/util/function/Consumer;)V
 	public fun <init> (Ljava/lang/String;ILjava/lang/String;Ljava/util/function/Consumer;)V
 	public fun <init> (Ljava/util/function/Consumer;)V
@@ -749,8 +970,8 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 	public final fun getSecondsLeft ()I
 	public final fun getText ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Reconnect;
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/recconnct/Reconnect;
 	public final fun setHint (Ljava/lang/String;)V
 	public final fun setOnClick (Ljava/util/function/Consumer;)V
 	public final fun setSecondsLeft (I)V
@@ -758,28 +979,31 @@ public final class me/func/mod/selection/Reconnect : me/func/mod/selection/Opena
 	public fun setUuid (Ljava/util/UUID;)V
 }
 
-public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
-	public static final field Companion Lme/func/mod/selection/Selection$Companion;
+public class me/func/mod/ui/menu/selection/Selection : me/func/protocol/ui/menu/SelectionModel, me/func/mod/ui/menu/Paginated {
+	public static final field Companion Lme/func/mod/ui/menu/selection/Selection$Companion;
 	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II[Lme/func/mod/selection/Button;)V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;)V
-	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public fun add (Lme/func/mod/selection/Button;)V
-	public static final fun builder ()Lme/func/mod/selection/Selection$Builder;
-	public fun buttons ([Lme/func/mod/selection/Button;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;Ljava/util/function/Consumer;)V
+	public synthetic fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IILjava/util/List;Ljava/util/function/Consumer;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun add (Lme/func/mod/reactive/ReactiveButton;)V
+	public static final fun builder ()Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public fun buttons ([Lme/func/mod/reactive/ReactiveButton;)V
 	public fun clear ()V
 	public fun getColumns ()I
+	public fun getContentByPage (I)Ljava/util/List;
 	public fun getHint ()Ljava/lang/String;
 	public fun getMoney ()Ljava/lang/String;
+	public fun getPageCapacity ()I
+	public fun getPageCount ()I
 	public fun getRows ()I
 	public fun getStorage ()Ljava/util/List;
 	public final fun getTick ()Ljava/util/function/Consumer;
 	public fun getTitle ()Ljava/lang/String;
 	public fun getUuid ()Ljava/util/UUID;
 	public fun getVault ()Ljava/lang/String;
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Storage;
+	public fun isPageExists (I)Z
+	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Openable;
+	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/menu/Paginated;
+	public fun sendPage (ILorg/bukkit/entity/Player;)V
 	public fun setColumns (I)V
 	public fun setHint (Ljava/lang/String;)V
 	public fun setMoney (Ljava/lang/String;)V
@@ -791,96 +1015,128 @@ public class me/func/mod/selection/Selection : me/func/mod/selection/Storage {
 	public fun setVault (Ljava/lang/String;)V
 }
 
-public final class me/func/mod/selection/Selection$Builder {
+public final class me/func/mod/ui/menu/selection/Selection$Builder {
 	public fun <init> ()V
-	public final fun build ()Lme/func/mod/selection/Selection;
-	public final fun hint (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
-	public final fun money (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
-	public final fun rows (I)Lme/func/mod/selection/Selection$Builder;
-	public final fun storage (Ljava/util/List;)Lme/func/mod/selection/Selection$Builder;
-	public final fun storage ([Lme/func/mod/selection/Button;)Lme/func/mod/selection/Selection$Builder;
-	public final fun title (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
-	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/selection/Selection$Builder;
-	public final fun vault (Ljava/lang/String;)Lme/func/mod/selection/Selection$Builder;
+	public final fun build ()Lme/func/mod/ui/menu/selection/Selection;
+	public final fun columns (I)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun hint (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun money (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun rows (I)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun storage (Ljava/util/List;)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun storage ([Lme/func/mod/reactive/ReactiveButton;)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/ui/menu/selection/Selection$Builder;
+	public final fun vault (Ljava/lang/String;)Lme/func/mod/ui/menu/selection/Selection$Builder;
 }
 
-public final class me/func/mod/selection/Selection$Companion {
-	public final fun builder ()Lme/func/mod/selection/Selection$Builder;
+public final class me/func/mod/ui/menu/selection/Selection$Companion {
+	public final fun builder ()Lme/func/mod/ui/menu/selection/Selection$Builder;
 }
 
-public abstract interface class me/func/mod/selection/Storage : me/func/mod/selection/Openable {
-	public abstract fun add (Lme/func/mod/selection/Button;)V
-	public abstract fun buttons ([Lme/func/mod/selection/Button;)V
-	public abstract fun clear ()V
-	public abstract fun getStorage ()Ljava/util/List;
-	public abstract fun getTitle ()Ljava/lang/String;
-	public abstract fun setStorage (Ljava/util/List;)V
-	public abstract fun setTitle (Ljava/lang/String;)V
-}
-
-public final class me/func/mod/selection/Storage$DefaultImpls {
-	public static fun add (Lme/func/mod/selection/Storage;Lme/func/mod/selection/Button;)V
-	public static fun buttons (Lme/func/mod/selection/Storage;[Lme/func/mod/selection/Button;)V
-	public static fun clear (Lme/func/mod/selection/Storage;)V
-}
-
-public final class me/func/mod/selection/queue/QueueView : me/func/mod/selection/Openable {
-	public fun <init> ()V
-	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V
-	public final fun close (Lorg/bukkit/entity/Player;)V
-	public final fun getDescription ()Ljava/lang/String;
-	public final fun getIcon ()Ljava/lang/String;
-	public final fun getOnLeave ()Ljava/util/function/Consumer;
-	public final fun getTitle ()Ljava/lang/String;
-	public fun getUuid ()Ljava/util/UUID;
-	public final fun onLeave (Ljava/util/function/Consumer;)V
-	public synthetic fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/Openable;
-	public fun open (Lorg/bukkit/entity/Player;)Lme/func/mod/selection/queue/QueueView;
-	public final fun setDescription (Ljava/lang/String;)V
-	public final fun setIcon (Ljava/lang/String;)V
-	public final fun setOnLeave (Ljava/util/function/Consumer;)V
-	public final fun setTitle (Ljava/lang/String;)V
-	public fun setUuid (Ljava/util/UUID;)V
-	public final fun update (Ljava/lang/String;)Lme/func/mod/selection/queue/QueueView;
-	public final fun update (Lorg/bukkit/entity/Player;Ljava/lang/String;)Lme/func/mod/selection/queue/QueueView;
-}
-
-public final class me/func/mod/selection/queue/QueueViewer : org/bukkit/event/Listener {
-	public static final field INSTANCE Lme/func/mod/selection/queue/QueueViewer;
-	public final fun getViews ()Ljava/util/HashMap;
+public final class me/func/mod/ui/scoreboard/ScoreBoard : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/ui/scoreboard/ScoreBoard;
+	public static final fun builder ()Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public static final fun get (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoardScheme;
+	public final fun handle (Lorg/bukkit/event/inventory/InventoryCloseEvent;)V
+	public final fun handle (Lorg/bukkit/event/player/PlayerKickEvent;)V
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
-	public final fun stop ([Lorg/bukkit/entity/Player;)V
+	public static final fun hide (Lorg/bukkit/entity/Player;)V
+	public static final fun remove (Ljava/lang/String;)V
+	public static final fun subscribe (Ljava/lang/String;Ljava/lang/Iterable;)V
+	public static final fun subscribe (Ljava/lang/String;[Lorg/bukkit/entity/Player;)V
+	public static final fun unsubscribe (Lorg/bukkit/entity/Player;)V
 }
 
-public final class me/func/mod/selection/queue/QueueViewerKt {
-	public static final fun queueView (Lkotlin/jvm/functions/Function1;)Lme/func/mod/selection/queue/QueueView;
+public final class me/func/mod/ui/scoreboard/ScoreBoard$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/ui/scoreboard/ScoreBoardScheme;)V
+	public synthetic fun <init> (Lme/func/mod/ui/scoreboard/ScoreBoardScheme;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/ui/scoreboard/ScoreBoardScheme;
+	public final fun dynamic (Ljava/lang/String;Ljava/util/function/Function;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun dynamic (Ljava/util/function/Function;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun empty ()Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun footer (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun header (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun key (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun line (Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
+	public final fun line (Ljava/lang/String;Ljava/lang/String;)Lme/func/mod/ui/scoreboard/ScoreBoard$Builder;
 }
 
-public final class me/func/mod/service/Services {
-	public static final field INSTANCE Lme/func/mod/service/Services;
-	public final fun getBalanceData (Lorg/bukkit/entity/Player;)Ljava/util/concurrent/CompletableFuture;
-	public final fun getDiscount (Lorg/bukkit/entity/Player;)Ljava/util/concurrent/CompletableFuture;
+public abstract interface class me/func/mod/ui/scoreboard/ScoreBoardRaw {
+	public abstract fun get (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/scoreboard/ScoreBoardRecord;
+	public abstract fun write (Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
 }
 
-public final class me/func/mod/util/FilesKt {
-	public static final fun dir (Ljava/lang/String;)Ljava/nio/file/Path;
-	public static final fun fileLastName (Ljava/lang/String;)Ljava/lang/String;
-	public static final fun fileLastName (Ljava/nio/file/Path;)Ljava/lang/String;
-	public static final fun listFiles (Ljava/lang/String;)Ljava/util/List;
+public final class me/func/mod/ui/scoreboard/ScoreBoardRaw$DefaultImpls {
+	public static fun write (Lme/func/mod/ui/scoreboard/ScoreBoardRaw;Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/scoreboard/ScoreBoardRecord {
+	public fun <init> (Ljava/lang/Object;Ljava/lang/Object;)V
+	public final fun getLeft ()Ljava/lang/Object;
+	public final fun getRight ()Ljava/lang/Object;
+	public final fun setLeft (Ljava/lang/Object;)V
+	public final fun setRight (Ljava/lang/Object;)V
+}
+
+public final class me/func/mod/ui/scoreboard/ScoreBoardScheme {
+	public fun <init> ()V
+	public fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;JLjava/util/List;)V
+	public synthetic fun <init> (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;JLjava/util/List;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun bind (Lorg/bukkit/entity/Player;)V
+	public final fun component1 ()Ljava/lang/String;
+	public final fun component2 ()Ljava/lang/String;
+	public final fun component3 ()Ljava/lang/String;
+	public final fun component4 ()Ljava/util/UUID;
+	public final fun component5 ()J
+	public final fun component6 ()Ljava/util/List;
+	public final fun copy (Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;JLjava/util/List;)Lme/func/mod/ui/scoreboard/ScoreBoardScheme;
+	public static synthetic fun copy$default (Lme/func/mod/ui/scoreboard/ScoreBoardScheme;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/util/UUID;JLjava/util/List;ILjava/lang/Object;)Lme/func/mod/ui/scoreboard/ScoreBoardScheme;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getContent ()Ljava/util/List;
+	public final fun getFooter ()Ljava/lang/String;
+	public final fun getHeader ()Ljava/lang/String;
+	public final fun getKey ()Ljava/lang/String;
+	public final fun getLastUpdateTimestamp ()J
+	public final fun getUuid ()Ljava/util/UUID;
+	public fun hashCode ()I
+	public final fun hide (Lorg/bukkit/entity/Player;)V
+	public final fun setContent (Ljava/util/List;)V
+	public final fun setFooter (Ljava/lang/String;)V
+	public final fun setHeader (Ljava/lang/String;)V
+	public final fun setKey (Ljava/lang/String;)V
+	public final fun setLastUpdateTimestamp (J)V
+	public final fun show (Lorg/bukkit/entity/Player;)V
+	public fun toString ()Ljava/lang/String;
+	public final fun update (Ljava/lang/Iterable;)V
+	public final fun update ([Lorg/bukkit/entity/Player;)V
+	public final fun updateByUUID (Ljava/lang/Iterable;)V
+	public final fun updateByUUID ([Ljava/util/UUID;)V
+}
+
+public final class me/func/mod/ui/scoreboard/raw/RawConstant : me/func/mod/ui/scoreboard/ScoreBoardRaw {
+	public fun <init> (Ljava/lang/Object;Ljava/lang/Object;)V
+	public fun get (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/scoreboard/ScoreBoardRecord;
+	public fun write (Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/scoreboard/raw/RawDynamic : me/func/mod/ui/scoreboard/ScoreBoardRaw {
+	public fun <init> (Ljava/util/function/Function;)V
+	public fun get (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/scoreboard/ScoreBoardRecord;
+	public final fun getAccept ()Ljava/util/function/Function;
+	public final fun setAccept (Ljava/util/function/Function;)V
+	public fun write (Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/scoreboard/raw/RawEmpty : me/func/mod/ui/scoreboard/ScoreBoardRaw {
+	public static final field INSTANCE Lme/func/mod/ui/scoreboard/raw/RawEmpty;
+	public fun get (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/scoreboard/ScoreBoardRecord;
+	public fun write (Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
 }
 
 public final class me/func/mod/util/LogKt {
 	public static final fun log (Ljava/lang/String;)V
 	public static final fun warn (Ljava/lang/String;)V
-}
-
-public final class me/func/mod/util/MouseButton : java/lang/Enum {
-	public static final field LEFT Lme/func/mod/util/MouseButton;
-	public static final field MIDDLE Lme/func/mod/util/MouseButton;
-	public static final field RIGHT Lme/func/mod/util/MouseButton;
-	public static fun valueOf (Ljava/lang/String;)Lme/func/mod/util/MouseButton;
-	public static fun values ()[Lme/func/mod/util/MouseButton;
 }
 
 public final class me/func/mod/util/Utils {
@@ -891,7 +1147,47 @@ public final class me/func/mod/util/Utils {
 	public static final fun command (Ljava/lang/String;Lorg/apache/logging/log4j/util/BiConsumer;)V
 	public static final fun consoleCommand (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun listener ([Lorg/bukkit/event/Listener;)V
+	public static final fun subscriber ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)Z
 	public static final synthetic fun unit (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
 	public static final synthetic fun unit (Lkotlin/jvm/functions/Function0;)V
+}
+
+public final class me/func/mod/world/Banners {
+	public static final field INSTANCE Lme/func/mod/world/Banners;
+	public static final fun add (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
+	public static final fun content (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
+	public static final fun content (Lorg/bukkit/entity/Player;Lme/func/protocol/data/element/Banner;Ljava/lang/String;)V
+	public final fun eyeLocation (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
+	public final fun getBanners ()Ljava/util/HashMap;
+	public final fun harmonicVibrations (Lme/func/protocol/data/element/Banner;Lme/func/protocol/math/Dimension;DDD)V
+	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
+	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
+	public final fun location (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
+	public final synthetic fun new (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/data/element/Banner;
+	public static final synthetic fun new (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
+	public static final fun remove (Ljava/util/UUID;)V
+	public final fun setBanners (Ljava/util/HashMap;)V
+	public final fun shineBlocks (Lme/func/protocol/data/element/Banner;Z)V
+	public static final fun show (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
+	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
+	public static final fun showAll (Lorg/bukkit/entity/Player;)V
+	public final fun target (Lme/func/protocol/data/element/Banner;Lorg/bukkit/entity/LivingEntity;DDD)V
+	public static synthetic fun target$default (Lme/func/mod/world/Banners;Lme/func/protocol/data/element/Banner;Lorg/bukkit/entity/LivingEntity;DDDILjava/lang/Object;)V
+}
+
+public final class me/func/mod/world/Npc {
+	public static final field INSTANCE Lme/func/mod/world/Npc;
+	public static final fun clear ()V
+	public final fun getNpcs ()Ljava/util/HashMap;
+	public static final fun hide (ILorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
+	public static final fun kill (I)Lkotlin/Unit;
+	public static final fun link (Lme/func/protocol/world/npc/NpcData;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun location (Lme/func/protocol/world/npc/NpcData;Lorg/bukkit/Location;)V
+	public final fun npc (Lkotlin/jvm/functions/Function1;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun onClick (Lme/func/protocol/world/npc/NpcData;Ljava/util/function/Consumer;)V
+	public static final fun show (ILorg/bukkit/entity/Player;)Lme/func/mod/conversation/data/NpcSmart;
+	public final fun skin (Lme/func/protocol/world/npc/NpcData;Ljava/lang/String;)V
+	public final fun skin (Lme/func/protocol/world/npc/NpcData;Ljava/util/UUID;)V
+	public static final fun spawn (I)Lkotlin/Unit;
 }
 

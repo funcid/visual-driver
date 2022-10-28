@@ -1,5 +1,6 @@
 package lootbox
 
+import dev.xdark.clientapi.event.input.KeyPress
 import dev.xdark.clientapi.event.input.MousePress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.network.PluginMessage
@@ -7,10 +8,10 @@ import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.feder.NetUtil
+import io.netty.buffer.Unpooled
 import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.Display
 import ru.cristalix.clientapi.JavaMod.clientApi
-import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
@@ -18,7 +19,9 @@ import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 
 class LootboxMod {
+
     init {
+
         val crateScreen = CrateScreen()
         var ready = false
         var pressed = false
@@ -29,7 +32,10 @@ class LootboxMod {
 
             if (crateScreen.opened && Mouse.isButtonDown(0)) {
                 crateScreen.opened = false
+                crateScreen.acceptClose()
                 crateScreen.close()
+                UIEngine.clientApi.minecraft().setIngameFocus()
+                UIEngine.clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
                 return@registerHandler
             }
 
@@ -50,7 +56,7 @@ class LootboxMod {
                     else {
                         pressed = false
                         ready = false
-                        open()
+                        acceptOpen()
                         if (hasNextItem()) {
                             UIEngine.schedule(0.5) {
                                 pressed = false
@@ -85,14 +91,17 @@ class LootboxMod {
                     loot.add(Loot(item, name, rarity))
                 }
 
-                clientApi.minecraft().setIngameNotInFocus()
-                crateScreen.close()
+                crateScreen.acceptClose()
+                crateScreen.open()
                 crateScreen.setup(loot)
                 crateScreen.prepareToOpen()
                 ready = true
             } else if (channel == "lootbox:close") {
-                crateScreen.close()
+                crateScreen.acceptClose()
                 ready = false
+                crateScreen.close()
+                UIEngine.clientApi.minecraft().setIngameFocus()
+                UIEngine.clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
             }
         }
 

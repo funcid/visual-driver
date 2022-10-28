@@ -3,9 +3,10 @@ package me.func.mod.conversation
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.ByteBufUtil
 import io.netty.buffer.Unpooled
+import me.func.atlas.Atlas.download
+import me.func.atlas.util.fileLastName
 import me.func.mod.Kit
 import me.func.mod.MOD_LOCAL_DIR_NAME
-import me.func.mod.util.fileLastName
 import me.func.mod.util.warn
 import net.minecraft.server.v1_12_R1.PacketDataSerializer
 import net.minecraft.server.v1_12_R1.PacketPlayOutCustomPayload
@@ -18,7 +19,6 @@ import ru.cristalix.core.util.UtilNetty
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
-import java.net.URL
 import java.nio.file.*
 import java.nio.file.attribute.BasicFileAttributes
 import kotlin.io.path.absolutePathString
@@ -29,33 +29,8 @@ object ModLoader {
 
     @JvmStatic
     @JvmOverloads
-    fun download(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME): String {
-        return try {
-            val dir = Paths.get(saveDir)
-            if (Files.notExists(dir))
-                Files.createDirectory(dir)
-
-            val website = URL(fileUrl)
-            val file = File(saveDir + "/" + fileUrl.fileLastName())
-            file.createNewFile()
-            website.openStream().use { `in` ->
-                Files.copy(
-                    `in`,
-                    file.toPath(),
-                    StandardCopyOption.REPLACE_EXISTING
-                )
-            }
-            file.path
-        } catch (exception: Exception) {
-            warn(exception.message ?: "Download failure! File: $fileUrl, directory: $saveDir")
-            ""
-        }
-    }
-
-    @JvmStatic
-    @JvmOverloads
     fun loadFromWeb(fileUrl: String, saveDir: String = MOD_LOCAL_DIR_NAME) =
-        load(download(fileUrl, saveDir))
+        load(download(fileUrl, saveDir, cache = false))
 
     @JvmStatic
     fun loadManyFromWeb(saveDir: String = MOD_LOCAL_DIR_NAME, vararg fileUrls: String) =
@@ -93,7 +68,10 @@ object ModLoader {
 
     @JvmStatic
     @JvmOverloads
-    fun load(file: File, overload: Boolean = false) = load(file.path.fileLastName(), file.inputStream(), overload)
+    fun load(file: File?, overload: Boolean = false) {
+        if (file == null) return
+        load(file.path.fileLastName(), file.inputStream(), overload)
+    }
 
     @JvmStatic
     @JvmOverloads

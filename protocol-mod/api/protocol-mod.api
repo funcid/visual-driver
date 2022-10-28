@@ -95,10 +95,10 @@ public final class me/func/protocol/personalization/GraffitiPlaced {
 }
 
 public final class me/func/protocol/personalization/Sticker : me/func/protocol/Unique {
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/DropRare;J)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;J)V
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOpenTime ()J
-	public final fun getRare ()Lme/func/protocol/DropRare;
+	public final fun getRare ()Lme/func/protocol/data/rare/DropRare;
 	public fun getUuid ()Ljava/util/UUID;
 }
 

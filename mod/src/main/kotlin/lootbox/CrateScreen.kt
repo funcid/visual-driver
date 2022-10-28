@@ -1,15 +1,18 @@
 package lootbox
 
+import Main.Companion.menuStack
 import dev.xdark.clientapi.item.Item
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.opengl.RenderHelper
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 import org.lwjgl.util.glu.GLU
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.UIEngine.clientApi
+import ru.cristalix.uiengine.element.ContextGui
 import ru.cristalix.uiengine.element.ItemElement
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.BOTTOM
@@ -25,8 +28,15 @@ import ru.cristalix.uiengine.utility.item
 import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
-class CrateScreen {
-    @JvmField var opened = false
+class CrateScreen : ContextGui() {
+
+    var opened = false
+
+    init {
+        onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE)
+            clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
+        }
+    }
 
     @JvmField val rotationIntensity = rectangle {
         color.alpha = 0.6
@@ -155,7 +165,6 @@ class CrateScreen {
         textureSize = V3(64.0, 64.0)
 
         addChild(cube {
-
             align = V3(0.5, 0.0, 0.0)
             origin = V3(0.5, 0.0, 1.0)
             offset.y = 3.0
@@ -247,7 +256,7 @@ class CrateScreen {
 
         addChild(body2)
 
-        UIEngine.overlayContext.addChild(background, text, this, vignette, rarityText, nameText)
+        this@CrateScreen.addChild(background, text, this, vignette, rarityText, nameText)
     }
 
     private lateinit var loot: List<Loot>
@@ -313,7 +322,7 @@ class CrateScreen {
         rarityText.color.alpha = 0.0
     }
 
-    fun close() {
+    fun acceptClose() {
         background.enabled = false
         text.color.alpha = 0.0
         perspective.enabled = false
@@ -330,7 +339,7 @@ class CrateScreen {
         }
     }
 
-    fun open() {
+    fun acceptOpen() {
         setupNextItem()
         text.color.alpha = 0.0
         itemRect.enabled = true

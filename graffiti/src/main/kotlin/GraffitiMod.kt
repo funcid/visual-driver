@@ -9,7 +9,7 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
-import me.func.protocol.DropRare
+import me.func.protocol.data.rare.DropRare
 import me.func.protocol.personalization.*
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
@@ -317,7 +317,9 @@ class GraffitiMod : KotlinMod() {
             drewGraffities.forEach { UIEngine.worldContexts.remove(it.container) }
 
             // Поставить в мире новые граффити
-            drewGraffities = MutableList(readInt()) { readLocalGraffitiPlace(this) }
+            drewGraffities = MutableList(readInt()) {
+                readLocalGraffitiPlace(this)
+            }
             drewGraffities.forEach { addGraffiti(it) }
         }
 

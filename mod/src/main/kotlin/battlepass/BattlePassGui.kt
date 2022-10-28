@@ -5,7 +5,7 @@ import dev.xdark.clientapi.event.window.WindowResize
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.resource.ResourceLocation
 import io.netty.buffer.Unpooled
-import me.func.protocol.DropRare
+import me.func.protocol.data.rare.DropRare
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod

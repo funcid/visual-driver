@@ -4,8 +4,8 @@ import com.google.gson.Gson
 import dev.xdark.feder.NetUtil
 import experimental.booster.bar.model.BoosterBarModel
 import experimental.booster.bar.model.BoosterSegmentModel
-import me.func.protocol.booster.bar.CloseBoosterRequest
-import me.func.protocol.booster.bar.OpenBoosterRequest
+import me.func.protocol.ui.booster.CloseBoosterRequest
+import me.func.protocol.ui.booster.OpenBoosterRequest
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
@@ -136,7 +136,7 @@ class BoosterBar {
         check(segment.progress != null) { "Progress of the segment ${segment.label} is not set" }
 
         carveSize = 1.5
-        size = V3(90.5, 15.0)
+        size = V3(60.5, 15.0)
         color = Color(20, 98, 41, 0.62)
 
         if (!isFirst) {
@@ -162,7 +162,7 @@ class BoosterBar {
         +carved {
             carveSize = 1.5
 
-            size = V3(90.5 * segment.progress!!, 15.0)
+            size = V3(60.5 * segment.progress!!, 15.0)
             color = Color(34, 174, 73, 0.62)
 
             if (segment.progress == 0.0) enabled = false

@@ -254,18 +254,18 @@ public final class me/func/protocol/personalization/GraffitiPlaced$Companion {
 
 public final class me/func/protocol/personalization/Sticker : me/func/protocol/Unique {
 	public static final field Companion Lme/func/protocol/personalization/Sticker$Companion;
-	public synthetic fun <init> (ILjava/util/UUID;Ljava/lang/String;Lme/func/protocol/DropRare;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
-	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/DropRare;J)V
+	public synthetic fun <init> (ILjava/util/UUID;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;JLkotlinx/serialization/internal/SerializationConstructorMarker;)V
+	public fun <init> (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;J)V
 	public final fun component1 ()Ljava/util/UUID;
 	public final fun component2 ()Ljava/lang/String;
-	public final fun component3 ()Lme/func/protocol/DropRare;
+	public final fun component3 ()Lme/func/protocol/data/rare/DropRare;
 	public final fun component4 ()J
-	public final fun copy (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/DropRare;J)Lme/func/protocol/personalization/Sticker;
-	public static synthetic fun copy$default (Lme/func/protocol/personalization/Sticker;Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/DropRare;JILjava/lang/Object;)Lme/func/protocol/personalization/Sticker;
+	public final fun copy (Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;J)Lme/func/protocol/personalization/Sticker;
+	public static synthetic fun copy$default (Lme/func/protocol/personalization/Sticker;Ljava/util/UUID;Ljava/lang/String;Lme/func/protocol/data/rare/DropRare;JILjava/lang/Object;)Lme/func/protocol/personalization/Sticker;
 	public fun equals (Ljava/lang/Object;)Z
 	public final fun getName ()Ljava/lang/String;
 	public final fun getOpenTime ()J
-	public final fun getRare ()Lme/func/protocol/DropRare;
+	public final fun getRare ()Lme/func/protocol/data/rare/DropRare;
 	public fun getUuid ()Ljava/util/UUID;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
