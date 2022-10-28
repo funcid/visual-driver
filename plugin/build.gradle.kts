@@ -12,13 +12,3 @@ dependencies {
 tasks {
     build { dependsOn(shadowJar) }
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            artifactId = "animation-plugin"
-
-            shadow.component(this)
-        }
-    }
-}
