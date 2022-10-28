@@ -1,37 +1,32 @@
-apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
-apply plugin: 'application'
+plugins {
+    id 'org.jetbrains.kotlin.plugin.serialization'
+    id("com.github.johnrengelman.shadow")
+}
 
-mainClassName = 'App'
 group 'me.func'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
-
 dependencies {
-    implementation project(":graffiti-protocol")
     implementation project(":protocol")
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'org.litote.kmongo:kmongo-coroutine-serialization:4.4.0'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
+    implementation project(":graffiti-protocol")
+    implementation project(":protocol-serialization")
+
+    implementation 'com.google.code.gson:gson:2.9.0'
+    implementation 'org.litote.kmongo:kmongo-coroutine-serialization:4.5.1'
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.3'
     implementation 'cristalix:microservice:20.11.04'
-    implementation 'io.netty:netty-all:4.1.37.Final'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.0'
+    implementation 'io.netty:netty-all:4.1.78.Final'
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.0")
-
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.6.3'
 }
 
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
+jar { enabled = false }
 
-afterEvaluate {
-    jar {
-        from {
-            configurations.runtimeClasspath.collect { it.directory ? it : zipTree(it) }
-        }
+shadowJar {
+    manifest {
+        attributes(
+            'Main-Class': 'App',
+            'Multi-Release': 'true'
+        )
     }
 }

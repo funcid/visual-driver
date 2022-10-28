@@ -4,16 +4,20 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBufOutputStream
 import io.netty.buffer.Unpooled
 import io.netty.handler.codec.EncoderException
+import me.func.protocol.data.color.RGB
 import net.minecraft.server.v1_12_R1.*
+import org.bukkit.Location
 import org.bukkit.craftbukkit.v1_12_R1.entity.CraftPlayer
 import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 import ru.cristalix.core.GlobalSerializers
 import java.io.DataOutput
 import java.lang.invoke.MethodHandle
 import java.lang.invoke.MethodHandles
 import java.lang.invoke.MethodType
+import java.util.*
 
 val LOOKUP: MethodHandles.Lookup = MethodHandles.publicLookup()
 val WRITE_ITEM: MethodHandle = try {
@@ -22,7 +26,7 @@ val WRITE_ITEM: MethodHandle = try {
         "writeItem",
         MethodType.methodType(PacketDataSerializer::class.java, net.minecraft.server.v1_12_R1.ItemStack::class.java)
     )
-} catch (_: Exception) {
+} catch (_: Throwable) {
     LOOKUP.findVirtual(
         PacketDataSerializer::class.java,
         "a",
@@ -30,7 +34,23 @@ val WRITE_ITEM: MethodHandle = try {
     )
 }
 
-class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSerializer(Unpooled.buffer())) {
+val CRAFT_ITEM_TO_NMS: MethodHandle by lazy {
+    try {
+        LOOKUP.findStatic(
+            CraftItemStack::class.java,
+            "asNMSCopy",
+            MethodType.methodType(net.minecraft.server.v1_12_R1.ItemStack::class.java, ItemStack::class.java)
+        )
+    } catch (_: Throwable) {
+        LOOKUP.findStatic(
+            ItemStack::class.java,
+            "asNMSCopy",
+            MethodType.methodType(net.minecraft.server.v1_12_R1.ItemStack::class.java, ItemStack::class.java)
+        )
+    }
+}
+
+class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Unpooled.buffer())) {
 
     constructor(vararg data: Any) : this() {
         for (info in data) {
@@ -38,6 +58,7 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
                 is String -> string(info)
                 is ItemStack -> item(info)
                 is net.minecraft.server.v1_12_R1.ItemStack -> item(info)
+                is Byte -> byte(info)
                 is Int -> integer(info)
                 is Short -> short(info)
                 is Boolean -> boolean(info)
@@ -47,49 +68,65 @@ class ModTransfer(private val serializer: PacketDataSerializer = PacketDataSeria
         }
     }
 
-    fun json(string: Any) = this.apply { string(GlobalSerializers.toJson(string)) }
+    fun json(string: Any) = apply { string(GlobalSerializers.toJson(string)) }
 
-    fun varInt(integer: Int) = this.apply { NetUtil.writeVarInt(integer, serializer) }
+    fun varInt(integer: Int) = apply { NetUtil.writeVarInt(integer, serializer) }
 
-    fun putString(string: String) = this.apply { NetUtil.writeUtf8(string, serializer) }
+    fun putString(string: String) = apply { NetUtil.writeUtf8(string, serializer) }
 
-    fun string(string: String) = this.apply { putString(string) }
+    fun rgb(rgb: RGB) = integer(rgb.red).integer(rgb.green).integer(rgb.blue)
 
-    fun byteArray(vararg byte: Byte) = this.apply { serializer.writeBytes(byte) }
+    fun string(string: String) = apply { putString(string) }
 
-    fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = this.apply { WRITE_ITEM.invoke(serializer, item) }
+    fun byteArray(vararg byte: Byte) = apply { serializer.writeBytes(byte) }
 
-    fun item(item: ItemStack) = this.apply { item(CraftItemStack.asNMSCopy(item)) }
+    fun item(item: net.minecraft.server.v1_12_R1.ItemStack) = apply { WRITE_ITEM.invoke(serializer, item) }
 
-    fun nbt(nbt: NBTTagCompound) = this.apply { writeNbtCompound(serializer, nbt) }
+    fun item(item: ItemStack) = item(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
-    fun nbt(item: ItemStack) = this.apply { nbt(CraftItemStack.asNMSCopy(item)) }
+    fun nbt(nbt: NBTTagCompound) = apply { writeNbtCompound(serializer, nbt) }
 
-    fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) {
-        this.apply { nbt(item.tag) }
-    }
+    fun nbt(item: ItemStack) = nbt(CRAFT_ITEM_TO_NMS.invoke(item) as net.minecraft.server.v1_12_R1.ItemStack)
 
-    fun integer(integer: Int) = this.apply { serializer.writeInt(integer) }
+    fun nbt(item: net.minecraft.server.v1_12_R1.ItemStack) =
+        nbt(item.tag ?: NBTTagCompound().apply { RuntimeException("Warning: Tag is null!").printStackTrace() })
+
+    fun integer(integer: Int) = apply { serializer.writeInt(integer) }
 
     @JvmName("putLong")
-    fun long(long: Long) = this.apply { serializer.writeLong(long) }
+    fun long(long: Long) = apply { serializer.writeLong(long) }
 
-    fun short(short: Short) = this.apply { serializer.writeShort(short.toInt()) }
+    fun short(short: Short) = apply { serializer.writeShort(short.toInt()) }
+
+    fun byte(byte: Byte) = apply { serializer.writeByte(byte.toInt()) }
+
+    @JvmName("putFloat")
+    fun float(float: Float) = apply { serializer.writeFloat(float) }
 
     @JvmName("putDouble")
-    fun double(double: Double) = this.apply { serializer.writeDouble(double) }
+    fun double(double: Double) = apply { serializer.writeDouble(double) }
+
+    fun v3(x: Double, y: Double, z: Double) = double(x).double(y).double(z)
+
+    fun v3(vector: Vector) = v3(vector.x, vector.y, vector.z)
+
+    fun v3(location: Location) = v3(location.toVector())
 
     @JvmName("putBoolean")
-    fun boolean(boolean: Boolean) = this.apply { serializer.writeBoolean(boolean) }
+    fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
-    fun send(channel: String?, player: Player?) {
-        if (player == null)
-            return
+    fun uuid(uuid: UUID) = apply { serializer.ensureWritable(16).writeLong(uuid.mostSignificantBits).writeLong(uuid.leastSignificantBits) }
 
-        serializer.a = serializer.retainedSlice()
+    fun uuid(uuid: String) = uuid(UUID.fromString(uuid))
 
-        (player as CraftPlayer).handle.playerConnection.sendPacket(PacketPlayOutCustomPayload(channel, serializer))
-    }
+    fun send(channel: String, vararg players: Player?): Unit = send(channel, players.asIterable())
+
+    fun send(channel: String, players: Iterable<Player?>): Unit =
+        players.filterIsInstance<CraftPlayer>().forEach {
+            it.handle.playerConnection.networkManager.sendPacket(
+                PacketPlayOutCustomPayload(channel, PacketDataSerializer(serializer.retainedSlice()))
+            )
+        }
 
     fun writeNbtCompound(data: PacketDataSerializer, nbt: NBTTagCompound?): PacketDataSerializer {
         if (nbt == null) {
