@@ -6,7 +6,7 @@ import com.google.gson.JsonParser
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.render.*
 import dev.xdark.clientapi.event.window.WindowResize
-import me.func.protocol.dialog.*
+import me.func.protocol.ui.dialog.*
 import org.lwjgl.input.Keyboard
 import org.lwjgl.input.Mouse
 import ru.cristalix.clientapi.JavaMod.clientApi
@@ -21,7 +21,7 @@ import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import kotlin.math.sign
 
-class DialogMod {
+object DialogMod {
     private var gui = ContextGui()
     private var buttons: RectangleElement = rectangle { }
     private var buttonCursor: RectangleElement
@@ -38,7 +38,7 @@ class DialogMod {
     private var pickedItem = -1
     private var entrypoints: MutableList<Entrypoint> = arrayListOf()
 
-    private var visible = false
+    var visible = false
     private lateinit var entrypoint: Entrypoint
     private lateinit var screen: Screen
     private var history: MutableList<Screen> = arrayListOf()
@@ -156,14 +156,16 @@ class DialogMod {
         }
 
         fun close(target: Entrypoint) {
+            visible = false
+            entrypoint = target
+
             buttonPart.align.x = 0.0
             buttonCursor.offset.x = 1.0
             buttonsBG.offset.x = 0.0
-            entrypoint = target
-            visible = false
             pickedItem = -1
             npcPart.size.y = 0.0
             buttonPart.align.x = 1.0
+
             gui.close()
         }
 
@@ -324,8 +326,10 @@ class DialogMod {
         }
 
         gui.onKeyTyped { _, code ->
-            if (code == Keyboard.KEY_ESCAPE)
+            if (code == Keyboard.KEY_ESCAPE) {
                 close(entrypoint)
+                gui.close()
+            }
 
             if (visible) {
                 var i = 0
@@ -398,8 +402,17 @@ class DialogMod {
         }
 
         mod.registerHandler<GameLoop> {
-            if (!visible)
+            if (!visible) {
+
+                buttonPart.align.x = 0.0
+                buttonCursor.offset.x = 1.0
+                buttonsBG.offset.x = 0.0
+                pickedItem = -1
+                npcPart.size.y = 0.0
+                buttonPart.align.x = 1.0
+
                 return@registerHandler
+            }
             val wheel = Mouse.getDWheel()
             if (wheel != 0)
                 shiftButtonCursor(sign(-wheel.toDouble()).toInt())

@@ -16,12 +16,13 @@ mod {
     main = "Main"
     author = "func"
     jarFileName = "animation-api-production.jar"
+    setVersion(project.version)
 }
 
-def modJar = layout.buildDirectory.file("bundle/animation-api-production.jar")
+def modJar = layout.buildDirectory.file("libs/animation-api-production.jar")
 
 task upload() {
-    dependsOn(tasks.build)
+    dependsOn(tasks.jar)
     if (!System.getenv("SSH_PASSPHRASE")) return
     remotes {
         webServer {

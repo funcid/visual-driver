@@ -3,25 +3,32 @@ package me.func.mod
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.atlas.util.dir
+import me.func.atlas.util.fileLastName
 import me.func.mod.conversation.AutoSendRegistry
-import me.func.mod.conversation.Debug
 import me.func.mod.conversation.ModLoader
 import me.func.mod.conversation.ModTransfer
-import me.func.mod.data.DailyReward
-import me.func.mod.data.LootDrop
+import me.func.mod.conversation.broadcast.SubscribeVerifier
+import me.func.mod.conversation.data.LootDrop
+import me.func.mod.debug.Debug
 import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
-import me.func.mod.selection.MenuManager
-import me.func.mod.selection.queue.QueueViewer
+import me.func.mod.ui.Glow
+import me.func.mod.ui.dialog.Dialog
+import me.func.mod.ui.menu.MenuManager
+import me.func.mod.ui.menu.queue.QueueViewer
 import me.func.mod.util.*
-import me.func.protocol.*
-import me.func.protocol.dialog.Dialog
+import me.func.protocol.data.color.RGB
+import me.func.protocol.data.status.EndStatus
+import me.func.protocol.data.status.MessageStatus
+import me.func.protocol.math.Position
 import me.func.protocol.personalization.GraffitiPlaced
+import me.func.protocol.ui.indicator.Indicators
+import me.func.protocol.world.marker.Marker
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.craftbukkit.v1_12_R1.inventory.CraftItemStack
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
@@ -32,14 +39,7 @@ import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.Predicate
 
-data class Booster(
-    var name: String = "name",
-    var multiplier: Double = 0.0
-)
-
-fun booster(booster: Booster.() -> Unit) = Booster().also(booster)
-
-val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.ru/func/animation-api/"
+val MOD_STORAGE_URL = System.getenv("MOD_STORAGE_URL") ?: "https://storage.c7x.dev/func/animation-api/"
 val MOD_LOCAL_TEST_DIR_NAME = dir(System.getenv("MOD_TEST_PATH") ?: "mods").fileLastName()
 val MOD_LOCAL_DIR_NAME = dir(System.getenv("MOD_PATH") ?: "anime").fileLastName()
 
@@ -62,7 +62,9 @@ object Anime {
     init {
         log("Enabling animation-api, version: $version")
 
-        listener(StandardMods, Glow, AutoSendRegistry, MenuManager, QueueViewer, me.func.mod.dialog.Dialog)
+        listener(StandardMods, Glow, AutoSendRegistry, SubscribeVerifier, QueueViewer)
+        subscriber(GraffitiManager, Dialog, MenuManager)
+
         Debug // Инициализации команды и обработчика сообщений
     }
 
@@ -81,10 +83,7 @@ object Anime {
         }
 
         // Загружаем все киты
-        kits.filter { it != Kit.DEBUG && it != Kit.GRAFFITI}.forEach(::load)
-
-        // Загружаем модуль граффити
-        load(Kit.GRAFFITI)
+        kits.filter { it != Kit.DEBUG }.forEach(::load)
     }
 
     // Метод для изменения правила установки граффити
@@ -94,6 +93,7 @@ object Anime {
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) = ModTransfer().send(channel, player)
 
+    @Deprecated("Будет переделано на полноценное меню")
     @JvmStatic
     fun openLootBox(player: Player, vararg items: LootDrop) = ModTransfer().integer(items.size).apply {
         items.forEach {
@@ -170,6 +170,14 @@ object Anime {
     fun overlayText(player: Player, positions: Position, vararg text: String) = overlayText(player, positions, text.joinToString("\n"))
 
     @JvmStatic
+    fun overlayText(players: Collection<Player>, positions: Position, text: String) {
+        ModTransfer().integer(positions.ordinal).string(text).send("anime:overlay", players)
+    }
+
+    @JvmStatic
+    fun overlayText(players: Collection<Player>, positions: Position, vararg text: String) = overlayText(players, positions, text.joinToString("\n"))
+
+    @JvmStatic
     @Deprecated("Устаревший метод, новый - overlayText")
     fun bottomRightMessage(player: Player, vararg text: String) = bottomRightMessage(player, text.joinToString("\n"))
 
@@ -187,13 +195,36 @@ object Anime {
     }
 
     @JvmStatic
+    fun killboardMessage(players: Collection<Player>, text: String, topMargin: Int) {
+        ModTransfer()
+            .string(text)
+            .integer(topMargin)
+            .send("func:notice", players)
+    }
+
+    @JvmStatic
+    fun killboardMessage(players: Collection<Player>, text: String) {
+        killboardMessage(players, text, 15)
+    }
+
+    @JvmStatic
+    fun systemMessage(player: Player, messageStatus: MessageStatus, text: String) {
+        ModTransfer().integer(messageStatus.ordinal).double(1.5).string(text).send("anime:message", player)
+    }
+
+    @JvmStatic
+    fun systemMessage(player: Player, messageStatus: MessageStatus, duration: Double, text: String) {
+        ModTransfer().integer(messageStatus.ordinal).double(duration).string(text).send("anime:message", player)
+    }
+
+    @JvmStatic
     fun lockPersonalization(player: Player) {
-        sendEmptyBuffer("func:break-ui", player)
+        ModTransfer(true).send("func:break-ui", player)
     }
 
     @JvmStatic
     fun unlockPersonalization(player: Player) {
-        sendEmptyBuffer("func:return-ui", player)
+        ModTransfer(false).send("func:break-ui", player)
     }
 
     @JvmStatic
@@ -253,7 +284,6 @@ object Anime {
         cursorMessage(player, message.format(objects))
 
     @JvmStatic
-    @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
     fun marker(player: Player, marker: Marker): Marker {
         ModTransfer()
             .string(marker.uuid.toString())
@@ -284,7 +314,6 @@ object Anime {
         moveMarker(player, marker.uuid, marker.x, marker.y, marker.z, 0.01)
 
     @JvmStatic
-    @Deprecated("Маркеры устарели, существует более мощный инструмент - Banners")
     fun markers(player: Player, vararg markers: Marker) = markers.forEach { marker(player, it) }
 
     @JvmStatic
@@ -297,19 +326,6 @@ object Anime {
 
     @JvmStatic
     fun clearMarkers(player: Player) = sendEmptyBuffer("func:clear", player)
-
-    @JvmStatic
-    fun openDailyRewardMenu(player: Player, currentDayIndex: Int, vararg week: DailyReward) {
-        if (week.size != 7) {
-            throw IllegalArgumentException("Week size must be 7!")
-        }
-
-        val transfer = ModTransfer().integer(currentDayIndex + 1)
-        for (day in week)
-            transfer.item(CraftItemStack.asNMSCopy(day.icon))
-                .string("§7Награда: " + day.title)
-        transfer.send("func:weekly-reward", player)
-    }
 
     @JvmOverloads
     @JvmStatic
@@ -493,41 +509,51 @@ object Anime {
     fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255, 192, 203)
 
     @JvmStatic
-    fun showEnding(player: Player, endStatus: EndStatus, key: String, value: String) {
+    @JvmOverloads
+    fun showEnding(
+        player: Player,
+        endStatus: EndStatus,
+        key: String,
+        value: String,
+        secondsShown: Double = 8.0,
+    ) {
         ModTransfer()
             .integer(endStatus.ordinal)
             .string(key)
             .string(value)
+            .double(secondsShown)
             .send("crazy:ending", player)
     }
 
     @JvmStatic
-    fun bigTitle(player: Player, message: String) {
-        ModTransfer()
-            .string(message)
-            .send("ilisov:bigtitle", player)
+    fun bigTitle(player: Player, message: String) = bigTitle(player, 1.5, message)
+
+    @JvmStatic
+    fun bigTitle(player: Player, duration: Double, message: String) {
+        ModTransfer().double(duration).string(message).send("ilisov:bigtitle", player)
     }
 
     @JvmStatic
-    fun showEnding(player: Player, endStatus: EndStatus, key: List<String>, value: List<String>) =
-        showEnding(player, endStatus, key.joinToString("\n \n"), value.joinToString("\n \n"))
+    @JvmOverloads
+    fun showEnding(
+        player: Player,
+        endStatus: EndStatus,
+        key: List<String>,
+        value: List<String>,
+        secondsShown: Double = 8.0,
+    ) = showEnding(
+        player = player,
+        endStatus = endStatus,
+        key = key.joinToString("\n \n"),
+        value = value.joinToString("\n \n"),
+        secondsShown = secondsShown,
+    )
 
     @JvmStatic
     fun close(player: Player) {
         MenuManager.clearHistory(player)
         sendEmptyBuffer("func:close", player)
     }
-
-    @JvmStatic
-    fun startBoosters(player: Player, enable: Boolean, vararg boosters: Booster) = ModTransfer()
-        .integer(boosters.size)
-        .boolean(enable)
-        .apply {
-            boosters.forEach {
-                string(it.name)
-                double(it.multiplier)
-            }
-        }.send("mid:boost", player)
 
     fun equipPersonalization(viewer: Player, stand: UUID, vararg personalization: UUID) {
         ModTransfer()

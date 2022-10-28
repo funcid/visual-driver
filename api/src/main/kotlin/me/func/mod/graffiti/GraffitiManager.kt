@@ -2,6 +2,7 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.service.Services.socketClient
 import me.func.protocol.graffiti.packet.GraffitiBuyPackage
 import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
@@ -17,7 +18,7 @@ import java.util.concurrent.CompletableFuture
 import java.util.function.Predicate
 import kotlin.math.abs
 
-object GraffitiManager {
+object GraffitiManager : PlayerSubscriber {
 
     private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
     private const val MAX_GRAFFITI_IN_WORLD = 50
@@ -25,7 +26,7 @@ object GraffitiManager {
     private const val MAX_PLACE_DISTANCE = 10
 
     private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
-    private val placed: MutableList<GraffitiPlaced> = mutableListOf()
+    private val placed: MutableList<GraffitiPlaced> = arrayListOf()
 
     var isCanPlace: Predicate<Location> = Predicate { true }
 
@@ -58,10 +59,6 @@ object GraffitiManager {
         }
 
         transfer.send("graffiti:create-bulk", player) // На моде все стоящие очистятся
-    }
-
-    fun clear(player: Player) {
-        graffiti.remove(player.uniqueId)
     }
 
     private fun safeRead(player: Player?): FeatureUserData? {
@@ -120,7 +117,7 @@ object GraffitiManager {
             }
 
             // Если на одного игрока много поставленных граффити
-            if (placed.filter { it.owner == player.uniqueId }.size >= MAX_GRAFFITI_PER_PLAYER) {
+            if (placed.count { it.owner == player.uniqueId } >= MAX_GRAFFITI_PER_PLAYER) {
                 player.sendMessage(Formatting.error("Вы поставили слишком много граффити!"))
                 return@createReader
             }
@@ -222,4 +219,10 @@ object GraffitiManager {
         }
         return future
     }
+
+    override val isConstant = true
+
+    override fun removeSubscriber(player: Player) { graffiti.remove(player.uniqueId) }
+
+    override fun getSubscribersCount() = graffiti.size
 }

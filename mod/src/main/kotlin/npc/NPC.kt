@@ -7,8 +7,8 @@ import dev.xdark.clientapi.math.BlockPos
 import dev.xdark.clientapi.util.EnumFacing
 import dev.xdark.clientapi.util.EnumHand
 import dev.xdark.feder.NetUtil
-import me.func.protocol.npc.NpcBehaviour
-import me.func.protocol.npc.NpcData
+import me.func.protocol.world.npc.NpcBehaviour
+import me.func.protocol.world.npc.NpcData
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
@@ -19,6 +19,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class NPC {
+
     init {
         // Утилита для работы с NPC
         val npcManager = NpcManager()
@@ -51,6 +52,7 @@ class NPC {
                 readBoolean()
             )
             npcManager.spawn(data)
+
             npcManager.show(data.uuid)
         }
 

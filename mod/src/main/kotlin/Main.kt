@@ -8,7 +8,7 @@ import dev.xdark.clientapi.opengl.OpenGlHelper
 import dev.xdark.feder.NetUtil
 import dialog.DialogMod
 import experimental.Experimental
-import experimental.storage.Storable
+import standard.storage.AbstractMenu
 import healthbar.Healthbar
 import io.netty.buffer.Unpooled
 import lootbox.LootboxMod
@@ -17,29 +17,34 @@ import npc.NPC
 import org.lwjgl.opengl.GL20
 import ru.cristalix.clientapi.KotlinMod
 import ru.cristalix.uiengine.UIEngine
-import standard.ExternalManager
+import standard.util.ExternalManager
 import standard.Standard
+import standard.storage.Information
 import java.util.Stack
 
 class Main : KotlinMod() {
+
     companion object {
+
         lateinit var externalManager: ExternalManager
-        var menuStack: Stack<Storable> = Stack()
+        @Volatile
+        var menuStack: Stack<AbstractMenu> = Stack()
     }
 
     override fun onEnable() {
+
         UIEngine.initialize(this)
 
         registerChannel("anime:loadmod") {
             repeat(readInt() /* Count */) {
                 when (Mod.values()[readInt() /* Mod Ordinal */]) {
                     Mod.STANDARD -> Standard()
-                    Mod.EXPERIMENTAL -> Experimental.bruh()
+                    Mod.EXPERIMENTAL -> Experimental.load()
                     Mod.NPC -> NPC()
                     Mod.HEALTHBAR -> Healthbar()
                     Mod.BATTLEPASS -> BattlePass()
                     Mod.LOOTBOX -> LootboxMod()
-                    Mod.DIALOG -> DialogMod()
+                    Mod.DIALOG -> DialogMod
                     Mod.CHAT -> MultiChat()
                     else -> return@repeat
                 }
@@ -79,6 +84,7 @@ class Main : KotlinMod() {
         registerChannel("func:close") {
             val mc = UIEngine.clientApi.minecraft()
             val screen = mc.currentScreen()
+
             if (screen is AdvancementsScreen || screen is OptionsScreen)
                 return@registerChannel
             menuStack.clear()
