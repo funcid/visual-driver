@@ -1,9 +1,11 @@
-import me.func.protocol.graffiti.GraffitiPlaced
+import me.func.protocol.personalization.GraffitiPlaced
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.Context3D
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.eventloop.animate
+import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import java.util.*
 
@@ -14,49 +16,54 @@ data class LocalPack(
         origin = CENTER
         align = CENTER
 
-        val boxSize = ICON_PACK_SIZE
-        val boxOpposite = 8
-
-        offset.y += OVAL_RADIUS - 10
-        offset.x += index * boxSize + index * boxOpposite - app.userData.packs.size * (boxSize - boxOpposite) / 2 - boxOpposite
-
-        size = V3(boxSize, boxSize)
+        val total = mod.getPack(packUuid).graffiti.first().address.size * 1.0 / PICTURE_SIZE
+        textureLocation = mod.texture
+        textureFrom = V3(0.0, total * index)
+        textureSize = V3(total, total)
+        size = V3(ICON_PACK_SIZE - 4, ICON_PACK_SIZE - 4)
         color = WHITE
-
-        onClick {
-            app.gui.children.clear()
-            app.userData.activePack = index
-            app.loadPackIntoMenu()
-        }
+    },
+    val iconContainer: CarvedRectangle = carved {
+        origin = CENTER
+        align = CENTER
+        size = V3(ICON_PACK_SIZE, ICON_PACK_SIZE)
+        color = Color(0, 0, 0, 0.62)
+        +icon
     },
     val title: TextElement = text {
-        val pack = app.getPack(packUuid)
+        val pack = mod.getPack(packUuid)
         origin = CENTER
         align = CENTER
         color = WHITE
         offset.y -= 30
         shadow = true
-        content = "${pack.title}\nby ${pack.creator}"
-    }, var graffiti: List<LocalGraffiti> = app.getPack(packUuid).graffiti.map { currentGraffiti ->
-        LocalGraffiti(app.getPack(packUuid), currentGraffiti, rectangle {
+        content = "${pack.title}\n${pack.creator}"
+    }, var graffiti: List<LocalGraffiti> = mod.getPack(packUuid).graffiti.map { currentGraffiti ->
+        LocalGraffiti(mod.getPack(packUuid), currentGraffiti, rectangle {
             origin = CENTER
             align = CENTER
             color = WHITE
             enabled = false
 
-            textureLocation = app.texture
-            textureFrom = V3(currentGraffiti.address.x.toDouble() / PICTURE_SIZE, currentGraffiti.address.y.toDouble() / PICTURE_SIZE)
+            textureLocation = mod.texture
+            textureFrom = V3(
+                currentGraffiti.address.x.toDouble() / PICTURE_SIZE,
+                currentGraffiti.address.y.toDouble() / PICTURE_SIZE
+            )
             size = V3(currentGraffiti.address.size.toDouble(), currentGraffiti.address.size.toDouble())
             textureSize =
-                V3(currentGraffiti.address.size.toDouble() / PICTURE_SIZE, currentGraffiti.address.size.toDouble() / PICTURE_SIZE)
+                V3(
+                    currentGraffiti.address.size.toDouble() / PICTURE_SIZE,
+                    currentGraffiti.address.size.toDouble() / PICTURE_SIZE
+                )
 
-            onHover {
+            this@rectangle.onHover {
                 var child = if (this@rectangle.children.isEmpty()) null else this@rectangle.children[0] as TextElement?
 
                 if (child != null && !hovered) {
-                    animate(0.1) {
-                        scale.x = 0.25
-                        scale.y = 0.25
+                    this@rectangle.animate(0.1) {
+                        scale.x = BASE_SCALE
+                        scale.y = BASE_SCALE
                         color.alpha = 1.0
                     }
                     removeChild(child!!)
@@ -71,25 +78,30 @@ data class LocalPack(
                         content = "${currentGraffiti.uses} штук"
                     }
                     addChild(child!!)
-                    animate(0.1) {
-                        scale.x = 0.37
-                        scale.y = 0.37
+                    this@rectangle.animate(0.1) {
+                        scale.x = 0.3
+                        scale.y = 0.3
                         color.alpha = 0.7
                     }
                 }
             }
-            onClick {
+            onMouseUp {
+                // Если граффити нет - не выбирать
+                if (currentGraffiti.uses < 1) return@onMouseUp
+
                 // Выбор граффити
-                app.gui.close()
+                mod.gui.children.clear()
+                mod.gui.close()
 
                 val player = UIEngine.clientApi.minecraft().player
 
                 scale.x = 1.0
                 scale.y = 1.0
                 size = V3(75.0, 75.0)
-                app.activeGraffiti = LocalGraffitiPlaced(
+                mod.activeGraffiti = LocalGraffitiPlaced(
                     GraffitiPlaced(
                         packUuid,
+                        player.name,
                         "world",
                         currentGraffiti,
                         player.x,
@@ -103,20 +115,20 @@ data class LocalPack(
                 )
                 offset = V3(10.0, 10.0)
 
-                app.activeGraffiti!!.context3D.addChild(this@rectangle)
-                UIEngine.worldContexts.add(app.activeGraffiti!!.context3D)
+                mod.activeGraffiti!!.container.addChild(this@rectangle)
+                UIEngine.worldContexts.add(mod.activeGraffiti!!.container)
             }
         })
     }
 ) {
     fun backGraffitiToPack(placed: LocalGraffitiPlaced) {
-        val rectangle = placed.context3D.children[0]
+        val rectangle = placed.container.children[0]
 
         rectangle.size.x = placed.graffiti.graffiti.address.size.toDouble()
         rectangle.size.y = placed.graffiti.graffiti.address.size.toDouble()
         rectangle.color.alpha = 1.0
 
-        placed.context3D.removeChild(rectangle)
-        UIEngine.worldContexts.remove(placed.context3D)
+        placed.container.removeChild(rectangle)
+        UIEngine.worldContexts.remove(placed.container)
     }
 }

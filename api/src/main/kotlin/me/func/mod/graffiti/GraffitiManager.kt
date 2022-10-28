@@ -2,24 +2,33 @@ package me.func.mod.graffiti
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
-import me.func.protocol.graffiti.GraffitiPlaced
-import me.func.protocol.graffiti.FeatureUserData
+import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.service.Services.socketClient
+import me.func.protocol.graffiti.packet.GraffitiBuyPackage
+import me.func.protocol.graffiti.packet.GraffitiLoadUserPackage
+import me.func.protocol.graffiti.packet.GraffitiUsePackage
+import me.func.protocol.personalization.FeatureUserData
+import me.func.protocol.personalization.GraffitiPlaced
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import ru.cristalix.core.formatting.Formatting
-import java.util.*
+import java.util.UUID
 import java.util.concurrent.CompletableFuture
+import java.util.function.Predicate
 import kotlin.math.abs
 
-object GraffitiManager {
+object GraffitiManager : PlayerSubscriber {
 
-    private const val GRAFFITI_TICKS_ALIVE = 20 * 30
+    private const val GRAFFITI_TICKS_ALIVE = 20 * 60 * 10
     private const val MAX_GRAFFITI_IN_WORLD = 50
-    private const val MAX_GRAFFITI_PER_PLAYER = 3
+    private const val MAX_GRAFFITI_PER_PLAYER = 5
     private const val MAX_PLACE_DISTANCE = 10
 
     private val graffiti: HashMap<UUID, FeatureUserData> = hashMapOf()
-    private val placed: MutableList<GraffitiPlaced> = mutableListOf()
+    private val placed: MutableList<GraffitiPlaced> = arrayListOf()
+
+    var isCanPlace: Predicate<Location> = Predicate { true }
 
     fun sendGraffitiBulk(player: Player) {
         // Загрузка всех активных граффити за раз, в мире игрока
@@ -28,6 +37,7 @@ object GraffitiManager {
 
         needed.forEach { place ->
             transfer.string(place.owner.toString())
+                .string(place.ownerName)
                 .string(place.world)
                 .string(place.graffiti.uuid.toString())
                 .integer(place.graffiti.address.x)
@@ -39,23 +49,19 @@ object GraffitiManager {
                 .double(place.x)
                 .double(place.y)
                 .double(place.z)
+                .integer(place.ticksLeft)
                 .double(place.rotationAngle)
                 .double(place.rotationAxisX)
                 .double(place.rotationAxisY)
                 .double(place.rotationAxisZ)
-                .integer(place.ticksLeft)
+                .double(place.extraRotation)
                 .boolean(place.onGround)
-                .boolean(place.local)
         }
 
         transfer.send("graffiti:create-bulk", player) // На моде все стоящие очистятся
     }
 
-    fun clear(player: Player) {
-        graffiti.remove(player.uniqueId)
-    }
-
-    fun safeRead(player: Player?): FeatureUserData? {
+    private fun safeRead(player: Player?): FeatureUserData? {
         // Если игрок вышел и потом пришло сообщение
         if (player == null || !player.isOnline)
             return null
@@ -111,7 +117,7 @@ object GraffitiManager {
             }
 
             // Если на одного игрока много поставленных граффити
-            if (placed.filter { it.owner == player.uniqueId }.size > MAX_GRAFFITI_PER_PLAYER) {
+            if (placed.count { it.owner == player.uniqueId } >= MAX_GRAFFITI_PER_PLAYER) {
                 player.sendMessage(Formatting.error("Вы поставили слишком много граффити!"))
                 return@createReader
             }
@@ -125,9 +131,15 @@ object GraffitiManager {
             if (abs(player.location.x - x) > MAX_PLACE_DISTANCE || abs(player.location.z - z) > MAX_PLACE_DISTANCE)
                 return@createReader
 
+            // Проверяем, разрешил ли сервер использовать граффити
+            if (!isCanPlace.test(Location(player.world, x, y, z))) {
+                player.sendMessage(Formatting.error("Данный сервер запретил вам ставить тут граффити."))
+                return@createReader
+            }
+
             // Мы прошли все проверки теперь можно тратить граффити!
-            Anime.graffitiClient?.use(player.uniqueId, packUuid, graffitiUuid)?.thenAccept { success ->
-                if (!success) {
+            socketClient.writeAndAwaitResponse<GraffitiUsePackage>(GraffitiUsePackage(player.uniqueId, packUuid, graffitiUuid)).thenAccept { pckg ->
+                if (!pckg.success) {
                     player.sendMessage(Formatting.error("У вас закончилось это граффити! Если это ошибка, перезайдите на сервер."))
                     return@thenAccept
                 }
@@ -137,6 +149,7 @@ object GraffitiManager {
                 // Создание граффити в мире
                 val placedGraffiti = GraffitiPlaced(
                     player.uniqueId,
+                    player.name,
                     player.world.name,
                     graffiti, x, y, z,
                     GRAFFITI_TICKS_ALIVE,
@@ -144,7 +157,7 @@ object GraffitiManager {
                     buffer.readDouble(),
                     buffer.readDouble(),
                     buffer.readDouble(),
-                    buffer.readBoolean(),
+                    buffer.readDouble(),
                     buffer.readBoolean()
                 )
 
@@ -159,16 +172,19 @@ object GraffitiManager {
 
         // Попытка купить граффити с клиента
         Anime.createReader("graffiti:buy") { player, buffer ->
-
             val data = safeRead(player) ?: return@createReader
             val packUuid = Anime.safeReadUUID(buffer) ?: return@createReader
 
             // Если такого пака не существует
             val pack = data.packs.find { it.uuid == packUuid } ?: return@createReader
 
+            // Покупка граффити недоступна
+            player.sendMessage(Formatting.error("А ты умный! Но тут серверная проверка 㬓"))
+            return@createReader
+
             // Попробовать купить пак граффити
-            Anime.graffitiClient?.buy(player.uniqueId, packUuid, pack.price)?.thenAccept { error ->
-                error?.let {
+            socketClient.writeAndAwaitResponse<GraffitiBuyPackage>(GraffitiBuyPackage(player.uniqueId, packUuid, pack.price)).thenAccept { pckg ->
+                pckg.errorMessage?.let {
                     player.sendMessage(Formatting.error(it))
                     return@thenAccept
                 }
@@ -192,8 +208,10 @@ object GraffitiManager {
         if (value != null) {
             future.complete(value)
         } else {
-            Anime.graffitiClient?.loadUser(uuid)?.thenAccept { data ->
+            socketClient.writeAndAwaitResponse<GraffitiLoadUserPackage>(GraffitiLoadUserPackage(uuid)).thenAccept { pckg ->
                 // Если данные успешно загрузились
+                val data = pckg.data
+
                 if (data != null)
                     graffiti[uuid] = data
                 future.complete(data)
@@ -201,4 +219,10 @@ object GraffitiManager {
         }
         return future
     }
+
+    override val isConstant = true
+
+    override fun removeSubscriber(player: Player) { graffiti.remove(player.uniqueId) }
+
+    override fun getSubscribersCount() = graffiti.size
 }
