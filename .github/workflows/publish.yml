@@ -24,6 +24,7 @@ jobs:
           --no-daemon
           --parallel
           --stacktrace
+          -Pversion=4.0.${{github.run_number}}
           :protocol:build
           :protocol-serialization:build
           :protocol-mod:build
