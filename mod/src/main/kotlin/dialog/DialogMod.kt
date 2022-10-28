@@ -21,7 +21,7 @@ import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import kotlin.math.sign
 
-class DialogMod {
+object DialogMod {
     private var gui = ContextGui()
     private var buttons: RectangleElement = rectangle { }
     private var buttonCursor: RectangleElement
@@ -38,7 +38,7 @@ class DialogMod {
     private var pickedItem = -1
     private var entrypoints: MutableList<Entrypoint> = arrayListOf()
 
-    private var visible = false
+    var visible = false
     private lateinit var entrypoint: Entrypoint
     private lateinit var screen: Screen
     private var history: MutableList<Screen> = arrayListOf()

@@ -44,7 +44,7 @@ class Main : KotlinMod() {
                     Mod.HEALTHBAR -> Healthbar()
                     Mod.BATTLEPASS -> BattlePass()
                     Mod.LOOTBOX -> LootboxMod()
-                    Mod.DIALOG -> DialogMod()
+                    Mod.DIALOG -> DialogMod
                     Mod.CHAT -> MultiChat()
                     else -> return@repeat
                 }

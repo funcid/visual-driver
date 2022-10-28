@@ -1,6 +1,8 @@
 package experimental.panel
 
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.feder.NetUtil
+import dialog.DialogMod
 import me.func.protocol.data.color.RGB
 import readColoredUtf8
 import readRgb
@@ -29,6 +31,10 @@ class Panel {
 
     init {
         UIEngine.overlayContext + container
+
+        mod.registerHandler<GameLoop> {
+            container.enabled = !DialogMod.visible
+        }
 
         mod.registerChannel("func:panel-new") {
             val uuid = readId()
