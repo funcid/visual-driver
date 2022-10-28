@@ -24,7 +24,7 @@ allprojects {
      * Подробнее про семантическое версионирование:
      *     https://semver.org/lang/ru/
      */
-    version = "4.0.0"
+    project.version = "4.0." + (project.properties["buildVersion"] ?: 0)
 }
 
 subprojects {
