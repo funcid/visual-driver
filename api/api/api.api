@@ -538,6 +538,7 @@ public final class me/func/mod/reactive/ReactiveProgress$Builder {
 	public final fun offsetZ (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
 	public final fun position (Lme/func/protocol/math/Position;)Lme/func/mod/reactive/ReactiveProgress$Builder;
 	public final fun progress (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
+	public final fun scale (D)Lme/func/mod/reactive/ReactiveProgress$Builder;
 	public final fun text (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveProgress$Builder;
 	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactiveProgress$Builder;
 }
