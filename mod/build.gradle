@@ -15,7 +15,7 @@ mod {
     name = "Animation Api"
     main = "Main"
     author = "func"
-    jarFileName = "visual-driver-production.jar"
+    jarFileName = "animation-api-production.jar"
     setVersion(project.version)
 }
 

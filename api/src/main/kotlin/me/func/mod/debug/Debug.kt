@@ -40,7 +40,7 @@ object Debug {
         lastUseDebugCommand = now
 
         val listMod = listFiles(MOD_LOCAL_DIR_NAME)?.apply { listFiles(MOD_LOCAL_TEST_DIR_NAME)?.let { addAll(it) } }
-        add("Animation-API успешно работает!")
+        add("Visual-Driver успешно работает!")
         add("API Version: ${Anime.version}")
         add("Standards Mods: ${StandardMods.mods.joinToString(", ") { it.name }}")
         add("Custom Mods: ${me.func.mod.conversation.ModLoader.mods.keys.filter { key -> key != STANDARD_MOD_URL.fileLastName() }.joinToString(", ") { key -> key }}")
