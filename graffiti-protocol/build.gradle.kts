@@ -7,7 +7,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "animation-api-graffiti-protocol"
+            artifactId = "visual-driver-graffiti-protocol"
 
             from(components["java"])
         }

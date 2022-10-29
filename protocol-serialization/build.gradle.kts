@@ -10,7 +10,7 @@ dependencies {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "animation-api-protocol-serialization"
+            artifactId = "visual-driver-protocol-serialization"
 
             from(components["java"])
         }

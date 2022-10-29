@@ -36,7 +36,7 @@ tasks {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "animation-api"
+            artifactId = "visual-driver"
             from(components["java"])
         }
     }

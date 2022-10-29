@@ -11,7 +11,7 @@ plugins {
 }
 
 allprojects {
-    group = "me.func.animation-api"
+    group = "me.func.visual-driver"
 
     // Версия генерируется автоматически
     val build = (project.properties["buildVersion"] ?: return@allprojects).toString().toInt()
