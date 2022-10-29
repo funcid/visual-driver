@@ -773,6 +773,7 @@ public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/br
 	public static final field INSTANCE Lme/func/mod/ui/menu/MenuManager;
 	public static final fun bind (Lme/func/mod/ui/menu/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
 	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
+	public final fun getAllViewers (Lme/func/mod/ui/menu/Openable;)Ljava/util/List;
 	public final fun getHandleMap ()Ljava/util/HashMap;
 	public final fun getMenuStacks ()Ljava/util/HashMap;
 	public final fun getReconnectMap ()Ljava/util/HashMap;
