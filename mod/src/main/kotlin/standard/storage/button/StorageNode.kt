@@ -14,6 +14,7 @@ import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
 import standard.storage.AbstractMenu
+import standard.storage.TextedIcon
 import standard.storage.menu.MenuManager
 
 abstract class StorageNode<T : AbstractElement>(
@@ -36,6 +37,7 @@ abstract class StorageNode<T : AbstractElement>(
     var descriptionElement: TextElement? = null
     var hintElement: TextElement? = null
     var hintContainer: CarvedRectangle? = null
+    var priceElement: TextedIcon? = null
 
     fun createHint(sized: V3, default: String) = hintContainer ?: carved {
         carveSize = 2.0

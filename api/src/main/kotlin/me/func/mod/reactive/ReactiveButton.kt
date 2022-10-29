@@ -80,10 +80,15 @@ class ReactiveButton : Button() {
 
     override var price: Long = -1
         set(value) {
+            if (value != field) reactive { byte(8).long(value) }
             field = value
             priceText = value.toString()
         }
     override var priceText: String = ""
+        set(value) {
+            if (value != field) reactive { byte(9).string(value) }
+            field = value
+        }
 
     override var sale = 0
 

@@ -2,6 +2,7 @@ package standard.storage.menu.selection
 
 import Main.Companion.menuStack
 import asColor
+import formatPriceText
 import me.func.protocol.ui.menu.SelectionModel
 import org.lwjgl.input.Keyboard
 import ru.cristalix.uiengine.element.CarvedRectangle
@@ -34,6 +35,7 @@ class Selection(
 
     lateinit var arrowLeft: CarvedRectangle
     lateinit var arrowRight: CarvedRectangle
+    var balanceText: TextedIcon? = null
 
     private val width = 460.0
     private val height = 230.0
@@ -63,7 +65,7 @@ class Selection(
         +menuTitle
 
         if (money.isNotEmpty()) {
-            +textWithMoney(money, vault).apply {
+            balanceText = +textWithMoney(money, vault).apply {
                 origin = TOP_RIGHT
                 align = TOP_RIGHT
                 title.shadow = true
@@ -133,8 +135,8 @@ class Selection(
                         val price = element.price
                         val priceText = element.priceText
 
-                        +textWithMoney(
-                            if (sale > 0) "§7§m$priceText§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else priceText,
+                        element.priceElement = +textWithMoney(
+                            formatPriceText(sale, price, priceText),
                             if (element.vault?.isEmpty() == true) vault else element.vault!!,
                             false
                         ).apply {

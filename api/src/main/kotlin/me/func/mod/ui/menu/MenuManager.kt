@@ -4,15 +4,15 @@ import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.Anime.provided
-import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.conversation.data.MouseButton
 import me.func.mod.reactive.ReactiveButton
 import me.func.mod.ui.menu.choicer.Choicer
 import me.func.mod.ui.menu.confirmation.Confirmation
+import me.func.mod.ui.menu.daily.DailyRewardMenu
 import me.func.mod.ui.menu.recconnct.Reconnect
 import me.func.mod.ui.menu.selection.Selection
-import me.func.mod.conversation.data.MouseButton
-import me.func.mod.ui.menu.daily.DailyRewardMenu
 import me.func.mod.util.warn
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player
@@ -137,6 +137,11 @@ object MenuManager : PlayerSubscriber {
             ModTransfer().integer(stack.peek().storage.indexOf(this)).also(setup)
                 .send("button:update", Bukkit.getPlayer(uuid) ?: return@forEach)
         }
+
+    fun getAllViewers(menu: Openable): List<Player> =
+        menuStacks
+            .filter { it.value.isNotEmpty() && it.value.peek() == menu }
+            .mapNotNull { Bukkit.getPlayer(it.key) }
 
     override val isConstant = true
 

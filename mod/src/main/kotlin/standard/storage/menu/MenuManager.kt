@@ -2,18 +2,16 @@ package standard.storage.menu
 
 import Main.Companion.menuStack
 import asColor
-import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
+import formatPriceText
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import readColoredUtf8
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.utility.Color
 import standard.storage.AbstractMenu
 import standard.storage.Information
 import standard.storage.button.StorageItemStack
@@ -125,6 +123,24 @@ class MenuManager {
                         if (!inited) return@registerChannel
                         node.hintContainer?.color = node.backgroundColor.asColor()
                         node.bundle?.color = node.backgroundColor.asColor(0.28)
+                    }
+
+                    7 -> {
+                        node.enabled = readBoolean()
+                        if (!inited) return@registerChannel
+                        node.bundle?.enabled = node.enabled
+                    }
+
+                    8 -> {
+                        node.price = readLong()
+                        if (!inited) return@registerChannel
+                        node.priceElement?.updateTitle(formatPriceText(node.sale, node.price, node.priceText))
+                    }
+
+                    9 -> {
+                        node.priceText = readColoredUtf8()
+                        if (!inited) return@registerChannel
+                        node.priceElement?.updateTitle(formatPriceText(node.sale, node.price, node.priceText))
                     }
 
                     else -> return@registerChannel

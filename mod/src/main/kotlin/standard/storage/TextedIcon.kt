@@ -29,6 +29,15 @@ class TextedIcon(text: String, icon: String, textLeft: Boolean = true) : Rectang
     }
 
     init {
-        super.size = V3(image.size.x + title.size.x + 2, title.lineHeight)
+        updateSize()
+    }
+
+    fun updateTitle(text: String) {
+        title.content = text
+        updateSize()
+    }
+
+    private fun updateSize() {
+        size = V3(image.size.x + title.size.x + 2, title.lineHeight)
     }
 }
