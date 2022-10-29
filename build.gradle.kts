@@ -14,9 +14,8 @@ allprojects {
     group = "me.func.animation-api"
 
     // Версия генерируется автоматически
-    val build = (project.properties["buildVersion"] ?: return@allprojects).toString().toInt() +
-            project.properties["offset"].toString().toInt()
-    project.version = "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10
+    val build = (project.properties["buildVersion"] ?: return@allprojects).toString().toInt()
+    project.version = "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10 + ".RELEASE"
 }
 
 subprojects {

@@ -25,7 +25,6 @@ jobs:
           --parallel
           --stacktrace
           -PbuildVersion=${{github.run_number}}
-          -Poffset=101
           :protocol:build
           :protocol-serialization:build
           :protocol-mod:build

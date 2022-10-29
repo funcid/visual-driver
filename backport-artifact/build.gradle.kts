@@ -6,7 +6,7 @@ publishing {
     publications {
         create<MavenPublication>("maven") {
             groupId = "me.func"
-            artifactId = "animation-api"
+            artifactId = "visual-driver"
 
             from(components["java"])
         }
