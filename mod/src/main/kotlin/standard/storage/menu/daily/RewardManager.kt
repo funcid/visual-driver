@@ -2,6 +2,7 @@ package standard.storage.menu.daily
 
 import dev.xdark.feder.NetUtil
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import standard.storage.button.ButtonReader
 import standard.storage.menu.MenuManager
 import java.util.*
 
@@ -13,7 +14,7 @@ class RewardManager {
             val uuid = UUID.fromString(NetUtil.readUtf8(this))
             val day = readInt()
             val taken = readBoolean()
-            val storage = MenuManager.readIcons(this)
+            val storage = ButtonReader.readIcons(this)
             val menu = DailyRewardMenu(uuid, day, taken, storage)
 
             MenuManager.push(menu)

@@ -14,8 +14,14 @@ allprojects {
     group = "me.func.visual-driver"
 
     // Версия генерируется автоматически
-    val build = (project.properties["buildVersion"] ?: return@allprojects).toString().toInt()
-    project.version = "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10 + ".RELEASE"
+    val release = project.properties["buildVersion"]
+
+    if (release != null) {
+        val build = release.toString().toInt()
+        project.version = "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10 + ".RELEASE"
+    } else {
+        project.version = "3.2.29.TEST"
+    }
 }
 
 subprojects {

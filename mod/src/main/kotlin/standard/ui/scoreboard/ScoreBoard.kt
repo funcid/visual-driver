@@ -23,7 +23,7 @@ class ScoreBoard(
 
     var lastMaxX = 10.0
 
-    private val dataLine = mutableListOf<RectangleElement>()
+    private val dataLine = arrayListOf<RectangleElement>()
 
     init {
         carveSize = 2.0

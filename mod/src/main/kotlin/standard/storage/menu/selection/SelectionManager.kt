@@ -7,6 +7,7 @@ import readColoredUtf8
 import readJson
 import readUuid
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import standard.storage.button.ButtonReader
 import standard.storage.button.StorageItemTexture
 import standard.storage.menu.MenuManager
 import java.util.*
@@ -86,7 +87,7 @@ class SelectionManager {
 
                 println("Read icons on page $page")
 
-                val data = MenuManager.readIcons(this)
+                val data = ButtonReader.readIcons(this)
                 // Добавляем хинт кнопкам
                 data.forEach { it.hint = if (it.hint == null || it.hint?.isEmpty() == true) menu.hint else it.hint }
                 currentPage.content = data
