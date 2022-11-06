@@ -7,6 +7,7 @@ import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
+import ru.cristalix.uiengine.eventloop.Task
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
 
@@ -28,6 +29,7 @@ class Title {
         enabled = false
 
     }
+    private var taskArray: Array<Task>? = null
 
     init {
         UIEngine.overlayContext + box
@@ -41,20 +43,20 @@ class Title {
                 scale.x = 2.2
                 scale.y = 2.2
             }
-            UIEngine.schedule(3.1) {
+            taskArray?.forEach { it.cancelled = true }
+            taskArray = arrayOf(UIEngine.schedule(3.1) {
                 text.animate(3.15) {
                     scale.x = 20.0
                     scale.y = 20.0
                     color.alpha = 0.0
                 }
-            }
-            UIEngine.schedule(3.3) {
+            }, UIEngine.schedule(3.3) {
                 box.enabled = false
                 text.color = WHITE
                 text.color.alpha = 0.0
                 text.scale.x = 1.0
                 text.scale.y = 1.0
-            }
+            })
         }
     }
 }
