@@ -1,5 +1,5 @@
 import java.io.FileOutputStream
-import java.util.Properties
+import java.util.*
 
 dependencies {
     compileOnly("cristalix:bukkit-core:21.01.30")
@@ -20,7 +20,15 @@ tasks {
         val propertiesFile = file("$buildDir/generated-version/version.properties")
         propertiesFile.parentFile.mkdirs()
         val properties = Properties()
-        properties.setProperty("version", "${project.version}")
+        val version = when (val generatedVersion = project.properties["buildVersion"]) {
+            null -> "development"
+            else -> {
+                val build = generatedVersion.toString().toInt()
+                "${build / 100}.${(build / 10) % 10}.${build % 10}.RELEASE"
+            }
+        }
+
+        properties.setProperty("version", version)
         val out = FileOutputStream(propertiesFile)
         properties.store(out, null)
         outputs.file(propertiesFile)
@@ -34,7 +42,7 @@ tasks {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            artifactId = "animation-api"
+            artifactId = "visual-driver"
             from(components["java"])
         }
     }

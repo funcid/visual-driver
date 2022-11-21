@@ -2,20 +2,19 @@ package standard.storage.menu
 
 import Main.Companion.menuStack
 import asColor
-import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
+import formatPriceText
 import io.netty.buffer.ByteBuf
 import org.lwjgl.input.Mouse
 import readColoredUtf8
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
-import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
-import ru.cristalix.uiengine.utility.Color
 import standard.storage.AbstractMenu
 import standard.storage.Information
+import standard.storage.button.ButtonReader.readIcons
 import standard.storage.button.StorageItemStack
 import standard.storage.button.StorageItemTexture
 import standard.storage.menu.selection.SelectionManager
@@ -31,25 +30,6 @@ class MenuManager {
         val itemPadding = 4.0
 
         fun isMenuClickBlocked() = openTimeAndDelayMillis + beforeClickDelay > System.currentTimeMillis()
-
-        fun readIcons(buffer: ByteBuf) = MutableList(buffer.readInt()) {
-            val data = if (buffer.readBoolean()) StorageItemStack(ItemTools.read(buffer)) // item
-            else StorageItemTexture(NetUtil.readUtf8(buffer)) // texture
-
-            data.apply {
-                price = buffer.readLong() // price
-                priceText = buffer.readColoredUtf8()
-                title = buffer.readColoredUtf8() // item title
-                description = buffer.readColoredUtf8() // item description
-                hint = buffer.readColoredUtf8() // item hint
-                hoverText = buffer.readColoredUtf8() // item hover desc
-                command = buffer.readColoredUtf8() // command
-                vault = buffer.readColoredUtf8() // vault
-                backgroundColor = buffer.readRgb() // color
-                enabled = buffer.readBoolean() // enabled button
-                sale = buffer.readInt()
-            }
-        }
 
         fun push(gui: AbstractMenu) {
             menuStack.push(gui)
@@ -125,6 +105,24 @@ class MenuManager {
                         if (!inited) return@registerChannel
                         node.hintContainer?.color = node.backgroundColor.asColor()
                         node.bundle?.color = node.backgroundColor.asColor(0.28)
+                    }
+
+                    7 -> {
+                        node.enabled = readBoolean()
+                        if (!inited) return@registerChannel
+                        node.bundle?.enabled = node.enabled
+                    }
+
+                    8 -> {
+                        node.price = readLong()
+                        if (!inited) return@registerChannel
+                        node.priceElement?.updateTitle(formatPriceText(node.sale, node.price, node.priceText))
+                    }
+
+                    9 -> {
+                        node.priceText = readColoredUtf8()
+                        if (!inited) return@registerChannel
+                        node.priceElement?.updateTitle(formatPriceText(node.sale, node.price, node.priceText))
                     }
 
                     else -> return@registerChannel

@@ -1,5 +1,6 @@
 package me.func.mod.ui.menu.selection
 
+import me.func.mod.conversation.ModTransfer
 import me.func.mod.reactive.ReactiveButton
 import me.func.mod.ui.menu.MenuManager
 import me.func.mod.ui.menu.MenuManager.bind
@@ -13,7 +14,7 @@ import java.util.function.Consumer
 open class Selection(
     override var uuid: UUID = UUID.randomUUID(),
     override var title: String = "Меню",
-    override var money: String = "",
+    money: String = "",
     override var vault: String = "\uE03C",
     override var hint: String = "Купить",
     override var rows: Int = 3,
@@ -22,6 +23,11 @@ open class Selection(
     var tick: Consumer<Storage>? = null
 ) : Paginated, SelectionModel(storage, rows, columns) {
 
+    override var money: String = money
+        set(value) {
+            if (value != field) reactive { byte(0).string(value) }
+            field = value
+        }
 
     companion object {
         @JvmStatic
@@ -62,5 +68,13 @@ open class Selection(
         selection.sendPage(0, player)
 
         return selection
+    }
+
+    private fun reactive(setup: ModTransfer.() -> Unit) {
+        val viewers = MenuManager.getAllViewers(this).ifEmpty { return }
+        ModTransfer()
+            .uuid(uuid)
+            .also(setup)
+            .send("selection:update", viewers)
     }
 }

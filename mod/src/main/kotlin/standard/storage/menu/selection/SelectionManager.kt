@@ -5,7 +5,9 @@ import dev.xdark.feder.NetUtil
 import me.func.protocol.ui.menu.SelectionModel
 import readColoredUtf8
 import readJson
+import readUuid
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import standard.storage.button.ButtonReader
 import standard.storage.button.StorageItemTexture
 import standard.storage.menu.MenuManager
 import java.util.*
@@ -85,12 +87,29 @@ class SelectionManager {
 
                 println("Read icons on page $page")
 
-                val data = MenuManager.readIcons(this)
+                val data = ButtonReader.readIcons(this)
                 // Добавляем хинт кнопкам
                 data.forEach { it.hint = if (it.hint == null || it.hint?.isEmpty() == true) menu.hint else it.hint }
                 currentPage.content = data
                 menu.storage.addAll(data)
                 menu.redrawGrid()
+            }
+
+            mod.registerChannel("selection:update") {
+                if (menuStack.isEmpty()) return@registerChannel
+                val menu = menuStack.peek() as? Selection ?: return@registerChannel
+                val uuid = readUuid()
+                if (uuid != menu.uuid) return@registerChannel
+
+                when (readByte().toInt()) {
+                    0 -> {
+                        val money = readColoredUtf8()
+                        menu.money = money
+                        menu.balanceText?.updateTitle(money)
+                    }
+
+                    else -> return@registerChannel
+                }
             }
         }
     }

@@ -3,7 +3,7 @@ name: Publish Library
 on:
   push:
     branches:
-      - main
+      - release
 
 jobs:
   build:
@@ -24,6 +24,7 @@ jobs:
           --no-daemon
           --parallel
           --stacktrace
+          -PbuildVersion=${{github.run_number}}
           :protocol:build
           :protocol-serialization:build
           :protocol-mod:build
@@ -31,9 +32,8 @@ jobs:
           :graffiti:build
           :graffiti-protocol:build
           :graffiti-service:build
-          :backport-artifact:build
           :api:build
-          :plugin:build
+          :backport-artifact:build
           publish
       env:
         CRI_REPO_LOGIN: ${{ secrets.CRI_REPO_LOGIN }}

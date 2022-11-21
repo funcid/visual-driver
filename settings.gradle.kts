@@ -39,7 +39,7 @@ dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 }
 
-rootProject.name = "animation-api"
+rootProject.name = "visual-driver"
 
 arrayOf(
     "api",

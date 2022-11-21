@@ -9,6 +9,7 @@ import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.Color
 import java.nio.charset.StandardCharsets
+import java.util.*
 
 val gson = Gson()
 
@@ -24,6 +25,8 @@ fun ByteBuf.readColoredUtf8() = NetUtil.readUtf8(this).replace("&", "§")
 
 fun ByteBuf.readRgb() = Tricolor(readInt(), readInt(), readInt())
 
+fun ByteBuf.readUuid(): UUID = UUID(readLong(), readLong())
+
 fun RGB.asColor(opacity: Double = 1.0) = Color(red, green, blue, opacity)
 
 fun lazyRectangle(element: RectangleElement.() -> Unit) = LazyElement { RectangleElement().also(element) }
@@ -31,3 +34,6 @@ fun lazyRectangle(element: RectangleElement.() -> Unit) = LazyElement { Rectangl
 fun lazyText(element: TextElement.() -> Unit) = LazyElement { TextElement().also(element) }
 
 fun lazyCarved(element: CarvedRectangle.() -> Unit) = LazyElement { CarvedRectangle().also(element) }
+
+fun formatPriceText(sale: Int, price: Long, priceText: String): String =
+    if (sale > 0) "§7§m$priceText§a ${(price * (100.0 - sale) / 100).toInt()} §c§l-$sale%" else priceText

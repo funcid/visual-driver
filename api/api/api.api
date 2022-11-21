@@ -773,6 +773,7 @@ public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/br
 	public static final field INSTANCE Lme/func/mod/ui/menu/MenuManager;
 	public static final fun bind (Lme/func/mod/ui/menu/Openable;Lorg/bukkit/entity/Player;)Lme/func/mod/conversation/ModTransfer;
 	public static final fun clearHistory (Lorg/bukkit/entity/Player;)V
+	public final fun getAllViewers (Lme/func/mod/ui/menu/Openable;)Ljava/util/List;
 	public final fun getHandleMap ()Ljava/util/HashMap;
 	public final fun getMenuStacks ()Ljava/util/HashMap;
 	public final fun getReconnectMap ()Ljava/util/HashMap;
@@ -1132,6 +1133,44 @@ public final class me/func/mod/ui/scoreboard/raw/RawEmpty : me/func/mod/ui/score
 	public static final field INSTANCE Lme/func/mod/ui/scoreboard/raw/RawEmpty;
 	public fun get (Lorg/bukkit/entity/Player;)Lme/func/mod/ui/scoreboard/ScoreBoardRecord;
 	public fun write (Lme/func/mod/conversation/ModTransfer;Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/token/Token {
+	public static final field Companion Lme/func/mod/ui/token/Token$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/ui/token/Token$Companion$Builder;
+	public final fun getContentGenerator ()Ljava/util/function/Function;
+	public final fun getTitleGenerator ()Ljava/util/function/Function;
+	public final fun getUuid ()Ljava/util/UUID;
+	public final fun setContentGenerator (Ljava/util/function/Function;)V
+	public final fun setTitleGenerator (Ljava/util/function/Function;)V
+	public final fun update (Ljava/util/List;)V
+}
+
+public final class me/func/mod/ui/token/Token$Companion {
+	public final fun builder ()Lme/func/mod/ui/token/Token$Companion$Builder;
+}
+
+public final class me/func/mod/ui/token/Token$Companion$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/ui/token/Token;)V
+	public synthetic fun <init> (Lme/func/mod/ui/token/Token;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/ui/token/Token;
+	public final fun content (Ljava/lang/String;)Lme/func/mod/ui/token/Token$Companion$Builder;
+	public final fun content (Ljava/util/function/Function;)Lme/func/mod/ui/token/Token$Companion$Builder;
+	public final fun title (Ljava/lang/String;)Lme/func/mod/ui/token/Token$Companion$Builder;
+	public final fun title (Ljava/util/function/Function;)Lme/func/mod/ui/token/Token$Companion$Builder;
+}
+
+public final class me/func/mod/ui/token/TokenGroup : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public fun <init> (Ljava/util/List;)V
+	public fun <init> ([Lme/func/mod/ui/token/Token;)V
+	public fun getSubscribersCount ()I
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun removeTokens (Ljava/util/List;)V
+	public fun setConstant (Z)V
+	public final fun subscribe (Lorg/bukkit/entity/Player;)V
 }
 
 public final class me/func/mod/util/LogKt {
