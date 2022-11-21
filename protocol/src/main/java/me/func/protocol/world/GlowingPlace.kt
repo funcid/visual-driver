@@ -3,7 +3,7 @@ package me.func.protocol.world
 import me.func.protocol.data.color.RGB
 import java.util.UUID
 
-class GlowingPlace(
+open class GlowingPlace(
     val uuid: UUID = UUID.randomUUID(),
     var rgb: RGB,
     val x: Double,

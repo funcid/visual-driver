@@ -2,7 +2,9 @@ package me.func.protocol.data.element
 
 import me.func.protocol.data.color.RGB
 import me.func.protocol.data.color.Tricolor
+import sun.audio.AudioPlayer.player
 import java.util.UUID
+import kotlin.math.pow
 
 class Banner(
     var uuid: UUID = UUID.randomUUID(),
@@ -23,26 +25,34 @@ class Banner(
     var texture: String = "",
     var color: RGB = Tricolor(0, 0, 0),
     var opacity: Double = 0.62,
-    var carveSize: Double = 2.0
+    var carveSize: Double = 2.0,
+    var active: Boolean = true
 ) {
+
     companion object {
         @JvmStatic
         fun builder() = Builder()
     }
 
-    constructor(init: Banner.() -> Unit) : this() { this.init() }
+    constructor(init: Banner.() -> Unit) : this() {
+        this.init()
+    }
 
     class Builder(val banner: Banner = Banner()) {
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
         fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }
-        fun watchingOnPlayerWithoutPitch(watchingOnPlayerWithoutPitch: Boolean) = apply { banner.watchingOnPlayerWithoutPitch = watchingOnPlayerWithoutPitch }
+        fun watchingOnPlayerWithoutPitch(watchingOnPlayerWithoutPitch: Boolean) =
+            apply { banner.watchingOnPlayerWithoutPitch = watchingOnPlayerWithoutPitch }
+
         fun content(vararg content: String) = apply { banner.content = content.joinToString("\n") }
         fun resizeLine(lineIndex: Int, textScale: Double): Builder {
-            val list = (banner.motionSettings["line"] ?: mutableListOf<Pair<Int, Double>>()) as MutableList<Pair<Int, Double>>
+            val list =
+                (banner.motionSettings["line"] ?: mutableListOf<Pair<Int, Double>>()) as MutableList<Pair<Int, Double>>
             list.add(lineIndex to textScale)
             banner.motionSettings["line"] = list
             return this
         }
+
         fun x(x: Double) = apply { banner.x = x }
         fun y(y: Double) = apply { banner.y = y }
         fun z(z: Double) = apply { banner.z = z }
@@ -58,6 +68,7 @@ class Banner(
         fun blue(blue: Int) = apply { banner.color.blue = blue }
         fun opacity(opacity: Double) = apply { banner.opacity = opacity }
         fun carveSize(carveSize: Double) = apply { banner.carveSize = carveSize }
+        fun active(active: Boolean) = apply { banner.active = active }
 
         fun build() = banner
     }

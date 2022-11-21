@@ -103,7 +103,7 @@ class MenuManager {
                     6 -> {
                         node.backgroundColor = readRgb()
                         if (!inited) return@registerChannel
-                        node.hintContainer?.color = node.backgroundColor.asColor()
+                        node.hintContainer?.color = node.backgroundColor.asColor(0.0)
                         node.bundle?.color = node.backgroundColor.asColor(0.28)
                     }
 

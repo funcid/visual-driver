@@ -2,15 +2,22 @@ package standard.world
 
 import asColor
 import dev.xdark.clientapi.entity.Entity
+import dev.xdark.clientapi.event.input.RightClick
+import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.event.render.RenderTickPre
+import dev.xdark.clientapi.math.Vec3d
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.feder.NetUtil
+import io.netty.buffer.Unpooled
 import me.func.protocol.data.element.Banner
 import me.func.protocol.data.element.MotionType
+import me.func.protocol.math.RadiusCheck
+import org.lwjgl.input.Mouse
 import readRgb
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
+import ru.cristalix.uiengine.UIEngine.clientApi
 import ru.cristalix.uiengine.element.*
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.utility.*
@@ -19,7 +26,6 @@ import kotlin.collections.component1
 import kotlin.collections.component2
 import kotlin.collections.set
 import kotlin.math.abs
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 class Banners {
@@ -31,6 +37,52 @@ class Banners {
         "¨222200" + string.replace(Regex("(§[0-9a-fA-F]|¨......)"), "¨222200")
 
     init {
+        var pressed = false
+
+        mod.registerHandler<GameLoop> {
+
+            val pressedLeft = Mouse.isButtonDown(MouseButton.LEFT.ordinal)
+            val pressedRight = Mouse.isButtonDown(MouseButton.RIGHT.ordinal)
+
+            if (pressed && !pressedLeft && !pressedRight) {
+                pressed = false
+            } else if (!pressed && (pressedLeft || pressedRight)) {
+                pressed = true
+
+                val player = clientApi.minecraft().player
+
+                banners.filterValues {
+                    val origin = it.second.offset
+                    RadiusCheck.inRadius(
+                        6.0,
+                        doubleArrayOf(origin.x, origin.y, origin.z),
+                        doubleArrayOf(player.x, player.y, player.z)
+                    )
+                }.filterValues {
+                    val origin = it.second.offset
+
+                    val vector = Vec3d.of(
+                        origin.x - player.x,
+                        origin.y - player.y - 1.5 - it.first.height / 16.0 / 2.0,
+                        origin.z - player.z
+                    ).normalize()
+
+                    player.lookVec.dotProduct(vector.x, vector.y, vector.z) > 0.9
+                }.forEach { (uuid, _) ->
+
+                    println("Created click from $uuid")
+
+                    clientApi.clientConnection().sendPayload(
+                        "banner:click", Unpooled.buffer()
+                            .ensureWritable(16)
+                            .writeLong(uuid.mostSignificantBits)
+                            .writeLong(uuid.leastSignificantBits)
+                            .writeInt(if (pressedLeft) MouseButton.LEFT.ordinal else MouseButton.RIGHT.ordinal)
+                    )
+                }
+            }
+        }
+
         mod.registerChannel("banner:new") {
 
             repeat(readInt()) {
@@ -75,7 +127,7 @@ class Banners {
 
                     if (banner.texture.isNotEmpty()) {
                         val parts = banner.texture.split(":")
-                        val location = UIEngine.clientApi.resourceManager().getLocation(parts[0], parts[1])
+                        val location = clientApi.resourceManager().getLocation(parts[0], parts[1])
 
                         color = Color(0, 0, 0, 0.0)
 
@@ -172,8 +224,8 @@ class Banners {
         }
 
         mod.registerHandler<RenderTickPre> {
-            val player = UIEngine.clientApi.minecraft().player
-            val timer = UIEngine.clientApi.minecraft().timer
+            val player = clientApi.minecraft().player
+            val timer = clientApi.minecraft().timer
             val yaw =
                 (player.rotationYaw - player.prevRotationYaw) * timer.renderPartialTicks + player.prevRotationYaw
             val pitch =
@@ -191,9 +243,12 @@ class Banners {
                 if (banner.watchingOnPlayerWithoutPitch) {
                     content.rotation = Rotation(-yaw * Math.PI / 180 + Math.PI, 0.0, 1.0, 0.0)
                 }
-                content.enabled = (content.offset.x - player.x).pow(2) +
-                        (content.offset.z - player.z).pow(2) +
-                        (content.offset.y - player.y).pow(2) < 75 * 75 * size
+
+                content.enabled = RadiusCheck.inRadius(
+                    75.0 * sqrt(size),
+                    doubleArrayOf(content.offset.x, content.offset.y, content.offset.z),
+                    doubleArrayOf(player.x, player.y, player.z)
+                )
             }
         }
     }

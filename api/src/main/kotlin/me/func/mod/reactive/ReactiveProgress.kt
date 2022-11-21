@@ -24,9 +24,9 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
     private val subscribed = hashSetOf<Player>()
 
     // Отписать игроков от обновлений
-    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players)
+    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players.toSet())
 
-    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players)
+    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players.toSet())
 
     fun send(players: List<Player>) = send(*players.toTypedArray())
 

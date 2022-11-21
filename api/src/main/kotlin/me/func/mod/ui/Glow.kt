@@ -2,10 +2,13 @@ package me.func.mod.ui
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.SubscribeVerifier
+import me.func.mod.reactive.ReactivePlace
 import me.func.mod.util.warn
 import me.func.protocol.data.color.RGB
 import me.func.protocol.data.color.Tricolor
 import me.func.protocol.world.GlowingPlace
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -20,6 +23,36 @@ object Glow : Listener {
 
     val glowingPlaces = hashMapOf<UUID, GlowingPlace>()
     private val playerAccepter = hashMapOf<UUID, Consumer<Player>>()
+
+    init {
+        Bukkit.getScheduler().runTaskTimer(Anime.provided, {
+
+            SubscribeVerifier.providers.asSequence()
+                .filterIsInstance<ReactivePlace>()
+                .filter { it.onEntire != null || it.onLeave != null }
+                .forEach { place ->
+
+                    val fresh = place.getPlayersInside()
+                    val old = place.playersInside
+
+                    fresh.forEach { newPlayer ->
+
+                        // Если сейчас в круге есть игрок, а его не было
+                        if (!old.contains(newPlayer.uniqueId))
+                            place.onEntire?.accept(newPlayer)
+                    }
+
+                    old.mapNotNull { Bukkit.getPlayer(it) }.forEach { oldPlayer ->
+
+                        // Если сейчас в круге нет игрока, а он был
+                        if (!fresh.contains(oldPlayer))
+                            place.onLeave?.accept(oldPlayer)
+                    }
+
+                    place.playersInside = fresh.map { it.uniqueId }.toHashSet()
+                }
+        }, 20, 5)
+    }
 
     @EventHandler
     fun PlayerMoveEvent.handle() {

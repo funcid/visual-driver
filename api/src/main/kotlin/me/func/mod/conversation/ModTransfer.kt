@@ -115,7 +115,11 @@ class ModTransfer(val serializer: PacketDataSerializer = PacketDataSerializer(Un
     @JvmName("putBoolean")
     fun boolean(boolean: Boolean) = apply { serializer.writeBoolean(boolean) }
 
-    fun uuid(uuid: UUID) = apply { serializer.ensureWritable(16).writeLong(uuid.mostSignificantBits).writeLong(uuid.leastSignificantBits) }
+    fun uuid(uuid: UUID) = apply {
+        serializer.ensureWritable(16)
+            .writeLong(uuid.mostSignificantBits)
+            .writeLong(uuid.leastSignificantBits)
+    }
 
     fun uuid(uuid: String) = uuid(UUID.fromString(uuid))
 

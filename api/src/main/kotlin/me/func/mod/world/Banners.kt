@@ -1,6 +1,10 @@
 package me.func.mod.world
 
+import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.conversation.data.MouseButton
+import me.func.mod.util.subscriber
 import me.func.mod.util.warn
 import me.func.protocol.math.Dimension
 import me.func.protocol.data.element.Banner
@@ -8,14 +12,37 @@ import me.func.protocol.data.element.MotionType
 import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
+import org.bukkit.event.Listener
 import java.lang.StrictMath.pow
 import java.util.*
+import java.util.function.BiConsumer
+import java.util.function.Consumer
 import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
-object Banners {
+object Banners : PlayerSubscriber {
 
-    var banners = hashMapOf<UUID, Banner>()
+    var banners = hashMapOf<UUID, Banner>() // banner uuid to uuid
+    val clickable = hashMapOf<UUID, BiConsumer<Player, MouseButton>>() // banner uuid to consumer
+    val activeHandlers = hashMapOf<UUID, MutableSet<UUID>>() // player uuid to set of uuid banners
+
+    init {
+        subscriber(this)
+
+        Anime.createReader("banner:click") { player, buffer ->
+            try {
+
+                val uuid = UUID(buffer.readLong(), buffer.readLong())
+                val mouseButton = MouseButton.values()[buffer.readInt()]
+                val logic = clickable[uuid] ?: return@createReader
+
+                if (banners.containsKey(uuid) || activeHandlers[player.uniqueId]?.contains(uuid) == true)
+                    logic.accept(player, mouseButton)
+            } catch (exception: Exception) {
+                warn("Error while read banner uuid: " + exception.message)
+            }
+        }
+    }
 
     @JvmSynthetic
     fun new(data: Banner.() -> Unit) = new(Banner().apply(data))
@@ -41,6 +68,13 @@ object Banners {
     }
 
     @JvmStatic
+    fun add(banner: Banner, consumer: BiConsumer<Player, MouseButton>): Banner {
+
+        clickable[banner.uuid] = consumer
+        return new(banner)
+    }
+
+    @JvmStatic
     fun content(player: Player, uuid: UUID, content: String) {
         banners[uuid]?.content = content
         ModTransfer(uuid.toString(), content).send("banner:change-content", player)
@@ -48,6 +82,17 @@ object Banners {
 
     @JvmStatic
     fun content(player: Player, banner: Banner, content: String) = content(player, banner.uuid, content)
+
+    @JvmStatic
+    fun show(player: Player, banner: Banner, consumer: BiConsumer<Player, MouseButton>) {
+
+        val set = activeHandlers[player.uniqueId] ?: hashSetOf()
+
+        set.add(banner.uuid)
+        activeHandlers[player.uniqueId] = set
+        clickable[banner.uuid] = consumer
+        show(player, banner)
+    }
 
     @JvmStatic
     fun show(player: Player, vararg uuid: UUID) = show(player, *uuid.mapNotNull { banners[it] }.toTypedArray())
@@ -99,6 +144,7 @@ object Banners {
     @JvmStatic
     fun remove(uuid: UUID) {
         banners.remove(uuid)
+        clickable.remove(uuid)
     }
 
     @JvmStatic
@@ -143,4 +189,13 @@ object Banners {
         motionSettings["speed${dimension.name}"] = speed
         motionSettings["offset${dimension.name}"] = offset
     }
+
+    override val isConstant = true
+
+    override fun removeSubscriber(player: Player) {
+        activeHandlers[player.uniqueId]?.forEach { uuid -> clickable.remove(uuid) }
+        activeHandlers.remove(player.uniqueId)
+    }
+
+    override fun getSubscribersCount() = activeHandlers.size
 }
