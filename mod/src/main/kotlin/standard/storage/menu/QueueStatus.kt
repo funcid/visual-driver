@@ -28,9 +28,9 @@ class QueueStatus {
         private var counter = 0
         private var enabled = false
 
-        private val container = UIEngine.overlayContext +carved {
+        private val container = carved {
             enabled = false
-            color = Color(0, 0, 0, 0.50)
+            color = Color(0, 0, 0, 0.62)
             size = V3(382.0 / 2.0, 100.0 / 2)
             align = TOP
             origin = TOP
