@@ -1,9 +1,12 @@
 package standard.ui
 
+import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.gui.ingame.ChatScreen
 import dev.xdark.feder.NetUtil
 import lazyText
 import me.func.protocol.math.Position
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.*
@@ -80,6 +83,9 @@ class OverlayText {
                 Position.LEFT -> centerLeft.content = NetUtil.readUtf8(this)
                 Position.TOP -> top.content = NetUtil.readUtf8(this)
                 else -> {}
+            }
+            registerHandler<GameLoop> {
+                bottomLeft.enabled = UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen
             }
         }
     }
