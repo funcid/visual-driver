@@ -563,4 +563,8 @@ object Anime {
             .send(ENABLE_DISABLE_MODELS, viewer)
     }
 
+    fun openUrl(player: Player, url: String) = ModTransfer().string(url).send("open:url", player)
+
+    fun openP13n(player: Player) = sendEmptyBuffer("open:p13n", player)
+
 }

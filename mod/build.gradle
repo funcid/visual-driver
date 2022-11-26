@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    compileOnly 'ru.cristalix:client-api:10.2-SNAPSHOT'
+    compileOnly 'dev.xdark:clientapi:2.0.2'
     implementation 'ru.cristalix:client-sdk:10.2-SNAPSHOT'
     implementation 'ru.cristalix:uiengine:10.2-SNAPSHOT'
     implementation 'implario:humanize:1.1.3'

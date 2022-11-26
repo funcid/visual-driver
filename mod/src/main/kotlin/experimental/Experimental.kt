@@ -7,7 +7,9 @@ import experimental.panel.Panel
 import experimental.progress.ProgressController
 import experimental.progress.AbstractProgress
 import org.lwjgl.util.vector.Vector3f
+import readColoredUtf8
 import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
@@ -31,6 +33,14 @@ class Experimental {
             ProgressController.Companion
             Panel()
             TokenManager
+
+            mod.registerChannel("open:url") {
+                clientApi.minecraft().openUrl(readColoredUtf8())
+            }
+
+            mod.registerChannel("open:p13n") {
+                clientApi.minecraft().openP13n()
+            }
 
             return null
         }
