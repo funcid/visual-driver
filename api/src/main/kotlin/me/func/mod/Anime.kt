@@ -15,6 +15,7 @@ import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
+import me.func.mod.reactive.callback.ReactivePlaceCallbackHandler
 import me.func.mod.ui.Glow
 import me.func.mod.ui.dialog.Dialog
 import me.func.mod.ui.menu.MenuManager
@@ -66,6 +67,7 @@ object Anime {
         subscriber(GraffitiManager, Dialog, MenuManager)
 
         Debug // Инициализации команды и обработчика сообщений
+        ReactivePlaceCallbackHandler // инициализация хука к реактивным местам
     }
 
     @JvmStatic

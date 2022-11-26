@@ -198,4 +198,6 @@ object Banners : PlayerSubscriber {
     }
 
     override fun getSubscribersCount() = activeHandlers.size
+
+    override val uuid: UUID = UUID.randomUUID()
 }

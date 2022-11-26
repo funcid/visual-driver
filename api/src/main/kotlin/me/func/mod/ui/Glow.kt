@@ -24,36 +24,6 @@ object Glow : Listener {
     val glowingPlaces = hashMapOf<UUID, GlowingPlace>()
     private val playerAccepter = hashMapOf<UUID, Consumer<Player>>()
 
-    init {
-        Bukkit.getScheduler().runTaskTimer(Anime.provided, {
-
-            SubscribeVerifier.providers.asSequence()
-                .filterIsInstance<ReactivePlace>()
-                .filter { it.onEntire != null || it.onLeave != null }
-                .forEach { place ->
-
-                    val fresh = place.getPlayersInside()
-                    val old = place.playersInside
-
-                    fresh.forEach { newPlayer ->
-
-                        // Если сейчас в круге есть игрок, а его не было
-                        if (!old.contains(newPlayer.uniqueId))
-                            place.onEntire?.accept(newPlayer)
-                    }
-
-                    old.mapNotNull { Bukkit.getPlayer(it) }.forEach { oldPlayer ->
-
-                        // Если сейчас в круге нет игрока, а он был
-                        if (!fresh.contains(oldPlayer))
-                            place.onLeave?.accept(oldPlayer)
-                    }
-
-                    place.playersInside = fresh.map { it.uniqueId }.toHashSet()
-                }
-        }, 20, 5)
-    }
-
     @EventHandler
     fun PlayerMoveEvent.handle() {
         if (to.x != from.x || to.y != from.y || to.z != from.z) {
@@ -109,10 +79,12 @@ object Glow : Listener {
     ) = addPlace(GlowingPlace(UUID.randomUUID(), rgb, x, y, z), onJoin)
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun addPlace(place: GlowingPlace, onJoin: Consumer<Player>) =
         addPlace(place).also { playerAccepter[place.uuid] = onJoin }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun addPlace(place: GlowingPlace): GlowingPlace {
         if (glowingPlaces.size > 300) {
             warn("Glow places map size > 300! Stop add glowing places!")
@@ -123,6 +95,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun showPlace(player: Player, place: GlowingPlace) {
         ModTransfer()
             .uuid(place.uuid)
@@ -134,14 +107,17 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun showLoadedPlace(player: Player, uuid: UUID) {
         glowingPlaces[uuid]?.let { place -> showPlace(player, place) }
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun showAllPlaces(player: Player) = glowingPlaces.values.forEach { showLoadedPlace(player, it.uuid) }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun removePlace(place: GlowingPlace, vararg players: Player): GlowingPlace {
         if (glowingPlaces.remove(place.uuid) != null) {
             playerAccepter.remove(place.uuid)
@@ -153,6 +129,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun clearPlaces(vararg players: Player) {
         players.forEach { Anime.sendEmptyBuffer("func:place-clear", it) }
         glowingPlaces.clear()
@@ -160,6 +137,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun changePlaceColor(place: GlowingPlace, rgb: RGB, vararg players: Player) {
         ModTransfer()
             .uuid(place.uuid)

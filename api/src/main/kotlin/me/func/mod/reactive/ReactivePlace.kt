@@ -17,8 +17,8 @@ class ReactivePlace : PlayerSubscriber {
 
     override var isConstant = false
     private val subscribed = hashSetOf<UUID>()
+    override var uuid: UUID = UUID.randomUUID()
 
-    var uuid: UUID = UUID.randomUUID()
     var rgb: RGB = GlowColor.GREEN
     var x: Double = 0.0
     var y: Double = 0.0
@@ -28,13 +28,10 @@ class ReactivePlace : PlayerSubscriber {
     var onEntire: Consumer<Player>? = null
     var onLeave: Consumer<Player>? = null
 
-    var playersInside = hashSetOf<UUID>()
-
     private fun starter() = ModTransfer().uuid(uuid)
 
     override fun removeSubscriber(player: Player) {
         subscribed.remove(player.uniqueId)
-        playersInside.remove(player.uniqueId)
     }
 
     override fun getSubscribersCount() = subscribed.size

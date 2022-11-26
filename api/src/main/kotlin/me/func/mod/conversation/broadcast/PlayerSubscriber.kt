@@ -1,8 +1,9 @@
 package me.func.mod.conversation.broadcast
 
+import me.func.protocol.Unique
 import org.bukkit.entity.Player
 
-interface PlayerSubscriber {
+interface PlayerSubscriber : Unique {
 
     val isConstant: Boolean
 

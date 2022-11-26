@@ -4,12 +4,14 @@ import dev.xdark.clientapi.event.render.RenderPass
 import dev.xdark.clientapi.opengl.GlStateManager
 import dev.xdark.clientapi.render.DefaultVertexFormats
 import dev.xdark.feder.NetUtil
+import io.netty.buffer.Unpooled
 import me.func.protocol.world.GlowingPlace
 import me.func.protocol.data.color.Tricolor
 import org.lwjgl.opengl.GL11
 import readRgb
 import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
+import writeUuid
 import java.util.UUID
 import kotlin.math.cos
 import kotlin.math.pow
@@ -19,6 +21,8 @@ class GlowPlaces {
     companion object {
         private val places = arrayListOf<GlowingPlace>()
         private val placeCache = hashMapOf<UUID, MutableList<Triple<Double, Double, Double>>>()
+
+        private val inside = hashSetOf<UUID>()
 
         init {
             mod.registerChannel("func:place") {
@@ -78,8 +82,24 @@ class GlowPlaces {
                 places.sortedByDescending { place -> (place.x - entity.x).pow(2) + (place.z - entity.z).pow(2) }
                     .forEach { place ->
 
-                        if ((place.x - entity.x).pow(2) + (place.y - entity.y).pow(2) + (place.z - entity.z).pow(2) > 25 * 25 * 25)
+                        val distance = (place.x - entity.x).pow(2) + (place.z - entity.z).pow(2)
+
+                        // если ладеко, просто не рисуем
+                        if (distance > 100 * 100)
                             return@forEach
+
+                        val isWasInside = inside.contains(place.uuid)
+                        val isInside = distance < place.radius
+
+                        // если игрок перешел через место, отправить информацию на сервер
+                        if (isWasInside != isInside) {
+
+                            if (isWasInside) inside.remove(place.uuid)
+                            else inside.add(place.uuid)
+
+                            clientApi.clientConnection()
+                                .sendPayload("server:place-signal", Unpooled.buffer().writeUuid(place.uuid))
+                        }
 
                         val x = place.x - (entity.x - prevX) * pt - prevX
                         val y = place.y - (entity.y - prevY) * pt - prevY

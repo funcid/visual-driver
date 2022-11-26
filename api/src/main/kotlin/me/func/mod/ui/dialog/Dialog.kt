@@ -55,5 +55,6 @@ object Dialog : PlayerSubscriber {
     override fun removeSubscriber(player: Player) { opened.remove(player.uniqueId) }
 
     override fun getSubscribersCount() = opened.size
+    override val uuid: UUID = UUID.randomUUID()
 
 }

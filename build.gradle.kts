@@ -20,7 +20,7 @@ allprojects {
         val build = release.toString().toInt()
         project.version = "" + build / 100 + "." + (build / 10) % 10 + "." + build % 10 + ".RELEASE"
     } else {
-        project.version = "3.2.59.TEST"
+        project.version = "3.2.60.TEST"
     }
 }
 

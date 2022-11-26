@@ -2,14 +2,15 @@
 
 package me.func.mod.util
 
+import io.netty.buffer.ByteBuf
 import me.func.mod.Anime
 import me.func.mod.conversation.CRAFT_ITEM_TO_NMS
 import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.conversation.broadcast.SubscribeVerifier
-import me.func.mod.debug.Subscriber
 import net.minecraft.server.v1_12_R1.NBTTagCompound
 import org.apache.logging.log4j.util.BiConsumer
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.ConsoleCommandSender
@@ -17,6 +18,8 @@ import org.bukkit.entity.Player
 import org.bukkit.event.Listener
 import org.bukkit.inventory.ItemStack
 import org.bukkit.scheduler.BukkitTask
+import java.util.*
+import kotlin.math.pow
 
 @JvmSynthetic
 inline fun unit(block: () -> Unit): Unit = block()
@@ -64,3 +67,13 @@ fun ItemStack.nbt(key: String, value: String): ItemStack =
         if (tag == null) tag = NBTTagCompound()
         tag.setString(key, value)
     }.asBukkitMirror()
+
+fun safe(action: () -> Unit) {
+    return try {
+        action()
+    } catch (exception: Exception) {
+        exception.printStackTrace()
+    }
+}
+
+fun ByteBuf.readUuid(): UUID = UUID(readLong(), readLong())
