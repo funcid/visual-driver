@@ -1,7 +1,9 @@
 package standard.storage
 
 import Main.Companion.menuStack
+import asColor
 import io.netty.buffer.Unpooled
+import me.func.protocol.data.color.GlowColor
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
@@ -55,8 +57,8 @@ interface AbstractMenu {
         offset.y = offsetY
         offset.x -= 65
         size = V3(40.0, backButtonSize)
-        val normalColor = Color(42, 102, 189, 0.83)
-        val hoveredColor = Color(224, 118, 20, 0.83)
+        val normalColor = GlowColor.BLUE.asColor(0.83)
+        val hoveredColor = GlowColor.BLUE_LIGHT.asColor(0.83)
         color = normalColor
         onHover {
             animate(0.08, Easings.QUINT_OUT) {

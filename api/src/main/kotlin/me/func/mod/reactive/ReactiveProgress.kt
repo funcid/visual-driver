@@ -66,6 +66,12 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
             field = value
         }
 
+    override var lineColor = super.lineColor
+        set(value) {
+            update(starter().integer(2).rgb(value))
+            field = value
+        }
+
     private fun update(transfer: ModTransfer) {
 
         // Обновить прогресс у всех игроков
