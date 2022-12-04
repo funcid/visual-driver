@@ -1,6 +1,5 @@
 package lootbox
 
-import Main.Companion.menuStack
 import dev.xdark.clientapi.item.Item
 import dev.xdark.clientapi.item.ItemStack
 import dev.xdark.clientapi.opengl.GlStateManager
@@ -29,8 +28,6 @@ import ru.cristalix.uiengine.utility.rectangle
 import ru.cristalix.uiengine.utility.text
 
 class CrateScreen : ContextGui() {
-
-    var opened = false
 
     init {
         onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE)

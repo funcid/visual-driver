@@ -6,6 +6,7 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import experimental.panel.Panel
 import experimental.progress.ProgressController
 import experimental.progress.AbstractProgress
+import experimental.utils.Test
 import org.lwjgl.util.vector.Vector3f
 import readColoredUtf8
 import ru.cristalix.clientapi.JavaMod
@@ -33,14 +34,8 @@ class Experimental {
             ProgressController.Companion
             Panel()
             TokenManager
-
-            mod.registerChannel("open:url") {
-                clientApi.minecraft().openUrl(readColoredUtf8())
-            }
-
-            mod.registerChannel("open:p13n") {
-                clientApi.minecraft().openP13n()
-            }
+            Test()
+            Test
 
             return null
         }

@@ -30,9 +30,6 @@ class DailyRewardMenu(
     override var storage: MutableList<StorageNode<*>> = arrayListOf()
 ) : AbstractMenu, ContextGui() {
 
-    private var rootElement: RectangleElement? = null
-    private var hoverContainer: CarvedRectangle? = null
-
     init {
         keyTypedHandlers.clear()
         onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE) closeGui() }
@@ -217,49 +214,6 @@ class DailyRewardMenu(
         if (hideWrapped) close()
     }
 
-    fun updateScale(resolution: ScaledResolution = clientApi.resolution()) {
-        val rootElement = rootElement ?: return
+    override fun close() = super.close(true)
 
-        val factor = resolution.scaleFactor
-
-        val scaleWidth = resolution.scaledWidth_double
-        val scaleHeight = resolution.scaledHeight_double
-
-        val sizeX = scaleWidth * factor / 2.0
-        val sizeY = scaleHeight * factor / 2.0
-
-        val highX = (sizeY / sizeX) * 100.0
-        val highY = (sizeX / sizeY) * 100.0
-
-        val scaleX = if (highX <= 100.0) sizeY else sizeX
-        val scaleY = if (highY <= 100.0) sizeX else sizeY
-
-        val scaleXY = (scaleX + scaleY) / 2.0
-        val sizeXY = (sizeX + sizeY) / 2.0
-
-        var scaleTotal = (((if (highX <= 47.257 || highY <= 47.257) scaleXY else sizeXY) * 0.001) + 0.26775)
-
-        scaleTotal = when (factor) {
-            1 -> scaleTotal * 2.0
-            3 -> scaleTotal / 1.5
-            4 -> scaleTotal / 2.0
-            else -> scaleTotal
-        }
-
-        val rootSizeX = rootElement.size.x + 30.0
-        val rootSizeY = rootElement.size.y + 30.0
-
-        val percentX = (sizeX / rootSizeX) * 100.0
-        val percentY = (sizeY / rootSizeY) * 100.0
-
-        val scX = (1.0 * percentX) / 100.0
-        val scY = (1.0 * percentY) / 100.0
-
-        if ((sizeX <= rootSizeX || sizeY <= rootSizeY) && factor == 1) scaleTotal /= 1.73225 - (if (sizeX <= rootSizeX) scX else scY)
-
-        size = V3(sizeX, sizeY)
-        rootElement.scale = V3(scaleTotal, scaleTotal, 1.0)
-
-        hoverContainer?.scale = V3(scaleTotal, scaleTotal, 1.0)
-    }
 }
