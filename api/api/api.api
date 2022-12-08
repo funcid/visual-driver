@@ -44,8 +44,6 @@ public final class me/func/mod/Anime {
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;D)V
-	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
-	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
 	public final fun openP13n (Lorg/bukkit/entity/Player;)V
 	public final fun openUrl (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
@@ -58,7 +56,6 @@ public final class me/func/mod/Anime {
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/data/color/RGB;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)V
-	public static final fun removeSphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun safeReadUUID (Lio/netty/buffer/ByteBuf;)Ljava/util/UUID;
 	public static final fun sendEmptyBuffer (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
 	public final fun setGraffitiClient (Lme/func/mod/graffiti/GraffitiClient;)V
@@ -69,14 +66,8 @@ public final class me/func/mod/Anime {
 	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;DILjava/lang/Object;)V
 	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;DILjava/lang/Object;)V
 	public static final fun showIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/ui/indicator/Indicators;)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;D)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;DDD)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;D)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;DDD)V
 	public static final fun systemMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/MessageStatus;DLjava/lang/String;)V
 	public static final fun systemMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/MessageStatus;Ljava/lang/String;)V
-	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDD)V
-	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;)V
 	public static final fun timer (Lorg/bukkit/entity/Player;I)V
 	public static final fun timer (Lorg/bukkit/entity/Player;Ljava/lang/String;I)V
 	public static final fun timer (Lorg/bukkit/entity/Player;Ljava/lang/String;IIII)V
@@ -1244,6 +1235,15 @@ public final class me/func/mod/ui/token/TokenGroup : me/func/mod/conversation/br
 public final class me/func/mod/util/LogKt {
 	public static final fun log (Ljava/lang/String;)V
 	public static final fun warn (Ljava/lang/String;)V
+}
+
+public final class me/func/mod/util/PlayerKt {
+	public static final fun killboard (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun loadTexture (Lorg/bukkit/entity/Player;Ljava/lang/String;)Ljava/lang/String;
+	public static final fun openP13n (Lorg/bukkit/entity/Player;)V
+	public static final fun openUrl (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun title (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun title (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
 }
 
 public final class me/func/mod/util/Utils {

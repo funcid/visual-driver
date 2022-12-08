@@ -90,7 +90,7 @@ class GlowPlaces {
                             return@forEach
 
                         val isWasInside = inside.contains(place.uuid)
-                        val isInside = distance <= place.radius
+                        val isInside = distance <= place.radius * place.radius
 
                         // если игрок перешел через место, отправить информацию на сервер
                         if (isWasInside != isInside) {
@@ -98,12 +98,10 @@ class GlowPlaces {
                             if (isWasInside) inside.remove(place.uuid)
                             else inside.add(place.uuid)
 
-                            UIEngine.schedule(0.1) {
-                                clientApi.clientConnection().sendPayload(
-                                    "server:place-signal",
-                                    Unpooled.buffer().writeUuid(place.uuid)
-                                )
-                            }
+                            clientApi.clientConnection().sendPayload(
+                                "server:place-signal",
+                                Unpooled.buffer().writeUuid(place.uuid)
+                            )
                         }
 
                         val x = place.x - (entity.x - prevX) * pt - prevX

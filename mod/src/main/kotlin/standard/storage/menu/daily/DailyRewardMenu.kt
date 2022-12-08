@@ -179,7 +179,6 @@ class DailyRewardMenu(
     fun sendDayStatus() {
         for (i in 0..6) {
             val element = storage[i]
-            val setDay = i + 1
 
             var color = Color(42, 102, 189, 0.28)
             var content = "Награда за\nвход в игру"
