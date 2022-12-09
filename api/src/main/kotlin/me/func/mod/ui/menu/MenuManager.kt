@@ -152,4 +152,5 @@ object MenuManager : PlayerSubscriber {
     }
 
     override fun getSubscribersCount() = handleMap.size
+    override val uuid: UUID = UUID.randomUUID()
 }

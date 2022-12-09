@@ -10,7 +10,7 @@ import java.util.*
 
 class ReactivePanel : PlayerSubscriber {
 
-    var uuid: UUID = UUID.randomUUID()
+    override var uuid: UUID = UUID.randomUUID()
 
     init {
         subscriber(this)

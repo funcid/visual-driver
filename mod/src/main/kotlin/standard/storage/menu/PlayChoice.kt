@@ -133,4 +133,7 @@ class PlayChoice(
     }
 
     override fun getInformationBlock() = information
+
+    override fun close() = super.close(true)
+
 }

@@ -27,6 +27,10 @@ fun ByteBuf.readRgb() = Tricolor(readInt(), readInt(), readInt())
 
 fun ByteBuf.readUuid(): UUID = UUID(readLong(), readLong())
 
+fun ByteBuf.writeUuid(uuid: UUID) = ensureWritable(16)
+    .writeLong(uuid.mostSignificantBits)
+    .writeLong(uuid.leastSignificantBits)
+
 fun RGB.asColor(opacity: Double = 1.0) = Color(red, green, blue, opacity)
 
 fun lazyRectangle(element: RectangleElement.() -> Unit) = LazyElement { RectangleElement().also(element) }

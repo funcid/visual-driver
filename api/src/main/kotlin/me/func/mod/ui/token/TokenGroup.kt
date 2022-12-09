@@ -18,6 +18,8 @@ class TokenGroup(
 
     override var isConstant = true
 
+    override val uuid: UUID = UUID.randomUUID()
+
     init {
         subscriber(this)
 

@@ -19,18 +19,20 @@ interface Information {
 
         onHover {
             if (!hasHovered && hovered) {
-                hasHovered = !hasHovered
+                hasHovered = true
                 animate(0.1, Easings.QUAD_OUT) {
                     size = V3(scalar + 4, scalar + 4)
+                    offset = V3(-scalar + 2, scalar - 2)
                 }
             } else if (hasHovered && !hovered) {
-                hasHovered = !hasHovered
+                hasHovered = false
                 animate(0.1, Easings.QUAD_OUT) {
                     size = V3(scalar, scalar)
+                    offset = V3(-scalar, scalar)
                 }
             }
         }
-        offset = V3(-scalar, scalar, scalar)
+        offset = V3(-scalar, scalar)
         size = V3(scalar, scalar)
         color = Color(42, 102, 189)
         +text {

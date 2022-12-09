@@ -1,5 +1,6 @@
 package experimental.progress
 
+import asColor
 import dev.xdark.clientapi.event.render.RenderTickPre
 import dev.xdark.clientapi.event.render.ScaleChange
 import dev.xdark.clientapi.event.window.WindowResize
@@ -89,6 +90,7 @@ class ProgressController {
                         }
                     }
                     1 -> bar.content.content = readColoredUtf8() // текст
+                    2 -> bar.progress.color = readRgb().asColor() // цвет
                 }
             }
         }

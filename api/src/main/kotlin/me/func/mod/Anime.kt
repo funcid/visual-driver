@@ -15,6 +15,7 @@ import me.func.mod.debug.ModWatcher
 import me.func.mod.graffiti.GraffitiClient
 import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
+import me.func.mod.reactive.callback.ReactivePlaceCallbackHandler
 import me.func.mod.ui.Glow
 import me.func.mod.ui.dialog.Dialog
 import me.func.mod.ui.menu.MenuManager
@@ -66,6 +67,7 @@ object Anime {
         subscriber(GraffitiManager, Dialog, MenuManager)
 
         Debug // Инициализации команды и обработчика сообщений
+        ReactivePlaceCallbackHandler // инициализация хука к реактивным местам
     }
 
     @JvmStatic
@@ -88,7 +90,9 @@ object Anime {
 
     // Метод для изменения правила установки граффити
     @JvmStatic
-    fun modifyGraffitiPlaceCondition(canPlace: Predicate<Location>) { isCanPlace = canPlace }
+    fun modifyGraffitiPlaceCondition(canPlace: Predicate<Location>) {
+        isCanPlace = canPlace
+    }
 
     @JvmStatic
     fun sendEmptyBuffer(channel: String, player: Player) = ModTransfer().send(channel, player)
@@ -141,6 +145,10 @@ object Anime {
     fun title(player: Player, vararg text: String) = title(player, text.joinToString("\n"))
 
     @JvmStatic
+    @Deprecated(
+        "Используйте ReactiveProgress",
+        ReplaceWith("ReactiveProgress", "me.func.mod.reactive.ReactiveProgress")
+    )
     fun timer(player: Player, text: String, duration: Int, red: Int, blue: Int, green: Int) = ModTransfer()
         .string(text)
         .integer(duration)
@@ -150,9 +158,17 @@ object Anime {
         .send("func:bar", player)
 
     @JvmStatic
+    @Deprecated(
+        "Используйте ReactiveProgress",
+        ReplaceWith("ReactiveProgress", "me.func.mod.reactive.ReactiveProgress")
+    )
     fun timer(player: Player, text: String, duration: Int) = timer(player, text, duration, 42, 102, 189)
 
     @JvmStatic
+    @Deprecated(
+        "Используйте ReactiveProgress",
+        ReplaceWith("ReactiveProgress", "me.func.mod.reactive.ReactiveProgress")
+    )
     fun timer(player: Player, duration: Int) = timer(player, "До конца осталось", duration)
 
     @JvmStatic
@@ -167,7 +183,8 @@ object Anime {
     }
 
     @JvmStatic
-    fun overlayText(player: Player, positions: Position, vararg text: String) = overlayText(player, positions, text.joinToString("\n"))
+    fun overlayText(player: Player, positions: Position, vararg text: String) =
+        overlayText(player, positions, text.joinToString("\n"))
 
     @JvmStatic
     fun overlayText(players: Collection<Player>, positions: Position, text: String) {
@@ -175,7 +192,8 @@ object Anime {
     }
 
     @JvmStatic
-    fun overlayText(players: Collection<Player>, positions: Position, vararg text: String) = overlayText(players, positions, text.joinToString("\n"))
+    fun overlayText(players: Collection<Player>, positions: Position, vararg text: String) =
+        overlayText(players, positions, text.joinToString("\n"))
 
     @JvmStatic
     @Deprecated("Устаревший метод, новый - overlayText")
@@ -375,95 +393,6 @@ object Anime {
             .send("func:corpse", to)
 
     @JvmStatic
-    fun sphere(to: Player, uuid: UUID, x: Double, y: Double, z: Double, color: Color, diameter: Double) = ModTransfer()
-        .integer(0)
-        .long(uuid.mostSignificantBits)
-        .long(uuid.leastSignificantBits)
-        .double(x)
-        .double(y)
-        .double(z)
-        .integer(color.red)
-        .integer(color.green)
-        .integer(color.blue)
-        .double(color.alpha / 255.0)
-        .double(diameter)
-        .send("fiwka:sphere", to)
-
-    @JvmStatic
-    fun sphere(
-        to: Player,
-        uuid: UUID,
-        x: Double,
-        y: Double,
-        z: Double,
-        color: Color,
-        sX: Double,
-        sY: Double,
-        sZ: Double
-    ) = ModTransfer()
-        .integer(1)
-        .long(uuid.mostSignificantBits)
-        .long(uuid.leastSignificantBits)
-        .double(x)
-        .double(y)
-        .double(z)
-        .integer(color.red)
-        .integer(color.green)
-        .integer(color.blue)
-        .double(color.alpha / 255.0)
-        .double(sX)
-        .double(sY)
-        .double(sZ)
-        .send("fiwka:sphere", to)
-
-    @JvmStatic
-    fun teleportSphereTo(to: Player, uuid: UUID, x: Double, y: Double, z: Double) =
-        ModTransfer()
-            .integer(2)
-            .long(uuid.mostSignificantBits)
-            .long(uuid.leastSignificantBits)
-            .double(x)
-            .double(y)
-            .double(z)
-            .send("fiwka:sphere", to)
-
-    @JvmStatic
-    fun moveSphereTo(to: Player, uuid: UUID, x: Double, y: Double, z: Double, time: Double) =
-        ModTransfer()
-            .integer(3)
-            .long(uuid.mostSignificantBits)
-            .long(uuid.leastSignificantBits)
-            .double(x)
-            .double(y)
-            .double(z)
-            .double(time)
-            .send("fiwka:sphere", to)
-
-    @JvmStatic
-    fun sphere(to: Player, uuid: UUID, location: Location, color: Color, radius: Double) =
-        sphere(to, uuid, location.getX(), location.getY(), location.getZ(), color, radius)
-
-    @JvmStatic
-    fun sphere(to: Player, uuid: UUID, location: Location, color: Color, sX: Double, sY: Double, sZ: Double) =
-        sphere(to, uuid, location.getX(), location.getY(), location.getZ(), color, sX, sY, sZ)
-
-    @JvmStatic
-    fun teleportSphereTo(to: Player, uuid: UUID, location: Location) =
-        teleportSphereTo(to, uuid, location.getX(), location.getY(), location.getZ())
-
-    @JvmStatic
-    fun moveSphereTo(to: Player, uuid: UUID, location: Location, time: Double) =
-        moveSphereTo(to, uuid, location.getX(), location.getY(), location.getZ(), time)
-
-    @JvmStatic
-    fun removeSphere(to: Player, uuid: UUID) =
-        ModTransfer()
-            .integer(4)
-            .long(uuid.mostSignificantBits)
-            .long(uuid.leastSignificantBits)
-            .send("fiwka:sphere", to)
-
-    @JvmStatic
     fun graffiti(player: Player, placed: GraffitiPlaced) {
         if (player.world.name != placed.world)
             return
@@ -493,6 +422,10 @@ object Anime {
     }
 
     @JvmStatic
+    @Deprecated(
+        "Используйте ReactiveProgress",
+        ReplaceWith("ReactiveProgress", "me.func.mod.reactive.ReactiveProgress")
+    )
     fun reload(player: Player, seconds: Double, text: String, red: Int, green: Int, blue: Int) = ModTransfer()
         .double(seconds)
         .string(text)
@@ -502,10 +435,18 @@ object Anime {
         .send("func:recharge", player)
 
     @JvmStatic
+    @Deprecated(
+        "Используйте ReactiveProgress",
+        ReplaceWith("ReactiveProgress", "me.func.mod.reactive.ReactiveProgress")
+    )
     fun reload(player: Player, seconds: Double, text: String, color: RGB) =
         reload(player, seconds, text, color.red, color.green, color.blue)
 
     @JvmStatic
+    @Deprecated(
+        "Используйте ReactiveProgress",
+        ReplaceWith("ReactiveProgress", "me.func.mod.reactive.ReactiveProgress")
+    )
     fun reload(player: Player, seconds: Double, text: String) = reload(player, seconds, text, 255, 192, 203)
 
     @JvmStatic
@@ -560,5 +501,9 @@ object Anime {
             .json(PacketEnableDisableModels(stand, personalization.toSet(), setOf()))
             .send(ENABLE_DISABLE_MODELS, viewer)
     }
+
+    fun openUrl(player: Player, url: String) = ModTransfer().string(url).send("open:url", player)
+
+    fun openP13n(player: Player) = sendEmptyBuffer("open:p13n", player)
 
 }

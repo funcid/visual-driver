@@ -22,9 +22,9 @@ class Reconnect {
         private var secondsLeft = -1
 
         init {
-            var element: TextElement? = null
-            var buttonText: TextElement? = null
-            var button: CarvedRectangle? = null
+            var element: TextElement?
+            var buttonText: TextElement?
+            var button: CarvedRectangle?
             val container = UIEngine.overlayContext + carved {
                 enabled = false
                 color = Color(20, 98, 41, 0.62)

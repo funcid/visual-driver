@@ -6,8 +6,11 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import experimental.panel.Panel
 import experimental.progress.ProgressController
 import experimental.progress.AbstractProgress
+import experimental.utils.Test
 import org.lwjgl.util.vector.Vector3f
+import readColoredUtf8
 import ru.cristalix.clientapi.JavaMod
+import ru.cristalix.clientapi.JavaMod.clientApi
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.registerHandler
 import ru.cristalix.uiengine.UIEngine
@@ -31,6 +34,8 @@ class Experimental {
             ProgressController.Companion
             Panel()
             TokenManager
+            Test()
+            Test
 
             return null
         }

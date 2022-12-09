@@ -44,9 +44,9 @@ public final class me/func/mod/Anime {
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)V
 	public static final fun moveMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;D)V
-	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDD)V
-	public static final fun moveSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;D)V
 	public static final fun openLootBox (Lorg/bukkit/entity/Player;[Lme/func/mod/conversation/data/LootDrop;)V
+	public final fun openP13n (Lorg/bukkit/entity/Player;)V
+	public final fun openUrl (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;Ljava/lang/String;)V
 	public static final fun overlayText (Ljava/util/Collection;Lme/func/protocol/math/Position;[Ljava/lang/String;)V
 	public static final fun overlayText (Lorg/bukkit/entity/Player;Lme/func/protocol/math/Position;Ljava/lang/String;)V
@@ -56,7 +56,6 @@ public final class me/func/mod/Anime {
 	public static final fun reload (Lorg/bukkit/entity/Player;DLjava/lang/String;Lme/func/protocol/data/color/RGB;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun removeMarker (Lorg/bukkit/entity/Player;Lme/func/protocol/world/marker/Marker;)V
-	public static final fun removeSphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;)V
 	public static final fun safeReadUUID (Lio/netty/buffer/ByteBuf;)Ljava/util/UUID;
 	public static final fun sendEmptyBuffer (Ljava/lang/String;Lorg/bukkit/entity/Player;)V
 	public final fun setGraffitiClient (Lme/func/mod/graffiti/GraffitiClient;)V
@@ -67,14 +66,8 @@ public final class me/func/mod/Anime {
 	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/lang/String;Ljava/lang/String;DILjava/lang/Object;)V
 	public static synthetic fun showEnding$default (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/EndStatus;Ljava/util/List;Ljava/util/List;DILjava/lang/Object;)V
 	public static final fun showIndicator (Lorg/bukkit/entity/Player;[Lme/func/protocol/ui/indicator/Indicators;)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;D)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDDLjava/awt/Color;DDD)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;D)V
-	public static final fun sphere (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;Ljava/awt/Color;DDD)V
 	public static final fun systemMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/MessageStatus;DLjava/lang/String;)V
 	public static final fun systemMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/status/MessageStatus;Ljava/lang/String;)V
-	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;DDD)V
-	public static final fun teleportSphereTo (Lorg/bukkit/entity/Player;Ljava/util/UUID;Lorg/bukkit/Location;)V
 	public static final fun timer (Lorg/bukkit/entity/Player;I)V
 	public static final fun timer (Lorg/bukkit/entity/Player;Ljava/lang/String;I)V
 	public static final fun timer (Lorg/bukkit/entity/Player;Ljava/lang/String;IIII)V
@@ -193,7 +186,7 @@ public final class me/func/mod/conversation/ModTransferKt {
 	public static final fun getWRITE_ITEM ()Ljava/lang/invoke/MethodHandle;
 }
 
-public abstract interface class me/func/mod/conversation/broadcast/PlayerSubscriber {
+public abstract interface class me/func/mod/conversation/broadcast/PlayerSubscriber : me/func/protocol/Unique {
 	public abstract fun getSubscribersCount ()I
 	public abstract fun isConstant ()Z
 	public abstract fun removeSubscriber (Lorg/bukkit/entity/Player;)V
@@ -201,7 +194,8 @@ public abstract interface class me/func/mod/conversation/broadcast/PlayerSubscri
 
 public final class me/func/mod/conversation/broadcast/SubscribeVerifier : org/bukkit/event/Listener {
 	public static final field INSTANCE Lme/func/mod/conversation/broadcast/SubscribeVerifier;
-	public final fun add ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)Z
+	public final fun add ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)V
+	public final fun getProviders ()Ljava/util/HashMap;
 	public final fun handle (Lorg/bukkit/event/player/PlayerQuitEvent;)V
 }
 
@@ -383,6 +377,7 @@ public abstract interface class me/func/mod/graffiti/GraffitiClient {
 public final class me/func/mod/graffiti/GraffitiManager : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field INSTANCE Lme/func/mod/graffiti/GraffitiManager;
 	public fun getSubscribersCount ()I
+	public fun getUuid ()Ljava/util/UUID;
 	public final fun isCanPlace ()Ljava/util/function/Predicate;
 	public fun isConstant ()Z
 	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
@@ -473,7 +468,7 @@ public final class me/func/mod/reactive/ReactivePanel : me/func/mod/conversation
 	public final fun getProgress ()D
 	public fun getSubscribersCount ()I
 	public final fun getText ()Ljava/lang/String;
-	public final fun getUuid ()Ljava/util/UUID;
+	public fun getUuid ()Ljava/util/UUID;
 	public fun isConstant ()Z
 	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
 	public final fun send (Ljava/util/List;)V
@@ -481,7 +476,7 @@ public final class me/func/mod/reactive/ReactivePanel : me/func/mod/conversation
 	public final fun setColor (Lme/func/protocol/data/color/RGB;)V
 	public final fun setProgress (D)V
 	public final fun setText (Ljava/lang/String;)V
-	public final fun setUuid (Ljava/util/UUID;)V
+	public fun setUuid (Ljava/util/UUID;)V
 	public final fun unsubscribe (Ljava/lang/Iterable;)Z
 	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
 }
@@ -502,6 +497,61 @@ public final class me/func/mod/reactive/ReactivePanel$Companion {
 	public final fun builder ()Lme/func/mod/reactive/ReactivePanel$Builder;
 }
 
+public final class me/func/mod/reactive/ReactivePlace : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field Companion Lme/func/mod/reactive/ReactivePlace$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun delete ()V
+	public final fun delete (Ljava/util/Set;)V
+	public static synthetic fun delete$default (Lme/func/mod/reactive/ReactivePlace;Ljava/util/Set;ILjava/lang/Object;)V
+	public final fun getAngles ()I
+	public final fun getOnEntire ()Ljava/util/function/Consumer;
+	public final fun getOnLeave ()Ljava/util/function/Consumer;
+	public final fun getPlayersInside ()Ljava/util/List;
+	public final fun getRadius ()D
+	public final fun getRgb ()Lme/func/protocol/data/color/RGB;
+	public fun getSubscribersCount ()I
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun getX ()D
+	public final fun getY ()D
+	public final fun getZ ()D
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun send ([Lorg/bukkit/entity/Player;)V
+	public final fun setAngles (I)V
+	public fun setConstant (Z)V
+	public final fun setOnEntire (Ljava/util/function/Consumer;)V
+	public final fun setOnLeave (Ljava/util/function/Consumer;)V
+	public final fun setRadius (D)V
+	public final fun setRgb (Lme/func/protocol/data/color/RGB;)V
+	public fun setUuid (Ljava/util/UUID;)V
+	public final fun setX (D)V
+	public final fun setY (D)V
+	public final fun setZ (D)V
+}
+
+public final class me/func/mod/reactive/ReactivePlace$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/reactive/ReactivePlace;)V
+	public synthetic fun <init> (Lme/func/mod/reactive/ReactivePlace;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun angles (I)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun build ()Lme/func/mod/reactive/ReactivePlace;
+	public final fun getModel ()Lme/func/mod/reactive/ReactivePlace;
+	public final fun location (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun onEntire (Ljava/util/function/Consumer;)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun onLeave (Ljava/util/function/Consumer;)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun radius (D)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun rgb (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun x (D)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun y (D)Lme/func/mod/reactive/ReactivePlace$Builder;
+	public final fun z (D)Lme/func/mod/reactive/ReactivePlace$Builder;
+}
+
+public final class me/func/mod/reactive/ReactivePlace$Companion {
+	public final fun builder ()Lme/func/mod/reactive/ReactivePlace$Builder;
+}
+
 public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/progress/Progress, me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field Companion Lme/func/mod/reactive/ReactiveProgress$Companion;
 	public fun <init> ()V
@@ -510,6 +560,7 @@ public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/p
 	public final fun delete (Ljava/util/Set;)V
 	public static synthetic fun delete$default (Lme/func/mod/reactive/ReactiveProgress;Ljava/util/Set;ILjava/lang/Object;)V
 	public final fun getLastUpdate ()J
+	public fun getLineColor ()Lme/func/protocol/data/color/RGB;
 	public fun getProgress ()D
 	public fun getSubscribersCount ()I
 	public fun getText ()Ljava/lang/String;
@@ -518,6 +569,7 @@ public final class me/func/mod/reactive/ReactiveProgress : me/func/protocol/ui/p
 	public final fun send (Ljava/util/List;)V
 	public final fun send ([Lorg/bukkit/entity/Player;)V
 	public final fun setLastUpdate (J)V
+	public fun setLineColor (Lme/func/protocol/data/color/RGB;)V
 	public fun setProgress (D)V
 	public fun setText (Ljava/lang/String;)V
 	public final fun unsubscribe (Ljava/lang/Iterable;)Z
@@ -545,6 +597,10 @@ public final class me/func/mod/reactive/ReactiveProgress$Builder {
 
 public final class me/func/mod/reactive/ReactiveProgress$Companion {
 	public final fun builder ()Lme/func/mod/reactive/ReactiveProgress$Builder;
+}
+
+public final class me/func/mod/reactive/callback/ReactivePlaceCallbackHandler {
+	public static final field INSTANCE Lme/func/mod/reactive/callback/ReactivePlaceCallbackHandler;
 }
 
 public final class me/func/mod/service/Services {
@@ -763,6 +819,7 @@ public final class me/func/mod/ui/dialog/Dialog : me/func/mod/conversation/broad
 	public static final field INSTANCE Lme/func/mod/ui/dialog/Dialog;
 	public static final fun dialog (Lorg/bukkit/entity/Player;Lme/func/protocol/ui/dialog/Dialog;Ljava/lang/String;)V
 	public fun getSubscribersCount ()I
+	public fun getUuid ()Ljava/util/UUID;
 	public fun isConstant ()Z
 	public static final fun openDialog (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
 	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
@@ -778,6 +835,7 @@ public final class me/func/mod/ui/menu/MenuManager : me/func/mod/conversation/br
 	public final fun getMenuStacks ()Ljava/util/HashMap;
 	public final fun getReconnectMap ()Ljava/util/HashMap;
 	public fun getSubscribersCount ()I
+	public fun getUuid ()Ljava/util/UUID;
 	public fun isConstant ()Z
 	public final fun push (Lorg/bukkit/entity/Player;Lme/func/mod/ui/menu/Storage;)Lme/func/mod/ui/menu/Storage;
 	public final fun reactive (Lme/func/mod/reactive/ReactiveButton;Lkotlin/jvm/functions/Function1;)V
@@ -1166,6 +1224,7 @@ public final class me/func/mod/ui/token/TokenGroup : me/func/mod/conversation/br
 	public fun <init> (Ljava/util/List;)V
 	public fun <init> ([Lme/func/mod/ui/token/Token;)V
 	public fun getSubscribersCount ()I
+	public fun getUuid ()Ljava/util/UUID;
 	public fun isConstant ()Z
 	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
 	public final fun removeTokens (Ljava/util/List;)V
@@ -1178,6 +1237,15 @@ public final class me/func/mod/util/LogKt {
 	public static final fun warn (Ljava/lang/String;)V
 }
 
+public final class me/func/mod/util/PlayerKt {
+	public static final fun killboard (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun loadTexture (Lorg/bukkit/entity/Player;Ljava/lang/String;)Ljava/lang/String;
+	public static final fun openP13n (Lorg/bukkit/entity/Player;)V
+	public static final fun openUrl (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun title (Lorg/bukkit/entity/Player;Ljava/lang/String;)V
+	public static final fun title (Lorg/bukkit/entity/Player;[Ljava/lang/String;)V
+}
+
 public final class me/func/mod/util/Utils {
 	public static final fun addNbtToItemStack (Lorg/bukkit/inventory/ItemStack;Ljava/lang/String;Ljava/lang/String;)Lorg/bukkit/inventory/ItemStack;
 	public static final fun after (JLjava/lang/Runnable;)Lorg/bukkit/scheduler/BukkitTask;
@@ -1186,27 +1254,37 @@ public final class me/func/mod/util/Utils {
 	public static final fun command (Ljava/lang/String;Lorg/apache/logging/log4j/util/BiConsumer;)V
 	public static final fun consoleCommand (Ljava/lang/String;Lkotlin/jvm/functions/Function0;)V
 	public static final fun listener ([Lorg/bukkit/event/Listener;)V
-	public static final fun subscriber ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)Z
+	public static final fun readUuid (Lio/netty/buffer/ByteBuf;)Ljava/util/UUID;
+	public static final fun safe (Lkotlin/jvm/functions/Function0;)V
+	public static final fun subscriber ([Lme/func/mod/conversation/broadcast/PlayerSubscriber;)V
 	public static final synthetic fun unit (Ljava/lang/Object;Lkotlin/jvm/functions/Function1;)V
 	public static final synthetic fun unit (Lkotlin/jvm/functions/Function0;)V
 }
 
-public final class me/func/mod/world/Banners {
+public final class me/func/mod/world/Banners : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field INSTANCE Lme/func/mod/world/Banners;
 	public static final fun add (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
+	public static final fun add (Lme/func/protocol/data/element/Banner;Ljava/util/function/BiConsumer;)Lme/func/protocol/data/element/Banner;
 	public static final fun content (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun content (Lorg/bukkit/entity/Player;Lme/func/protocol/data/element/Banner;Ljava/lang/String;)V
 	public final fun eyeLocation (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
+	public final fun getActiveHandlers ()Ljava/util/HashMap;
 	public final fun getBanners ()Ljava/util/HashMap;
+	public final fun getClickable ()Ljava/util/HashMap;
+	public fun getSubscribersCount ()I
+	public fun getUuid ()Ljava/util/UUID;
 	public final fun harmonicVibrations (Lme/func/protocol/data/element/Banner;Lme/func/protocol/math/Dimension;DDD)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
+	public fun isConstant ()Z
 	public final fun location (Lme/func/protocol/data/element/Banner;Lorg/bukkit/Location;)V
 	public final synthetic fun new (Lkotlin/jvm/functions/Function1;)Lme/func/protocol/data/element/Banner;
 	public static final synthetic fun new (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
 	public static final fun remove (Ljava/util/UUID;)V
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
 	public final fun setBanners (Ljava/util/HashMap;)V
 	public final fun shineBlocks (Lme/func/protocol/data/element/Banner;Z)V
+	public static final fun show (Lorg/bukkit/entity/Player;Lme/func/protocol/data/element/Banner;Ljava/util/function/BiConsumer;)V
 	public static final fun show (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun show (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
 	public static final fun showAll (Lorg/bukkit/entity/Player;)V
