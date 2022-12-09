@@ -84,9 +84,9 @@ class OverlayText {
                 Position.TOP -> top.content = NetUtil.readUtf8(this)
                 else -> {}
             }
-            registerHandler<GameLoop> {
-                bottomLeft.enabled = UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen
-            }
+        }
+        registerHandler<GameLoop> {
+            bottomLeft.enabled = UIEngine.clientApi.minecraft().currentScreen() !is ChatScreen
         }
     }
 }
