@@ -1,6 +1,6 @@
 package standard.util
 
-import dev.xdark.clientapi.event.gui.ScreenDisplay
+import dev.xdark.clientapi.event.render.BlockLayerRender
 import lazyText
 import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
@@ -29,9 +29,10 @@ class ModelBlocker {
 
         UIEngine.overlayContext + locker
 
-        mod.registerHandler<ScreenDisplay> {
+        mod.registerHandler<BlockLayerRender> {
             if (disabled && JavaMod.clientApi.p13nProvider().isGuiOpen) {
                 isCancelled = true
+                UIEngine.clientApi.minecraft().displayScreen(null)
                 locker.enabled = true
                 UIEngine.schedule(1.5) {
                     animate(0.5, Easings.BACK_BOTH) {
