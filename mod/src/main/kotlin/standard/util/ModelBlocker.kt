@@ -2,6 +2,7 @@ package standard.util
 
 import dev.xdark.clientapi.event.gui.ScreenDisplay
 import lazyText
+import ru.cristalix.clientapi.JavaMod
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.uiengine.UIEngine
 import ru.cristalix.uiengine.element.TextElement
@@ -10,7 +11,6 @@ import ru.cristalix.uiengine.utility.CENTER
 import ru.cristalix.uiengine.utility.Easings
 import ru.cristalix.uiengine.utility.V3
 import ru.cristalix.uiengine.utility.WHITE
-import ru.cristalix.uiengine.utility.text
 
 class ModelBlocker {
 
@@ -30,11 +30,7 @@ class ModelBlocker {
         UIEngine.overlayContext + locker
 
         mod.registerHandler<ScreenDisplay> {
-            if (!disabled) return@registerHandler
-
-            println("Debug! Personalization class menu is " + screen::class.java.simpleName)
-
-            if (screen::class.java.simpleName == "atm") {
+            if (disabled && JavaMod.clientApi.p13nProvider().isGuiOpen) {
                 isCancelled = true
                 locker.enabled = true
                 UIEngine.schedule(1.5) {
