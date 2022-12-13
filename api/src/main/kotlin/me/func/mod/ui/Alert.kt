@@ -20,7 +20,7 @@ object Alert {
         millis: Long,
         frontColor: RGB,
         backGroundColor: RGB,
-        chatMessage: String?,
+        chatMessage: String,
         vararg buttons: NotificationButton
     ) {
         if (buttons.size > 2) {
