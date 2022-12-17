@@ -8,6 +8,7 @@ import ru.cristalix.uiengine.element.CarvedRectangle
 import ru.cristalix.uiengine.element.RectangleElement
 import ru.cristalix.uiengine.element.TextElement
 import ru.cristalix.uiengine.utility.Color
+import ru.cristalix.uiengine.utility.V3
 import java.nio.charset.StandardCharsets
 import java.util.*
 
@@ -24,6 +25,8 @@ inline fun <reified T> ByteBuf.readJson(): T = gson.fromJson(readFullAsString(),
 fun ByteBuf.readColoredUtf8() = NetUtil.readUtf8(this).replace("&", "§")
 
 fun ByteBuf.readRgb() = Tricolor(readInt(), readInt(), readInt())
+
+fun ByteBuf.readV3() = V3(readDouble(), readDouble(), readDouble())
 
 fun ByteBuf.readUuid(): UUID = UUID(readLong(), readLong())
 

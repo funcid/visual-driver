@@ -67,7 +67,10 @@ enum class Kit(val fromUrl: String? = null, private val setup: () -> Unit = {}) 
     EXPERIMENTAL({ StandardMods.mods.add(Mod.EXPERIMENTAL) }) {
         @EventHandler(priority = EventPriority.LOW)
         fun PlayerJoinEvent.handle() {
-            after(3) { Banners.show(player, *Banners.banners.map { it.value }.toTypedArray()) }
+            after(3) {
+                Banners.show(player, *Banners.banners.map { it.value }.toTypedArray())
+                Anime.loadTexture(player, "https://storage.c7x.dev/tensess/tycoon/textures/pointer_1.png")
+            }
         }
     },
     MULTI_CHAT({ StandardMods.mods.add(Mod.CHAT) }),
