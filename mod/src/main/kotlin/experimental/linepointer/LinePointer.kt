@@ -197,9 +197,10 @@ class LinePointer(
 
         contexts.forEach {
 
-            val distance = (it.offset.x - player.x).pow(2) + (it.offset.y - player.y).pow(2) + (it.offset.z - player.z).pow(2)
+            val distance =
+                (it.offset.x - player.x).pow(2) + (it.offset.y - player.y).pow(2) + (it.offset.z - player.z).pow(2)
 
-            if (distance <= limitRendering * limitRendering) {
+            if (distance <= limitRendering) {
 
                 if (!UIEngine.worldContexts.contains(it)) UIEngine.worldContexts.add(it)
                 elements.add(it)
