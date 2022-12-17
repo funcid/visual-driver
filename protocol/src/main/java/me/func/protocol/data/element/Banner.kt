@@ -16,15 +16,15 @@ class Banner(
         "pitch" to 0.0,
         "xray" to false
     ),
-    var content: String = "",
-    var x: Double = 0.0,
-    var y: Double = 0.0,
-    var z: Double = 0.0,
-    var height: Int = 100,
-    var weight: Int = 100,
-    var texture: String = "",
-    var color: RGB = Tricolor(0, 0, 0),
-    var opacity: Double = 0.62,
+    var content: String = "", // todo: reactive
+    var x: Double = 0.0, // todo: reactive
+    var y: Double = 0.0, // todo: reactive
+    var z: Double = 0.0, // todo: reactive
+    var height: Int = 100, // todo: reactive
+    var weight: Int = 100, // todo: reactive
+    var texture: String = "", // todo: reactive
+    var color: RGB = Tricolor(0, 0, 0), // todo: reactive
+    var opacity: Double = 0.62, // todo: reactive
     var carveSize: Double = 2.0,
     var active: Boolean = true
 ) {

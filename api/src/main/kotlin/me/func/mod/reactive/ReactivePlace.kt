@@ -19,10 +19,10 @@ class ReactivePlace : PlayerSubscriber {
     private val subscribed = hashSetOf<UUID>()
     override var uuid: UUID = UUID.randomUUID()
 
-    var rgb: RGB = GlowColor.GREEN
-    var x: Double = 0.0
-    var y: Double = 0.0
-    var z: Double = 0.0
+    var rgb: RGB = GlowColor.GREEN // todo: reactive
+    var x: Double = 0.0 // todo: reactive
+    var y: Double = 0.0 // todo: reactive
+    var z: Double = 0.0 // todo: reactive
     var radius: Double = 1.3
     var angles: Int = 12
     var onEntire: Consumer<Player>? = null
