@@ -176,6 +176,8 @@ class LinePointer(
             return contexts
         }
 
+
+
         contexts.forEachIndexed { index, context ->
 
             if (index + 1 <= limit) {
