@@ -1,17 +1,12 @@
 package experimental.linepointer
 
-import asColor
 import dev.xdark.clientapi.event.lifecycle.GameLoop
-import dev.xdark.feder.NetUtil
-import io.netty.buffer.ByteBuf
-import readRgb
-import readV3
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import java.util.*
 
 object LineManager {
 
-    const val UPDATE_PERIOD_MILLIS = 150
+    const val UPDATE_PERIOD_MILLIS: Long = 150
 
     private val lines = hashMapOf<UUID, LinePointer>()
     private var lastUpdate = System.currentTimeMillis()
@@ -26,27 +21,22 @@ object LineManager {
 
                 lines.values.forEach {
 
-                    it.rebase()
+                    when (it.origin == null) {
+                        true -> it.rebase()
+                        false -> {
+                            it.rebase(1)
+                            it.animation()
+                        }
+                    }
+
                     it.draw()
+                    it.changeVisibility()
                 }
             }
         }
     }
 
-    fun update(uuid: UUID, update: Int, buf: ByteBuf) {
-
-        val line = lines[uuid] ?: return
-
-        when (update) {
-            1 -> line.color = buf.readRgb().asColor()
-            2 -> line.location = buf.readV3()
-            3 -> line.origin = if (buf.readBoolean()) buf.readV3() else null
-            4 -> line.limitRendering = buf.readInt()
-            5 -> line.texture = NetUtil.readUtf8(buf)
-        }
-
-        line.update()
-    }
+    fun get(uuid: UUID) = lines[uuid]
 
     fun put(linePointer: LinePointer) {
         lines[linePointer.uuid] = linePointer

@@ -5,6 +5,7 @@ import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.util.subscriber
 import me.func.protocol.data.color.RGB
 import me.func.protocol.data.color.Tricolor
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
@@ -30,9 +31,9 @@ class ReactiveLine : PlayerSubscriber {
     private val subscribed = hashSetOf<Player>()
 
     // Отписать игроков от обновлений
-    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players)
+    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players.toSet())
 
-    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players)
+    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players.toSet())
 
     fun send(players: List<Player>) = send(*players.toTypedArray())
 
@@ -41,22 +42,20 @@ class ReactiveLine : PlayerSubscriber {
         // Отправить и добавить игроков в подписавшихся
         subscribed.addAll(players)
 
-        if (to != null) {
+        transfer()
+            .boolean(from != null)
+            .rgb(color)
+            .v3(to)
+            .integer(viewDistance)
+            .string(texture)
+            .apply {
 
-            transfer()
-                .boolean(origin != null)
-                .rgb(color)
-                .v3(to!!)
-                .integer(viewDistance)
-                .string(texture)
-                .apply {
+                if (from != null) {
+                    v3(from!!)
+                }
 
-                    if (origin != null) {
-                        v3(origin!!)
-                    }
+            }.send("tensess:add-line", *players)
 
-                }.send("tensess:add-line", *players)
-        }
     }
 
     fun remove(players: List<Player>) = remove(players.toSet())
@@ -82,25 +81,23 @@ class ReactiveLine : PlayerSubscriber {
             field = value
         }
 
-    var to: Location? = null
+    var to: Location = Location(Bukkit.getWorlds().first(), 0.0, 0.0, 0.0)
         set(value) {
-
-            if (value != null) {
-                update(transfer().integer(2).v3(value))
-                field = value
-            }
+            update(transfer().integer(2).v3(value))
+            field = value
         }
 
-    var origin: Location? = null
+    var from: Location? = null
         set(value) {
 
-            transfer().integer(3).boolean(value != null).apply {
-                if (value != null) {
-                    v3(value)
-                }
-            }.apply {
-                update(this)
+            val hasFrom = value != null
+            val transfer = transfer().integer(3).boolean(hasFrom)
+
+            if (hasFrom) {
+                transfer.v3(value!!)
             }
+
+            update(transfer)
 
             field = value
         }
@@ -122,13 +119,13 @@ class ReactiveLine : PlayerSubscriber {
         fun builder() = Builder()
     }
 
-    class Builder(private val model: ReactiveLine= ReactiveLine()) {
+    class Builder(private val model: ReactiveLine = ReactiveLine()) {
         fun uuid(UUID: UUID) = apply { model.uuid = UUID }
-        fun to(location: Location?) = apply { model.to = location }
+        fun to(location: Location) = apply { model.to = location }
         fun color(color: RGB) = apply { model.color = color }
         fun viewDistance(distance: Int) = apply { model.viewDistance = distance }
         fun texture(texture: String) = apply { model.texture = texture }
-        fun origin(origin: Location?) = apply { model.origin = origin }
+        fun from(origin: Location?) = apply { model.from = origin }
 
         fun build() = model
     }

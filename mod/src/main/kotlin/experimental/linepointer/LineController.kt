@@ -1,11 +1,12 @@
 package experimental.linepointer
 
-import asColor
 import dev.xdark.feder.NetUtil
+import io.netty.buffer.ByteBuf
 import readRgb
 import readV3
 import ru.cristalix.clientapi.KotlinModHolder.mod
 import ru.cristalix.clientapi.readId
+import java.util.*
 
 object LineController {
 
@@ -22,7 +23,7 @@ object LineController {
             LineManager.put(
                 LinePointer(
                     uuid,
-                    readRgb().asColor(),
+                    readRgb(),
                     readV3(),
                     readInt(),
                     NetUtil.readUtf8(this),
@@ -38,8 +39,22 @@ object LineController {
         }
 
         mod.registerChannel(UPDATE_LINE_CHANNEL) {
-
-            LineManager.update(readId(), readInt(), this)
+            update(readId(), readInt(), this)
         }
+    }
+
+    private fun update(uuid: UUID, update: Int, buf: ByteBuf) {
+
+        val line = LineManager.get(uuid) ?: return
+
+        when (update) {
+            1 -> line.rgb = buf.readRgb()
+            2 -> line.location = buf.readV3()
+            3 -> line.origin = if (buf.readBoolean()) buf.readV3() else null
+            4 -> line.limitRendering = buf.readInt()
+            5 -> line.texture = NetUtil.readUtf8(buf)
+        }
+
+        line.update()
     }
 }
