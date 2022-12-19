@@ -43,7 +43,13 @@ object PlaceController {
 
         when (updateId) {
             1 -> reactivePlace.rgb = buf.readRgb()
-            2 -> reactivePlace.location = buf.readV3()
+            2 -> {
+                when (buf.readInt()) {
+                    1 -> reactivePlace.location.x = buf.readDouble()
+                    2 -> reactivePlace.location.y = buf.readDouble()
+                    3 -> reactivePlace.location.z = buf.readDouble()
+                }
+            }
         }
 
         PlaceManager.cacheClear()

@@ -1,13 +1,10 @@
 package me.func.mod.ui
 
 import me.func.mod.reactive.ReactivePlace
-import me.func.mod.util.warn
 import org.bukkit.Bukkit
-import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.player.PlayerMoveEvent
-import java.util.*
 import kotlin.math.pow
 
 object ReactiveGlow : Listener {
@@ -28,37 +25,13 @@ object ReactiveGlow : Listener {
     }
 
     @JvmStatic
-    fun get(uuid: UUID) = glowingPlaces.firstOrNull { it.uuid == uuid }
-
-    @JvmStatic
-    fun addPlace(place: ReactivePlace, vararg players: Player) {
-
-        if (Glow.glowingPlaces.size > 300) {
-            warn("Glow places map size > 300! Stop add glowing places!")
-        }
-
-        glowingPlaces.add(place)
-        place.send(*players)
-    }
-
-    @JvmStatic
-    fun removePlace(uuid: UUID) {
-
-        val place = glowingPlaces.firstOrNull { it.uuid == uuid }
-        if (place != null) removePlace(place)
-    }
-
-    @JvmStatic
-    fun removePlace(place: ReactivePlace) {
-
-        glowingPlaces.remove(place)
-        place.delete(place.subscribed.mapNotNull { Bukkit.getPlayer(it) }.toSet())
-    }
-
-    @JvmStatic
     fun clearPlaces() {
-
-        glowingPlaces.forEach { removePlace(it) }
+        glowingPlaces.forEach { it.delete(it.subscribed.mapNotNull { uuid -> Bukkit.getPlayer(uuid) }.toSet()) }
         glowingPlaces.clear()
+    }
+
+    @JvmStatic
+    fun ReactivePlace.link() {
+        if (!glowingPlaces.contains(this)) glowingPlaces.add(this)
     }
 }

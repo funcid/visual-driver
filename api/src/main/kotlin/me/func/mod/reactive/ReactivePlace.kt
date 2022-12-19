@@ -2,6 +2,7 @@ package me.func.mod.reactive
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.ui.ReactiveGlow.link
 import me.func.mod.util.subscriber
 import me.func.protocol.data.color.GlowColor
 import me.func.protocol.data.color.RGB
@@ -10,7 +11,6 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
-import kotlin.math.pow
 
 class ReactivePlace : PlayerSubscriber {
 
@@ -26,28 +26,31 @@ class ReactivePlace : PlayerSubscriber {
 
     var x: Double = 0.0
         set(value) {
-            update(updateLocation())
+            update(starter().integer(2).integer(1).double(value))
             field = value
         }
 
     var y: Double = 0.0
         set(value) {
-            update(updateLocation())
+            update(starter().integer(2).integer(2).double(value))
             field = value
         }
 
     var z: Double = 0.0
         set(value) {
-            update(updateLocation())
+            update(starter().integer(2).integer(3).double(value))
             field = value
         }
 
     var radius: Double = 1.3
     var angles: Int = 12
     var onEntire: Consumer<Player>? = null
-    var onLeave: Consumer<Player>? = null
+        set(value) {
+            this.link()
+            field = value
+        }
 
-    private fun updateLocation() = starter().integer(2).v3(x, y, z)
+    var onLeave: Consumer<Player>? = null
 
     private fun starter() = ModTransfer().uuid(uuid)
 
