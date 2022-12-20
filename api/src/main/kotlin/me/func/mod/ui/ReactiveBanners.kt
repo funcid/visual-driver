@@ -42,7 +42,7 @@ object ReactiveBanners {
     }
 
     @JvmStatic
-    fun ReactiveBanner.hide(vararg players: Player) = ModTransfer().integer(1).uuid(this.uuid).send("banner:reactive-remove", *players)
+    fun ReactiveBanner.hide(vararg players: Player) = ModTransfer().uuid(this.uuid).send("banner:reactive-remove", *players)
 
     @JvmStatic
     fun ReactiveBanner.remove() = this.hide(*this.subscribed.mapNotNull { Bukkit.getPlayer(it) }.toTypedArray())
@@ -60,7 +60,7 @@ object ReactiveBanners {
 
         players.filter { !this.subscribed.contains(it.uniqueId) }.forEach { this.subscribed.add(it.uniqueId) }
 
-        ModTransfer().integer(1)
+        ModTransfer()
             .uuid(this.uuid)
             .integer(this.motionType.ordinal)
             .boolean(this.watchingOnPlayer)
