@@ -19,7 +19,7 @@ class KillBoard {
             val padding = 5.0
 
             size = V3(maxWidth + padding * 2, 4.0)
-            color = Color(6, 6, 6, 0.5)
+            color = Color(0, 0, 0, 0.62)
             offset = V3(10.0, 0.0)
             align = TOP_RIGHT
             val textElement = +text {
