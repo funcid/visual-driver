@@ -11,6 +11,7 @@ import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import io.netty.buffer.Unpooled
+import me.func.protocol.data.element.Banner
 import me.func.protocol.data.element.MotionType
 import me.func.protocol.math.RadiusCheck
 import org.lwjgl.input.Mouse
@@ -30,7 +31,7 @@ import kotlin.math.sqrt
 
 object BannersManager {
 
-    private val banners = hashMapOf<UUID, Triple<ReactiveBanner, Context3D, CarvedRectangle>>()
+    private val banners = hashMapOf<UUID, Triple<Banner, Context3D, CarvedRectangle>>()
     private val sizes = hashMapOf<Pair<UUID, Int>, Double>()
 
     private fun toBlackText(string: String) =
@@ -190,7 +191,7 @@ object BannersManager {
         }
     }
 
-    private fun text(text: String, banner: ReactiveBanner, element: Parent) {
+    private fun text(text: String, banner: Banner, element: Parent) {
 
         text.split("\n").forEachIndexed { index, line ->
 
@@ -233,7 +234,7 @@ object BannersManager {
     fun new(buf: ByteBuf) {
 
         val uuid = buf.readId()
-        val banner = ReactiveBanner()
+        val banner = Banner()
 
         banner.uuid = uuid
         banner.motionType = MotionType.values()[buf.readInt()]
@@ -246,7 +247,10 @@ object BannersManager {
         }
 
         banner.content = NetUtil.readUtf8(buf)
-        banner.location = buf.readV3()
+        val v3 = buf.readV3()
+        banner.x = v3.x
+        banner.y = v3.y
+        banner.z = v3.z
         banner.height = buf.readInt()
         banner.weight = buf.readInt()
         banner.texture = NetUtil.readUtf8(buf)
@@ -261,9 +265,13 @@ object BannersManager {
         UIEngine.worldContexts.add(triple.second)
     }
 
-    private fun getTriple(banner: ReactiveBanner): Triple<ReactiveBanner, Context3D, CarvedRectangle> {
+    private fun getTriple(banner: Banner): Triple<Banner, Context3D, CarvedRectangle> {
 
-        val context = Context3D(banner.location)
+        val context = Context3D(V3(
+            banner.x,
+            banner.y,
+            banner.z
+        ))
 
         val carved = carved {
             carveSize = banner.carveSize
