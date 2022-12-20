@@ -130,7 +130,10 @@ class Banners {
                         val location = clientApi.resourceManager().getLocation(parts[0], parts[1])
 
                         color = Color(0, 0, 0, 0.0)
-                        this.textureLocation = location
+                        left.enabled = false
+                        right.enabled = false
+                        main.size = sized
+                        main.textureLocation = location
                     }
                     if (banner.content.isNotEmpty()) {
                         text(banner.content, banner, this)

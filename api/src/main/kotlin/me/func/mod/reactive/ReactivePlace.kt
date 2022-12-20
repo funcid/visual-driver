@@ -2,7 +2,7 @@ package me.func.mod.reactive
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.broadcast.PlayerSubscriber
-import me.func.mod.ui.menu.MenuManager.reactive
+import me.func.mod.ui.ReactiveGlow.link
 import me.func.mod.util.subscriber
 import me.func.protocol.data.color.GlowColor
 import me.func.protocol.data.color.RGB
@@ -11,21 +11,45 @@ import org.bukkit.Location
 import org.bukkit.entity.Player
 import java.util.*
 import java.util.function.Consumer
-import kotlin.math.pow
 
 class ReactivePlace : PlayerSubscriber {
 
     override var isConstant = false
-    private val subscribed = hashSetOf<UUID>()
+    val subscribed = hashSetOf<UUID>()
     override var uuid: UUID = UUID.randomUUID()
 
     var rgb: RGB = GlowColor.GREEN
+        set(value) {
+            update(starter().integer(1).rgb(value))
+            field = value
+        }
+
     var x: Double = 0.0
+        set(value) {
+            update(starter().integer(2).integer(1).double(value))
+            field = value
+        }
+
     var y: Double = 0.0
+        set(value) {
+            update(starter().integer(2).integer(2).double(value))
+            field = value
+        }
+
     var z: Double = 0.0
+        set(value) {
+            update(starter().integer(2).integer(3).double(value))
+            field = value
+        }
+
     var radius: Double = 1.3
     var angles: Int = 12
     var onEntire: Consumer<Player>? = null
+        set(value) {
+            this.link()
+            field = value
+        }
+
     var onLeave: Consumer<Player>? = null
 
     private fun starter() = ModTransfer().uuid(uuid)
@@ -40,12 +64,8 @@ class ReactivePlace : PlayerSubscriber {
         subscriber(this)
     }
 
-    fun getPlayersInside() = subscribed.mapNotNull { Bukkit.getPlayer(it) }.filter { player ->
-        (x - player.location.x).pow(2) + (z - player.location.z).pow(2) <= radius.pow(2)
-    }
-
     private fun update(transfer: ModTransfer) = transfer.send(
-        "func:place-update",
+        "func:reactive-place-update",
         subscribed.mapNotNull(Bukkit::getPlayer)
     )
 
@@ -58,14 +78,14 @@ class ReactivePlace : PlayerSubscriber {
             .v3(x, y, z)
             .double(radius)
             .integer(angles)
-            .send("func:place", *players)
+            .send("func:reactive-place", *players)
     }
 
     @JvmOverloads
     fun delete(players: Set<Player> = subscribed.mapNotNull { Bukkit.getPlayer(it) }.toSet()) {
 
-        // Удалить данный прогресс бар
-        starter().send("func:place-kill", players)
+        // Удалить данный плейс
+        starter().send("func:reactive-place-kill", players)
         players.forEach { removeSubscriber(it) }
     }
 
@@ -86,7 +106,7 @@ class ReactivePlace : PlayerSubscriber {
         fun angles(angles: Int) = apply { model.angles = angles }
         fun onEntire(accept: Consumer<Player>) = apply { model.onEntire = accept }
         fun onLeave(accept: Consumer<Player>) = apply { model.onLeave = accept }
+
         fun build() = model
     }
-
 }

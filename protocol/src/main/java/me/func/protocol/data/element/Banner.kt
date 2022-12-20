@@ -6,27 +6,27 @@ import sun.audio.AudioPlayer.player
 import java.util.UUID
 import kotlin.math.pow
 
-class Banner(
-    var uuid: UUID = UUID.randomUUID(),
-    var motionType: MotionType = MotionType.CONSTANT,
-    var watchingOnPlayer: Boolean = false,
-    var watchingOnPlayerWithoutPitch: Boolean = false,
-    var motionSettings: MutableMap<String, Any> = hashMapOf(
+open class Banner(
+    open var uuid: UUID = UUID.randomUUID(),
+    open var motionType: MotionType = MotionType.CONSTANT,
+    open var watchingOnPlayer: Boolean = false,
+    open var watchingOnPlayerWithoutPitch: Boolean = false,
+    open var motionSettings: MutableMap<String, Any> = hashMapOf(
         "yaw" to 0.0,
         "pitch" to 0.0,
         "xray" to false
     ),
-    var content: String = "",
-    var x: Double = 0.0,
-    var y: Double = 0.0,
-    var z: Double = 0.0,
-    var height: Int = 100,
-    var weight: Int = 100,
-    var texture: String = "",
-    var color: RGB = Tricolor(0, 0, 0),
-    var opacity: Double = 0.62,
-    var carveSize: Double = 2.0,
-    var active: Boolean = true
+    open var content: String = "",
+    open var x: Double = 0.0,
+    open var y: Double = 0.0,
+    open var z: Double = 0.0,
+    open var height: Int = 100,
+    open var weight: Int = 100,
+    open var texture: String = "",
+    open var color: RGB = Tricolor(0, 0, 0),
+    open var opacity: Double = 0.62,
+    open var carveSize: Double = 2.0,
+    open var active: Boolean = true
 ) {
 
     companion object {

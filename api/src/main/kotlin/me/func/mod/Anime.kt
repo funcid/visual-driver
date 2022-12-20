@@ -17,6 +17,7 @@ import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
 import me.func.mod.reactive.callback.ReactivePlaceCallbackHandler
 import me.func.mod.ui.Glow
+import me.func.mod.ui.ReactiveGlow
 import me.func.mod.ui.dialog.Dialog
 import me.func.mod.ui.menu.MenuManager
 import me.func.mod.ui.menu.queue.QueueViewer
@@ -35,7 +36,6 @@ import org.bukkit.inventory.ItemStack
 import org.bukkit.plugin.java.JavaPlugin
 import pw.lach.p13n.network.client.P13nChannels.ENABLE_DISABLE_MODELS
 import pw.lach.p13n.network.client.PacketEnableDisableModels
-import java.awt.Color
 import java.util.*
 import java.util.function.BiConsumer
 import java.util.function.Predicate
@@ -63,7 +63,7 @@ object Anime {
     init {
         log("Enabling animation-api, version: $version")
 
-        listener(StandardMods, Glow, AutoSendRegistry, SubscribeVerifier, QueueViewer)
+        listener(StandardMods, Glow, ReactiveGlow, AutoSendRegistry, SubscribeVerifier, QueueViewer)
         subscriber(GraffitiManager, Dialog, MenuManager)
 
         Debug // Инициализации команды и обработчика сообщений

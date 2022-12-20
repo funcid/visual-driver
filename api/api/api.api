@@ -390,6 +390,32 @@ public abstract interface class me/func/mod/reactive/ButtonClickHandler {
 	public abstract fun handle (Lorg/bukkit/entity/Player;ILme/func/mod/reactive/ReactiveButton;)V
 }
 
+public final class me/func/mod/reactive/ReactiveBanner : me/func/protocol/data/element/Banner, me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public fun <init> ()V
+	public fun getColor ()Lme/func/protocol/data/color/RGB;
+	public fun getContent ()Ljava/lang/String;
+	public fun getHeight ()I
+	public fun getOpacity ()D
+	public final fun getSubscribed ()Ljava/util/ArrayList;
+	public fun getSubscribersCount ()I
+	public fun getTexture ()Ljava/lang/String;
+	public fun getWeight ()I
+	public fun getX ()D
+	public fun getY ()D
+	public fun getZ ()D
+	public fun isConstant ()Z
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public fun setColor (Lme/func/protocol/data/color/RGB;)V
+	public fun setContent (Ljava/lang/String;)V
+	public fun setHeight (I)V
+	public fun setOpacity (D)V
+	public fun setTexture (Ljava/lang/String;)V
+	public fun setWeight (I)V
+	public fun setX (D)V
+	public fun setY (D)V
+	public fun setZ (D)V
+}
+
 public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/menu/Button {
 	public fun <init> ()V
 	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveButton;
@@ -457,6 +483,52 @@ public final class me/func/mod/reactive/ReactiveButton : me/func/protocol/ui/men
 	public final fun write (Lme/func/mod/conversation/ModTransfer;)V
 }
 
+public final class me/func/mod/reactive/ReactiveLine : me/func/mod/conversation/broadcast/PlayerSubscriber {
+	public static final field Companion Lme/func/mod/reactive/ReactiveLine$Companion;
+	public fun <init> ()V
+	public static final fun builder ()Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun getColor ()Lme/func/protocol/data/color/RGB;
+	public final fun getOrigin ()Lorg/bukkit/Location;
+	public fun getSubscribersCount ()I
+	public final fun getTexture ()Ljava/lang/String;
+	public final fun getTo ()Lorg/bukkit/Location;
+	public fun getUuid ()Ljava/util/UUID;
+	public final fun getViewDistance ()I
+	public fun isConstant ()Z
+	public final fun remove ()V
+	public final fun remove (Ljava/util/List;)V
+	public final fun remove (Ljava/util/Set;)V
+	public static synthetic fun remove$default (Lme/func/mod/reactive/ReactiveLine;Ljava/util/Set;ILjava/lang/Object;)V
+	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public final fun send (Ljava/util/List;)V
+	public final fun send ([Lorg/bukkit/entity/Player;)V
+	public final fun setColor (Lme/func/protocol/data/color/RGB;)V
+	public final fun setOrigin (Lorg/bukkit/Location;)V
+	public final fun setTexture (Ljava/lang/String;)V
+	public final fun setTo (Lorg/bukkit/Location;)V
+	public fun setUuid (Ljava/util/UUID;)V
+	public final fun setViewDistance (I)V
+	public final fun unsubscribe (Ljava/lang/Iterable;)Z
+	public final fun unsubscribe ([Lorg/bukkit/entity/Player;)Z
+}
+
+public final class me/func/mod/reactive/ReactiveLine$Builder {
+	public fun <init> ()V
+	public fun <init> (Lme/func/mod/reactive/ReactiveLine;)V
+	public synthetic fun <init> (Lme/func/mod/reactive/ReactiveLine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun build ()Lme/func/mod/reactive/ReactiveLine;
+	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun origin (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun texture (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun to (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun viewDistance (I)Lme/func/mod/reactive/ReactiveLine$Builder;
+}
+
+public final class me/func/mod/reactive/ReactiveLine$Companion {
+	public final fun builder ()Lme/func/mod/reactive/ReactiveLine$Builder;
+}
+
 public final class me/func/mod/reactive/ReactivePanel : me/func/mod/conversation/broadcast/PlayerSubscriber {
 	public static final field Companion Lme/func/mod/reactive/ReactivePanel$Companion;
 	public fun <init> ()V
@@ -507,9 +579,9 @@ public final class me/func/mod/reactive/ReactivePlace : me/func/mod/conversation
 	public final fun getAngles ()I
 	public final fun getOnEntire ()Ljava/util/function/Consumer;
 	public final fun getOnLeave ()Ljava/util/function/Consumer;
-	public final fun getPlayersInside ()Ljava/util/List;
 	public final fun getRadius ()D
 	public final fun getRgb ()Lme/func/protocol/data/color/RGB;
+	public final fun getSubscribed ()Ljava/util/HashSet;
 	public fun getSubscribersCount ()I
 	public fun getUuid ()Ljava/util/UUID;
 	public final fun getX ()D
@@ -671,6 +743,24 @@ public final class me/func/mod/ui/MultiChat {
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/chat/ModChat;Ljava/lang/String;)V
+}
+
+public final class me/func/mod/ui/ReactiveBanners {
+	public static final field INSTANCE Lme/func/mod/ui/ReactiveBanners;
+	public static final fun clearAll ()V
+	public final fun getBanners ()Ljava/util/HashMap;
+	public static final fun hide (Lme/func/mod/reactive/ReactiveBanner;[Lorg/bukkit/entity/Player;)V
+	public static final fun onClick (Lme/func/mod/reactive/ReactiveBanner;Ljava/util/function/BiConsumer;)V
+	public static final fun remove (Lme/func/mod/reactive/ReactiveBanner;)V
+	public final fun setBanners (Ljava/util/HashMap;)V
+	public static final fun show (Lme/func/mod/reactive/ReactiveBanner;[Lorg/bukkit/entity/Player;)V
+}
+
+public final class me/func/mod/ui/ReactiveGlow : org/bukkit/event/Listener {
+	public static final field INSTANCE Lme/func/mod/ui/ReactiveGlow;
+	public static final fun clearPlaces ()V
+	public final fun handle (Lorg/bukkit/event/player/PlayerMoveEvent;)V
+	public static final fun link (Lme/func/mod/reactive/ReactivePlace;)V
 }
 
 public final class me/func/mod/ui/battlepass/BattlePass {
