@@ -29,6 +29,8 @@ import ru.cristalix.uiengine.utility.text
 
 class CrateScreen : ContextGui() {
 
+    var open = false
+
     init {
         onKeyTyped { _, code -> if (code == Keyboard.KEY_ESCAPE)
             clientApi.clientConnection().sendPayload("lootbox:closed", Unpooled.EMPTY_BUFFER)
@@ -374,7 +376,7 @@ class CrateScreen : ContextGui() {
 
         if (!hasNext) {
             UIEngine.schedule(0.5) {
-                opened = true
+                open = true
             }
         }
     }
