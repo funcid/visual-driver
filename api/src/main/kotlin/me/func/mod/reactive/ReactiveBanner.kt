@@ -86,4 +86,43 @@ class ReactiveBanner : PlayerSubscriber, Banner() {
         subscribed.mapNotNull(Bukkit::getPlayer)
     )
 
+    companion object {
+        @JvmStatic
+        fun builder() = Builder()
+    }
+
+    class Builder(val banner: ReactiveBanner = ReactiveBanner()) {
+        fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
+        fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }
+        fun watchingOnPlayerWithoutPitch(watchingOnPlayerWithoutPitch: Boolean) =
+            apply { banner.watchingOnPlayerWithoutPitch = watchingOnPlayerWithoutPitch }
+
+        fun content(vararg content: String) = apply { banner.content = content.joinToString("\n") }
+        fun resizeLine(lineIndex: Int, textScale: Double): Builder {
+            val list =
+                (banner.motionSettings["line"] ?: mutableListOf<Pair<Int, Double>>()) as MutableList<Pair<Int, Double>>
+            list.add(lineIndex to textScale)
+            banner.motionSettings["line"] = list
+            return this
+        }
+
+        fun x(x: Double) = apply { banner.x = x }
+        fun y(y: Double) = apply { banner.y = y }
+        fun z(z: Double) = apply { banner.z = z }
+        fun yaw(yaw: Float) = apply { banner.motionSettings["yaw"] = yaw }
+        fun pitch(pitch: Float) = apply { banner.motionSettings["pitch"] = pitch }
+        fun xray(xray: Double) = apply { banner.motionSettings["xray"] = xray }
+        fun height(height: Int) = apply { banner.height = height }
+        fun weight(weight: Int) = apply { banner.weight = weight }
+        fun texture(texture: String) = apply { banner.texture = texture }
+        fun color(rgb: RGB) = apply { banner.color = rgb }
+        fun red(red: Int) = apply { banner.color.red = red }
+        fun green(green: Int) = apply { banner.color.green = green }
+        fun blue(blue: Int) = apply { banner.color.blue = blue }
+        fun opacity(opacity: Double) = apply { banner.opacity = opacity }
+        fun carveSize(carveSize: Double) = apply { banner.carveSize = carveSize }
+        fun active(active: Boolean) = apply { banner.active = active }
+
+        fun build() = banner
+    }
 }
