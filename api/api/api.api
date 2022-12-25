@@ -488,7 +488,7 @@ public final class me/func/mod/reactive/ReactiveLine : me/func/mod/conversation/
 	public fun <init> ()V
 	public static final fun builder ()Lme/func/mod/reactive/ReactiveLine$Builder;
 	public final fun getColor ()Lme/func/protocol/data/color/RGB;
-	public final fun getOrigin ()Lorg/bukkit/Location;
+	public final fun getFrom ()Lorg/bukkit/Location;
 	public fun getSubscribersCount ()I
 	public final fun getTexture ()Ljava/lang/String;
 	public final fun getTo ()Lorg/bukkit/Location;
@@ -503,7 +503,7 @@ public final class me/func/mod/reactive/ReactiveLine : me/func/mod/conversation/
 	public final fun send (Ljava/util/List;)V
 	public final fun send ([Lorg/bukkit/entity/Player;)V
 	public final fun setColor (Lme/func/protocol/data/color/RGB;)V
-	public final fun setOrigin (Lorg/bukkit/Location;)V
+	public final fun setFrom (Lorg/bukkit/Location;)V
 	public final fun setTexture (Ljava/lang/String;)V
 	public final fun setTo (Lorg/bukkit/Location;)V
 	public fun setUuid (Ljava/util/UUID;)V
@@ -518,7 +518,7 @@ public final class me/func/mod/reactive/ReactiveLine$Builder {
 	public synthetic fun <init> (Lme/func/mod/reactive/ReactiveLine;ILkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun build ()Lme/func/mod/reactive/ReactiveLine;
 	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveLine$Builder;
-	public final fun origin (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveLine$Builder;
+	public final fun from (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveLine$Builder;
 	public final fun texture (Ljava/lang/String;)Lme/func/mod/reactive/ReactiveLine$Builder;
 	public final fun to (Lorg/bukkit/Location;)Lme/func/mod/reactive/ReactiveLine$Builder;
 	public final fun uuid (Ljava/util/UUID;)Lme/func/mod/reactive/ReactiveLine$Builder;
@@ -743,24 +743,6 @@ public final class me/func/mod/ui/MultiChat {
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/lang/String;Ljava/lang/String;)V
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Ljava/util/UUID;Ljava/lang/String;)V
 	public static final fun sendMessage (Lorg/bukkit/entity/Player;Lme/func/protocol/data/chat/ModChat;Ljava/lang/String;)V
-}
-
-public final class me/func/mod/ui/ReactiveBanners {
-	public static final field INSTANCE Lme/func/mod/ui/ReactiveBanners;
-	public static final fun clearAll ()V
-	public final fun getBanners ()Ljava/util/HashMap;
-	public static final fun hide (Lme/func/mod/reactive/ReactiveBanner;[Lorg/bukkit/entity/Player;)V
-	public static final fun onClick (Lme/func/mod/reactive/ReactiveBanner;Ljava/util/function/BiConsumer;)V
-	public static final fun remove (Lme/func/mod/reactive/ReactiveBanner;)V
-	public final fun setBanners (Ljava/util/HashMap;)V
-	public static final fun show (Lme/func/mod/reactive/ReactiveBanner;[Lorg/bukkit/entity/Player;)V
-}
-
-public final class me/func/mod/ui/ReactiveGlow : org/bukkit/event/Listener {
-	public static final field INSTANCE Lme/func/mod/ui/ReactiveGlow;
-	public static final fun clearPlaces ()V
-	public final fun handle (Lorg/bukkit/event/player/PlayerMoveEvent;)V
-	public static final fun link (Lme/func/mod/reactive/ReactivePlace;)V
 }
 
 public final class me/func/mod/ui/battlepass/BattlePass {

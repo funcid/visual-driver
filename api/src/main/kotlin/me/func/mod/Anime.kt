@@ -17,7 +17,6 @@ import me.func.mod.graffiti.GraffitiManager
 import me.func.mod.graffiti.GraffitiManager.isCanPlace
 import me.func.mod.reactive.callback.ReactivePlaceCallbackHandler
 import me.func.mod.ui.Glow
-import me.func.mod.ui.ReactiveGlow
 import me.func.mod.ui.dialog.Dialog
 import me.func.mod.ui.menu.MenuManager
 import me.func.mod.ui.menu.queue.QueueViewer
@@ -63,7 +62,7 @@ object Anime {
     init {
         log("Enabling animation-api, version: $version")
 
-        listener(StandardMods, Glow, ReactiveGlow, AutoSendRegistry, SubscribeVerifier, QueueViewer)
+        listener(StandardMods, Glow, AutoSendRegistry, SubscribeVerifier, QueueViewer)
         subscriber(GraffitiManager, Dialog, MenuManager)
 
         Debug // Инициализации команды и обработчика сообщений

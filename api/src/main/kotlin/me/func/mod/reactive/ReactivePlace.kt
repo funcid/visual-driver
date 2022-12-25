@@ -2,7 +2,6 @@ package me.func.mod.reactive
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.broadcast.PlayerSubscriber
-import me.func.mod.ui.ReactiveGlow.link
 import me.func.mod.util.subscriber
 import me.func.protocol.data.color.GlowColor
 import me.func.protocol.data.color.RGB
@@ -45,11 +44,6 @@ class ReactivePlace : PlayerSubscriber {
     var radius: Double = 1.3
     var angles: Int = 12
     var onEntire: Consumer<Player>? = null
-        set(value) {
-            this.link()
-            field = value
-        }
-
     var onLeave: Consumer<Player>? = null
 
     private fun starter() = ModTransfer().uuid(uuid)
