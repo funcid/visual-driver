@@ -4,6 +4,7 @@ import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.broadcast.PlayerSubscriber
 import me.func.mod.conversation.data.MouseButton
+import me.func.mod.reactive.ReactiveBanner
 import me.func.mod.util.subscriber
 import me.func.mod.util.warn
 import me.func.protocol.math.Dimension
@@ -12,11 +13,9 @@ import me.func.protocol.data.element.MotionType
 import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
-import org.bukkit.event.Listener
 import java.lang.StrictMath.pow
 import java.util.*
 import java.util.function.BiConsumer
-import java.util.function.Consumer
 import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
@@ -57,19 +56,20 @@ object Banners : PlayerSubscriber {
     @JvmStatic
     @JvmSynthetic
     fun new(banner: Banner): Banner {
+
         if (banners.size > 300) {
             val unique = banners.values.distinctBy { it.x }.distinctBy { it.y }.distinctBy { it.z }
             warn("Fatal error: banners map size>300! Found and cleared ${banners.size - unique.size} unused banners!")
             banners = HashMap(unique.associateBy { banner.uuid })
             return banner
         }
+
         banners[banner.uuid] = banner
         return banner
     }
 
     @JvmStatic
     fun add(banner: Banner, consumer: BiConsumer<Player, MouseButton>): Banner {
-
         clickable[banner.uuid] = consumer
         return new(banner)
     }
@@ -77,11 +77,23 @@ object Banners : PlayerSubscriber {
     @JvmStatic
     fun content(player: Player, uuid: UUID, content: String) {
         banners[uuid]?.content = content
-        ModTransfer(uuid.toString(), content).send("banner:change-content", player)
+        ModTransfer().uuid(uuid).integer(1).string(content).send("banner:update", player)
     }
 
     @JvmStatic
     fun content(player: Player, banner: Banner, content: String) = content(player, banner.uuid, content)
+
+    @JvmStatic
+    fun ReactiveBanner.send(player: Player) {
+        this.subscribed.add(player.uniqueId)
+        show(player, this)
+    }
+
+    @JvmStatic
+    fun ReactiveBanner.hide(player: Player) {
+        this.subscribed.remove(player.uniqueId)
+        hide(player, this)
+    }
 
     @JvmStatic
     fun show(player: Player, banner: Banner, consumer: BiConsumer<Player, MouseButton>) {
@@ -99,10 +111,11 @@ object Banners : PlayerSubscriber {
 
     @JvmStatic
     fun show(player: Player, vararg banner: Banner) {
+
         val transfer = ModTransfer().integer(banner.size)
 
         banner.forEach { current ->
-            transfer.string(current.uuid.toString())
+            transfer.uuid(current.uuid)
                 .integer(current.motionType.ordinal)
                 .boolean(current.watchingOnPlayer)
                 .boolean(current.watchingOnPlayerWithoutPitch)
@@ -126,6 +139,7 @@ object Banners : PlayerSubscriber {
                     }
                 }
         }
+
         transfer.send("banner:new", player)
 
         banner.filter { it.motionSettings.containsKey("line") }.forEach { current ->
@@ -137,9 +151,7 @@ object Banners : PlayerSubscriber {
     }
 
     @JvmStatic
-    fun showAll(player: Player){
-        show(player, *banners.values.toTypedArray())
-    }
+    fun showAll(player: Player) = show(player, *banners.values.toTypedArray())
 
     @JvmStatic
     fun remove(uuid: UUID) {
@@ -148,8 +160,7 @@ object Banners : PlayerSubscriber {
     }
 
     @JvmStatic
-    fun hide(player: Player, vararg uuid: UUID) =
-        ModTransfer(uuid.size).apply { uuid.forEach { string(it.toString()) } }.send("banner:remove", player)
+    fun hide(player: Player, vararg uuid: UUID) = ModTransfer(uuid.size).apply { uuid.forEach { uuid(it) } }.send("banner:remove", player)
 
     @JvmStatic
     fun hide(player: Player, vararg banner: Banner) = hide(player, *banner.map { it.uuid }.toTypedArray())

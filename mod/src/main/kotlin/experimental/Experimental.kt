@@ -8,8 +8,6 @@ import experimental.places.PlaceManager
 import experimental.progress.ProgressController
 import experimental.utils.Test
 import standard.ui.scoreboard.token.TokenManager
-import standard.world.reactive.BannersController
-import standard.world.reactive.BannersManager
 
 // не пытайтесь это "оптимизировать", иначе вы все сломаете
 class Experimental {
@@ -30,8 +28,6 @@ class Experimental {
             LineManager
             PlaceController
             PlaceManager
-            BannersController
-            BannersManager
             Test()
             Test
 

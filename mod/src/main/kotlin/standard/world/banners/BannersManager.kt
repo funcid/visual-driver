@@ -1,4 +1,4 @@
-package standard.world.reactive
+package standard.world.banners
 
 import asColor
 import dev.xdark.clientapi.entity.Entity
@@ -47,9 +47,8 @@ object BannersManager {
             val pressedLeft = Mouse.isButtonDown(MouseButton.LEFT.ordinal)
             val pressedRight = Mouse.isButtonDown(MouseButton.RIGHT.ordinal)
 
-            if (pressed && !pressedLeft && !pressedRight) {
-                pressed = false
-            } else if (!pressed && (pressedLeft || pressedRight)) {
+            if (pressed && !pressedLeft && !pressedRight) pressed = false
+            else if (!pressed && (pressedLeft || pressedRight)) {
 
                 pressed = true
 
@@ -73,14 +72,13 @@ object BannersManager {
                     ).normalize()
 
                     player.lookVec.dotProduct(vector.x, vector.y, vector.z) > 0.9
-                }
-                    .forEach { (uuid, _) ->
+                }.forEach { (uuid, _) ->
 
-                        clientApi.clientConnection().sendPayload(
-                            BannersController.CLICK_BANNER_CHANNEL, Unpooled.buffer().writeUuid(uuid)
-                                .writeInt(if (pressedLeft) MouseButton.LEFT.ordinal else MouseButton.RIGHT.ordinal)
-                        )
-                    }
+                    clientApi.clientConnection().sendPayload(
+                        BannersController.CLICK_BANNER_CHANNEL, Unpooled.buffer().writeUuid(uuid)
+                            .writeInt(if (pressedLeft) MouseButton.LEFT.ordinal else MouseButton.RIGHT.ordinal)
+                    )
+                }
             }
         }
 
@@ -145,30 +143,17 @@ object BannersManager {
         return if (texture.isNotEmpty()) ResourceLocation.of(parts[0], parts[1]) else null
     }
 
-    fun changeContent(uuid: UUID, content: String) {
+    fun remove(size: Int, buf: ByteBuf) = repeat(size) { remove(buf.readId()) }
 
-        banners[uuid]?.let { triple ->
-            if (triple.third.children.size > 2) {
-
-                triple.third.removeChild(*triple.third.children.filterIsInstance<TextElement>().toTypedArray())
-                text(content, triple.first, triple.third)
-            }
-        }
-    }
-
-    fun remove(buf: ByteBuf) {
-
-        val uuid = buf.readId()
-        banners[uuid]?.let {
-
-            UIEngine.worldContexts.remove(it.second)
-            banners.remove(uuid)
-        }
+    private fun remove(uuid: UUID) = banners[uuid]?.let {
+        UIEngine.worldContexts.remove(it.second)
+        banners.remove(uuid)
     }
 
     fun textSize(buf: ByteBuf) {
 
         val uuid = buf.readId()
+
         banners[uuid]?.let { triple ->
             repeat(buf.readInt()) {
 
@@ -191,7 +176,7 @@ object BannersManager {
         }
     }
 
-    private fun text(text: String, banner: Banner, element: Parent) {
+    fun text(text: String, banner: Banner, element: Parent) {
 
         text.split("\n").forEachIndexed { index, line ->
 
@@ -231,7 +216,9 @@ object BannersManager {
         }
     }
 
-    fun new(buf: ByteBuf) {
+    fun new(size: Int, byteBuf: ByteBuf) = repeat(size) { new(byteBuf) }
+
+    private fun new(buf: ByteBuf) {
 
         val uuid = buf.readId()
         val banner = Banner()
@@ -256,6 +243,16 @@ object BannersManager {
         banner.texture = NetUtil.readUtf8(buf)
         banner.color = buf.readRgb()
         banner.opacity = buf.readDouble()
+        banner.carveSize = buf.readDouble()
+
+        if (banner.motionType == MotionType.STEP_BY_TARGET) {
+            banner.apply {
+                motionSettings["target"] = buf.readInt()
+                motionSettings["offsetX"] = buf.readDouble()
+                motionSettings["offsetY"] = buf.readDouble()
+                motionSettings["offsetZ"] = buf.readDouble()
+            }
+        }
 
         val triple = getTriple(banner)
 
@@ -267,11 +264,13 @@ object BannersManager {
 
     private fun getTriple(banner: Banner): Triple<Banner, Context3D, CarvedRectangle> {
 
-        val context = Context3D(V3(
-            banner.x,
-            banner.y,
-            banner.z
-        ))
+        val context = Context3D(
+            V3(
+                banner.x,
+                banner.y,
+                banner.z
+            )
+        )
 
         val carved = carved {
             carveSize = banner.carveSize

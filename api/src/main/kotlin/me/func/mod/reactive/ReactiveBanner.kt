@@ -6,13 +6,9 @@ import me.func.protocol.data.color.RGB
 import me.func.protocol.data.color.Tricolor
 import me.func.protocol.data.element.Banner
 import me.func.protocol.data.element.MotionType
-import me.func.protocol.math.Dimension
 import org.bukkit.Bukkit
-import org.bukkit.Location
-import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.util.*
-import kotlin.math.sqrt
 
 class ReactiveBanner : PlayerSubscriber, Banner() {
 
@@ -82,7 +78,7 @@ class ReactiveBanner : PlayerSubscriber, Banner() {
     private fun transfer() = ModTransfer().uuid(uuid)
 
     private fun update(transfer: ModTransfer) = transfer.send(
-        "banner:reactive-update",
+        "banner:update",
         subscribed.mapNotNull(Bukkit::getPlayer)
     )
 
@@ -91,7 +87,7 @@ class ReactiveBanner : PlayerSubscriber, Banner() {
         fun builder() = Builder()
     }
 
-    class Builder(val banner: ReactiveBanner = ReactiveBanner()) {
+    class Builder(private val banner: ReactiveBanner = ReactiveBanner()) {
         fun motionType(motionType: MotionType) = apply { banner.motionType = motionType }
         fun watchingOnPlayer(watchingOnPlayer: Boolean) = apply { banner.watchingOnPlayer = watchingOnPlayer }
         fun watchingOnPlayerWithoutPitch(watchingOnPlayerWithoutPitch: Boolean) =
