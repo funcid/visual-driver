@@ -225,4 +225,5 @@ object GraffitiManager : PlayerSubscriber {
     override fun removeSubscriber(player: Player) { graffiti.remove(player.uniqueId) }
 
     override fun getSubscribersCount() = graffiti.size
+    override val uuid: UUID = UUID.randomUUID()
 }

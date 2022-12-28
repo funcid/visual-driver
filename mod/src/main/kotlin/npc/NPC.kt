@@ -1,6 +1,7 @@
 package npc
 
 import dev.xdark.clientapi.event.lifecycle.GameLoop
+import dev.xdark.clientapi.event.render.NameTemplateRender
 import dev.xdark.clientapi.inventory.EntityEquipmentSlot
 import dev.xdark.clientapi.item.ItemTools
 import dev.xdark.clientapi.math.BlockPos
@@ -78,7 +79,7 @@ class NPC {
         mod.registerChannel("npc:update") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
                 npcManager.get(this)?.let { entity ->
-                    entity.entity?.let { npc ->
+                    entity.entity.let { npc ->
                         npc.customNameTag = NetUtil.readUtf8(this@registerChannel)
 
                         npc.teleport(readDouble(), readDouble(), readDouble())
@@ -105,7 +106,7 @@ class NPC {
         mod.registerChannel("npc:kick") {
             UUID.fromString(NetUtil.readUtf8(this)).apply {
                 npcManager.get(this)?.let { entity ->
-                    entity.entity?.swingArm(if (readBoolean()) EnumHand.MAIN_HAND else EnumHand.OFF_HAND)
+                    entity.entity.swingArm(if (readBoolean()) EnumHand.MAIN_HAND else EnumHand.OFF_HAND)
                 }
             }
         }
@@ -121,7 +122,7 @@ class NPC {
         // Изменение предмета в инвентаре
         mod.registerChannel("npc:slot") {
             npcManager.get(UUID.fromString(NetUtil.readUtf8(this)))?.let {
-                it.entity?.let { npc ->
+                it.entity.let { npc ->
                     readInt().let { slot ->
                         val item = ItemTools.read(this)
 
@@ -142,7 +143,7 @@ class NPC {
             val player = clientApi.minecraft().player
 
             npcManager.each { _, data ->
-                data.entity?.let { entity ->
+                data.entity.let { entity ->
                     if (data.data.behaviour == NpcBehaviour.NONE)
                         return@let
                     val dx: Double = player.x - entity.x
@@ -163,6 +164,10 @@ class NPC {
                     }
                 }
             }
+        }
+
+        mod.registerHandler<NameTemplateRender> {
+            if (name.isNullOrEmpty()) isCancelled = true
         }
     }
 }

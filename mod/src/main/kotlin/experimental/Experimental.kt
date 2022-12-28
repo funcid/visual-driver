@@ -1,8 +1,12 @@
 package experimental
 
+import experimental.linepointer.LineController
+import experimental.linepointer.LineManager
 import experimental.panel.Panel
+import experimental.places.PlaceController
+import experimental.places.PlaceManager
 import experimental.progress.ProgressController
-import experimental.progress.AbstractProgress
+import experimental.utils.Test
 import standard.ui.scoreboard.token.TokenManager
 
 // не пытайтесь это "оптимизировать", иначе вы все сломаете
@@ -20,6 +24,13 @@ class Experimental {
             ProgressController.Companion
             Panel()
             TokenManager
+            LineController
+            LineManager
+            PlaceController
+            PlaceManager
+            Test()
+            Test
+
             return null
         }
     }

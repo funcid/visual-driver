@@ -16,21 +16,21 @@ import ru.cristalix.uiengine.utility.*
 
 class QueueStatus {
     companion object {
-        private lateinit var buttonText: TextElement
-        private lateinit var button: CarvedRectangle
-        private lateinit var icon: CarvedRectangle
-        private lateinit var png: RectangleElement
-        private lateinit var title: TextElement
-        private lateinit var desc: TextElement
-        private lateinit var time: TextElement
-        private lateinit var pattern: RectangleElement
+        private var buttonText: TextElement
+        private var button: CarvedRectangle
+        private var icon: CarvedRectangle
+        private var png: RectangleElement
+        private var title: TextElement
+        private var desc: TextElement
+        private var time: TextElement
+        private var pattern: RectangleElement
         private const val width = 140.0
         private var counter = 0
         private var enabled = false
 
-        private val container = UIEngine.overlayContext +carved {
+        private val container = carved {
             enabled = false
-            color = Color(0, 0, 0, 0.50)
+            color = Color(0, 0, 0, 0.62)
             size = V3(382.0 / 2.0, 100.0 / 2)
             align = TOP
             origin = TOP

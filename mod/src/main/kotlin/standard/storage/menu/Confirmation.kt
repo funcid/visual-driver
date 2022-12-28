@@ -17,9 +17,9 @@ class Confirmation(var uuid: UUID, lines: String) : ContextGui() {
     private val buttonWidth = 80.0
     private val buttonHeight = 20.0
 
-    lateinit var message: TextElement
-    lateinit var agree: CarvedRectangle
-    lateinit var disagree: CarvedRectangle
+    var message: TextElement
+    var agree: CarvedRectangle
+    var disagree: CarvedRectangle
 
     private fun answer(answer: Boolean) {
         clientApi.clientConnection().sendPayload("func:yesno", Unpooled.buffer().apply {

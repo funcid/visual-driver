@@ -88,7 +88,7 @@ abstract class StorageNode<T : AbstractElement>(
             val new = line + word
             val color = line.split("§").last().first()
 
-            if (new.getRealWidth() * 0.75 > length) {
+            if (new.getRealWidth() * 0.9 > length) {
                 descriptionElement!!.content += "\n§$color"
             }
             descriptionElement!!.content += "$word "

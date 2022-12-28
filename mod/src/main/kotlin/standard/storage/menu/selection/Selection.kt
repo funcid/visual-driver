@@ -33,8 +33,8 @@ class Selection(
     @JvmField var currentPage: Int = 0,
 ) : AbstractMenu, Information, ContextGui() {
 
-    lateinit var arrowLeft: CarvedRectangle
-    lateinit var arrowRight: CarvedRectangle
+    var arrowLeft: CarvedRectangle
+    var arrowRight: CarvedRectangle
     var balanceText: TextedIcon? = null
 
     private val width = 460.0
@@ -229,5 +229,6 @@ class Selection(
     }
 
     override fun getInformationBlock() = information
+    override fun close() = super.close(true)
 
 }

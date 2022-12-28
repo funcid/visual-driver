@@ -1,6 +1,5 @@
 package lootbox
 
-import dev.xdark.clientapi.event.input.KeyPress
 import dev.xdark.clientapi.event.input.MousePress
 import dev.xdark.clientapi.event.lifecycle.GameLoop
 import dev.xdark.clientapi.event.network.PluginMessage
@@ -27,11 +26,11 @@ class LootboxMod {
         var pressed = false
 
         mod.registerHandler<GameLoop> {
-            if (!ready && !crateScreen.opened)
+            if (!ready && !crateScreen.open)
                 return@registerHandler
 
-            if (crateScreen.opened && Mouse.isButtonDown(0)) {
-                crateScreen.opened = false
+            if (crateScreen.open && Mouse.isButtonDown(0)) {
+                crateScreen.open = false
                 crateScreen.acceptClose()
                 crateScreen.close()
                 UIEngine.clientApi.minecraft().setIngameFocus()
@@ -106,7 +105,7 @@ class LootboxMod {
         }
 
         mod.registerHandler<RenderTickPre> {
-            if (!crateScreen.opened)
+            if (!crateScreen.open)
                 return@registerHandler
 
             crateScreen.apply {

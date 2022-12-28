@@ -2,10 +2,13 @@ package me.func.mod.ui
 
 import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.SubscribeVerifier
+import me.func.mod.reactive.ReactivePlace
 import me.func.mod.util.warn
 import me.func.protocol.data.color.RGB
 import me.func.protocol.data.color.Tricolor
 import me.func.protocol.world.GlowingPlace
+import org.bukkit.Bukkit
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -76,10 +79,12 @@ object Glow : Listener {
     ) = addPlace(GlowingPlace(UUID.randomUUID(), rgb, x, y, z), onJoin)
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun addPlace(place: GlowingPlace, onJoin: Consumer<Player>) =
         addPlace(place).also { playerAccepter[place.uuid] = onJoin }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun addPlace(place: GlowingPlace): GlowingPlace {
         if (glowingPlaces.size > 300) {
             warn("Glow places map size > 300! Stop add glowing places!")
@@ -90,6 +95,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun showPlace(player: Player, place: GlowingPlace) {
         ModTransfer()
             .uuid(place.uuid)
@@ -101,14 +107,17 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun showLoadedPlace(player: Player, uuid: UUID) {
         glowingPlaces[uuid]?.let { place -> showPlace(player, place) }
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun showAllPlaces(player: Player) = glowingPlaces.values.forEach { showLoadedPlace(player, it.uuid) }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun removePlace(place: GlowingPlace, vararg players: Player): GlowingPlace {
         if (glowingPlaces.remove(place.uuid) != null) {
             playerAccepter.remove(place.uuid)
@@ -120,6 +129,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun clearPlaces(vararg players: Player) {
         players.forEach { Anime.sendEmptyBuffer("func:place-clear", it) }
         glowingPlaces.clear()
@@ -127,6 +137,7 @@ object Glow : Listener {
     }
 
     @JvmStatic
+    @Deprecated("Используйте ReactivePlace")
     fun changePlaceColor(place: GlowingPlace, rgb: RGB, vararg players: Player) {
         ModTransfer()
             .uuid(place.uuid)

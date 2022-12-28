@@ -24,9 +24,9 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
     private val subscribed = hashSetOf<Player>()
 
     // Отписать игроков от обновлений
-    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players)
+    fun unsubscribe(vararg players: Player) = subscribed.removeAll(players.toSet())
 
-    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players)
+    fun unsubscribe(players: Iterable<Player>) = subscribed.removeAll(players.toSet())
 
     fun send(players: List<Player>) = send(*players.toTypedArray())
 
@@ -63,6 +63,12 @@ class ReactiveProgress : Progress(), PlayerSubscriber {
     override var text: String = super.text
         set(value) {
             update(starter().integer(1).string(value))
+            field = value
+        }
+
+    override var lineColor = super.lineColor
+        set(value) {
+            update(starter().integer(2).rgb(value))
             field = value
         }
 

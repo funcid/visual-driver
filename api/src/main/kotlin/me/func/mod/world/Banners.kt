@@ -1,6 +1,11 @@
 package me.func.mod.world
 
+import me.func.mod.Anime
 import me.func.mod.conversation.ModTransfer
+import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.conversation.data.MouseButton
+import me.func.mod.reactive.ReactiveBanner
+import me.func.mod.util.subscriber
 import me.func.mod.util.warn
 import me.func.protocol.math.Dimension
 import me.func.protocol.data.element.Banner
@@ -10,12 +15,33 @@ import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import java.lang.StrictMath.pow
 import java.util.*
+import java.util.function.BiConsumer
 import kotlin.collections.HashMap
 import kotlin.math.sqrt
 
-object Banners {
+object Banners : PlayerSubscriber {
 
-    var banners = hashMapOf<UUID, Banner>()
+    var banners = hashMapOf<UUID, Banner>() // banner uuid to uuid
+    val clickable = hashMapOf<UUID, BiConsumer<Player, MouseButton>>() // banner uuid to consumer
+    val activeHandlers = hashMapOf<UUID, MutableSet<UUID>>() // player uuid to set of uuid banners
+
+    init {
+        subscriber(this)
+
+        Anime.createReader("banner:click") { player, buffer ->
+            try {
+
+                val uuid = UUID(buffer.readLong(), buffer.readLong())
+                val mouseButton = MouseButton.values()[buffer.readInt()]
+                val logic = clickable[uuid] ?: return@createReader
+
+                if (banners.containsKey(uuid) || activeHandlers[player.uniqueId]?.contains(uuid) == true)
+                    logic.accept(player, mouseButton)
+            } catch (exception: Exception) {
+                warn("Error while read banner uuid: " + exception.message)
+            }
+        }
+    }
 
     @JvmSynthetic
     fun new(data: Banner.() -> Unit) = new(Banner().apply(data))
@@ -30,34 +56,54 @@ object Banners {
     @JvmStatic
     @JvmSynthetic
     fun new(banner: Banner): Banner {
+
         if (banners.size > 300) {
             val unique = banners.values.distinctBy { it.x }.distinctBy { it.y }.distinctBy { it.z }
             warn("Fatal error: banners map size>300! Found and cleared ${banners.size - unique.size} unused banners!")
             banners = HashMap(unique.associateBy { banner.uuid })
             return banner
         }
+
         banners[banner.uuid] = banner
         return banner
     }
 
     @JvmStatic
+    fun add(banner: Banner, consumer: BiConsumer<Player, MouseButton>): Banner {
+        clickable[banner.uuid] = consumer
+        return new(banner)
+    }
+
+    @JvmStatic
     fun content(player: Player, uuid: UUID, content: String) {
         banners[uuid]?.content = content
-        ModTransfer(uuid.toString(), content).send("banner:change-content", player)
+        ModTransfer().uuid(uuid).integer(1).string(content).send("banner:update", player)
     }
 
     @JvmStatic
     fun content(player: Player, banner: Banner, content: String) = content(player, banner.uuid, content)
 
     @JvmStatic
+    fun show(player: Player, banner: Banner, consumer: BiConsumer<Player, MouseButton>) {
+
+        val set = activeHandlers[player.uniqueId] ?: hashSetOf()
+
+        set.add(banner.uuid)
+        activeHandlers[player.uniqueId] = set
+        clickable[banner.uuid] = consumer
+        show(player, banner)
+    }
+
+    @JvmStatic
     fun show(player: Player, vararg uuid: UUID) = show(player, *uuid.mapNotNull { banners[it] }.toTypedArray())
 
     @JvmStatic
     fun show(player: Player, vararg banner: Banner) {
+
         val transfer = ModTransfer().integer(banner.size)
 
         banner.forEach { current ->
-            transfer.string(current.uuid.toString())
+            transfer.uuid(current.uuid)
                 .integer(current.motionType.ordinal)
                 .boolean(current.watchingOnPlayer)
                 .boolean(current.watchingOnPlayerWithoutPitch)
@@ -81,29 +127,28 @@ object Banners {
                     }
                 }
         }
+
         transfer.send("banner:new", player)
 
         banner.filter { it.motionSettings.containsKey("line") }.forEach { current ->
             val sizes = current.motionSettings["line"] as MutableList<Pair<Int, Double>>
-            val sizeTransfer = ModTransfer(current.uuid.toString(), sizes.size)
+            val sizeTransfer = ModTransfer().uuid(current.uuid).integer(sizes.size)
             sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
             sizeTransfer.send("banner:size-text", player)
         }
     }
 
     @JvmStatic
-    fun showAll(player: Player){
-        show(player, *banners.values.toTypedArray())
-    }
+    fun showAll(player: Player) = show(player, *banners.values.toTypedArray())
 
     @JvmStatic
     fun remove(uuid: UUID) {
         banners.remove(uuid)
+        clickable.remove(uuid)
     }
 
     @JvmStatic
-    fun hide(player: Player, vararg uuid: UUID) =
-        ModTransfer(uuid.size).apply { uuid.forEach { string(it.toString()) } }.send("banner:remove", player)
+    fun hide(player: Player, vararg uuid: UUID) = ModTransfer(uuid.size).apply { uuid.forEach { uuid(it) } }.send("banner:remove", player)
 
     @JvmStatic
     fun hide(player: Player, vararg banner: Banner) = hide(player, *banner.map { it.uuid }.toTypedArray())
@@ -143,4 +188,15 @@ object Banners {
         motionSettings["speed${dimension.name}"] = speed
         motionSettings["offset${dimension.name}"] = offset
     }
+
+    override val isConstant = true
+
+    override fun removeSubscriber(player: Player) {
+        activeHandlers[player.uniqueId]?.forEach { uuid -> clickable.remove(uuid) }
+        activeHandlers.remove(player.uniqueId)
+    }
+
+    override fun getSubscribersCount() = activeHandlers.size
+
+    override val uuid: UUID = UUID.randomUUID()
 }

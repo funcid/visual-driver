@@ -21,7 +21,7 @@ tasks {
         propertiesFile.parentFile.mkdirs()
         val properties = Properties()
         val version = when (val generatedVersion = project.properties["buildVersion"]) {
-            null -> "development"
+            null -> project.version.toString()
             else -> {
                 val build = generatedVersion.toString().toInt()
                 "${build / 100}.${(build / 10) % 10}.${build % 10}.RELEASE"
