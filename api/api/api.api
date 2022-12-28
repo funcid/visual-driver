@@ -428,7 +428,6 @@ public final class me/func/mod/reactive/ReactiveBanner$Builder {
 	public final fun carveSize (D)Lme/func/mod/reactive/ReactiveBanner$Builder;
 	public final fun color (Lme/func/protocol/data/color/RGB;)Lme/func/mod/reactive/ReactiveBanner$Builder;
 	public final fun content ([Ljava/lang/String;)Lme/func/mod/reactive/ReactiveBanner$Builder;
-	public final fun getBanner ()Lme/func/mod/reactive/ReactiveBanner;
 	public final fun green (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
 	public final fun height (I)Lme/func/mod/reactive/ReactiveBanner$Builder;
 	public final fun motionType (Lme/func/protocol/data/element/MotionType;)Lme/func/mod/reactive/ReactiveBanner$Builder;
@@ -1381,6 +1380,7 @@ public final class me/func/mod/world/Banners : me/func/mod/conversation/broadcas
 	public fun getSubscribersCount ()I
 	public fun getUuid ()Ljava/util/UUID;
 	public final fun harmonicVibrations (Lme/func/protocol/data/element/Banner;Lme/func/protocol/math/Dimension;DDD)V
+	public static final fun hide (Lme/func/mod/reactive/ReactiveBanner;Lorg/bukkit/entity/Player;)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Ljava/util/UUID;)V
 	public static final fun hide (Lorg/bukkit/entity/Player;[Lme/func/protocol/data/element/Banner;)V
 	public fun isConstant ()Z
@@ -1389,6 +1389,7 @@ public final class me/func/mod/world/Banners : me/func/mod/conversation/broadcas
 	public static final synthetic fun new (Lme/func/protocol/data/element/Banner;)Lme/func/protocol/data/element/Banner;
 	public static final fun remove (Ljava/util/UUID;)V
 	public fun removeSubscriber (Lorg/bukkit/entity/Player;)V
+	public static final fun send (Lme/func/mod/reactive/ReactiveBanner;Lorg/bukkit/entity/Player;)V
 	public final fun setBanners (Ljava/util/HashMap;)V
 	public final fun shineBlocks (Lme/func/protocol/data/element/Banner;Z)V
 	public static final fun show (Lorg/bukkit/entity/Player;Lme/func/protocol/data/element/Banner;Ljava/util/function/BiConsumer;)V

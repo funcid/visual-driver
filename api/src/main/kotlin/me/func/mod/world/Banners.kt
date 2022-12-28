@@ -84,18 +84,6 @@ object Banners : PlayerSubscriber {
     fun content(player: Player, banner: Banner, content: String) = content(player, banner.uuid, content)
 
     @JvmStatic
-    fun ReactiveBanner.send(player: Player) {
-        this.subscribed.add(player.uniqueId)
-        show(player, this)
-    }
-
-    @JvmStatic
-    fun ReactiveBanner.hide(player: Player) {
-        this.subscribed.remove(player.uniqueId)
-        hide(player, this)
-    }
-
-    @JvmStatic
     fun show(player: Player, banner: Banner, consumer: BiConsumer<Player, MouseButton>) {
 
         val set = activeHandlers[player.uniqueId] ?: hashSetOf()
@@ -144,7 +132,7 @@ object Banners : PlayerSubscriber {
 
         banner.filter { it.motionSettings.containsKey("line") }.forEach { current ->
             val sizes = current.motionSettings["line"] as MutableList<Pair<Int, Double>>
-            val sizeTransfer = ModTransfer(current.uuid.toString(), sizes.size)
+            val sizeTransfer = ModTransfer().uuid(current.uuid).integer(sizes.size)
             sizes.forEach { sizeTransfer.integer(it.first).double(it.second) }
             sizeTransfer.send("banner:size-text", player)
         }

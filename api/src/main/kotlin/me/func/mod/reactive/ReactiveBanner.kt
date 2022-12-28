@@ -2,6 +2,7 @@ package me.func.mod.reactive
 
 import me.func.mod.conversation.ModTransfer
 import me.func.mod.conversation.broadcast.PlayerSubscriber
+import me.func.mod.world.Banners
 import me.func.protocol.data.color.RGB
 import me.func.protocol.data.color.Tricolor
 import me.func.protocol.data.element.Banner
@@ -82,7 +83,18 @@ class ReactiveBanner : PlayerSubscriber, Banner() {
         subscribed.mapNotNull(Bukkit::getPlayer)
     )
 
+    fun send(player: Player) {
+        this.subscribed.add(player.uniqueId)
+        Banners.show(player, this)
+    }
+
+    fun hide(player: Player) {
+        this.subscribed.remove(player.uniqueId)
+        Banners.hide(player, this)
+    }
+
     companion object {
+
         @JvmStatic
         fun builder() = Builder()
     }

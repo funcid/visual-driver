@@ -14,7 +14,7 @@ object BannersController {
     const val ADD_BANNER_CHANNEL = "banner:new"
     const val UPDATE_BANNER_CHANNEL = "banner:update"
     const val REMOVE_BANNER_CHANNEL = "banner:remove"
-    const val TEXT_SIZE_CHANNEL = "banner:text_size"
+    const val TEXT_SIZE_CHANNEL = "banner:size-text"
     const val CLICK_BANNER_CHANNEL = "banner:click"
 
     init {
