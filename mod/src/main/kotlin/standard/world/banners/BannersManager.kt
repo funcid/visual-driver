@@ -138,11 +138,6 @@ object BannersManager {
         }
     }
 
-    fun getTextureLocation(texture: String): ResourceLocation? {
-        val parts = texture.split(":")
-        return if (texture.isNotEmpty()) ResourceLocation.of(parts[0], parts[1]) else null
-    }
-
     fun remove(size: Int, buf: ByteBuf) = repeat(size) { remove(buf.readId()) }
 
     private fun remove(uuid: UUID) = banners[uuid]?.let {
@@ -162,7 +157,15 @@ object BannersManager {
 
                 sizes[uuid to line] = newScale
 
-                val text = triple.third.children.filterIsInstance<TextElement>().toTypedArray()
+                val text = triple.third.children
+                    .filterIsInstance<TextElement>()
+                    .toTypedArray()
+
+                if (text.size <= line * 2 + 1) {
+                    val first = text.firstOrNull()?.content ?: "<no first line provided>"
+                    println("Cannot resize line! Index: $line, banner first line: $first")
+                    return
+                }
 
                 text[line * 2].animate(0.2) {
                     scale = V3(newScale, newScale, newScale)
@@ -280,7 +283,9 @@ object BannersManager {
             align = TOP
             origin = TOP
 
-            this.textureLocation = getTextureLocation(banner.texture)
+            left.enabled = false
+            main.textureLocation = ResourceLocation.of(banner.texture)
+            right.enabled = false
 
             val sized = V3(banner.weight.toDouble(), banner.height.toDouble())
 

@@ -15,6 +15,7 @@ import ru.cristalix.uiengine.UIEngine
 import standard.storage.AbstractMenu
 import standard.storage.Information
 import standard.storage.button.ButtonReader.readIcons
+import standard.storage.button.DEFAULT_MAX_HINT_OPACITY
 import standard.storage.button.StorageItemStack
 import standard.storage.button.StorageItemTexture
 import standard.storage.menu.selection.SelectionManager
@@ -103,7 +104,7 @@ class MenuManager {
                     6 -> {
                         node.backgroundColor = readRgb()
                         if (!inited) return@registerChannel
-                        node.hintContainer?.color = node.backgroundColor.asColor(0.0)
+                        node.hintContainer?.color = node.backgroundColor.asColor(DEFAULT_MAX_HINT_OPACITY)
                         node.bundle?.color = node.backgroundColor.asColor(0.28)
                     }
 

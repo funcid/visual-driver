@@ -11,6 +11,7 @@ import ru.cristalix.uiengine.eventloop.animate
 import ru.cristalix.uiengine.onMouseUp
 import ru.cristalix.uiengine.utility.*
 import standard.storage.Information
+import standard.storage.button.DEFAULT_MAX_HINT_OPACITY
 import java.util.*
 
 class PlayChoice(
@@ -112,7 +113,7 @@ class PlayChoice(
                                 hasHoverEffect = nowHovered
 
                                 animate(0.2, Easings.CUBIC_OUT) {
-                                    hint.color.alpha = if (hasHoverEffect) 0.95 else 0.0
+                                    hint.color.alpha = if (hasHoverEffect) DEFAULT_MAX_HINT_OPACITY else 0.0
                                     element.hintElement?.color?.alpha = if (hasHoverEffect) 1.0 else 0.0
                                 }
                             }

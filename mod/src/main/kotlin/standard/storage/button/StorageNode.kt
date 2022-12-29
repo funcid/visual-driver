@@ -17,6 +17,8 @@ import standard.storage.AbstractMenu
 import standard.storage.TextedIcon
 import standard.storage.menu.MenuManager
 
+const val DEFAULT_MAX_HINT_OPACITY = 0.95
+
 abstract class StorageNode<T : AbstractElement>(
     open var icon: T,
     override var price: Long = -1,

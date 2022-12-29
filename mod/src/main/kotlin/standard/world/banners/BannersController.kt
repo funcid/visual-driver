@@ -1,6 +1,7 @@
 package standard.world.banners
 
 import asColor
+import dev.xdark.clientapi.resource.ResourceLocation
 import dev.xdark.feder.NetUtil
 import io.netty.buffer.ByteBuf
 import readRgb
@@ -61,7 +62,7 @@ object BannersController {
             }
             3 -> triple.third.size.y = buf.readDouble()
             4 -> triple.third.size.x = buf.readDouble()
-            5 -> triple.third.textureLocation = BannersManager.getTextureLocation(NetUtil.readUtf8(buf))
+            5 -> triple.third.main.textureLocation = ResourceLocation.of(NetUtil.readUtf8(buf))
             6 -> triple.third.color = buf.readRgb().asColor(triple.third.color.alpha)
             7 -> triple.third.color.alpha = buf.readDouble()
         }
