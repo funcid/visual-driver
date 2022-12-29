@@ -18,7 +18,7 @@ class Action(var type: String) {
     @JvmName("custom1")
     fun custom(custom: Runnable): Action {
         this.custom = custom
-        return command("anime:dialog-callback " + UUID.randomUUID())
+        return command("/anime:dialog-callback " + UUID.randomUUID())
     }
 
     @JvmName("command1")

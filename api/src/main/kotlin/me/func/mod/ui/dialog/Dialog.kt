@@ -15,11 +15,14 @@ object Dialog : PlayerSubscriber {
 
     init {
         command("dialog-callback") { player, args ->
+
             if (!opened.containsKey(player.uniqueId)) return@command
             val openedDialog = opened[player.uniqueId]
+
             openedDialog?.let {
                 it.entrypoints.forEach { entry ->
                     entry.screen.buttons?.forEach { button ->
+
                         button.actions
                             ?.filter { action -> action.custom != null && action.command?.endsWith(args[0]) == true }
                             ?.forEach { action -> action.custom?.run() }

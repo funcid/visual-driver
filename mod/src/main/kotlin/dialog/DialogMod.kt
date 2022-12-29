@@ -426,7 +426,7 @@ object DialogMod {
     }
 
     private fun parseScreen(json: JsonObject): Screen? {
-        val buttons = mutableListOf<Button?>()
+        val buttons = arrayListOf<Button?>()
         (json["buttons"] ?: return null).asJsonArray
             .mapNotNull { it.asJsonObject }
             .forEach { buttons.add(parseButton(it)) }
