@@ -199,6 +199,8 @@ object BannersManager {
             }
 
             element + text {
+                enabled = banner.motionSettings["xray"]?.equals("false") ?: true
+
                 align = TOP
                 origin = TOP
 
